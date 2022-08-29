@@ -1,0 +1,21 @@
+Package: GeoPressureManual
+Title: User Manual for GeoPressureR
+Description: Learn how to use GeoPressureR with the Great Reed Warbler 18LX.
+Version: 0.1
+Type: Book
+URL: https://github.com/Rafnuss/GeoPressureManual
+Imports: 
+    bookdown,
+    GeoPressureR,
+    ecmwfr,
+    GeoLocTools,
+    igraph,
+    ggplot2,
+    gridExtra,
+    plotly,
+    RColorBrewer,
+    leaflet,
+    leaflet.extras
+Remotes: 
+    rstudio/bookdown
+    rafnuss/GeoPressureR

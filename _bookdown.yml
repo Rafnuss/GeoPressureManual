@@ -1,0 +1,7 @@
+# book_filename: "GeoPressureManual"
+language:
+  ui:
+    chapter_name: "Chapter "
+delete_merged_file: true
+#new_session: yes
+# edit, history, view (link to github)

@@ -1,0 +1,8 @@
+--- 
+title: "User Manual for GeoPressureR"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+github-repo: rafnuss/GeoPressureR
+description: "Learn how to use GeoPressureR with the Great Reed Warbler 18LX."
+---
