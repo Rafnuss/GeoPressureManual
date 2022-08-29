@@ -34,9 +34,6 @@
 # R Environment Variables
 .Renviron
 
-# pkgdown site
-docs/
-
 # Bookdown
 _book/
 _bookdown_files/
@@ -45,3 +42,7 @@ _main_files/
 
 # nc file too large
 *.nc
+
+# site
+# Only use when updating the website
+# docs/
