@@ -1,7 +1,10 @@
 # book_filename: "GeoPressureManual"
+repo: "https://github.com/Rafnuss/GeoPressureManual/"
+output_dir: "docs"
 language:
   ui:
     chapter_name: "Chapter "
 delete_merged_file: true
-#new_session: yes
-# edit, history, view (link to github)
+split_bib: FALSE
+# search: false
+# new_session: yes

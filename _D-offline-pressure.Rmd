@@ -1,0 +1,48 @@
+# Offline pressure
+
+```{r}
+pam_data <- pam_read(
+  pathname = system.file("extdata", package = "GeoPressureR"),
+  crop_start = "2017-06-20", crop_end = "2018-05-02"
+)
+pam_data <- pam_classify(pam_data)
+pam_data <- trainset_read(pam_data, pathname = system.file("extdata", package = "GeoPressureR"))
+```
+
+
+```{r, eval=F}
+# Sys.setenv( cds.key="Insert_your_CDS_API_KEY_here")
+# Sys.setenv( cds.user="Insert_your_CDS_UID_here")
+# usethis::edit_r_environ()
+cds.key <- Sys.getenv("cds.key")
+cds.user <- Sys.getenv("cds.user")
+wf_set_key(user = cds.user, key = cds.key, service = "cds")
+```
+
+
+
+```{r, eval=F}
+request <- list(
+  dataset_short_name = "reanalysis-era5-single-levels",
+  product_type = "reanalysis",
+  format = "netcdf",
+  variable = c("surface_pressure"),
+  year = sort(unique(format(pam_data$pressure$date, "%Y"))),
+  month = sort(unique(format(pam_data$pressure$date, "%m"))),
+  day = sort(unique(format(pam_data$pressure$date, "%d"))),
+  time = sort(unique(format(pam_data$pressure$date, "%H:%M"))),
+  area = c(50, -16, 0, 23)
+)
+```
+
+```{r, eval=F}
+req <- wf_request(user = cds.user, request = request, transfer = F)
+```
+```{r, eval=F}
+dir.save <- "~"
+wf_transfer(url = req$request_id, service = "cds", user = cds.user, path = dir.save, filename = filename)
+```
+
+```{r, eval=F}
+
+```

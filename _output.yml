@@ -1,0 +1,13 @@
+bookdown::gitbook:
+  css: style.css
+  config:
+    toc:
+      collapse: section
+      before: |
+            <li><a href="./">A User Manual for GeoPressureR</a></li>
+      after: |
+            <li><a href="https://github.com/Rafnuss/GeoPressureTemplate">Ready to start your own study?</a></li>
+    edit: https://github.com/Rafnuss/GeoPressureManual/edit/main/%s
+    sharing:
+      github: yes
+      facebook: no

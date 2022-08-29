@@ -42,3 +42,6 @@ _book/
 _bookdown_files/
 _main.Rmd
 _main_files/
+
+# nc file too large
+*.nc
