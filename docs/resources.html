@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>C Resources | A User Manual for GeoPressureR</title>
+  <title>D Resources | A User Manual for GeoPressureR</title>
   <meta name="description" content="Learn how to use GeoPressureR with the Great Reed Warbler 18LX." />
   <meta name="generator" content="bookdown 0.28.1 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="C Resources | A User Manual for GeoPressureR" />
+  <meta property="og:title" content="D Resources | A User Manual for GeoPressureR" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png" />
   <meta property="og:description" content="Learn how to use GeoPressureR with the Great Reed Warbler 18LX." />
   <meta name="github-repo" content="rafnuss/GeoPressureManual" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="C Resources | A User Manual for GeoPressureR" />
+  <meta name="twitter:title" content="D Resources | A User Manual for GeoPressureR" />
   
   <meta name="twitter:description" content="Learn how to use GeoPressureR with the Great Reed Warbler 18LX." />
   <meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png" />
@@ -50,9 +50,116 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+<link href="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.css" rel="stylesheet" />
+<script src="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.js"></script>
+<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
+<link href="libs/fontawesome-4.7.0/font-awesome.min.css" rel="stylesheet" />
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -88,7 +195,7 @@
 <li class="chapter" data-level="1.4" data-path="pressure-map.html"><a href="pressure-map.html#computing-mistmatch-maps"><i class="fa fa-check"></i><b>1.4</b> Compute mistmatch maps</a></li>
 <li class="chapter" data-level="1.5" data-path="pressure-map.html"><a href="pressure-map.html#compute-probability-maps"><i class="fa fa-check"></i><b>1.5</b> Compute probability maps</a></li>
 <li class="chapter" data-level="1.6" data-path="pressure-map.html"><a href="pressure-map.html#compute-altitude"><i class="fa fa-check"></i><b>1.6</b> Compute altitude</a></li>
-<li class="chapter" data-level="1.7" data-path="pressure-map.html"><a href="pressure-map.html#compute-pressure-and-altitude-of-the-full-path"><i class="fa fa-check"></i><b>1.7</b> Compute pressure and altitude of the full path</a></li>
+<li class="chapter" data-level="1.7" data-path="pressure-map.html"><a href="pressure-map.html#compute-pressure-and-altitude-for-the-path"><i class="fa fa-check"></i><b>1.7</b> Compute pressure and altitude for the path</a></li>
 <li class="chapter" data-level="1.8" data-path="pressure-map.html"><a href="pressure-map.html#save"><i class="fa fa-check"></i><b>1.8</b> Save</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="light-map.html"><a href="light-map.html"><i class="fa fa-check"></i><b>2</b> Light map</a>
@@ -137,59 +244,61 @@
 <li class="chapter" data-level="5.9" data-path="wind-graph.html"><a href="wind-graph.html#compute-flight-energy"><i class="fa fa-check"></i><b>5.9</b> Compute flight energy</a></li>
 <li class="chapter" data-level="5.10" data-path="wind-graph.html"><a href="wind-graph.html#save-4"><i class="fa fa-check"></i><b>5.10</b> Save</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path=""><a href="#appendix-appendix"><i class="fa fa-check"></i>(APPENDIX) Appendix</a>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="labelling-tracks.html"><a href="labelling-tracks.html"><i class="fa fa-check"></i><b>A</b> Labelling tracks</a>
 <ul>
-<li class="chapter" data-level="5.11" data-path="wind-graph.html"><a href="wind-graph.html#labelling-principles"><i class="fa fa-check"></i><b>5.11</b> Labelling principles</a></li>
-<li class="chapter" data-level="5.12" data-path="wind-graph.html"><a href="wind-graph.html#introduction-to-trainset"><i class="fa fa-check"></i><b>5.12</b> Introduction to TRAINSET</a></li>
-<li class="chapter" data-level="5.13" data-path="wind-graph.html"><a href="wind-graph.html#four-tests-to-check-labelling"><i class="fa fa-check"></i><b>5.13</b> Four tests to check labelling</a>
+<li class="chapter" data-level="A.1" data-path="labelling-tracks.html"><a href="labelling-tracks.html#labelling-principles"><i class="fa fa-check"></i><b>A.1</b> Labelling principles</a></li>
+<li class="chapter" data-level="A.2" data-path="labelling-tracks.html"><a href="labelling-tracks.html#introduction-to-trainset"><i class="fa fa-check"></i><b>A.2</b> Introduction to TRAINSET</a></li>
+<li class="chapter" data-level="A.3" data-path="labelling-tracks.html"><a href="labelling-tracks.html#four-tests-to-check-labelling"><i class="fa fa-check"></i><b>A.3</b> Four tests to check labelling</a>
 <ul>
-<li class="chapter" data-level="5.13.1" data-path="wind-graph.html"><a href="wind-graph.html#test-1-duration-of-stationary-periods-and-flights"><i class="fa fa-check"></i><b>5.13.1</b> Test 1: Duration of stationary periods and flights</a></li>
-<li class="chapter" data-level="5.13.2" data-path="wind-graph.html"><a href="wind-graph.html#test-2-pressure-timeseries"><i class="fa fa-check"></i><b>5.13.2</b> Test 2: Pressure timeseries</a></li>
-<li class="chapter" data-level="5.13.3" data-path="wind-graph.html"><a href="wind-graph.html#test-3-pressure-timeseries-match"><i class="fa fa-check"></i><b>5.13.3</b> Test 3: Pressure timeseries match</a></li>
-<li class="chapter" data-level="5.13.4" data-path="wind-graph.html"><a href="wind-graph.html#test-4-histogram-of-pressure-error"><i class="fa fa-check"></i><b>5.13.4</b> Test 4: Histogram of pressure error</a></li>
+<li class="chapter" data-level="A.3.1" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-1-duration-of-stationary-periods-and-flights"><i class="fa fa-check"></i><b>A.3.1</b> Test 1: Duration of stationary periods and flights</a></li>
+<li class="chapter" data-level="A.3.2" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-2-pressure-timeseries"><i class="fa fa-check"></i><b>A.3.2</b> Test 2: Pressure timeseries</a></li>
+<li class="chapter" data-level="A.3.3" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-3-pressure-timeseries-match"><i class="fa fa-check"></i><b>A.3.3</b> Test 3: Pressure timeseries match</a></li>
+<li class="chapter" data-level="A.3.4" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-4-histogram-of-pressure-error"><i class="fa fa-check"></i><b>A.3.4</b> Test 4: Histogram of pressure error</a></li>
 </ul></li>
-<li class="chapter" data-level="5.14" data-path="wind-graph.html"><a href="wind-graph.html#common-challenges-and-tips-to-address-them"><i class="fa fa-check"></i><b>5.14</b> Common challenges and tips to address them</a>
+<li class="chapter" data-level="A.4" data-path="labelling-tracks.html"><a href="labelling-tracks.html#common-challenges-and-tips-to-address-them"><i class="fa fa-check"></i><b>A.4</b> Common challenges and tips to address them</a>
 <ul>
-<li class="chapter" data-level="5.14.1" data-path="wind-graph.html"><a href="wind-graph.html#outliars-during-flights-due-to-low-bird-activity"><i class="fa fa-check"></i><b>5.14.1</b> Outliars during flights due to low bird activity</a></li>
-<li class="chapter" data-level="5.14.2" data-path="wind-graph.html"><a href="wind-graph.html#importance-of-zooming-in-before-editing-outliers"><i class="fa fa-check"></i><b>5.14.2</b> Importance of zooming in before editing outliers</a></li>
-<li class="chapter" data-level="5.14.3" data-path="wind-graph.html"><a href="wind-graph.html#short-stationary-halts-between-flights"><i class="fa fa-check"></i><b>5.14.3</b> Short stationary halts between flights</a></li>
+<li class="chapter" data-level="A.4.1" data-path="labelling-tracks.html"><a href="labelling-tracks.html#outliars-during-flights-due-to-low-bird-activity"><i class="fa fa-check"></i><b>A.4.1</b> Outliars during flights due to low bird activity</a></li>
+<li class="chapter" data-level="A.4.2" data-path="labelling-tracks.html"><a href="labelling-tracks.html#importance-of-zooming-in-before-editing-outliers"><i class="fa fa-check"></i><b>A.4.2</b> Importance of zooming in before editing outliers</a></li>
+<li class="chapter" data-level="A.4.3" data-path="labelling-tracks.html"><a href="labelling-tracks.html#short-stationary-halts-between-flights"><i class="fa fa-check"></i><b>A.4.3</b> Short stationary halts between flights</a></li>
+<li class="chapter" data-level="A.4.4" data-path="labelling-tracks.html"><a href="labelling-tracks.html#mountainous-species"><i class="fa fa-check"></i><b>A.4.4</b> Mountainous species</a></li>
 </ul></li>
-<li class="chapter" data-level="5.15" data-path="wind-graph.html"><a href="wind-graph.html#examples"><i class="fa fa-check"></i><b>5.15</b> Examples</a></li>
+<li class="chapter" data-level="A.5" data-path="labelling-tracks.html"><a href="labelling-tracks.html#examples"><i class="fa fa-check"></i><b>A.5</b> Examples</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="probability-aggregation.html"><a href="probability-aggregation.html"><i class="fa fa-check"></i><b>6</b> Probability aggregation</a>
+<li class="chapter" data-level="B" data-path="probability-aggregation.html"><a href="probability-aggregation.html"><i class="fa fa-check"></i><b>B</b> Probability aggregation</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#problem-presentation"><i class="fa fa-check"></i><b>6.1</b> Problem presentation</a>
+<li class="chapter" data-level="B.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#problem-presentation"><i class="fa fa-check"></i><b>B.1</b> Problem presentation</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#error-term"><i class="fa fa-check"></i><b>6.1.1</b> Error term</a></li>
-<li class="chapter" data-level="6.1.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#error-term-for-the-great-reed-warbler"><i class="fa fa-check"></i><b>6.1.2</b> Error term for the Great Reed Warbler</a></li>
+<li class="chapter" data-level="B.1.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#error-term"><i class="fa fa-check"></i><b>B.1.1</b> Error term</a></li>
+<li class="chapter" data-level="B.1.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#error-term-for-the-great-reed-warbler"><i class="fa fa-check"></i><b>B.1.2</b> Error term for the Great Reed Warbler</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#gaussian-likelihood-function"><i class="fa fa-check"></i><b>6.2</b> Gaussian likelihood function</a>
+<li class="chapter" data-level="B.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#gaussian-likelihood-function"><i class="fa fa-check"></i><b>B.2</b> Gaussian likelihood function</a>
 <ul>
-<li class="chapter" data-level="6.2.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#independance-of-errors"><i class="fa fa-check"></i><b>6.2.1</b> Independance of errors</a></li>
-<li class="chapter" data-level="6.2.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#quantification-of-the-errors-dependance"><i class="fa fa-check"></i><b>6.2.2</b> Quantification of the errors dependance</a></li>
+<li class="chapter" data-level="B.2.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#independance-of-errors"><i class="fa fa-check"></i><b>B.2.1</b> Independance of errors</a></li>
+<li class="chapter" data-level="B.2.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#quantification-of-the-errors-dependance"><i class="fa fa-check"></i><b>B.2.2</b> Quantification of the errors dependance</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="probability-aggregation.html"><a href="probability-aggregation.html#probability-aggregation-1"><i class="fa fa-check"></i><b>6.3</b> Probability aggregation</a>
+<li class="chapter" data-level="B.3" data-path="probability-aggregation.html"><a href="probability-aggregation.html#probability-aggregation-1"><i class="fa fa-check"></i><b>B.3</b> Probability aggregation</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#introduction-to-log-linear-pooling"><i class="fa fa-check"></i><b>6.3.1</b> Introduction to Log-linear pooling</a></li>
-<li class="chapter" data-level="6.3.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#log-linear-pooling-w1n"><i class="fa fa-check"></i><b>6.3.2</b> Log-linear pooling, <span class="math inline">\(w=1/n\)</span></a></li>
-<li class="chapter" data-level="6.3.3" data-path="probability-aggregation.html"><a href="probability-aggregation.html#log-linear-pooling-w-lognn"><i class="fa fa-check"></i><b>6.3.3</b> Log-linear pooling, <span class="math inline">\(w = \log(n)/n\)</span></a></li>
-<li class="chapter" data-level="6.3.4" data-path="probability-aggregation.html"><a href="probability-aggregation.html#validation"><i class="fa fa-check"></i><b>6.3.4</b> Validation</a></li>
+<li class="chapter" data-level="B.3.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#introduction-to-log-linear-pooling"><i class="fa fa-check"></i><b>B.3.1</b> Introduction to Log-linear pooling</a></li>
+<li class="chapter" data-level="B.3.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#log-linear-pooling-w1n"><i class="fa fa-check"></i><b>B.3.2</b> Log-linear pooling, <span class="math inline">\(w=1/n\)</span></a></li>
+<li class="chapter" data-level="B.3.3" data-path="probability-aggregation.html"><a href="probability-aggregation.html#log-linear-pooling-w-lognn"><i class="fa fa-check"></i><b>B.3.3</b> Log-linear pooling, <span class="math inline">\(w = \log(n)/n\)</span></a></li>
+<li class="chapter" data-level="B.3.4" data-path="probability-aggregation.html"><a href="probability-aggregation.html#validation"><i class="fa fa-check"></i><b>B.3.4</b> Validation</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html"><i class="fa fa-check"></i><b>7</b> Gridded Gibbs sampler</a>
+<li class="chapter" data-level="C" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html"><i class="fa fa-check"></i><b>C</b> Gridded Gibbs sampler</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#introduction-and-background"><i class="fa fa-check"></i><b>7.1</b> Introduction and background</a></li>
-<li class="chapter" data-level="7.2" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#stationary-probability"><i class="fa fa-check"></i><b>7.2</b> Stationary probability</a></li>
-<li class="chapter" data-level="7.3" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#movement-model"><i class="fa fa-check"></i><b>7.3</b> Movement model</a></li>
-<li class="chapter" data-level="7.4" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#initialize-the-path"><i class="fa fa-check"></i><b>7.4</b> Initialize the path</a></li>
-<li class="chapter" data-level="7.5" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#run-the-gibbs-sampler"><i class="fa fa-check"></i><b>7.5</b> Run the Gibbs sampler</a></li>
-<li class="chapter" data-level="7.6" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#illustration"><i class="fa fa-check"></i><b>7.6</b> Illustration</a></li>
+<li class="chapter" data-level="C.1" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#introduction-and-background"><i class="fa fa-check"></i><b>C.1</b> Introduction and background</a></li>
+<li class="chapter" data-level="C.2" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#stationary-probability"><i class="fa fa-check"></i><b>C.2</b> Stationary probability</a></li>
+<li class="chapter" data-level="C.3" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#movement-model"><i class="fa fa-check"></i><b>C.3</b> Movement model</a></li>
+<li class="chapter" data-level="C.4" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#initialize-the-path"><i class="fa fa-check"></i><b>C.4</b> Initialize the path</a></li>
+<li class="chapter" data-level="C.5" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#run-the-gibbs-sampler"><i class="fa fa-check"></i><b>C.5</b> Run the Gibbs sampler</a></li>
+<li class="chapter" data-level="C.6" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#illustration"><i class="fa fa-check"></i><b>C.6</b> Illustration</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>8</b> Resources</a>
+<li class="chapter" data-level="D" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>D</b> Resources</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="resources.html"><a href="resources.html#publications"><i class="fa fa-check"></i><b>8.1</b> Publications</a></li>
-<li class="chapter" data-level="8.2" data-path="resources.html"><a href="resources.html#presentations"><i class="fa fa-check"></i><b>8.2</b> Presentations</a></li>
-<li class="chapter" data-level="8.3" data-path="resources.html"><a href="resources.html#projects-using-geopressurer"><i class="fa fa-check"></i><b>8.3</b> Projects using <code>GeoPressureR</code></a></li>
+<li class="chapter" data-level="D.1" data-path="resources.html"><a href="resources.html#publications"><i class="fa fa-check"></i><b>D.1</b> Publications</a></li>
+<li class="chapter" data-level="D.2" data-path="resources.html"><a href="resources.html#presentations"><i class="fa fa-check"></i><b>D.2</b> Presentations</a></li>
+<li class="chapter" data-level="D.3" data-path="resources.html"><a href="resources.html#projects-using-geopressurer"><i class="fa fa-check"></i><b>D.3</b> Projects using <code>GeoPressureR</code></a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/Rafnuss/GeoPressureTemplate">Ready to start your own study?</a></li>
@@ -211,10 +320,10 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="resources" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">C</span> Resources<a href="resources.html#resources" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="publications" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">C.1</span> Publications<a href="resources.html#publications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="resources" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">D</span> Resources<a href="resources.html#resources" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="publications" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">D.1</span> Publications<a href="resources.html#publications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <blockquote>
 <p>Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Global positioning with animal-borne pressure sensors, 14 June 2022, PREPRINT (Version 2) available at Research Square <a href="https://doi.org/10.21203/rs.3.rs-1381915/v2" class="uri">https://doi.org/10.21203/rs.3.rs-1381915/v2</a></p>
 </blockquote>
@@ -222,8 +331,8 @@
 <p>Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Inferring bird’s trajectory from multi-sensor geolocators and remote sensing with a graphical model, 25 May 2022, PREPRINT (Version 1) available at Research Square <a href="https://doi.org/10.21203/rs.3.rs-1693751/v1" class="uri">https://doi.org/10.21203/rs.3.rs-1693751/v1</a></p>
 </blockquote>
 </div>
-<div id="presentations" class="section level2 hasAnchor" number="8.2">
-<h2><span class="header-section-number">C.2</span> Presentations<a href="resources.html#presentations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="presentations" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">D.2</span> Presentations<a href="resources.html#presentations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <blockquote>
 <p>Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Leveraging light, pressure, activity, and wind data to improve geolocator positioning. August 2022. <em>28th International Ornithological Congress</em>. PRESENTATION available at <a href="https://youtu.be/U7jAK9nZNQU">Youtube</a>.</p>
 </blockquote>
@@ -231,8 +340,8 @@
 <p>Raphaël Nussbaumer, Mathieu Gravey, Felix Liechti. Improving the spatial accuracy of multi-sensor geolocators’ position using atmospheric surface pressure. October 2021. <em>7th International Bio-logging Science Symposium</em>. PRESENTATION available at <a href="https://www.youtube.com/watch?v=0JsYU_xfKN8">Youtube</a>.</p>
 </blockquote>
 </div>
-<div id="projects-using-geopressurer" class="section level2 hasAnchor" number="8.3">
-<h2><span class="header-section-number">C.3</span> Projects using <code>GeoPressureR</code><a href="resources.html#projects-using-geopressurer" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="projects-using-geopressurer" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">D.3</span> Projects using <code>GeoPressureR</code><a href="resources.html#projects-using-geopressurer" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>List of all research projects using <code>GeoPressureR</code> with links to the code used to analyse and create figures. This might be helpful to get an idea of how to analyse your data and borrow some code sections for your own project. Feel free to <a href="mailto:rafnuss@gmail.com">contact me</a> if you’d like to appear on this list.</p>
 <table>
 <colgroup>
@@ -276,6 +385,23 @@
 </tbody>
 </table>
 
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Allard, Denis, A. Comunian, and Philippe Renard. 2012. <span>“Probability Aggregation Methods in Geoscience.”</span> <em>Mathematical Geosciences</em> 44 (July): 545–81. <a href="https://doi.org/10.1007/s11004-012-9396-3">https://doi.org/10.1007/s11004-012-9396-3</a>.
+</div>
+<div class="csl-entry">
+Lisovski, Simeon, Silke Bauer, Martins Briedis, Sarah C. Davidson, Kiran L. Dhanjal‐Adams, Michael T. Hallworth, Julia Karagicheva, et al. 2020. <span>“Light‐level Geolocator Analyses: A User’s Guide.”</span> Edited by Garrett Street. <em>Journal of Animal Ecology</em> 89 (January): 221–36. <a href="https://doi.org/10.1111/1365-2656.13036">https://doi.org/10.1111/1365-2656.13036</a>.
+</div>
+<div class="csl-entry">
+Nussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, and Felix Liechti. 2022a. <span>“Global Positioning with Animal-Borne Pressure Sensors.”</span> <a href="https://doi.org/10.21203/rs.3.rs-1381915">https://doi.org/10.21203/rs.3.rs-1381915</a>.
+</div>
+<div class="csl-entry">
+———. 2022b. <span>“Inferring Bird’s Trajectory from Multi-Sensor Geolocators and Remote Sensing with a Graphical Model.”</span> <a href="https://doi.org/10.21203/rs.3.rs-1381915">https://doi.org/10.21203/rs.3.rs-1381915</a>.
+</div>
+<div class="csl-entry">
+Werfeli, Mike. 2020. <span>“Inferring Migration Routes of Individual Nocturnal Bird Migrants.”</span> University of Zurich.
+</div>
+</div>
 </div>
 </div>
             </section>

@@ -205,7 +205,7 @@ ggplotly(p) %>%
 
 The function [`geopressure_ts()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts.html) also returns the ground level pressure timeseries from ERA5 at the location specified. This is useful to check whether there is a good match between the pressure measured by the geolocator and the one at the assumed location. This operation is typically used to check the quality of the manual labelling (see [Labelling tracks]).
 
-## Compute pressure and altitude of the full path
+## Compute pressure and altitude for the path
 
 We can repeat the computation of the pressure timeserie for all stationary periods. First we compute all the most likely position from the probability map of pressure. 
 

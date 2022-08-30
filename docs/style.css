@@ -68,8 +68,13 @@ h1.title {
 .book .book-body .page-wrapper .page-inner section.normal pre a {
   color: inherit;
 }
-.leaflet-control-container a{
+.book .book-body .page-wrapper .page-inner section.normal .leaflet-bar a, .book .book-body .page-wrapper .page-inner section.normal .leaflet-bar a:hover {
+    background-color: #fff;
+    text-decoration: none;
     color: inherit;
-    text-decoration: inherit;
-    background: inherit;
+}
+.book .book-body .page-wrapper .page-inner section.normal .leaflet-bar .leaflet-control-fullscreen-button, .book .book-body .page-wrapper .page-inner section.normal .leaflet-bar .leaflet-control-fullscreen-button:hover {
+    background-image: url(libs/lfx-fullscreen-1.0.2/css/fullscreen@2x.png);
+    background-position: 2px 2px;
+    background-size: 26px 52px;
 }

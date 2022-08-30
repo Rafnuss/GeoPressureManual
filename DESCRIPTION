@@ -1,7 +1,7 @@
 Package: GeoPressureManual
 Title: User Manual for GeoPressureR
 Description: Learn how to use GeoPressureR with the Great Reed Warbler 18LX.
-Version: 0.1
+Version: 1.0.0
 Authors@R: 
     person("Raphaël", "Nussbaumer", , "rafnuss@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8185-1020"))

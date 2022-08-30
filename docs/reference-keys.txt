@@ -10,7 +10,7 @@ identify-stationary-periods
 computing-mistmatch-maps
 compute-probability-maps
 compute-altitude
-compute-pressure-and-altitude-of-the-full-path
+compute-pressure-and-altitude-for-the-path
 save
 light-map
 annotate-twilights
@@ -46,6 +46,7 @@ output-3-simulated-paths-1
 geopressureviz
 compute-flight-energy
 save-4
+labelling-tracks
 labelling-principles
 introduction-to-trainset
 four-tests-to-check-labelling
@@ -57,6 +58,7 @@ common-challenges-and-tips-to-address-them
 outliars-during-flights-due-to-low-bird-activity
 importance-of-zooming-in-before-editing-outliers
 short-stationary-halts-between-flights
+mountainous-species
 examples
 probability-aggregation
 problem-presentation
@@ -81,4 +83,3 @@ resources
 publications
 presentations
 projects-using-geopressurer
-references
