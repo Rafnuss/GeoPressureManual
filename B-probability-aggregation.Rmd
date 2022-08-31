@@ -73,13 +73,13 @@ The figure below shows the error distribution at the known location of equipment
 s <- 0.5
 ```
 
-Therefore, assuming a gaussian distribution of our error, the [Gaussian likelkhood](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Non-independent_variables)  of a multivariate normal distribution is given by 
+Therefore, assuming a Gaussian distribution of our error, the [Gaussian likelikhood](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Non-independent_variables)  of a multivariate normal distribution is given by 
 $$ f(\boldsymbol{\varepsilon})={\frac {1}{(2\pi)^{n/2} \sqrt{\det(\boldsymbol{\Sigma})}}}\exp \left(-\frac{1}{2} \boldsymbol{\varepsilon} \boldsymbol{\Sigma}^{-1} \boldsymbol{\varepsilon} \right).$$
 with the vector notation $\boldsymbol{\varepsilon }=[\varepsilon[1],\ldots,\varepsilon[n]]$ and where the covariance matrix $\boldsymbol{\Sigma}$ contains the variance of two datapoints $\boldsymbol{\Sigma}_{t_1,t_2} = \operatorname {E}[ \varepsilon[t_1] \varepsilon[t_2] ]$.
 
 ### Independance of errors
 
-As the covariance is difficult to quantify explicitly, we can first look at the very strong assumption of independance of the error, $\varepsilon_t \overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma)$. In this case, the [Gaussian likelkhood function](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Continuous_distribution,_continuous_parameter_space) $f_{ind}$ is simply the product of the normal probability density function of each error $\varepsilon[t]$, 
+As the covariance is difficult to quantify explicitly, we can first look at the very strong assumption of independance of the error, $\varepsilon_t \overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma)$. In this case, the [Gaussian likelikhood function](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Continuous_distribution,_continuous_parameter_space) $f_{ind}$ is simply the product of the normal probability density function of each error $\varepsilon[t]$, 
 $$ f_{ind}(\boldsymbol{\varepsilon})=\prod _{t=1}^{n}f_\mathcal{N}(\varepsilon[t])=\left({\frac {1}{2\pi \sigma ^{2}}}\right)^{n/2}\exp \left(-{\frac {\sum _{t=1}^{n}\varepsilon[t]^2}{2\sigma ^2}}\right).$$
 
 We can re-write this equation as a function of the MSE
@@ -130,9 +130,9 @@ fun_plot_prob <- function(f_prob, sta, pressure_maps) {
 fun_plot_prob(f_prob, sta, pressure_maps)
 ```
 
-Assuming independance, the gaussian likelihood transforms the MSE into probability with narrow ranges of uncertaintie. So narrow that for long stationary period (i_s=1 and 17), the enterie map is 0.
+Assuming independance, the Gaussian likelihood transforms the MSE into probability with narrow ranges of uncertainties. So narrow that for long stationary period (i_s=1 and 17), the entire map is 0.
 
-This comes from the multiplication of probability assumed in the independence case (see equation above). The underlying assuming of the mulitplication operator is the [conjunction of probabilities](https://en.wikipedia.org/wiki/Logical_conjunction), where aggregating two information is done with the AND operator: $P(A~\text{and}~B) = P(A)\times P(B)$. Only the information content overlaping every datapoint of information is kept. 
+This comes from the multiplication of probability assumed in the independence case (see equation above). The underlying assuming of the multiplication operator is the [conjunction of probabilities](https://en.wikipedia.org/wiki/Logical_conjunction), where aggregating two information is done with the AND operator: $P(A~\text{and}~B) = P(A)\times P(B)$. Only the information content overlapping every datapoint of information is kept. 
 
 ### Quantification of the errors dependance
 
@@ -150,9 +150,9 @@ From this observation, one option would be to construct a covariance matrix base
 
 In the rest of this vignette, we will take a different angle, re-framing the problem differently and exploring other options to compute the likelihood.
 
-In the field of [probability aggreation](https://link.springer.com/article/10.1007/s11004-012-9396-3), the problem of combining sources of information with overlapping/redundant content is frame as finding a pooling operator $F$ such that,
+In the field of [probability aggregation](https://link.springer.com/article/10.1007/s11004-012-9396-3), the problem of combining sources of information with overlapping/redundant content is frame as finding a pooling operator $F$ such that,
 $$p(\textbf{x}\mid \varepsilon[1],\ldots,\varepsilon[n]) \approx F(p(\textbf{x} \mid \varepsilon[1]) ,\ldots,p(\textbf{x} \mid \varepsilon[n])),$$
-which, with our gaussian assumption, we can written,
+which, with our Gaussian assumption, we can written,
 $$ F(f(\varepsilon[1]),\ldots,f(\varepsilon[n]))=F(\boldsymbol{\varepsilon})$$
 
 ### Introduction to Log-linear pooling
@@ -161,7 +161,7 @@ The most popular aggregation function is the log-linear pooling,
 
 $$F(\boldsymbol{\varepsilon}) \propto \prod_{t=1}^n f(\varepsilon[t])^{w_t}$$
 
-This equation also relies on the principle of conjuction of probability, but it uses a weight $w_t$ which is related to the new information brought by each additional $\varepsilon[t]$. Formally, it can be defined by
+This equation also relies on the principle of conjunction of probability, but it uses a weight $w_t$ which is related to the new information brought by each additional $\varepsilon[t]$. Formally, it can be defined by
 $$w_t=\frac{\ln p(\varepsilon[t] \mid \boldsymbol{x},\varepsilon[1],\ldots \varepsilon[t-1])}{\ln p(\varepsilon[t] \mid \boldsymbol{x})}.$$
 @Allard2012a is a great resource to learn more about probability aggregation and log linear pooling.
 
@@ -214,23 +214,23 @@ fun_plot_prob(f_prob, sta, pressure_maps)
 
 ### Validation
 
-Validation of uncertainty estimation is relatively difficult, especially when there are only a few datapoints and we assume that the behaviour of the bird might differ between calibration sites (equipement and retrival) and the rest of its journey. 
+Validation of uncertainty estimation is relatively difficult, especially when there are only a few datapoints and we assume that the behaviour of the bird might differ between calibration sites (equipment and retrival) and the rest of its journey. 
 
 In the figure below, some examples of uncertainty estimate are shown. Ideally, we want the colored area to be small (low uncertainty), but when assessing an uncertainty, we also want the red cross to fall within the colored area. That is, if the red cross is too often outside, our estimator is too confident.
 
-Furthermore, the shape of the uncertainty can be strongly anisotripic (e.g., hoopoe bottom right) making the distance between the most likely point (blue) and true value (red cross) a poor measure of uncertainty. 
+Furthermore, the shape of the uncertainty can be strongly anisotropic (e.g., hoopoe bottom right) making the distance between the most likely point (blue) and true value (red cross) a poor measure of uncertainty. 
 
-![Uncertainty of pressure mismatch (colorscale) for the equipement period shwoing the true equipement sire (red cross) wihtin the probability map estimated and the most likely value](assets/probability-aggregation-map-uncertainty.png){width=100%}
+![Uncertainty of pressure mismatch (colorscale) for the equipment period showing the true equipment sire (red cross) within the probability map estimated and the most likely value](assets/probability-aggregation-map-uncertainty.png){width=100%}
 
-Assessing uncertainty relies on checking that that the red cross is distributed according to each uncertainty shape. A more formal way to quantifiying the uncertainty is of the quantile of the true value $q=p(\boldsymbol{x}\leq \boldsymbol{x}_{true})$, which corresponds to the proability that the variable is less than or equal to the true value. So, if the true value belongs to the distribution, the distribution of its quantile should be uniform.
+Assessing uncertainty relies on checking that that the red cross is distributed according to each uncertainty shape. A more formal way to quantifiying the uncertainty is of the quantile of the true value $q=p(\boldsymbol{x}\leq \boldsymbol{x}_{true})$, which corresponds to the probability that the variable is less than or equal to the true value. So, if the true value belongs to the distribution, the distribution of its quantile should be uniform.
 
 This can be visualize with the empirical cumulative distribution of the quantiles which should fall on the 1:1 line (like a qq-plot). The two extreme cases ($w=1$ and $w=1/n$) show overconfidence (above the line) and  underconfidence (below the line) respectively. Indeed, the distribution of quantile using the $w=1/n$ method shows a lot of quantile values between 0.9-1, which indicates that the true value is within the 90% uncertainty contour (underconfident).
 
 
 ![](assets/probability-aggregation-qq.png){width=100%}
 
-The method chosen ($w=\log(n)/n$) is doing better than both, but is still in general underconfident. Because the calibration the validation is performed with rather long temporal serie (equipement and retrival), one can expect that the labelisation of pressure is better/easier than for other places. Thus, it seems more appropriate to be slightly underconfident while the method is being developed. 
+The method chosen ($w=\log(n)/n$) is doing better than both, but is still in general underconfident. Because the calibration the validation is performed with rather long temporal serie (equipment and retrival), one can expect that the labelisation of pressure is better/easier than for other places. Thus, it seems more appropriate to be slightly underconfident while the method is being developed. 
 
 The covariance aggregation scheme was implemented by computing the covariance matrix of the multi-variate Gaussian distribution. The covariance function was build using the exact on the variogram of each species. This is, in theory, the more correct method, but it looks too overconfident. Thus we didn't use it for now.
 
-Looking forward, calibration is highly dependant on the local topography and the ability of the bird to move up and down. Manual edition/labeling has also a strong impact. 
+Looking forward, calibration is highly dependant on the local topography and the ability of the bird to move up and down. Manual edition/labelling has also a strong impact. 

@@ -2,7 +2,7 @@
 
 In this chapter, we will see how to create a [mathematical graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)) to model the trajectory of the bird [@Nussbaumer2022b]. We will then use this graph to compute three main output: (1) the shortest path (i.e., the most likely trajectory, (2) the probability maps at each stationary period and (3) simulated paths sampled according to their likelihood. 
 
-We called this a _basic_ graph because it does not integrate windspeed, and make assumption on the groundspeed distribution of the bird. The chapte [Wind graph] will explain how we can retrieve wind data and improve the graph model. 
+We called this a _basic_ graph because it does not integrate windspeed, and make assumption on the groundspeed distribution of the bird. The chapter [Wind graph] will explain how we can retrieve wind data and improve the graph model. 
 
 We already pre-processed the light and pressure data data in the chapter [Static map]. Make sure that the data was passing all the check before moving to this chapter
 
@@ -23,10 +23,10 @@ static_prob <- lapply(static_prob, function(raster) {
 
 ## Create the graph 
 
-We create the graph with the function [`graph_create()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_create.html), which perform the following steps: 
+We create the graph with the function `graph_create()`, which perform the following steps: 
 
 1. We only keep the nodes of all locations within the 99% percentile of the static pressure map. (A node is uniquely identify by a latitude, longitude and stationary period).
-2. We only keep the nodes which are within reach of distance of all other nodes based on a average groundspeed of 150km/h. This accounts for the distance of all other possible nodes from the previous stationay period and to the next stationary period. This is computed with the image binary distance function [distmap()](https://rdrr.io/bioc/EBImage/man/distmap.html) from the [EBImage](https://github.com/aoles/EBImage) package. This step allows to eliminate multiple impossible nodes without having to compute all possible transition.
+2. We only keep the nodes which are within reach of distance of all other nodes based on a average groundspeed of 150km/h. This accounts for the distance of all other possible nodes from the previous stationary period and to the next stationary period. This is computed with the image binary distance function [distmap()](https://rdrr.io/bioc/EBImage/man/distmap.html) from the [EBImage](https://github.com/aoles/EBImage) package. This step allows to eliminate multiple impossible nodes without having to compute all possible transition.
 3. We then build the graph based on the filtered nodes and containing the edges requiring an average groundspeed less than 150km/h.
 4. Finally, we trim the graph based on the flow graph constraint, that is, the nodes must be connected to the equipment node and retrieval node. Indeed, after filtering, some nodes might be connected in a single direction (so called dead branch). We thus ensure that each node is on a path that connects the equipment site to the retrieval site. This operation is performed with the [Breadth-first search (BFS) algorithm](https://en.wikipedia.org/wiki/Breadth-first_search).
 
@@ -171,7 +171,7 @@ for (i in seq_len(grl$sz[3])) {
   m <- m %>%
     addCircles(lng = path_sim$lon[, i], lat = path_sim$lat[, i], opacity = .4, weight = 10, color = col[i])
 }
-# m <- m %>% addLegend(position="bottomright", colors = col[1:grl$sz[3]], labels = seq_len(grl$sz[3]), title = "Stationay period", opacity = 1 )
+# m <- m %>% addLegend(position="bottomright", colors = col[1:grl$sz[3]], labels = seq_len(grl$sz[3]), title = "stationary period", opacity = 1 )
 ```
 </details>
 

@@ -1,564 +1,341 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Static map | A User Manual for GeoPressureR</title>
+<meta name="author" content="Raphaël Nussbaumer">
+<meta name="description" content="This chapter covers important pre-processing steps to ensure that modelling the trajectory with a graph is possible and successful. Firstly, we will aligned the maps of pressure and light and...">
+<meta name="generator" content="bookdown 0.28.1 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Static map | A User Manual for GeoPressureR">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://raphaelnussbaumer.com/GeoPressureManual/static-map.html">
+<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<meta property="og:description" content="This chapter covers important pre-processing steps to ensure that modelling the trajectory with a graph is possible and successful. Firstly, we will aligned the maps of pressure and light and...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Static map | A User Manual for GeoPressureR">
+<meta name="twitter:description" content="This chapter covers important pre-processing steps to ensure that modelling the trajectory with a graph is possible and successful. Firstly, we will aligned the maps of pressure and light and...">
+<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.0/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script><script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script><script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script><link href="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.css" rel="stylesheet">
+<script src="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.js"></script><link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet">
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script><link href="libs/fontawesome-4.7.0/font-awesome.min.css" rel="stylesheet">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NJ17NCTPB5"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Static map | A User Manual for GeoPressureR</title>
-  <meta name="description" content="Learn how to use GeoPressureR with the Great Reed Warbler 18LX." />
-  <meta name="generator" content="bookdown 0.28.1 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="Chapter 3 Static map | A User Manual for GeoPressureR" />
-  <meta property="og:type" content="book" />
-  <meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png" />
-  <meta property="og:description" content="Learn how to use GeoPressureR with the Great Reed Warbler 18LX." />
-  <meta name="github-repo" content="rafnuss/GeoPressureManual" />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Static map | A User Manual for GeoPressureR" />
-  
-  <meta name="twitter:description" content="Learn how to use GeoPressureR with the Great Reed Warbler 18LX." />
-  <meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png" />
-
-
-
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  <link rel="shortcut icon" href="assets/geopressuremanual.ico" type="image/x-icon" />
-<link rel="prev" href="light-map.html"/>
-<link rel="next" href="basic-graph.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/proj4-2.6.2/proj4.min.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
-<link href="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.css" rel="stylesheet" />
-<script src="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.js"></script>
-<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
-<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
-<link href="libs/fontawesome-4.7.0/font-awesome.min.css" rel="stylesheet" />
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+      gtag('config', 'G-NJ17NCTPB5');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">A User Manual for GeoPressureR</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
-<ul>
-<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#geolocation-by-pressure"><i class="fa fa-check"></i><b>0.1</b> Geolocation by pressure</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#the-geopressure-suite"><i class="fa fa-check"></i><b>0.2</b> The GeoPressure suite</a></li>
-<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>0.3</b> Installation</a></li>
-</ul></li>
-<li class="chapter" data-level="1" data-path="pressure-map.html"><a href="pressure-map.html"><i class="fa fa-check"></i><b>1</b> Pressure map</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="pressure-map.html"><a href="pressure-map.html#read-geolocator-data"><i class="fa fa-check"></i><b>1.1</b> Read geolocator data</a></li>
-<li class="chapter" data-level="1.2" data-path="pressure-map.html"><a href="pressure-map.html#label-tracks"><i class="fa fa-check"></i><b>1.2</b> Label tracks</a>
-<ul>
-<li class="chapter" data-level="1.2.1" data-path="pressure-map.html"><a href="pressure-map.html#automatic-classification-of-activity"><i class="fa fa-check"></i><b>1.2.1</b> Automatic classification of activity</a></li>
-<li class="chapter" data-level="1.2.2" data-path="pressure-map.html"><a href="pressure-map.html#edit-activity-on-trainset"><i class="fa fa-check"></i><b>1.2.2</b> Edit activity on TRAINSET</a></li>
-</ul></li>
-<li class="chapter" data-level="1.3" data-path="pressure-map.html"><a href="pressure-map.html#identify-stationary-periods"><i class="fa fa-check"></i><b>1.3</b> Identify stationary periods</a></li>
-<li class="chapter" data-level="1.4" data-path="pressure-map.html"><a href="pressure-map.html#computing-mistmatch-maps"><i class="fa fa-check"></i><b>1.4</b> Compute mistmatch maps</a></li>
-<li class="chapter" data-level="1.5" data-path="pressure-map.html"><a href="pressure-map.html#compute-probability-maps"><i class="fa fa-check"></i><b>1.5</b> Compute probability maps</a></li>
-<li class="chapter" data-level="1.6" data-path="pressure-map.html"><a href="pressure-map.html#compute-altitude"><i class="fa fa-check"></i><b>1.6</b> Compute altitude</a></li>
-<li class="chapter" data-level="1.7" data-path="pressure-map.html"><a href="pressure-map.html#compute-pressure-and-altitude-for-the-path"><i class="fa fa-check"></i><b>1.7</b> Compute pressure and altitude for the path</a></li>
-<li class="chapter" data-level="1.8" data-path="pressure-map.html"><a href="pressure-map.html#save"><i class="fa fa-check"></i><b>1.8</b> Save</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="light-map.html"><a href="light-map.html"><i class="fa fa-check"></i><b>2</b> Light map</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="light-map.html"><a href="light-map.html#annotate-twilights"><i class="fa fa-check"></i><b>2.1</b> Annotate twilights</a></li>
-<li class="chapter" data-level="2.2" data-path="light-map.html"><a href="light-map.html#calibrate-zenith-angles"><i class="fa fa-check"></i><b>2.2</b> Calibrate zenith angles</a></li>
-<li class="chapter" data-level="2.3" data-path="light-map.html"><a href="light-map.html#compute-stationary-periods"><i class="fa fa-check"></i><b>2.3</b> Compute stationary periods</a></li>
-<li class="chapter" data-level="2.4" data-path="light-map.html"><a href="light-map.html#compute-probability-map"><i class="fa fa-check"></i><b>2.4</b> Compute probability map</a></li>
-<li class="chapter" data-level="2.5" data-path="light-map.html"><a href="light-map.html#save-1"><i class="fa fa-check"></i><b>2.5</b> Save</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="static-map.html"><a href="static-map.html"><i class="fa fa-check"></i><b>3</b> Static map</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="static-map.html"><a href="static-map.html#combine-pressure-and-light"><i class="fa fa-check"></i><b>3.1</b> Combine pressure and light</a></li>
-<li class="chapter" data-level="3.2" data-path="static-map.html"><a href="static-map.html#check-track-with-geopressureviz"><i class="fa fa-check"></i><b>3.2</b> Check track with GeoPressureViz</a>
-<ul>
-<li class="chapter" data-level="3.2.1" data-path="static-map.html"><a href="static-map.html#navigate-geopressureviz"><i class="fa fa-check"></i><b>3.2.1</b> Navigate GeoPressureViz</a></li>
-<li class="chapter" data-level="3.2.2" data-path="static-map.html"><a href="static-map.html#check-your-data"><i class="fa fa-check"></i><b>3.2.2</b> Check your data</a></li>
-<li class="chapter" data-level="3.2.3" data-path="static-map.html"><a href="static-map.html#run-geopressureviz"><i class="fa fa-check"></i><b>3.2.3</b> Run GeoPressureViz</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="static-map.html"><a href="static-map.html#final-checks"><i class="fa fa-check"></i><b>3.3</b> Final checks</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="static-map.html"><a href="static-map.html#check-1"><i class="fa fa-check"></i><b>3.3.1</b> Check 1</a></li>
-<li class="chapter" data-level="3.3.2" data-path="static-map.html"><a href="static-map.html#check-2"><i class="fa fa-check"></i><b>3.3.2</b> Check 2</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="static-map.html"><a href="static-map.html#save-2"><i class="fa fa-check"></i><b>3.4</b> Save</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="basic-graph.html"><a href="basic-graph.html"><i class="fa fa-check"></i><b>4</b> Basic graph</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="basic-graph.html"><a href="basic-graph.html#create-the-graph"><i class="fa fa-check"></i><b>4.1</b> Create the graph</a></li>
-<li class="chapter" data-level="4.2" data-path="basic-graph.html"><a href="basic-graph.html#compute-the-transition-probability"><i class="fa fa-check"></i><b>4.2</b> Compute the transition probability</a></li>
-<li class="chapter" data-level="4.3" data-path="basic-graph.html"><a href="basic-graph.html#output-1-shortest-path"><i class="fa fa-check"></i><b>4.3</b> Output 1: Shortest path</a></li>
-<li class="chapter" data-level="4.4" data-path="basic-graph.html"><a href="basic-graph.html#output-2-marginal-probability-map"><i class="fa fa-check"></i><b>4.4</b> Output 2: Marginal probability map</a></li>
-<li class="chapter" data-level="4.5" data-path="basic-graph.html"><a href="basic-graph.html#output-3-simulated-paths"><i class="fa fa-check"></i><b>4.5</b> Output 3: Simulated paths</a></li>
-<li class="chapter" data-level="4.6" data-path="basic-graph.html"><a href="basic-graph.html#save-3"><i class="fa fa-check"></i><b>4.6</b> Save</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="wind-graph.html"><a href="wind-graph.html"><i class="fa fa-check"></i><b>5</b> Wind graph</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="wind-graph.html"><a href="wind-graph.html#download-wind-data"><i class="fa fa-check"></i><b>5.1</b> Download wind data</a></li>
-<li class="chapter" data-level="5.2" data-path="wind-graph.html"><a href="wind-graph.html#create-graph"><i class="fa fa-check"></i><b>5.2</b> Create graph</a></li>
-<li class="chapter" data-level="5.3" data-path="wind-graph.html"><a href="wind-graph.html#add-wind-to-graph"><i class="fa fa-check"></i><b>5.3</b> Add wind to graph</a></li>
-<li class="chapter" data-level="5.4" data-path="wind-graph.html"><a href="wind-graph.html#compute-the-transition-probability-1"><i class="fa fa-check"></i><b>5.4</b> Compute the transition probability</a></li>
-<li class="chapter" data-level="5.5" data-path="wind-graph.html"><a href="wind-graph.html#output-1-shortest-path-1"><i class="fa fa-check"></i><b>5.5</b> Output 1: Shortest path</a></li>
-<li class="chapter" data-level="5.6" data-path="wind-graph.html"><a href="wind-graph.html#output-2-marginal-proability-map"><i class="fa fa-check"></i><b>5.6</b> Output 2: Marginal proability map</a></li>
-<li class="chapter" data-level="5.7" data-path="wind-graph.html"><a href="wind-graph.html#output-3-simulated-paths-1"><i class="fa fa-check"></i><b>5.7</b> Output 3: Simulated paths</a></li>
-<li class="chapter" data-level="5.8" data-path="wind-graph.html"><a href="wind-graph.html#geopressureviz"><i class="fa fa-check"></i><b>5.8</b> GeoPressureViz</a></li>
-<li class="chapter" data-level="5.9" data-path="wind-graph.html"><a href="wind-graph.html#compute-flight-energy"><i class="fa fa-check"></i><b>5.9</b> Compute flight energy</a></li>
-<li class="chapter" data-level="5.10" data-path="wind-graph.html"><a href="wind-graph.html#save-4"><i class="fa fa-check"></i><b>5.10</b> Save</a></li>
-</ul></li>
-<li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="labelling-tracks.html"><a href="labelling-tracks.html"><i class="fa fa-check"></i><b>A</b> Labelling tracks</a>
-<ul>
-<li class="chapter" data-level="A.1" data-path="labelling-tracks.html"><a href="labelling-tracks.html#labelling-principles"><i class="fa fa-check"></i><b>A.1</b> Labelling principles</a></li>
-<li class="chapter" data-level="A.2" data-path="labelling-tracks.html"><a href="labelling-tracks.html#introduction-to-trainset"><i class="fa fa-check"></i><b>A.2</b> Introduction to TRAINSET</a></li>
-<li class="chapter" data-level="A.3" data-path="labelling-tracks.html"><a href="labelling-tracks.html#four-tests-to-check-labelling"><i class="fa fa-check"></i><b>A.3</b> Four tests to check labelling</a>
-<ul>
-<li class="chapter" data-level="A.3.1" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-1-duration-of-stationary-periods-and-flights"><i class="fa fa-check"></i><b>A.3.1</b> Test 1: Duration of stationary periods and flights</a></li>
-<li class="chapter" data-level="A.3.2" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-2-pressure-timeseries"><i class="fa fa-check"></i><b>A.3.2</b> Test 2: Pressure timeseries</a></li>
-<li class="chapter" data-level="A.3.3" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-3-pressure-timeseries-match"><i class="fa fa-check"></i><b>A.3.3</b> Test 3: Pressure timeseries match</a></li>
-<li class="chapter" data-level="A.3.4" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-4-histogram-of-pressure-error"><i class="fa fa-check"></i><b>A.3.4</b> Test 4: Histogram of pressure error</a></li>
-</ul></li>
-<li class="chapter" data-level="A.4" data-path="labelling-tracks.html"><a href="labelling-tracks.html#common-challenges-and-tips-to-address-them"><i class="fa fa-check"></i><b>A.4</b> Common challenges and tips to address them</a>
-<ul>
-<li class="chapter" data-level="A.4.1" data-path="labelling-tracks.html"><a href="labelling-tracks.html#outliars-during-flights-due-to-low-bird-activity"><i class="fa fa-check"></i><b>A.4.1</b> Outliars during flights due to low bird activity</a></li>
-<li class="chapter" data-level="A.4.2" data-path="labelling-tracks.html"><a href="labelling-tracks.html#importance-of-zooming-in-before-editing-outliers"><i class="fa fa-check"></i><b>A.4.2</b> Importance of zooming in before editing outliers</a></li>
-<li class="chapter" data-level="A.4.3" data-path="labelling-tracks.html"><a href="labelling-tracks.html#short-stationary-halts-between-flights"><i class="fa fa-check"></i><b>A.4.3</b> Short stationary halts between flights</a></li>
-<li class="chapter" data-level="A.4.4" data-path="labelling-tracks.html"><a href="labelling-tracks.html#mountainous-species"><i class="fa fa-check"></i><b>A.4.4</b> Mountainous species</a></li>
-</ul></li>
-<li class="chapter" data-level="A.5" data-path="labelling-tracks.html"><a href="labelling-tracks.html#examples"><i class="fa fa-check"></i><b>A.5</b> Examples</a></li>
-</ul></li>
-<li class="chapter" data-level="B" data-path="probability-aggregation.html"><a href="probability-aggregation.html"><i class="fa fa-check"></i><b>B</b> Probability aggregation</a>
-<ul>
-<li class="chapter" data-level="B.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#problem-presentation"><i class="fa fa-check"></i><b>B.1</b> Problem presentation</a>
-<ul>
-<li class="chapter" data-level="B.1.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#error-term"><i class="fa fa-check"></i><b>B.1.1</b> Error term</a></li>
-<li class="chapter" data-level="B.1.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#error-term-for-the-great-reed-warbler"><i class="fa fa-check"></i><b>B.1.2</b> Error term for the Great Reed Warbler</a></li>
-</ul></li>
-<li class="chapter" data-level="B.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#gaussian-likelihood-function"><i class="fa fa-check"></i><b>B.2</b> Gaussian likelihood function</a>
-<ul>
-<li class="chapter" data-level="B.2.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#independance-of-errors"><i class="fa fa-check"></i><b>B.2.1</b> Independance of errors</a></li>
-<li class="chapter" data-level="B.2.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#quantification-of-the-errors-dependance"><i class="fa fa-check"></i><b>B.2.2</b> Quantification of the errors dependance</a></li>
-</ul></li>
-<li class="chapter" data-level="B.3" data-path="probability-aggregation.html"><a href="probability-aggregation.html#probability-aggregation-1"><i class="fa fa-check"></i><b>B.3</b> Probability aggregation</a>
-<ul>
-<li class="chapter" data-level="B.3.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#introduction-to-log-linear-pooling"><i class="fa fa-check"></i><b>B.3.1</b> Introduction to Log-linear pooling</a></li>
-<li class="chapter" data-level="B.3.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#log-linear-pooling-w1n"><i class="fa fa-check"></i><b>B.3.2</b> Log-linear pooling, <span class="math inline">\(w=1/n\)</span></a></li>
-<li class="chapter" data-level="B.3.3" data-path="probability-aggregation.html"><a href="probability-aggregation.html#log-linear-pooling-w-lognn"><i class="fa fa-check"></i><b>B.3.3</b> Log-linear pooling, <span class="math inline">\(w = \log(n)/n\)</span></a></li>
-<li class="chapter" data-level="B.3.4" data-path="probability-aggregation.html"><a href="probability-aggregation.html#validation"><i class="fa fa-check"></i><b>B.3.4</b> Validation</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="C" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html"><i class="fa fa-check"></i><b>C</b> Gridded Gibbs sampler</a>
-<ul>
-<li class="chapter" data-level="C.1" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#introduction-and-background"><i class="fa fa-check"></i><b>C.1</b> Introduction and background</a></li>
-<li class="chapter" data-level="C.2" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#stationary-probability"><i class="fa fa-check"></i><b>C.2</b> Stationary probability</a></li>
-<li class="chapter" data-level="C.3" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#movement-model"><i class="fa fa-check"></i><b>C.3</b> Movement model</a></li>
-<li class="chapter" data-level="C.4" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#initialize-the-path"><i class="fa fa-check"></i><b>C.4</b> Initialize the path</a></li>
-<li class="chapter" data-level="C.5" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#run-the-gibbs-sampler"><i class="fa fa-check"></i><b>C.5</b> Run the Gibbs sampler</a></li>
-<li class="chapter" data-level="C.6" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#illustration"><i class="fa fa-check"></i><b>C.6</b> Illustration</a></li>
-</ul></li>
-<li class="chapter" data-level="D" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>D</b> Resources</a>
-<ul>
-<li class="chapter" data-level="D.1" data-path="resources.html"><a href="resources.html#publications"><i class="fa fa-check"></i><b>D.1</b> Publications</a></li>
-<li class="chapter" data-level="D.2" data-path="resources.html"><a href="resources.html#presentations"><i class="fa fa-check"></i><b>D.2</b> Presentations</a></li>
-<li class="chapter" data-level="D.3" data-path="resources.html"><a href="resources.html#projects-using-geopressurer"><i class="fa fa-check"></i><b>D.3</b> Projects using <code>GeoPressureR</code></a></li>
-</ul></li>
-<li class="divider"></li>
-<li><a href="https://github.com/Rafnuss/GeoPressureTemplate">Ready to start your own study?</a></li>
-
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">A User Manual for GeoPressureR</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A User Manual for GeoPressureR</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Introduction</a></li>
+<li><a class="" href="pressure-map.html"><span class="header-section-number">1</span> Pressure map</a></li>
+<li><a class="" href="light-map.html"><span class="header-section-number">2</span> Light map</a></li>
+<li><a class="active" href="static-map.html"><span class="header-section-number">3</span> Static map</a></li>
+<li><a class="" href="basic-graph.html"><span class="header-section-number">4</span> Basic graph</a></li>
+<li><a class="" href="wind-graph.html"><span class="header-section-number">5</span> Wind graph</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="labelling-tracks.html"><span class="header-section-number">A</span> Labelling tracks</a></li>
+<li><a class="" href="probability-aggregation.html"><span class="header-section-number">B</span> Probability aggregation</a></li>
+<li><a class="" href="gridded-gibbs-sampler.html"><span class="header-section-number">C</span> Gridded Gibbs sampler</a></li>
+<li><a class="" href="resources.html"><span class="header-section-number">D</span> Resources</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/Rafnuss/GeoPressureManual/">View book source <i class="fab fa-github"></i></a></p>
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="static-map" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Static map<a href="static-map.html#static-map" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="static-map" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Static map<a class="anchor" aria-label="anchor" href="#static-map"><i class="fas fa-link"></i></a>
+</h1>
 <p>This chapter covers important pre-processing steps to ensure that modelling the trajectory with a graph is possible and successful. Firstly, we will aligned the maps of pressure and light and create a <code>static_prob</code> variable containing all the information necessary for modeling the trajectory (incl. flight info).</p>
-<p>But before moving too quickly, we need to carefully check that pressure, light and flight duration data allow for a coherent trajectory. It is possible (even probable) that some manual editing of the pressure data labeling will be required, especially for short stopovers.</p>
-<div id="combine-pressure-and-light" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Combine pressure and light<a href="static-map.html#combine-pressure-and-light" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>But before moving too quickly, we need to carefully check that pressure, light and flight duration data allow for a coherent trajectory. It is possible (even probable) that some manual editing of the pressure data labelling will be required, especially for short stopovers.</p>
+<div id="combine-pressure-and-light" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Combine pressure and light<a class="anchor" aria-label="anchor" href="#combine-pressure-and-light"><i class="fas fa-link"></i></a>
+</h2>
 <p>Start by loading the data computed in <a href="light-map.html#light-map">Light map</a> and <a href="pressure-map.html#pressure-map">Pressure map</a>.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="static-map.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/1_pressure/18LX_pressure_prob.Rdata&quot;</span>)</span>
-<span id="cb41-2"><a href="static-map.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/2_light/18LX_light_prob.Rdata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/1_pressure/18LX_pressure_prob.Rdata"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/2_light/18LX_light_prob.Rdata"</span><span class="op">)</span></span></code></pre></div>
 <p>We first need to retrieve the pressure and light data for the same stationary period.</p>
 <p>When running this code for the first time, it is recommended to start by keeping only long stationary periods (e.g. <code>thr_sta_dur=5\*24</code> hours), and when all the check below are passing, you can reduce this threshold to zero.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="static-map.html#cb42-1" aria-hidden="true" tabindex="-1"></a>thr_sta_dur <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># in hours</span></span>
-<span id="cb42-2"><a href="static-map.html#cb42-2" aria-hidden="true" tabindex="-1"></a>sta_pres <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(pressure_prob, <span class="cf">function</span>(x) raster<span class="sc">::</span><span class="fu">metadata</span>(x)<span class="sc">$</span>sta_id))</span>
-<span id="cb42-3"><a href="static-map.html#cb42-3" aria-hidden="true" tabindex="-1"></a>sta_light <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(light_prob, <span class="cf">function</span>(x) raster<span class="sc">::</span><span class="fu">metadata</span>(x)<span class="sc">$</span>sta_id))</span>
-<span id="cb42-4"><a href="static-map.html#cb42-4" aria-hidden="true" tabindex="-1"></a>sta_thres <span class="ot">&lt;-</span> pam<span class="sc">$</span>sta<span class="sc">$</span>sta_id[<span class="fu">difftime</span>(pam<span class="sc">$</span>sta<span class="sc">$</span>end, pam<span class="sc">$</span>sta<span class="sc">$</span>start, <span class="at">units =</span> <span class="st">&quot;hours&quot;</span>) <span class="sc">&gt;</span> thr_sta_dur]</span>
-<span id="cb42-5"><a href="static-map.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the sta_id present on all three data sources</span></span>
-<span id="cb42-6"><a href="static-map.html#cb42-6" aria-hidden="true" tabindex="-1"></a>sta_id_keep <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">intersect</span>(sta_pres, sta_light), sta_thres)</span>
-<span id="cb42-7"><a href="static-map.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter pressure and light map</span></span>
-<span id="cb42-8"><a href="static-map.html#cb42-8" aria-hidden="true" tabindex="-1"></a>pressure_prob <span class="ot">&lt;-</span> pressure_prob[sta_pres <span class="sc">%in%</span> sta_id_keep]</span>
-<span id="cb42-9"><a href="static-map.html#cb42-9" aria-hidden="true" tabindex="-1"></a>light_prob <span class="ot">&lt;-</span> light_prob[sta_light <span class="sc">%in%</span> sta_id_keep]</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">thr_sta_dur</span> <span class="op">&lt;-</span> <span class="fl">0</span> <span class="co"># in hours</span></span>
+<span><span class="va">sta_pres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">pressure_prob</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/metadata.html">metadata</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">sta_id</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sta_light</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">light_prob</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/metadata.html">metadata</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">sta_id</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sta_thres</span> <span class="op">&lt;-</span> <span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">sta_id</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html">difftime</a></span><span class="op">(</span><span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">end</span>, <span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">start</span>, units <span class="op">=</span> <span class="st">"hours"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">thr_sta_dur</span><span class="op">]</span></span>
+<span><span class="co"># Get the sta_id present on all three data sources</span></span>
+<span><span class="va">sta_id_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span><span class="op">(</span><span class="va">sta_pres</span>, <span class="va">sta_light</span><span class="op">)</span>, <span class="va">sta_thres</span><span class="op">)</span></span>
+<span><span class="co"># Filter pressure and light map</span></span>
+<span><span class="va">pressure_prob</span> <span class="op">&lt;-</span> <span class="va">pressure_prob</span><span class="op">[</span><span class="va">sta_pres</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sta_id_keep</span><span class="op">]</span></span>
+<span><span class="va">light_prob</span> <span class="op">&lt;-</span> <span class="va">light_prob</span><span class="op">[</span><span class="va">sta_light</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sta_id_keep</span><span class="op">]</span></span></code></pre></div>
 <p>We then need to keep all the flights between consecutive stationary period separate so that we can estimate the wind support correctly.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="static-map.html#cb43-1" aria-hidden="true" tabindex="-1"></a>flight <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb43-2"><a href="static-map.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i_f <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">length</span>(sta_id_keep) <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb43-3"><a href="static-map.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  from_sta_id <span class="ot">&lt;-</span> sta_id_keep[i_f]</span>
-<span id="cb43-4"><a href="static-map.html#cb43-4" aria-hidden="true" tabindex="-1"></a>  to_sta_id <span class="ot">&lt;-</span> sta_id_keep[i_f <span class="sc">+</span> <span class="dv">1</span>]</span>
-<span id="cb43-5"><a href="static-map.html#cb43-5" aria-hidden="true" tabindex="-1"></a>  flight[[i_f]] <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb43-6"><a href="static-map.html#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">start =</span> pam<span class="sc">$</span>sta<span class="sc">$</span>end[<span class="fu">seq</span>(from_sta_id, to_sta_id <span class="sc">-</span> <span class="dv">1</span>)],</span>
-<span id="cb43-7"><a href="static-map.html#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">end =</span> pam<span class="sc">$</span>sta<span class="sc">$</span>start[<span class="fu">seq</span>(from_sta_id <span class="sc">+</span> <span class="dv">1</span>, to_sta_id)],</span>
-<span id="cb43-8"><a href="static-map.html#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sta_id =</span> <span class="fu">seq</span>(from_sta_id, to_sta_id <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb43-9"><a href="static-map.html#cb43-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb43-10"><a href="static-map.html#cb43-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb43-11"><a href="static-map.html#cb43-11" aria-hidden="true" tabindex="-1"></a>flight[[i_f <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">list</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">flight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i_f</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">sta_id_keep</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">from_sta_id</span> <span class="op">&lt;-</span> <span class="va">sta_id_keep</span><span class="op">[</span><span class="va">i_f</span><span class="op">]</span></span>
+<span>  <span class="va">to_sta_id</span> <span class="op">&lt;-</span> <span class="va">sta_id_keep</span><span class="op">[</span><span class="va">i_f</span> <span class="op">+</span> <span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">flight</span><span class="op">[[</span><span class="va">i_f</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    start <span class="op">=</span> <span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">end</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">from_sta_id</span>, <span class="va">to_sta_id</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>    end <span class="op">=</span> <span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">start</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">from_sta_id</span> <span class="op">+</span> <span class="fl">1</span>, <span class="va">to_sta_id</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>    sta_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">from_sta_id</span>, <span class="va">to_sta_id</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">flight</span><span class="op">[[</span><span class="va">i_f</span> <span class="op">+</span> <span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>We compute the static probability with the product of light and pressure probability maps, and add the flight duration in the metadata. <code>static_prob</code> is the consolidate variable containing all the information necessary to run the graph functions.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="static-map.html#cb44-1" aria-hidden="true" tabindex="-1"></a>static_prob <span class="ot">&lt;-</span> <span class="fu">mapply</span>(<span class="cf">function</span>(light, pressure, flight) {</span>
-<span id="cb44-2"><a href="static-map.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># define static prob as the product of light and pressure prob</span></span>
-<span id="cb44-3"><a href="static-map.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  static_prob <span class="ot">&lt;-</span> light <span class="sc">*</span> pressure</span>
-<span id="cb44-4"><a href="static-map.html#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-5"><a href="static-map.html#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># replace na by zero</span></span>
-<span id="cb44-6"><a href="static-map.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tmp &lt;- values(static_prob)</span></span>
-<span id="cb44-7"><a href="static-map.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tmp[is.na(tmp)] &lt;- 0</span></span>
-<span id="cb44-8"><a href="static-map.html#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># values(static_prob) &lt;- tmp</span></span>
-<span id="cb44-9"><a href="static-map.html#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-10"><a href="static-map.html#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">metadata</span>(static_prob) <span class="ot">&lt;-</span> <span class="fu">metadata</span>(pressure)</span>
-<span id="cb44-11"><a href="static-map.html#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">metadata</span>(static_prob)<span class="sc">$</span>flight <span class="ot">&lt;-</span> flight</span>
-<span id="cb44-12"><a href="static-map.html#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-13"><a href="static-map.html#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(static_prob)</span>
-<span id="cb44-14"><a href="static-map.html#cb44-14" aria-hidden="true" tabindex="-1"></a>}, light_prob, pressure_prob, flight)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">static_prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html">mapply</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">light</span>, <span class="va">pressure</span>, <span class="va">flight</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># define static prob as the product of light and pressure prob</span></span>
+<span>  <span class="va">static_prob</span> <span class="op">&lt;-</span> <span class="va">light</span> <span class="op">*</span> <span class="va">pressure</span></span>
+<span></span>
+<span>  <span class="co"># replace na by zero</span></span>
+<span>  <span class="co"># tmp &lt;- values(static_prob)</span></span>
+<span>  <span class="co"># tmp[is.na(tmp)] &lt;- 0</span></span>
+<span>  <span class="co"># values(static_prob) &lt;- tmp</span></span>
+<span></span>
+<span>  <span class="fu">metadata</span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">metadata</span><span class="op">(</span><span class="va">pressure</span><span class="op">)</span></span>
+<span>  <span class="fu">metadata</span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span><span class="op">$</span><span class="va">flight</span> <span class="op">&lt;-</span> <span class="va">flight</span></span>
+<span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span></span>
+<span><span class="op">}</span>, <span class="va">light_prob</span>, <span class="va">pressure_prob</span>, <span class="va">flight</span><span class="op">)</span></span></code></pre></div>
 <p>We overwrite the probability of the first and last stationary periods with the known location of the equipment/retrieval sites.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="static-map.html#cb45-1" aria-hidden="true" tabindex="-1"></a>lon_calib <span class="ot">&lt;-</span> <span class="fl">17.05</span></span>
-<span id="cb45-2"><a href="static-map.html#cb45-2" aria-hidden="true" tabindex="-1"></a>lat_calib <span class="ot">&lt;-</span> <span class="fl">48.9</span></span>
-<span id="cb45-3"><a href="static-map.html#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="static-map.html#cb45-4" aria-hidden="true" tabindex="-1"></a>lat <span class="ot">&lt;-</span> <span class="fu">seq</span>(raster<span class="sc">::</span><span class="fu">ymax</span>(static_prob[[<span class="dv">1</span>]]), raster<span class="sc">::</span><span class="fu">ymin</span>(static_prob[[<span class="dv">1</span>]]), <span class="at">length.out =</span> <span class="fu">nrow</span>(static_prob[[<span class="dv">1</span>]]) <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb45-5"><a href="static-map.html#cb45-5" aria-hidden="true" tabindex="-1"></a>lat <span class="ot">&lt;-</span> lat[<span class="fu">seq_len</span>(<span class="fu">length</span>(lat) <span class="sc">-</span> <span class="dv">1</span>)] <span class="sc">+</span> <span class="fu">diff</span>(lat[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]) <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb45-6"><a href="static-map.html#cb45-6" aria-hidden="true" tabindex="-1"></a>lon <span class="ot">&lt;-</span> <span class="fu">seq</span>(raster<span class="sc">::</span><span class="fu">xmin</span>(static_prob[[<span class="dv">1</span>]]), raster<span class="sc">::</span><span class="fu">xmax</span>(static_prob[[<span class="dv">1</span>]]), <span class="at">length.out =</span> <span class="fu">ncol</span>(static_prob[[<span class="dv">1</span>]]) <span class="sc">+</span> <span class="dv">1</span>)</span>
-<span id="cb45-7"><a href="static-map.html#cb45-7" aria-hidden="true" tabindex="-1"></a>lon <span class="ot">&lt;-</span> lon[<span class="fu">seq_len</span>(<span class="fu">length</span>(lon) <span class="sc">-</span> <span class="dv">1</span>)] <span class="sc">+</span> <span class="fu">diff</span>(lon[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]) <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb45-8"><a href="static-map.html#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-9"><a href="static-map.html#cb45-9" aria-hidden="true" tabindex="-1"></a>lon_calib_id <span class="ot">&lt;-</span> <span class="fu">which.min</span>(<span class="fu">abs</span>(lon_calib <span class="sc">-</span> lon))</span>
-<span id="cb45-10"><a href="static-map.html#cb45-10" aria-hidden="true" tabindex="-1"></a>lat_calib_id <span class="ot">&lt;-</span> <span class="fu">which.min</span>(<span class="fu">abs</span>(lat_calib <span class="sc">-</span> lat))</span>
-<span id="cb45-11"><a href="static-map.html#cb45-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-12"><a href="static-map.html#cb45-12" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(static_prob[[<span class="dv">1</span>]])</span>
-<span id="cb45-13"><a href="static-map.html#cb45-13" aria-hidden="true" tabindex="-1"></a>tmp[<span class="sc">!</span><span class="fu">is.na</span>(tmp)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb45-14"><a href="static-map.html#cb45-14" aria-hidden="true" tabindex="-1"></a>tmp[lat_calib_id, lon_calib_id] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb45-15"><a href="static-map.html#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(static_prob[[<span class="dv">1</span>]]) <span class="ot">&lt;-</span> tmp</span>
-<span id="cb45-16"><a href="static-map.html#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-17"><a href="static-map.html#cb45-17" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(static_prob[[<span class="fu">length</span>(static_prob)]])</span>
-<span id="cb45-18"><a href="static-map.html#cb45-18" aria-hidden="true" tabindex="-1"></a>tmp[<span class="sc">!</span><span class="fu">is.na</span>(tmp)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb45-19"><a href="static-map.html#cb45-19" aria-hidden="true" tabindex="-1"></a>tmp[lat_calib_id, lon_calib_id] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb45-20"><a href="static-map.html#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(static_prob[[<span class="fu">length</span>(static_prob)]]) <span class="ot">&lt;-</span> tmp</span></code></pre></div>
-<p>Finally, we can retrive the pressure and altitude from the most likely postion of the combined map of pressure and light.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="static-map.html#cb46-1" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> <span class="fu">geopressure_map2path</span>(static_prob)</span>
-<span id="cb46-2"><a href="static-map.html#cb46-2" aria-hidden="true" tabindex="-1"></a>static_timeserie <span class="ot">&lt;-</span> <span class="fu">geopressure_ts_path</span>(path, pam<span class="sc">$</span>pressure)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lon_calib</span> <span class="op">&lt;-</span> <span class="fl">17.05</span></span>
+<span><span class="va">lat_calib</span> <span class="op">&lt;-</span> <span class="fl">48.9</span></span>
+<span></span>
+<span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/xmin.html">ymax</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/xmin.html">ymin</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="va">lat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">lat</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">lat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/xmin.html">xmin</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/xmin.html">xmax</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="va">lon</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">lon</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">lon</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span></span>
+<span><span class="va">lon_calib_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">lon_calib</span> <span class="op">-</span> <span class="va">lon</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lat_calib_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">lat_calib</span> <span class="op">-</span> <span class="va">lat</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">tmp</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">tmp</span><span class="op">[</span><span class="va">lat_calib_id</span>, <span class="va">lon_calib_id</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="fu">values</span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">tmp</span></span>
+<span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">tmp</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">tmp</span><span class="op">[</span><span class="va">lat_calib_id</span>, <span class="va">lon_calib_id</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="fu">values</span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">tmp</span></span></code></pre></div>
+<p>Finally, we can retrieve the pressure and altitude from the most likely position of the combined map of pressure and light.</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_map2path.html">geopressure_map2path</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span></span>
+<span><span class="va">static_timeserie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts_path.html">geopressure_ts_path</a></span><span class="op">(</span><span class="va">path</span>, <span class="va">pam</span><span class="op">$</span><span class="va">pressure</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="check-track-with-geopressureviz" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Check track with GeoPressureViz<a href="static-map.html#check-track-with-geopressureviz" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="check-track-with-geopressureviz" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Check track with GeoPressureViz<a class="anchor" aria-label="anchor" href="#check-track-with-geopressureviz"><i class="fas fa-link"></i></a>
+</h2>
 <p>Now that we have combine pressure and light, we need to verify that the data is coherent. <strong>This is a really important step, so bear with me here</strong>.</p>
 <p>In <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, we had already checked that the pressure timeseries measured by the geolocator are consistent with a least one location on the map. But we didn’t checked that these position are (1) coherent with light data, and (2) within reach of one other considering the flight duration and realistic bird flight speed.</p>
 <p>To help you with this task, we have developed a shiny app <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move.</p>
-<p><a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" title="GeoPressureViz Demo" /></a><em>Screenshot of the <a href="https://rafnuss.shinyapps.io/GeoPressureViz/">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler 18LX, based on (1) the pressure and light match (map colorscale and timeserie) and (2) potential flight distances from previous and next stationary period (circles).</em></p>
-<div id="navigate-geopressureviz" class="section level3 hasAnchor" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Navigate GeoPressureViz<a href="static-map.html#navigate-geopressureviz" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" title="GeoPressureViz Demo"></a><em>Screenshot of the <a href="https://rafnuss.shinyapps.io/GeoPressureViz/">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler 18LX, based on (1) the pressure and light match (map colorscale and timeserie) and (2) potential flight distances from previous and next stationary period (circles).</em></p>
+<div id="navigate-geopressureviz" class="section level3" number="3.2.1">
+<h3>
+<span class="header-section-number">3.2.1</span> Navigate GeoPressureViz<a class="anchor" aria-label="anchor" href="#navigate-geopressureviz"><i class="fas fa-link"></i></a>
+</h3>
 <ol style="list-style-type: decimal">
 <li><p>Open <a href="https://rafnuss.shinyapps.io/GeoPressureViz/">the demo for 18LX</a></p></li>
-<li><p>The viewer has three panels:</p>
+<li>
+<p>The viewer has three panels:</p>
 <ol style="list-style-type: decimal">
 <li><p>The maps showing your the trajectory of the bird. The size of the circles indicates the duration of the stopover (hover over them to get more info).</p></li>
-<li><p>The bottom panel showing the pressure timeserie. The grey line is the raw day (<code>pam$pressure</code>), the black dots are pressure labeled as outliar, colored lines are the normalized pressure at the best match (i.e., <code>static_timeserie$pressure0</code>) and the color match the map dots.</p></li>
+<li><p>The bottom panel showing the pressure timeserie. The grey line is the raw day (<code>pam$pressure</code>), the black dots are pressure labeled as outlier, colored lines are the normalized pressure at the best match (i.e., <code>static_timeserie$pressure0</code>) and the color match the map dots.</p></li>
 <li><p>The side panel provides key information and helps you navigates the app</p></li>
-</ol></li>
+</ol>
+</li>
 <li><p>A central parameter to play with carefully is the “Minimum duration”. This will filter the entire dataset and replot the map and figure to select only stopover of such duration or higher. Try changing this value once and wait a bit for the figure to update. As shorter stationary period are less certain, their position is often wrong. That’s ok for now.</p></li>
-<li><p>Toogle the “Full Track” button to move to the stationary period view. The side panel will change and provides you with more options.</p></li>
-<li><p>Change the stationary period with the drop down or previous/next button. Exept from the first sta., three dots, two lines and two circle will appears on the map, and the pressure timeserie will update to zoom exactly on this stationary period. The color of the timeserie informs you on which dots on the map is the current stationary period, the two others begin the previous and next one.</p></li>
-<li><p>The circles indicates the distance from and to the previous and last stationay period location based on the speed slider on the side pannel (default if 40km/h). You can edit the speed to see how this impact the distances.</p></li>
+<li><p>Toggle the “Full Track” button to move to the stationary period view. The side panel will change and provides you with more options.</p></li>
+<li><p>Change the stationary period with the drop down or previous/next button. Except from the first sta., three dots, two lines and two circle will appears on the map, and the pressure timeserie will update to zoom exactly on this stationary period. The color of the timeserie informs you on which dots on the map is the current stationary period, the two others begin the previous and next one.</p></li>
+<li><p>The circles indicates the distance from and to the previous and last stationary period location based on the speed slider on the side panel (default if 40km/h). You can edit the speed to see how this impact the distances.</p></li>
 <li><p>You can choose to display the probabily map of pressure (<code>pressure_prob</code>) , light (<code>light_prob</code>) or combines (<code>static_prob</code>).</p></li>
 <li><p>Because some location are completely off, it is helpful to change their location to check the coherence of distance with the next/previous stationary period. Use the button “Start Editing” to do that. Every time you will click on the map, it will update the position. Once you’re happy with the position, you can click again the button to disable the editing mode.</p></li>
 <li><p>Finally, you can update the pressure timeserie with the new position that you’ve edited with the button “Query pressure”. This runs pressure_ts on the background, so it will be slow (especially for long stationary period). This feature is quite unstable, so use carefully, and be aware that you might have to restart the app if it crashes.</p></li>
 </ol>
 </div>
-<div id="check-your-data" class="section level3 hasAnchor" number="3.2.2">
-<h3><span class="header-section-number">3.2.2</span> Check your data<a href="static-map.html#check-your-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="check-your-data" class="section level3" number="3.2.2">
+<h3>
+<span class="header-section-number">3.2.2</span> Check your data<a class="anchor" aria-label="anchor" href="#check-your-data"><i class="fas fa-link"></i></a>
+</h3>
 <p>With GeoPressureViz, we want to check that the probability map is coherent with the flight distance from the previous/next location.</p>
 <p>I suggest starting by selecting only long stopovers (24-72hours depending on your application), as this will help to draw out the general trajectory followed by the bird, and only later adding the shorter stopovers which could raise more confusion (the best match of pressure is often completely off).</p>
-<p>Following the same recommendation than in <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, you want the non-outliar pressure of each stationary period to match a single elevation timeserie (bottom panel). You can check on the map that the pressure location seem coherent by selecting only “pressure” in the probability map display. Usually, it’s pretty obvious when there is an issue on the map.</p>
-<p>So, to correct any issue, go back to trainset and edit (1) labeling of activity to split or combine stationary periods and (2) labeling the pressure timeserie to exclude certain datapoints from the match. The good match of the timeserie is essential and will require several iteration.</p>
+<p>Following the same recommendation than in <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, you want the non-outlier pressure of each stationary period to match a single elevation timeserie (bottom panel). You can check on the map that the pressure location seem coherent by selecting only “pressure” in the probability map display. Usually, it’s pretty obvious when there is an issue on the map.</p>
+<p>So, to correct any issue, go back to trainset and edit (1) labelling of activity to split or combine stationary periods and (2) labelling the pressure timeserie to exclude certain datapoints from the match. The good match of the timeserie is essential and will require several iteration.</p>
 <p>Some additional notes:
 - The distance is computed based on an assumed average groundspeed. Birds can fly with a groundspeed up to 120-150 km/h (with wind support) although their usual average is around 40km/h.
 - The default position of the bird in GeoPressureViz is based on the most likely position from the static probability map. This is (usually) not the correct location.
 - Bird tend to flight directly to their main destination. Most detour are artifact, or you really need a long stationary period with a good match of pressure.
 - The most regular issue I faced is a small vertical movement of the bird during a 2-8 days stopover. Shorter stopover are usually easy as the bird doesn’t move much but each species is different.</p>
 </div>
-<div id="run-geopressureviz" class="section level3 hasAnchor" number="3.2.3">
-<h3><span class="header-section-number">3.2.3</span> Run GeoPressureViz<a href="static-map.html#run-geopressureviz" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="run-geopressureviz" class="section level3" number="3.2.3">
+<h3>
+<span class="header-section-number">3.2.3</span> Run GeoPressureViz<a class="anchor" aria-label="anchor" href="#run-geopressureviz"><i class="fas fa-link"></i></a>
+</h3>
 <p>To run the visualization, you will need to save the data as <code>~/geopressureviz.RData</code> (I cannot find a good way to pass variable to a shiny app instance, <a href="https://github.com/Rafnuss/GeoPressureR/issues/14">let me know if you have a suggestion</a>).</p>
 <p>The minimum information needed is <code>pam</code> and <code>static_prob</code>, but to see the difference between light and pressure, you can also add <code>light_prob</code> and <code>pressure_prob</code>. To see the match of pressure timeserie in the bottom panel, add <code>pressure_timeserie</code>.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="static-map.html#cb47-1" aria-hidden="true" tabindex="-1"></a>geopressureviz <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb47-2"><a href="static-map.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pam =</span> pam,</span>
-<span id="cb47-3"><a href="static-map.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">static_prob =</span> static_prob,</span>
-<span id="cb47-4"><a href="static-map.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pressure_prob =</span> pressure_prob,</span>
-<span id="cb47-5"><a href="static-map.html#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">light_prob =</span> light_prob,</span>
-<span id="cb47-6"><a href="static-map.html#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pressure_timeserie =</span> static_timeserie</span>
-<span id="cb47-7"><a href="static-map.html#cb47-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb47-8"><a href="static-map.html#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(geopressureviz, <span class="at">file =</span> <span class="st">&quot;~/geopressureviz.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">geopressureviz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  pam <span class="op">=</span> <span class="va">pam</span>,</span>
+<span>  static_prob <span class="op">=</span> <span class="va">static_prob</span>,</span>
+<span>  pressure_prob <span class="op">=</span> <span class="va">pressure_prob</span>,</span>
+<span>  light_prob <span class="op">=</span> <span class="va">light_prob</span>,</span>
+<span>  pressure_timeserie <span class="op">=</span> <span class="va">static_timeserie</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">geopressureviz</span>, file <span class="op">=</span> <span class="st">"~/geopressureviz.RData"</span><span class="op">)</span></span></code></pre></div>
 <p>Run the app in the browser for best view with</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="static-map.html#cb48-1" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">runApp</span>(<span class="fu">system.file</span>(<span class="st">&quot;geopressureviz&quot;</span>, <span class="at">package =</span> <span class="st">&quot;GeoPressureR&quot;</span>), <span class="at">launch.browser =</span> <span class="fu">getOption</span>(<span class="st">&quot;browser&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"geopressureviz"</span>, package <span class="op">=</span> <span class="st">"GeoPressureR"</span><span class="op">)</span>, launch.browser <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span><span class="op">(</span><span class="st">"browser"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="final-checks" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Final checks<a href="static-map.html#final-checks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>These checks are performed when creating the graph <a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_create.html"><code>graph_create()</code></a>, but for pedagogical reason, I thought it would be better to introduce them step by step here as they will also help you to get a better sense of the specific movement/trajectory of the bird you are modeling.</p>
-<div id="check-1" class="section level3 hasAnchor" number="3.3.1">
-<h3><span class="header-section-number">3.3.1</span> Check 1<a href="static-map.html#check-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="final-checks" class="section level2" number="3.3">
+<h2>
+<span class="header-section-number">3.3</span> Final checks<a class="anchor" aria-label="anchor" href="#final-checks"><i class="fas fa-link"></i></a>
+</h2>
+<p>These checks are performed when creating the graph <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_create.html">graph_create()</a></code>, but for pedagogical reason, I thought it would be better to introduce them step by step here as they will also help you to get a better sense of the specific movement/trajectory of the bird you are modeling.</p>
+<div id="check-1" class="section level3" number="3.3.1">
+<h3>
+<span class="header-section-number">3.3.1</span> Check 1<a class="anchor" aria-label="anchor" href="#check-1"><i class="fas fa-link"></i></a>
+</h3>
 <p>A first and easy check is that there be at least one location with a probability greater than 1 for each stationary period.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="static-map.html#cb49-1" aria-hidden="true" tabindex="-1"></a>static_prob_n <span class="ot">&lt;-</span> <span class="fu">lapply</span>(static_prob, <span class="cf">function</span>(x) {</span>
-<span id="cb49-2"><a href="static-map.html#cb49-2" aria-hidden="true" tabindex="-1"></a>  probt <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">as.matrix</span>(x)</span>
-<span id="cb49-3"><a href="static-map.html#cb49-3" aria-hidden="true" tabindex="-1"></a>  probt[<span class="fu">is.na</span>(probt)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb49-4"><a href="static-map.html#cb49-4" aria-hidden="true" tabindex="-1"></a>  probt <span class="sc">/</span> <span class="fu">sum</span>(probt, <span class="at">na.rm =</span> T)</span>
-<span id="cb49-5"><a href="static-map.html#cb49-5" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb49-6"><a href="static-map.html#cb49-6" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(static_prob_n, sum)) <span class="sc">==</span> <span class="dv">0</span></span>
-<span id="cb49-7"><a href="static-map.html#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(tmp)) {</span>
-<span id="cb49-8"><a href="static-map.html#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">warning</span>(<span class="fu">paste0</span>(</span>
-<span id="cb49-9"><a href="static-map.html#cb49-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;The `static_prob` provided has a probability map equal to &quot;</span>,</span>
-<span id="cb49-10"><a href="static-map.html#cb49-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;zero for the stationay period: &quot;</span>, <span class="fu">which</span>(tmp)</span>
-<span id="cb49-11"><a href="static-map.html#cb49-11" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb49-12"><a href="static-map.html#cb49-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">static_prob_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">static_prob</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">probt</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">probt</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">probt</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span>  <span class="va">probt</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">probt</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">static_prob_n</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span></span>
+<span>    <span class="st">"The `static_prob` provided has a probability map equal to "</span>,</span>
+<span>    <span class="st">"zero for the stationary period: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 </div>
-<div id="check-2" class="section level3 hasAnchor" number="3.3.2">
-<h3><span class="header-section-number">3.3.2</span> Check 2<a href="static-map.html#check-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="check-2" class="section level3" number="3.3.2">
+<h3>
+<span class="header-section-number">3.3.2</span> Check 2<a class="anchor" aria-label="anchor" href="#check-2"><i class="fas fa-link"></i></a>
+</h3>
 <p>Secondly, we check that there always be at least one possible transition from one stationary period to the next.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="static-map.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i_s <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">length</span>(static_prob) <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb50-2"><a href="static-map.html#cb50-2" aria-hidden="true" tabindex="-1"></a>  cur <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(static_prob[[i_s]]) <span class="sc">&gt;</span> <span class="dv">0</span></span>
-<span id="cb50-3"><a href="static-map.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  cur[<span class="fu">is.na</span>(cur)] <span class="ot">&lt;-</span> F</span>
-<span id="cb50-4"><a href="static-map.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  nex <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(static_prob[[i_s <span class="sc">+</span> <span class="dv">1</span>]]) <span class="sc">&gt;</span> <span class="dv">0</span></span>
-<span id="cb50-5"><a href="static-map.html#cb50-5" aria-hidden="true" tabindex="-1"></a>  nex[<span class="fu">is.na</span>(nex)] <span class="ot">&lt;-</span> F</span>
-<span id="cb50-6"><a href="static-map.html#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-7"><a href="static-map.html#cb50-7" aria-hidden="true" tabindex="-1"></a>  mtf <span class="ot">&lt;-</span> <span class="fu">metadata</span>(static_prob[[i_s]])</span>
-<span id="cb50-8"><a href="static-map.html#cb50-8" aria-hidden="true" tabindex="-1"></a>  flight_duration <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sum</span>(<span class="fu">difftime</span>(mtf<span class="sc">$</span>flight<span class="sc">$</span>end, mtf<span class="sc">$</span>flight<span class="sc">$</span>start, <span class="at">unit =</span> <span class="st">&quot;hours&quot;</span>))) <span class="co"># hours</span></span>
-<span id="cb50-9"><a href="static-map.html#cb50-9" aria-hidden="true" tabindex="-1"></a>  resolution <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">res</span>(static_prob[[<span class="dv">1</span>]])) <span class="sc">*</span> <span class="dv">111</span> <span class="co"># assuming 1°= 111km</span></span>
-<span id="cb50-10"><a href="static-map.html#cb50-10" aria-hidden="true" tabindex="-1"></a>  thr_gs <span class="ot">&lt;-</span> <span class="dv">150</span> <span class="co"># Assuming a max groundspeed of 150km/h</span></span>
-<span id="cb50-11"><a href="static-map.html#cb50-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-12"><a href="static-map.html#cb50-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check possible position at next stationary period</span></span>
-<span id="cb50-13"><a href="static-map.html#cb50-13" aria-hidden="true" tabindex="-1"></a>  possible_next <span class="ot">&lt;-</span> (EBImage<span class="sc">::</span><span class="fu">distmap</span>(<span class="sc">!</span>cur) <span class="sc">*</span> resolution <span class="sc">/</span> flight_duration) <span class="sc">&lt;</span> thr_gs</span>
-<span id="cb50-14"><a href="static-map.html#cb50-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-15"><a href="static-map.html#cb50-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">sum</span>(possible_next <span class="sc">&amp;</span> nex) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb50-16"><a href="static-map.html#cb50-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="st">&quot;There are no possible transition from stationary period&quot;</span>, i_s, <span class="st">&quot;to&quot;</span>, i_s <span class="sc">+</span> <span class="dv">1</span>, <span class="st">&quot;. Check part 1 process (light and pressure)&quot;</span>, <span class="at">sep =</span> <span class="st">&quot; &quot;</span>))</span>
-<span id="cb50-17"><a href="static-map.html#cb50-17" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb50-18"><a href="static-map.html#cb50-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i_s</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">cur</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span>  <span class="va">cur</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cur</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">F</span></span>
+<span>  <span class="va">nex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="va">i_s</span> <span class="op">+</span> <span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span></span>
+<span>  <span class="va">nex</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">nex</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">F</span></span>
+<span></span>
+<span>  <span class="va">mtf</span> <span class="op">&lt;-</span> <span class="fu">metadata</span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="va">flight_duration</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html">difftime</a></span><span class="op">(</span><span class="va">mtf</span><span class="op">$</span><span class="va">flight</span><span class="op">$</span><span class="va">end</span>, <span class="va">mtf</span><span class="op">$</span><span class="va">flight</span><span class="op">$</span><span class="va">start</span>, unit <span class="op">=</span> <span class="st">"hours"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># hours</span></span>
+<span>  <span class="va">resolution</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu">res</span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">111</span> <span class="co"># assuming 1°= 111km</span></span>
+<span>  <span class="va">thr_gs</span> <span class="op">&lt;-</span> <span class="fl">150</span> <span class="co"># Assuming a max groundspeed of 150km/h</span></span>
+<span></span>
+<span>  <span class="co"># Check possible position at next stationary period</span></span>
+<span>  <span class="va">possible_next</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu">EBImage</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/EBImage/man/distmap.html">distmap</a></span><span class="op">(</span><span class="op">!</span><span class="va">cur</span><span class="op">)</span> <span class="op">*</span> <span class="va">resolution</span> <span class="op">/</span> <span class="va">flight_duration</span><span class="op">)</span> <span class="op">&lt;</span> <span class="va">thr_gs</span></span>
+<span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">possible_next</span> <span class="op">&amp;</span> <span class="va">nex</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"There are no possible transition from stationary period"</span>, <span class="va">i_s</span>, <span class="st">"to"</span>, <span class="va">i_s</span> <span class="op">+</span> <span class="fl">1</span>, <span class="st">". Check part 1 process (light and pressure)"</span>, sep <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
-<div id="save-2" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Save<a href="static-map.html#save-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="static-map.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(pam,</span>
-<span id="cb51-2"><a href="static-map.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  static_prob,</span>
-<span id="cb51-3"><a href="static-map.html#cb51-3" aria-hidden="true" tabindex="-1"></a>  static_timeserie,</span>
-<span id="cb51-4"><a href="static-map.html#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;data/3_static/18LX_static_prob.Rdata&quot;</span></span>
-<span id="cb51-5"><a href="static-map.html#cb51-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div id="save-2" class="section level2" number="3.4">
+<h2>
+<span class="header-section-number">3.4</span> Save<a class="anchor" aria-label="anchor" href="#save-2"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">pam</span>,</span>
+<span>  <span class="va">static_prob</span>,</span>
+<span>  <span class="va">static_timeserie</span>,</span>
+<span>  file <span class="op">=</span> <span class="st">"data/3_static/18LX_static_prob.Rdata"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 
 </div>
 </div>
-            </section>
+  <div class="chapter-nav">
+<div class="prev"><a href="light-map.html"><span class="header-section-number">2</span> Light map</a></div>
+<div class="next"><a href="basic-graph.html"><span class="header-section-number">4</span> Basic graph</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#static-map"><span class="header-section-number">3</span> Static map</a></li>
+<li><a class="nav-link" href="#combine-pressure-and-light"><span class="header-section-number">3.1</span> Combine pressure and light</a></li>
+<li>
+<a class="nav-link" href="#check-track-with-geopressureviz"><span class="header-section-number">3.2</span> Check track with GeoPressureViz</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#navigate-geopressureviz"><span class="header-section-number">3.2.1</span> Navigate GeoPressureViz</a></li>
+<li><a class="nav-link" href="#check-your-data"><span class="header-section-number">3.2.2</span> Check your data</a></li>
+<li><a class="nav-link" href="#run-geopressureviz"><span class="header-section-number">3.2.3</span> Run GeoPressureViz</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#final-checks"><span class="header-section-number">3.3</span> Final checks</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#check-1"><span class="header-section-number">3.3.1</span> Check 1</a></li>
+<li><a class="nav-link" href="#check-2"><span class="header-section-number">3.3.2</span> Check 2</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#save-2"><span class="header-section-number">3.4</span> Save</a></li>
+</ul>
 
-          </div>
-        </div>
-      </div>
-<a href="light-map.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="basic-graph.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/Rafnuss/GeoPressureManual//blob/main/03-static_map.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/Rafnuss/GeoPressureManual//edit/main/03-static_map.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>A User Manual for GeoPressureR</strong>" was written by Raphaël Nussbaumer. </p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/Rafnuss/GeoPressureManual/edit/main/03-static_map.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
-});
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -570,7 +347,22 @@ gitbook.start({
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
-
 </html>

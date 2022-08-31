@@ -106,13 +106,13 @@ grl <- graph_add_wind(grl, pressure = pam$pressure, filename = "data/5_wind_grap
 
 Now that the have computed the airspeed required for performing the transition of each edge, we can improve the computation of the probability by modeling the probability of airspeed rather than groundspeed.
 
-We first search the morphological information of the Great Reed Warbler using the [AVONET database](https://doi.org/10.6084/m9.figshare.16586228.v5). You can also overwrite any of these value if you know them. See [`flight_bird()`](https://raphaelnussbaumer.com/GeoPressureR/reference/flight_bird.html) for more details.
+We first search the morphological information of the Great Reed Warbler using the [AVONET database](https://doi.org/10.6084/m9.figshare.16586228.v5). You can also overwrite any of these value if you know them. See `flight_bird()` for more details.
 
 ```{r}
 bird <- flight_bird("Acrocephalus arundinaceus")
 ```
 
-Using the bird created, we can convert a airspeed into a probability using the power method in the function [`flight_prob()`](https://raphaelnussbaumer.com/GeoPressureR/reference/flight_prob.html). See [Basic graph] for more information on [`flight_prob()`](https://raphaelnussbaumer.com/GeoPressureR/reference/flight_prob.html).
+Using the bird created, we can convert a airspeed into a probability using the power method in the function `flight_prob()`. See [Basic graph] for more information on `flight_prob()`.
 As an example, we can plot the probability for an airspeed ranging between 0 and 80 km/h.
 
 ```{r}
@@ -242,7 +242,7 @@ for (i_s in seq_len(grl$sz[3] - 1)) {
 m
 ```
 
-## Output 2: Marginal proability map
+## Output 2: Marginal probability map
 
 Same as [Basic graph]
 

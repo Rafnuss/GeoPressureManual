@@ -7,7 +7,7 @@ label-tracks
 automatic-classification-of-activity
 edit-activity-on-trainset
 identify-stationary-periods
-computing-mistmatch-maps
+computing-mismatch-maps
 compute-probability-maps
 compute-altitude
 compute-pressure-and-altitude-for-the-path
@@ -41,7 +41,7 @@ create-graph
 add-wind-to-graph
 compute-the-transition-probability-1
 output-1-shortest-path-1
-output-2-marginal-proability-map
+output-2-marginal-probability-map-1
 output-3-simulated-paths-1
 geopressureviz
 compute-flight-energy
@@ -55,7 +55,7 @@ test-2-pressure-timeseries
 test-3-pressure-timeseries-match
 test-4-histogram-of-pressure-error
 common-challenges-and-tips-to-address-them
-outliars-during-flights-due-to-low-bird-activity
+outliers-during-flights-due-to-low-bird-activity
 importance-of-zooming-in-before-editing-outliers
 short-stationary-halts-between-flights
 mountainous-species

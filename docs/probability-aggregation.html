@@ -1,383 +1,149 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>B Probability aggregation | A User Manual for GeoPressureR</title>
+<meta name="author" content="Raphaël Nussbaumer">
+<meta name="description" content="At the core of GeoPressure, we try to estimate the position of the bird based on a pressure mismatch of the geolocator and a weather reanalysis dataset (ERA5). A major challenge in this process is...">
+<meta name="generator" content="bookdown 0.28.1 with bs4_book()">
+<meta property="og:title" content="B Probability aggregation | A User Manual for GeoPressureR">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://raphaelnussbaumer.com/GeoPressureManual/probability-aggregation.html">
+<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<meta property="og:description" content="At the core of GeoPressure, we try to estimate the position of the bird based on a pressure mismatch of the geolocator and a weather reanalysis dataset (ERA5). A major challenge in this process is...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="B Probability aggregation | A User Manual for GeoPressureR">
+<meta name="twitter:description" content="At the core of GeoPressure, we try to estimate the position of the bird based on a pressure mismatch of the geolocator and a weather reanalysis dataset (ERA5). A major challenge in this process is...">
+<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.0/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script><script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script><script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script><link href="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.css" rel="stylesheet">
+<script src="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.js"></script><link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet">
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script><link href="libs/fontawesome-4.7.0/font-awesome.min.css" rel="stylesheet">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NJ17NCTPB5"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>B Probability aggregation | A User Manual for GeoPressureR</title>
-  <meta name="description" content="Learn how to use GeoPressureR with the Great Reed Warbler 18LX." />
-  <meta name="generator" content="bookdown 0.28.1 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="B Probability aggregation | A User Manual for GeoPressureR" />
-  <meta property="og:type" content="book" />
-  <meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png" />
-  <meta property="og:description" content="Learn how to use GeoPressureR with the Great Reed Warbler 18LX." />
-  <meta name="github-repo" content="rafnuss/GeoPressureManual" />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="B Probability aggregation | A User Manual for GeoPressureR" />
-  
-  <meta name="twitter:description" content="Learn how to use GeoPressureR with the Great Reed Warbler 18LX." />
-  <meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png" />
-
-
-
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  <link rel="shortcut icon" href="assets/geopressuremanual.ico" type="image/x-icon" />
-<link rel="prev" href="labelling-tracks.html"/>
-<link rel="next" href="gridded-gibbs-sampler.html"/>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-1.3.1/leaflet.js"></script>
-<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/proj4-2.6.2/proj4.min.js"></script>
-<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
-<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
-<link href="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.css" rel="stylesheet" />
-<script src="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.js"></script>
-<link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet" />
-<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script>
-<link href="libs/fontawesome-4.7.0/font-awesome.min.css" rel="stylesheet" />
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+      gtag('config', 'G-NJ17NCTPB5');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">A User Manual for GeoPressureR</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a>
-<ul>
-<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#geolocation-by-pressure"><i class="fa fa-check"></i><b>0.1</b> Geolocation by pressure</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#the-geopressure-suite"><i class="fa fa-check"></i><b>0.2</b> The GeoPressure suite</a></li>
-<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>0.3</b> Installation</a></li>
-</ul></li>
-<li class="chapter" data-level="1" data-path="pressure-map.html"><a href="pressure-map.html"><i class="fa fa-check"></i><b>1</b> Pressure map</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="pressure-map.html"><a href="pressure-map.html#read-geolocator-data"><i class="fa fa-check"></i><b>1.1</b> Read geolocator data</a></li>
-<li class="chapter" data-level="1.2" data-path="pressure-map.html"><a href="pressure-map.html#label-tracks"><i class="fa fa-check"></i><b>1.2</b> Label tracks</a>
-<ul>
-<li class="chapter" data-level="1.2.1" data-path="pressure-map.html"><a href="pressure-map.html#automatic-classification-of-activity"><i class="fa fa-check"></i><b>1.2.1</b> Automatic classification of activity</a></li>
-<li class="chapter" data-level="1.2.2" data-path="pressure-map.html"><a href="pressure-map.html#edit-activity-on-trainset"><i class="fa fa-check"></i><b>1.2.2</b> Edit activity on TRAINSET</a></li>
-</ul></li>
-<li class="chapter" data-level="1.3" data-path="pressure-map.html"><a href="pressure-map.html#identify-stationary-periods"><i class="fa fa-check"></i><b>1.3</b> Identify stationary periods</a></li>
-<li class="chapter" data-level="1.4" data-path="pressure-map.html"><a href="pressure-map.html#computing-mistmatch-maps"><i class="fa fa-check"></i><b>1.4</b> Compute mistmatch maps</a></li>
-<li class="chapter" data-level="1.5" data-path="pressure-map.html"><a href="pressure-map.html#compute-probability-maps"><i class="fa fa-check"></i><b>1.5</b> Compute probability maps</a></li>
-<li class="chapter" data-level="1.6" data-path="pressure-map.html"><a href="pressure-map.html#compute-altitude"><i class="fa fa-check"></i><b>1.6</b> Compute altitude</a></li>
-<li class="chapter" data-level="1.7" data-path="pressure-map.html"><a href="pressure-map.html#compute-pressure-and-altitude-for-the-path"><i class="fa fa-check"></i><b>1.7</b> Compute pressure and altitude for the path</a></li>
-<li class="chapter" data-level="1.8" data-path="pressure-map.html"><a href="pressure-map.html#save"><i class="fa fa-check"></i><b>1.8</b> Save</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="light-map.html"><a href="light-map.html"><i class="fa fa-check"></i><b>2</b> Light map</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="light-map.html"><a href="light-map.html#annotate-twilights"><i class="fa fa-check"></i><b>2.1</b> Annotate twilights</a></li>
-<li class="chapter" data-level="2.2" data-path="light-map.html"><a href="light-map.html#calibrate-zenith-angles"><i class="fa fa-check"></i><b>2.2</b> Calibrate zenith angles</a></li>
-<li class="chapter" data-level="2.3" data-path="light-map.html"><a href="light-map.html#compute-stationary-periods"><i class="fa fa-check"></i><b>2.3</b> Compute stationary periods</a></li>
-<li class="chapter" data-level="2.4" data-path="light-map.html"><a href="light-map.html#compute-probability-map"><i class="fa fa-check"></i><b>2.4</b> Compute probability map</a></li>
-<li class="chapter" data-level="2.5" data-path="light-map.html"><a href="light-map.html#save-1"><i class="fa fa-check"></i><b>2.5</b> Save</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="static-map.html"><a href="static-map.html"><i class="fa fa-check"></i><b>3</b> Static map</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="static-map.html"><a href="static-map.html#combine-pressure-and-light"><i class="fa fa-check"></i><b>3.1</b> Combine pressure and light</a></li>
-<li class="chapter" data-level="3.2" data-path="static-map.html"><a href="static-map.html#check-track-with-geopressureviz"><i class="fa fa-check"></i><b>3.2</b> Check track with GeoPressureViz</a>
-<ul>
-<li class="chapter" data-level="3.2.1" data-path="static-map.html"><a href="static-map.html#navigate-geopressureviz"><i class="fa fa-check"></i><b>3.2.1</b> Navigate GeoPressureViz</a></li>
-<li class="chapter" data-level="3.2.2" data-path="static-map.html"><a href="static-map.html#check-your-data"><i class="fa fa-check"></i><b>3.2.2</b> Check your data</a></li>
-<li class="chapter" data-level="3.2.3" data-path="static-map.html"><a href="static-map.html#run-geopressureviz"><i class="fa fa-check"></i><b>3.2.3</b> Run GeoPressureViz</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="static-map.html"><a href="static-map.html#final-checks"><i class="fa fa-check"></i><b>3.3</b> Final checks</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="static-map.html"><a href="static-map.html#check-1"><i class="fa fa-check"></i><b>3.3.1</b> Check 1</a></li>
-<li class="chapter" data-level="3.3.2" data-path="static-map.html"><a href="static-map.html#check-2"><i class="fa fa-check"></i><b>3.3.2</b> Check 2</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="static-map.html"><a href="static-map.html#save-2"><i class="fa fa-check"></i><b>3.4</b> Save</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="basic-graph.html"><a href="basic-graph.html"><i class="fa fa-check"></i><b>4</b> Basic graph</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="basic-graph.html"><a href="basic-graph.html#create-the-graph"><i class="fa fa-check"></i><b>4.1</b> Create the graph</a></li>
-<li class="chapter" data-level="4.2" data-path="basic-graph.html"><a href="basic-graph.html#compute-the-transition-probability"><i class="fa fa-check"></i><b>4.2</b> Compute the transition probability</a></li>
-<li class="chapter" data-level="4.3" data-path="basic-graph.html"><a href="basic-graph.html#output-1-shortest-path"><i class="fa fa-check"></i><b>4.3</b> Output 1: Shortest path</a></li>
-<li class="chapter" data-level="4.4" data-path="basic-graph.html"><a href="basic-graph.html#output-2-marginal-probability-map"><i class="fa fa-check"></i><b>4.4</b> Output 2: Marginal probability map</a></li>
-<li class="chapter" data-level="4.5" data-path="basic-graph.html"><a href="basic-graph.html#output-3-simulated-paths"><i class="fa fa-check"></i><b>4.5</b> Output 3: Simulated paths</a></li>
-<li class="chapter" data-level="4.6" data-path="basic-graph.html"><a href="basic-graph.html#save-3"><i class="fa fa-check"></i><b>4.6</b> Save</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="wind-graph.html"><a href="wind-graph.html"><i class="fa fa-check"></i><b>5</b> Wind graph</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="wind-graph.html"><a href="wind-graph.html#download-wind-data"><i class="fa fa-check"></i><b>5.1</b> Download wind data</a></li>
-<li class="chapter" data-level="5.2" data-path="wind-graph.html"><a href="wind-graph.html#create-graph"><i class="fa fa-check"></i><b>5.2</b> Create graph</a></li>
-<li class="chapter" data-level="5.3" data-path="wind-graph.html"><a href="wind-graph.html#add-wind-to-graph"><i class="fa fa-check"></i><b>5.3</b> Add wind to graph</a></li>
-<li class="chapter" data-level="5.4" data-path="wind-graph.html"><a href="wind-graph.html#compute-the-transition-probability-1"><i class="fa fa-check"></i><b>5.4</b> Compute the transition probability</a></li>
-<li class="chapter" data-level="5.5" data-path="wind-graph.html"><a href="wind-graph.html#output-1-shortest-path-1"><i class="fa fa-check"></i><b>5.5</b> Output 1: Shortest path</a></li>
-<li class="chapter" data-level="5.6" data-path="wind-graph.html"><a href="wind-graph.html#output-2-marginal-proability-map"><i class="fa fa-check"></i><b>5.6</b> Output 2: Marginal proability map</a></li>
-<li class="chapter" data-level="5.7" data-path="wind-graph.html"><a href="wind-graph.html#output-3-simulated-paths-1"><i class="fa fa-check"></i><b>5.7</b> Output 3: Simulated paths</a></li>
-<li class="chapter" data-level="5.8" data-path="wind-graph.html"><a href="wind-graph.html#geopressureviz"><i class="fa fa-check"></i><b>5.8</b> GeoPressureViz</a></li>
-<li class="chapter" data-level="5.9" data-path="wind-graph.html"><a href="wind-graph.html#compute-flight-energy"><i class="fa fa-check"></i><b>5.9</b> Compute flight energy</a></li>
-<li class="chapter" data-level="5.10" data-path="wind-graph.html"><a href="wind-graph.html#save-4"><i class="fa fa-check"></i><b>5.10</b> Save</a></li>
-</ul></li>
-<li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="labelling-tracks.html"><a href="labelling-tracks.html"><i class="fa fa-check"></i><b>A</b> Labelling tracks</a>
-<ul>
-<li class="chapter" data-level="A.1" data-path="labelling-tracks.html"><a href="labelling-tracks.html#labelling-principles"><i class="fa fa-check"></i><b>A.1</b> Labelling principles</a></li>
-<li class="chapter" data-level="A.2" data-path="labelling-tracks.html"><a href="labelling-tracks.html#introduction-to-trainset"><i class="fa fa-check"></i><b>A.2</b> Introduction to TRAINSET</a></li>
-<li class="chapter" data-level="A.3" data-path="labelling-tracks.html"><a href="labelling-tracks.html#four-tests-to-check-labelling"><i class="fa fa-check"></i><b>A.3</b> Four tests to check labelling</a>
-<ul>
-<li class="chapter" data-level="A.3.1" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-1-duration-of-stationary-periods-and-flights"><i class="fa fa-check"></i><b>A.3.1</b> Test 1: Duration of stationary periods and flights</a></li>
-<li class="chapter" data-level="A.3.2" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-2-pressure-timeseries"><i class="fa fa-check"></i><b>A.3.2</b> Test 2: Pressure timeseries</a></li>
-<li class="chapter" data-level="A.3.3" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-3-pressure-timeseries-match"><i class="fa fa-check"></i><b>A.3.3</b> Test 3: Pressure timeseries match</a></li>
-<li class="chapter" data-level="A.3.4" data-path="labelling-tracks.html"><a href="labelling-tracks.html#test-4-histogram-of-pressure-error"><i class="fa fa-check"></i><b>A.3.4</b> Test 4: Histogram of pressure error</a></li>
-</ul></li>
-<li class="chapter" data-level="A.4" data-path="labelling-tracks.html"><a href="labelling-tracks.html#common-challenges-and-tips-to-address-them"><i class="fa fa-check"></i><b>A.4</b> Common challenges and tips to address them</a>
-<ul>
-<li class="chapter" data-level="A.4.1" data-path="labelling-tracks.html"><a href="labelling-tracks.html#outliars-during-flights-due-to-low-bird-activity"><i class="fa fa-check"></i><b>A.4.1</b> Outliars during flights due to low bird activity</a></li>
-<li class="chapter" data-level="A.4.2" data-path="labelling-tracks.html"><a href="labelling-tracks.html#importance-of-zooming-in-before-editing-outliers"><i class="fa fa-check"></i><b>A.4.2</b> Importance of zooming in before editing outliers</a></li>
-<li class="chapter" data-level="A.4.3" data-path="labelling-tracks.html"><a href="labelling-tracks.html#short-stationary-halts-between-flights"><i class="fa fa-check"></i><b>A.4.3</b> Short stationary halts between flights</a></li>
-<li class="chapter" data-level="A.4.4" data-path="labelling-tracks.html"><a href="labelling-tracks.html#mountainous-species"><i class="fa fa-check"></i><b>A.4.4</b> Mountainous species</a></li>
-</ul></li>
-<li class="chapter" data-level="A.5" data-path="labelling-tracks.html"><a href="labelling-tracks.html#examples"><i class="fa fa-check"></i><b>A.5</b> Examples</a></li>
-</ul></li>
-<li class="chapter" data-level="B" data-path="probability-aggregation.html"><a href="probability-aggregation.html"><i class="fa fa-check"></i><b>B</b> Probability aggregation</a>
-<ul>
-<li class="chapter" data-level="B.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#problem-presentation"><i class="fa fa-check"></i><b>B.1</b> Problem presentation</a>
-<ul>
-<li class="chapter" data-level="B.1.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#error-term"><i class="fa fa-check"></i><b>B.1.1</b> Error term</a></li>
-<li class="chapter" data-level="B.1.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#error-term-for-the-great-reed-warbler"><i class="fa fa-check"></i><b>B.1.2</b> Error term for the Great Reed Warbler</a></li>
-</ul></li>
-<li class="chapter" data-level="B.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#gaussian-likelihood-function"><i class="fa fa-check"></i><b>B.2</b> Gaussian likelihood function</a>
-<ul>
-<li class="chapter" data-level="B.2.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#independance-of-errors"><i class="fa fa-check"></i><b>B.2.1</b> Independance of errors</a></li>
-<li class="chapter" data-level="B.2.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#quantification-of-the-errors-dependance"><i class="fa fa-check"></i><b>B.2.2</b> Quantification of the errors dependance</a></li>
-</ul></li>
-<li class="chapter" data-level="B.3" data-path="probability-aggregation.html"><a href="probability-aggregation.html#probability-aggregation-1"><i class="fa fa-check"></i><b>B.3</b> Probability aggregation</a>
-<ul>
-<li class="chapter" data-level="B.3.1" data-path="probability-aggregation.html"><a href="probability-aggregation.html#introduction-to-log-linear-pooling"><i class="fa fa-check"></i><b>B.3.1</b> Introduction to Log-linear pooling</a></li>
-<li class="chapter" data-level="B.3.2" data-path="probability-aggregation.html"><a href="probability-aggregation.html#log-linear-pooling-w1n"><i class="fa fa-check"></i><b>B.3.2</b> Log-linear pooling, <span class="math inline">\(w=1/n\)</span></a></li>
-<li class="chapter" data-level="B.3.3" data-path="probability-aggregation.html"><a href="probability-aggregation.html#log-linear-pooling-w-lognn"><i class="fa fa-check"></i><b>B.3.3</b> Log-linear pooling, <span class="math inline">\(w = \log(n)/n\)</span></a></li>
-<li class="chapter" data-level="B.3.4" data-path="probability-aggregation.html"><a href="probability-aggregation.html#validation"><i class="fa fa-check"></i><b>B.3.4</b> Validation</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="C" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html"><i class="fa fa-check"></i><b>C</b> Gridded Gibbs sampler</a>
-<ul>
-<li class="chapter" data-level="C.1" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#introduction-and-background"><i class="fa fa-check"></i><b>C.1</b> Introduction and background</a></li>
-<li class="chapter" data-level="C.2" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#stationary-probability"><i class="fa fa-check"></i><b>C.2</b> Stationary probability</a></li>
-<li class="chapter" data-level="C.3" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#movement-model"><i class="fa fa-check"></i><b>C.3</b> Movement model</a></li>
-<li class="chapter" data-level="C.4" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#initialize-the-path"><i class="fa fa-check"></i><b>C.4</b> Initialize the path</a></li>
-<li class="chapter" data-level="C.5" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#run-the-gibbs-sampler"><i class="fa fa-check"></i><b>C.5</b> Run the Gibbs sampler</a></li>
-<li class="chapter" data-level="C.6" data-path="gridded-gibbs-sampler.html"><a href="gridded-gibbs-sampler.html#illustration"><i class="fa fa-check"></i><b>C.6</b> Illustration</a></li>
-</ul></li>
-<li class="chapter" data-level="D" data-path="resources.html"><a href="resources.html"><i class="fa fa-check"></i><b>D</b> Resources</a>
-<ul>
-<li class="chapter" data-level="D.1" data-path="resources.html"><a href="resources.html#publications"><i class="fa fa-check"></i><b>D.1</b> Publications</a></li>
-<li class="chapter" data-level="D.2" data-path="resources.html"><a href="resources.html#presentations"><i class="fa fa-check"></i><b>D.2</b> Presentations</a></li>
-<li class="chapter" data-level="D.3" data-path="resources.html"><a href="resources.html#projects-using-geopressurer"><i class="fa fa-check"></i><b>D.3</b> Projects using <code>GeoPressureR</code></a></li>
-</ul></li>
-<li class="divider"></li>
-<li><a href="https://github.com/Rafnuss/GeoPressureTemplate">Ready to start your own study?</a></li>
-
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">A User Manual for GeoPressureR</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A User Manual for GeoPressureR</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Introduction</a></li>
+<li><a class="" href="pressure-map.html"><span class="header-section-number">1</span> Pressure map</a></li>
+<li><a class="" href="light-map.html"><span class="header-section-number">2</span> Light map</a></li>
+<li><a class="" href="static-map.html"><span class="header-section-number">3</span> Static map</a></li>
+<li><a class="" href="basic-graph.html"><span class="header-section-number">4</span> Basic graph</a></li>
+<li><a class="" href="wind-graph.html"><span class="header-section-number">5</span> Wind graph</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="labelling-tracks.html"><span class="header-section-number">A</span> Labelling tracks</a></li>
+<li><a class="active" href="probability-aggregation.html"><span class="header-section-number">B</span> Probability aggregation</a></li>
+<li><a class="" href="gridded-gibbs-sampler.html"><span class="header-section-number">C</span> Gridded Gibbs sampler</a></li>
+<li><a class="" href="resources.html"><span class="header-section-number">D</span> Resources</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/Rafnuss/GeoPressureManual/">View book source <i class="fab fa-github"></i></a></p>
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="probability-aggregation" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">B</span> Probability aggregation<a href="probability-aggregation.html#probability-aggregation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="probability-aggregation" class="section level1" number="7">
+<h1>
+<span class="header-section-number">B</span> Probability aggregation<a class="anchor" aria-label="anchor" href="#probability-aggregation"><i class="fas fa-link"></i></a>
+</h1>
 <p>At the core of GeoPressure, we try to estimate the position of the bird based on a pressure mismatch of the geolocator and a weather reanalysis dataset (<a href="https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era5">ERA5</a>). A major challenge in this process is the transformation of map of errors (mismatch) into a probability.</p>
 <p>In this vignette, we will explore this challenge, look at the theory behind it and explore possible solution using Great Reed Warbler (18IC) as an example.</p>
-<div id="problem-presentation" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">B.1</span> Problem presentation<a href="probability-aggregation.html#problem-presentation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="problem-presentation" class="section level2" number="7.1">
+<h2>
+<span class="header-section-number">B.1</span> Problem presentation<a class="anchor" aria-label="anchor" href="#problem-presentation"><i class="fas fa-link"></i></a>
+</h2>
 <p>For each stationary period, we estimate the probability of the position <span class="math inline">\(\textbf{x}\)</span> of the bird based on a pressure timeseries measured by the geolocator <span class="math inline">\(P_{gl}[t] \quad \forall t \in [1,\ldots,n]\)</span>, which in a Bayesian framework can be written as,
 <span class="math display">\[p(\textbf{x}\mid P_{gl}[1],\ldots,P_{gl}[n]) \propto p(P_{gl}[1],\ldots,P_{gl}[n] \mid \textbf{x}) p(\textbf{x}).\]</span></p>
 <p>We are interested here in determining the likelihood term <span class="math inline">\(p(P_{gl} \mid \textbf{x})\)</span> which represents the probability of observing the timeseries <span class="math inline">\(P_{gl}\)</span> knowing that the bird is at location <span class="math inline">\(\textbf{x}\)</span>. To quantify this probability, we look at the mismatch between <span class="math inline">\(P_{gl}\)</span> and the pressure timeseries of the ERA5 database <span class="math inline">\(P_{ERA5}(\textbf{x})\)</span> extracted at location <span class="math inline">\(\textbf{x}\)</span>. We can reformulate the likelihood as as a probability function <span class="math inline">\(f\)</span> of an error term <span class="math inline">\(\varepsilon(\textbf{x})\)</span> which measures a distance between <span class="math inline">\(P_{gl}\)</span> and <span class="math inline">\(P_{ERA5}(\textbf{x})\)</span>
 <span class="math display">\[p(P_{gl} \mid \textbf{x}) = f(\varepsilon[1],\ldots,\varepsilon[n])\]</span></p>
 <p>This formulation of the problem helps us to split our problem in two: first defining an error term <span class="math inline">\(\varepsilon[t]\)</span> and secondly defining the likelihood function <span class="math inline">\(f\)</span>.</p>
-<div id="error-term" class="section level3 hasAnchor" number="7.1.1">
-<h3><span class="header-section-number">B.1.1</span> Error term<a href="probability-aggregation.html#error-term" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="error-term" class="section level3" number="7.1.1">
+<h3>
+<span class="header-section-number">B.1.1</span> Error term<a class="anchor" aria-label="anchor" href="#error-term"><i class="fas fa-link"></i></a>
+</h3>
 <p>In most cases, we would expect to measure the error term with a simple difference <span class="math inline">\(P_{ERA5}(\textbf{x})[t]-P_{gl}[t].\)</span> However, within a ERA5 grid cell of 9-30km, we can expect a wide range of altitude at which the bird can be located. As such any offset between the two timeseries might be due to nothing more than a difference of altitude.</p>
 <p>To solve this issue, we remove the mean pressure difference, essentially ignoring the absolute value of pressure (and altitude) such that the error term only quantify the mismatch of the temporal variation,
 <span class="math display">\[\varepsilon[t] = \left( P_{ERA5}(\textbf{x})[t]-P_{gl}[t]\right) - \left( \frac{1}{n}\sum_{i=1}^{n} P_{ERA5}(\textbf{x})[i]-P_{gl}[i] \right) .\]</span></p>
 <p>This way of building the error term has some important consequences. A timeseries of only one datapoint will always yield zero error at all locations, resulting in an equally probable map. As the number of datapoints increases, the error term will become more and more able to distinguish between “good” and “bad” locations.</p>
 </div>
-<div id="error-term-for-the-great-reed-warbler" class="section level3 hasAnchor" number="7.1.2">
-<h3><span class="header-section-number">B.1.2</span> Error term for the Great Reed Warbler<a href="probability-aggregation.html#error-term-for-the-great-reed-warbler" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="error-term-for-the-great-reed-warbler" class="section level3" number="7.1.2">
+<h3>
+<span class="header-section-number">B.1.2</span> Error term for the Great Reed Warbler<a class="anchor" aria-label="anchor" href="#error-term-for-the-great-reed-warbler"><i class="fas fa-link"></i></a>
+</h3>
 <p>Let’s load the data data and filter</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="probability-aggregation.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/1_pressure/18LX_pressure_prob.Rdata&quot;</span>)</span>
-<span id="cb98-2"><a href="probability-aggregation.html#cb98-2" aria-hidden="true" tabindex="-1"></a>sta_id_keep <span class="ot">&lt;-</span> pam<span class="sc">$</span>sta<span class="sc">$</span>sta_id[<span class="fu">difftime</span>(pam<span class="sc">$</span>sta<span class="sc">$</span>end, pam<span class="sc">$</span>sta<span class="sc">$</span>start, <span class="at">units =</span> <span class="st">&quot;hours&quot;</span>) <span class="sc">&gt;</span> <span class="dv">12</span>]</span>
-<span id="cb98-3"><a href="probability-aggregation.html#cb98-3" aria-hidden="true" tabindex="-1"></a>pam<span class="sc">$</span>pressure<span class="sc">$</span>sta_id[<span class="sc">!</span>(pam<span class="sc">$</span>pressure<span class="sc">$</span>sta_id <span class="sc">%in%</span> sta_id_keep)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
-<p>We are using <a href="https://raphaelnussbaumer.com/GeoPressureServer/#description">the GeoPressure API</a> with the <code>geopressure_map()</code> function to measure the mismatch of the pressure series. Because the API can realistically return only a single map per stationary period, it aggregates the error timeseries with the Mean Squared Error (MSE),
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/1_pressure/18LX_pressure_prob.Rdata"</span><span class="op">)</span></span>
+<span><span class="va">sta_id_keep</span> <span class="op">&lt;-</span> <span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">sta_id</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html">difftime</a></span><span class="op">(</span><span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">end</span>, <span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">start</span>, units <span class="op">=</span> <span class="st">"hours"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">12</span><span class="op">]</span></span>
+<span><span class="va">pam</span><span class="op">$</span><span class="va">pressure</span><span class="op">$</span><span class="va">sta_id</span><span class="op">[</span><span class="op">!</span><span class="op">(</span><span class="va">pam</span><span class="op">$</span><span class="va">pressure</span><span class="op">$</span><span class="va">sta_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sta_id_keep</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
+<p>We are using <a href="https://raphaelnussbaumer.com/GeoPressureServer/#description">the GeoPressure API</a> with the <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_map.html">geopressure_map()</a></code> function to measure the mismatch of the pressure series. Because the API can realistically return only a single map per stationary period, it aggregates the error timeseries with the Mean Squared Error (MSE),
 <span class="math display">\[\mathit{MSE} = \frac{1}{n}\sum_{t=1}^{n} \varepsilon[t]^2.\]</span></p>
 <p>We can post-process the data to get back some basic metadata, such as the number of datapoints of each stationay period used. We also compute the position with the minimum MSE</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="probability-aggregation.html#cb99-1" aria-hidden="true" tabindex="-1"></a>sta <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb99-2"><a href="probability-aggregation.html#cb99-2" aria-hidden="true" tabindex="-1"></a>raster_mse_list <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb99-3"><a href="probability-aggregation.html#cb99-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i_s <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(pressure_maps)) {</span>
-<span id="cb99-4"><a href="probability-aggregation.html#cb99-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get MSE layer</span></span>
-<span id="cb99-5"><a href="probability-aggregation.html#cb99-5" aria-hidden="true" tabindex="-1"></a>  raster_mse_list[[i_s]] <span class="ot">&lt;-</span> pressure_maps[[i_s]][[<span class="dv">1</span>]]</span>
-<span id="cb99-6"><a href="probability-aggregation.html#cb99-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># change 0 (water) in NA</span></span>
-<span id="cb99-7"><a href="probability-aggregation.html#cb99-7" aria-hidden="true" tabindex="-1"></a>  raster_mse_list[[i_s]][raster_mse_list[[i_s]] <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb99-8"><a href="probability-aggregation.html#cb99-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-9"><a href="probability-aggregation.html#cb99-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Acess geotiff metadata</span></span>
-<span id="cb99-10"><a href="probability-aggregation.html#cb99-10" aria-hidden="true" tabindex="-1"></a>  mt <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">metadata</span>(pressure_maps[[i_s]])</span>
-<span id="cb99-11"><a href="probability-aggregation.html#cb99-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-12"><a href="probability-aggregation.html#cb99-12" aria-hidden="true" tabindex="-1"></a>  mt<span class="sc">$</span>start <span class="ot">&lt;-</span> mt<span class="sc">$</span>extend_sample[<span class="dv">1</span>]</span>
-<span id="cb99-13"><a href="probability-aggregation.html#cb99-13" aria-hidden="true" tabindex="-1"></a>  mt<span class="sc">$</span>end <span class="ot">&lt;-</span> mt<span class="sc">$</span>extend_sample[<span class="dv">2</span>]</span>
-<span id="cb99-14"><a href="probability-aggregation.html#cb99-14" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(raster_mse_list[[i_s]][[<span class="dv">1</span>]], <span class="at">xy =</span> T)</span>
-<span id="cb99-15"><a href="probability-aggregation.html#cb99-15" aria-hidden="true" tabindex="-1"></a>  mt<span class="sc">$</span>lon <span class="ot">&lt;-</span> tmp<span class="sc">$</span>x[<span class="fu">which.min</span>(tmp[, <span class="dv">3</span>])]</span>
-<span id="cb99-16"><a href="probability-aggregation.html#cb99-16" aria-hidden="true" tabindex="-1"></a>  mt<span class="sc">$</span>lat <span class="ot">&lt;-</span> tmp<span class="sc">$</span>y[<span class="fu">which.min</span>(tmp[, <span class="dv">3</span>])]</span>
-<span id="cb99-17"><a href="probability-aggregation.html#cb99-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-18"><a href="probability-aggregation.html#cb99-18" aria-hidden="true" tabindex="-1"></a>  sta <span class="ot">&lt;-</span> <span class="fu">rbind</span>(sta, <span class="fu">as.data.frame</span>(mt[<span class="sc">-</span><span class="dv">4</span>]))</span>
-<span id="cb99-19"><a href="probability-aggregation.html#cb99-19" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb99-20"><a href="probability-aggregation.html#cb99-20" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(sta))</span></code></pre></div>
-<table>
-<thead>
-<tr class="header">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">raster_mse_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i_s</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">pressure_maps</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># get MSE layer</span></span>
+<span>  <span class="va">raster_mse_list</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pressure_maps</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="co"># change 0 (water) in NA</span></span>
+<span>  <span class="va">raster_mse_list</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">raster_mse_list</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span> <span class="op">==</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span></span>
+<span>  <span class="co"># Acess geotiff metadata</span></span>
+<span>  <span class="va">mt</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/metadata.html">metadata</a></span><span class="op">(</span><span class="va">pressure_maps</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">mt</span><span class="op">$</span><span class="va">start</span> <span class="op">&lt;-</span> <span class="va">mt</span><span class="op">$</span><span class="va">extend_sample</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">mt</span><span class="op">$</span><span class="va">end</span> <span class="op">&lt;-</span> <span class="va">mt</span><span class="op">$</span><span class="va">extend_sample</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span>  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">raster_mse_list</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, xy <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span>  <span class="va">mt</span><span class="op">$</span><span class="va">lon</span> <span class="op">&lt;-</span> <span class="va">tmp</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.min</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">[</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">]</span></span>
+<span>  <span class="va">mt</span><span class="op">$</span><span class="va">lat</span> <span class="op">&lt;-</span> <span class="va">tmp</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.min</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">[</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span>  <span class="va">sta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">sta</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">mt</span><span class="op">[</span><span class="op">-</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sta</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
 <th align="right">sta_id</th>
 <th align="right">nb_sample</th>
 <th align="right">max_sample</th>
 <th align="right">margin</th>
 <th align="right">lon</th>
 <th align="right">lat</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
@@ -428,70 +194,80 @@ div.csl-indent {
 <td align="right">42.75</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 </div>
 </div>
-<div id="gaussian-likelihood-function" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">B.2</span> Gaussian likelihood function<a href="probability-aggregation.html#gaussian-likelihood-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="gaussian-likelihood-function" class="section level2" number="7.2">
+<h2>
+<span class="header-section-number">B.2</span> Gaussian likelihood function<a class="anchor" aria-label="anchor" href="#gaussian-likelihood-function"><i class="fas fa-link"></i></a>
+</h2>
 <p>In order to find an appropriate likelihood function, we first need to assume a distribution of the error. The sources of the errors are (1) the sensor measurement error, (2) the ERA5 reanalysis error and (3) the attitudinal movement of the bird during this time. Because we are removing the mean error, we can ignore any long-term errors (e.g., constant temporal error in ERA5 or biases in the geolocator sensor).</p>
 <p>The figure below shows the error distribution at the known location of equipment and retrieval.</p>
-<p><img src="assets/Appendix_F_4.png" style="width:100.0%" alt="Histogram of the error term" />
-They all look close enough to a Gaussian distribution. In the case of the Great Reed Warbler, the standard deviation is around 0.5.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="probability-aggregation.html#cb100-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fl">0.5</span></span></code></pre></div>
-<p>Therefore, assuming a gaussian distribution of our error, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Non-independent_variables">Gaussian likelkhood</a> of a multivariate normal distribution is given by
+<div class="inline-figure">
+<img src="assets/Appendix_F_4.png" style="width:100.0%" alt="Histogram of the error term">
+They all look close enough to a Gaussian distribution. In the case of the Great Reed Warbler, the standard deviation is around 0.5.</div>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span></code></pre></div>
+<p>Therefore, assuming a Gaussian distribution of our error, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Non-independent_variables">Gaussian likelikhood</a> of a multivariate normal distribution is given by
 <span class="math display">\[ f(\boldsymbol{\varepsilon})={\frac {1}{(2\pi)^{n/2} \sqrt{\det(\boldsymbol{\Sigma})}}}\exp \left(-\frac{1}{2} \boldsymbol{\varepsilon} \boldsymbol{\Sigma}^{-1} \boldsymbol{\varepsilon} \right).\]</span>
 with the vector notation <span class="math inline">\(\boldsymbol{\varepsilon }=[\varepsilon[1],\ldots,\varepsilon[n]]\)</span> and where the covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span> contains the variance of two datapoints <span class="math inline">\(\boldsymbol{\Sigma}_{t_1,t_2} = \operatorname {E}[ \varepsilon[t_1] \varepsilon[t_2] ]\)</span>.</p>
-<div id="independance-of-errors" class="section level3 hasAnchor" number="7.2.1">
-<h3><span class="header-section-number">B.2.1</span> Independance of errors<a href="probability-aggregation.html#independance-of-errors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As the covariance is difficult to quantify explicitly, we can first look at the very strong assumption of independance of the error, <span class="math inline">\(\varepsilon_t \overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma)\)</span>. In this case, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Continuous_distribution,_continuous_parameter_space">Gaussian likelkhood function</a> <span class="math inline">\(f_{ind}\)</span> is simply the product of the normal probability density function of each error <span class="math inline">\(\varepsilon[t]\)</span>,
+<div id="independance-of-errors" class="section level3" number="7.2.1">
+<h3>
+<span class="header-section-number">B.2.1</span> Independance of errors<a class="anchor" aria-label="anchor" href="#independance-of-errors"><i class="fas fa-link"></i></a>
+</h3>
+<p>As the covariance is difficult to quantify explicitly, we can first look at the very strong assumption of independance of the error, <span class="math inline">\(\varepsilon_t \overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma)\)</span>. In this case, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Continuous_distribution,_continuous_parameter_space">Gaussian likelikhood function</a> <span class="math inline">\(f_{ind}\)</span> is simply the product of the normal probability density function of each error <span class="math inline">\(\varepsilon[t]\)</span>,
 <span class="math display">\[ f_{ind}(\boldsymbol{\varepsilon})=\prod _{t=1}^{n}f_\mathcal{N}(\varepsilon[t])=\left({\frac {1}{2\pi \sigma ^{2}}}\right)^{n/2}\exp \left(-{\frac {\sum _{t=1}^{n}\varepsilon[t]^2}{2\sigma ^2}}\right).\]</span></p>
 <p>We can re-write this equation as a function of the MSE
 <span class="math display">\[ f_{ind}(\boldsymbol{\varepsilon})=\left({\frac {1}{2\pi \sigma ^{2}}}\right)^{n/2}\exp \left(-n{\frac {\mathit{MSE}}{2\sigma ^2}}\right).\]</span></p>
 <p>Using this equation, we can compute the probability for each stationary periods. In the code below, we define a likelihood function <code>f_prob</code> as a function of <span class="math inline">\(n\)</span>, <span class="math inline">\(\sigma\)</span> and the MSE.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="probability-aggregation.html#cb101-1" aria-hidden="true" tabindex="-1"></a>f_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(n, s, MSE) {</span>
-<span id="cb101-2"><a href="probability-aggregation.html#cb101-2" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> s<span class="sc">^</span><span class="dv">2</span>))<span class="sc">^</span>(n <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>n <span class="sc">*</span> MSE <span class="sc">/</span> <span class="dv">2</span> <span class="sc">/</span> s<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb101-3"><a href="probability-aggregation.html#cb101-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f_prob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">s</span>, <span class="va">MSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">n</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span> <span class="op">*</span> <span class="va">MSE</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">/</span> <span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>We define a function below to display the MSE and probability for 8 stationary periods based on a likelihood function. This function will be used later to compare with other likelihood function.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="probability-aggregation.html#cb102-1" aria-hidden="true" tabindex="-1"></a>fun_plot_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(f_prob, sta, pressure_maps) {</span>
-<span id="cb102-2"><a href="probability-aggregation.html#cb102-2" aria-hidden="true" tabindex="-1"></a>  raster_prob_list <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb102-3"><a href="probability-aggregation.html#cb102-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i_s <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(pressure_maps)) {</span>
-<span id="cb102-4"><a href="probability-aggregation.html#cb102-4" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;-</span> sta<span class="sc">$</span>nb_sample[i_s]</span>
-<span id="cb102-5"><a href="probability-aggregation.html#cb102-5" aria-hidden="true" tabindex="-1"></a>    raster_prob_list[[i_s]] <span class="ot">&lt;-</span> <span class="fu">f_prob</span>(n, s, raster_mse_list[[i_s]])</span>
-<span id="cb102-6"><a href="probability-aggregation.html#cb102-6" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb102-7"><a href="probability-aggregation.html#cb102-7" aria-hidden="true" tabindex="-1"></a>  iis <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">17</span>, <span class="dv">24</span>, <span class="dv">26</span>)</span>
-<span id="cb102-8"><a href="probability-aggregation.html#cb102-8" aria-hidden="true" tabindex="-1"></a>  sta[iis, ]</span>
-<span id="cb102-9"><a href="probability-aggregation.html#cb102-9" aria-hidden="true" tabindex="-1"></a>  dl <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb102-10"><a href="probability-aggregation.html#cb102-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fu">length</span>(iis)), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">7</span>, <span class="dv">0</span>), <span class="at">mai =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, .<span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb102-11"><a href="probability-aggregation.html#cb102-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i_s <span class="cf">in</span> iis) {</span>
-<span id="cb102-12"><a href="probability-aggregation.html#cb102-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(raster_mse_list[[i_s]],</span>
-<span id="cb102-13"><a href="probability-aggregation.html#cb102-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="fu">paste0</span>(<span class="st">&quot;MSE|i_s=&quot;</span>, i_s, <span class="st">&quot;|n=&quot;</span>, sta<span class="sc">$</span>nb_sample[i_s]),</span>
-<span id="cb102-14"><a href="probability-aggregation.html#cb102-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">horizontal =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb102-15"><a href="probability-aggregation.html#cb102-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb102-16"><a href="probability-aggregation.html#cb102-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.shrink =</span> .<span class="dv">8</span>,</span>
-<span id="cb102-17"><a href="probability-aggregation.html#cb102-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlim =</span> <span class="fu">c</span>(sta<span class="sc">$</span>lon[i_s] <span class="sc">-</span> dl, sta<span class="sc">$</span>lon[i_s] <span class="sc">+</span> dl), <span class="at">ylim =</span> <span class="fu">c</span>(sta<span class="sc">$</span>lat[i_s] <span class="sc">-</span> dl, sta<span class="sc">$</span>lat[i_s] <span class="sc">+</span> dl)</span>
-<span id="cb102-18"><a href="probability-aggregation.html#cb102-18" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb102-19"><a href="probability-aggregation.html#cb102-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(sta<span class="sc">$</span>lon[i_s], sta<span class="sc">$</span>lat[i_s])</span>
-<span id="cb102-20"><a href="probability-aggregation.html#cb102-20" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb102-21"><a href="probability-aggregation.html#cb102-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i_s <span class="cf">in</span> iis) {</span>
-<span id="cb102-22"><a href="probability-aggregation.html#cb102-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(raster_prob_list[[i_s]],</span>
-<span id="cb102-23"><a href="probability-aggregation.html#cb102-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;Prob&quot;</span>,</span>
-<span id="cb102-24"><a href="probability-aggregation.html#cb102-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">horizontal =</span> <span class="cn">TRUE</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">legend.shrink =</span> .<span class="dv">8</span>,</span>
-<span id="cb102-25"><a href="probability-aggregation.html#cb102-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlim =</span> <span class="fu">c</span>(sta<span class="sc">$</span>lon[i_s] <span class="sc">-</span> dl, sta<span class="sc">$</span>lon[i_s] <span class="sc">+</span> dl), <span class="at">ylim =</span> <span class="fu">c</span>(sta<span class="sc">$</span>lat[i_s] <span class="sc">-</span> dl, sta<span class="sc">$</span>lat[i_s] <span class="sc">+</span> dl)</span>
-<span id="cb102-26"><a href="probability-aggregation.html#cb102-26" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb102-27"><a href="probability-aggregation.html#cb102-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(sta<span class="sc">$</span>lon[i_s], sta<span class="sc">$</span>lat[i_s])</span>
-<span id="cb102-28"><a href="probability-aggregation.html#cb102-28" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb102-29"><a href="probability-aggregation.html#cb102-29" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="probability-aggregation.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fun_plot_prob</span>(f_prob, sta, pressure_maps)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
-<p>Assuming independance, the gaussian likelihood transforms the MSE into probability with narrow ranges of uncertaintie. So narrow that for long stationary period (i_s=1 and 17), the enterie map is 0.</p>
-<p>This comes from the multiplication of probability assumed in the independence case (see equation above). The underlying assuming of the mulitplication operator is the <a href="https://en.wikipedia.org/wiki/Logical_conjunction">conjunction of probabilities</a>, where aggregating two information is done with the AND operator: <span class="math inline">\(P(A~\text{and}~B) = P(A)\times P(B)\)</span>. Only the information content overlaping every datapoint of information is kept.</p>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fun_plot_prob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f_prob</span>, <span class="va">sta</span>, <span class="va">pressure_maps</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">raster_prob_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i_s</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">pressure_maps</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">n</span> <span class="op">&lt;-</span> <span class="va">sta</span><span class="op">$</span><span class="va">nb_sample</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span></span>
+<span>    <span class="va">raster_prob_list</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">f_prob</span><span class="op">(</span><span class="va">n</span>, <span class="va">s</span>, <span class="va">raster_mse_list</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">iis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">17</span>, <span class="fl">24</span>, <span class="fl">26</span><span class="op">)</span></span>
+<span>  <span class="va">sta</span><span class="op">[</span><span class="va">iis</span>, <span class="op">]</span></span>
+<span>  <span class="va">dl</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfcol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">iis</span><span class="op">)</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">7</span>, <span class="fl">0</span><span class="op">)</span>, mai <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">.1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i_s</span> <span class="kw">in</span> <span class="va">iis</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">raster_mse_list</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>      main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"MSE|i_s="</span>, <span class="va">i_s</span>, <span class="st">"|n="</span>, <span class="va">sta</span><span class="op">$</span><span class="va">nb_sample</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>      horizontal <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>      axes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      legend.shrink <span class="op">=</span> <span class="fl">.8</span>,</span>
+<span>      xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sta</span><span class="op">$</span><span class="va">lon</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span> <span class="op">-</span> <span class="va">dl</span>, <span class="va">sta</span><span class="op">$</span><span class="va">lon</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span> <span class="op">+</span> <span class="va">dl</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sta</span><span class="op">$</span><span class="va">lat</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span> <span class="op">-</span> <span class="va">dl</span>, <span class="va">sta</span><span class="op">$</span><span class="va">lat</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span> <span class="op">+</span> <span class="va">dl</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">sta</span><span class="op">$</span><span class="va">lon</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span>, <span class="va">sta</span><span class="op">$</span><span class="va">lat</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i_s</span> <span class="kw">in</span> <span class="va">iis</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">raster_prob_list</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>      main <span class="op">=</span> <span class="st">"Prob"</span>,</span>
+<span>      horizontal <span class="op">=</span> <span class="cn">TRUE</span>, axes <span class="op">=</span> <span class="cn">FALSE</span>, legend.shrink <span class="op">=</span> <span class="fl">.8</span>,</span>
+<span>      xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sta</span><span class="op">$</span><span class="va">lon</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span> <span class="op">-</span> <span class="va">dl</span>, <span class="va">sta</span><span class="op">$</span><span class="va">lon</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span> <span class="op">+</span> <span class="va">dl</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sta</span><span class="op">$</span><span class="va">lat</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span> <span class="op">-</span> <span class="va">dl</span>, <span class="va">sta</span><span class="op">$</span><span class="va">lat</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span> <span class="op">+</span> <span class="va">dl</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">sta</span><span class="op">$</span><span class="va">lon</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span>, <span class="va">sta</span><span class="op">$</span><span class="va">lat</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fun_plot_prob</span><span class="op">(</span><span class="va">f_prob</span>, <span class="va">sta</span>, <span class="va">pressure_maps</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-106-1.png" width="672"></div>
+<p>Assuming independance, the Gaussian likelihood transforms the MSE into probability with narrow ranges of uncertainties. So narrow that for long stationary period (i_s=1 and 17), the entire map is 0.</p>
+<p>This comes from the multiplication of probability assumed in the independence case (see equation above). The underlying assuming of the multiplication operator is the <a href="https://en.wikipedia.org/wiki/Logical_conjunction">conjunction of probabilities</a>, where aggregating two information is done with the AND operator: <span class="math inline">\(P(A~\text{and}~B) = P(A)\times P(B)\)</span>. Only the information content overlapping every datapoint of information is kept.</p>
 </div>
-<div id="quantification-of-the-errors-dependance" class="section level3 hasAnchor" number="7.2.2">
-<h3><span class="header-section-number">B.2.2</span> Quantification of the errors dependance<a href="probability-aggregation.html#quantification-of-the-errors-dependance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="quantification-of-the-errors-dependance" class="section level3" number="7.2.2">
+<h3>
+<span class="header-section-number">B.2.2</span> Quantification of the errors dependance<a class="anchor" aria-label="anchor" href="#quantification-of-the-errors-dependance"><i class="fas fa-link"></i></a>
+</h3>
 <p>Ploting the auto-covariance at the calibration site for all the species allow us to see a temporal pattern in the error. For most bird, we can see a clear daily fluctuation which is certainly due to the bird daily movement for commute between feeding and roosting site. The auto-covariance is approaching 0 for all birds, which is expected as we removed the mean value. However, the <a href="https://en.wikipedia.org/wiki/Variogram">sill</a> is reached between 6hours and 12 hours depending on birds (Hoopoe doesn’t reach it after 3 days!).</p>
 <div class="figure">
-<img src="assets/Appendix_F_3.png" style="width:100.0%" alt="" />
-<p class="caption">Auto-covariance of the error term</p>
+<img src="assets/Appendix_F_3.png" style="width:100.0%" alt=""><p class="caption">Auto-covariance of the error term</p>
 </div>
 <p>From this observation, one option would be to construct a covariance matrix based on the auto-covariance. While this would look like the cleanest way of doing it, we have two issues.</p>
 <ol style="list-style-type: decimal">
@@ -500,20 +276,24 @@ with the vector notation <span class="math inline">\(\boldsymbol{\varepsilon }=[
 </ol>
 </div>
 </div>
-<div id="probability-aggregation-1" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">B.3</span> Probability aggregation<a href="probability-aggregation.html#probability-aggregation-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="probability-aggregation-1" class="section level2" number="7.3">
+<h2>
+<span class="header-section-number">B.3</span> Probability aggregation<a class="anchor" aria-label="anchor" href="#probability-aggregation-1"><i class="fas fa-link"></i></a>
+</h2>
 <p>In the rest of this vignette, we will take a different angle, re-framing the problem differently and exploring other options to compute the likelihood.</p>
-<p>In the field of <a href="https://link.springer.com/article/10.1007/s11004-012-9396-3">probability aggreation</a>, the problem of combining sources of information with overlapping/redundant content is frame as finding a pooling operator <span class="math inline">\(F\)</span> such that,
+<p>In the field of <a href="https://link.springer.com/article/10.1007/s11004-012-9396-3">probability aggregation</a>, the problem of combining sources of information with overlapping/redundant content is frame as finding a pooling operator <span class="math inline">\(F\)</span> such that,
 <span class="math display">\[p(\textbf{x}\mid \varepsilon[1],\ldots,\varepsilon[n]) \approx F(p(\textbf{x} \mid \varepsilon[1]) ,\ldots,p(\textbf{x} \mid \varepsilon[n])),\]</span>
-which, with our gaussian assumption, we can written,
+which, with our Gaussian assumption, we can written,
 <span class="math display">\[ F(f(\varepsilon[1]),\ldots,f(\varepsilon[n]))=F(\boldsymbol{\varepsilon})\]</span></p>
-<div id="introduction-to-log-linear-pooling" class="section level3 hasAnchor" number="7.3.1">
-<h3><span class="header-section-number">B.3.1</span> Introduction to Log-linear pooling<a href="probability-aggregation.html#introduction-to-log-linear-pooling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="introduction-to-log-linear-pooling" class="section level3" number="7.3.1">
+<h3>
+<span class="header-section-number">B.3.1</span> Introduction to Log-linear pooling<a class="anchor" aria-label="anchor" href="#introduction-to-log-linear-pooling"><i class="fas fa-link"></i></a>
+</h3>
 <p>The most popular aggregation function is the log-linear pooling,</p>
 <p><span class="math display">\[F(\boldsymbol{\varepsilon}) \propto \prod_{t=1}^n f(\varepsilon[t])^{w_t}\]</span></p>
-<p>This equation also relies on the principle of conjuction of probability, but it uses a weight <span class="math inline">\(w_t\)</span> which is related to the new information brought by each additional <span class="math inline">\(\varepsilon[t]\)</span>. Formally, it can be defined by
+<p>This equation also relies on the principle of conjunction of probability, but it uses a weight <span class="math inline">\(w_t\)</span> which is related to the new information brought by each additional <span class="math inline">\(\varepsilon[t]\)</span>. Formally, it can be defined by
 <span class="math display">\[w_t=\frac{\ln p(\varepsilon[t] \mid \boldsymbol{x},\varepsilon[1],\ldots \varepsilon[t-1])}{\ln p(\varepsilon[t] \mid \boldsymbol{x})}.\]</span>
-<span class="citation">Allard, Comunian, and Renard (<a href="#ref-Allard2012a" role="doc-biblioref">2012</a>)</span> is a great resource to learn more about probability aggregation and log linear pooling.</p>
+<span class="citation">Denis Allard, A. Comunian, and Philippe Renard<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="#ref-Allard2012a" role="doc-biblioref"&gt;&lt;span&gt;“Probability Aggregation Methods in Geoscience,”&lt;/span&gt; &lt;em&gt;Mathematical Geosciences&lt;/em&gt; 44 (July 2012): 545–81, &lt;/a&gt;&lt;a href="https://doi.org/10.1007/s11004-012-9396-3" role="doc-biblioref"&gt;https://doi.org/10.1007/s11004-012-9396-3&lt;/a&gt;.&lt;/p&gt;'><sup>5</sup></a></span> is a great resource to learn more about probability aggregation and log linear pooling.</p>
 <p>The log-linear pooling aggregation simplifies to the case of Gaussian independence when <span class="math inline">\(w_t=1\)</span>. We have already explored this case earlier.</p>
 <p>In the more general case, using the Gaussian probability density function formula, we can write,
 <span class="math display">\[f(\varepsilon[t])^{w_t} = \left({\frac {1}{2\pi \sigma ^{2}}}\right)^{w_t/2}\exp \left(-w_t{\frac {\varepsilon[t]^2}{2\sigma ^2}}\right).\]</span></p>
@@ -522,120 +302,113 @@ which, with our gaussian assumption, we can written,
 <p>and even write it as a function of the MSE,
 <span class="math display">\[F(\boldsymbol{\varepsilon}) \propto \left({\frac {1}{2\pi \sigma ^{2}}}\right)^{\frac{wn}{2}} \exp \left(-{\frac {wn}{2\sigma ^2}}\textit{MSE}\right).\]</span></p>
 </div>
-<div id="log-linear-pooling-w1n" class="section level3 hasAnchor" number="7.3.2">
-<h3><span class="header-section-number">B.3.2</span> Log-linear pooling, <span class="math inline">\(w=1/n\)</span><a href="probability-aggregation.html#log-linear-pooling-w1n" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="log-linear-pooling-w1n" class="section level3" number="7.3.2">
+<h3>
+<span class="header-section-number">B.3.2</span> Log-linear pooling, <span class="math inline">\(w=1/n\)</span><a class="anchor" aria-label="anchor" href="#log-linear-pooling-w1n"><i class="fas fa-link"></i></a>
+</h3>
 <p>An interesting case is if <span class="math inline">\(w=1/n\)</span>, so that <span class="math inline">\(\sum_t w_t=1\)</span>. This would simplify the log-linear pooling aggregator to
 <span class="math display">\[ F(\boldsymbol{\varepsilon})={\frac {1}{\sigma\sqrt{2\pi} }}\exp \left(-{\frac {1}{2\sigma ^2}\mathit{MSE}}\right),\]</span>
 which can be interpreted as the Gaussian probability distributions of the MSE. The length of the timeseries <span class="math inline">\(n\)</span> has disappeared from the equation, so that the aggregation dependence only on the mean square of the errors, regardless of how many datapoints.</p>
 <p>We can try this and see the influence on the probability map.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="probability-aggregation.html#cb104-1" aria-hidden="true" tabindex="-1"></a>f_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(n, s, x) {</span>
-<span id="cb104-2"><a href="probability-aggregation.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> n</span>
-<span id="cb104-3"><a href="probability-aggregation.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> s<span class="sc">^</span><span class="dv">2</span>))<span class="sc">^</span>(n <span class="sc">*</span> w <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>w <span class="sc">*</span> n <span class="sc">/</span> <span class="dv">2</span> <span class="sc">/</span> (s<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> x)</span>
-<span id="cb104-4"><a href="probability-aggregation.html#cb104-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb104-5"><a href="probability-aggregation.html#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fun_plot_prob</span>(f_prob, sta, pressure_maps)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f_prob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">s</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">w</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">n</span></span>
+<span>  <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">w</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">w</span> <span class="op">*</span> <span class="va">n</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">/</span> <span class="op">(</span><span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">fun_plot_prob</span><span class="op">(</span><span class="va">f_prob</span>, <span class="va">sta</span>, <span class="va">pressure_maps</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-107-1.png" width="672"></div>
 <p>As expected from the disappearance of n, the uncertainty is now completely independent from the duration of the stationary period.</p>
 <p>This is again obviously not what we want, but it shows the other extreme of the log-linear pooling.</p>
 </div>
-<div id="log-linear-pooling-w-lognn" class="section level3 hasAnchor" number="7.3.3">
-<h3><span class="header-section-number">B.3.3</span> Log-linear pooling, <span class="math inline">\(w = \log(n)/n\)</span><a href="probability-aggregation.html#log-linear-pooling-w-lognn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="log-linear-pooling-w-lognn" class="section level3" number="7.3.3">
+<h3>
+<span class="header-section-number">B.3.3</span> Log-linear pooling, <span class="math inline">\(w = \log(n)/n\)</span><a class="anchor" aria-label="anchor" href="#log-linear-pooling-w-lognn"><i class="fas fa-link"></i></a>
+</h3>
 <p>For this study, we chose to use <span class="math inline">\(w=\frac{\log(n)}{n}\)</span>, which result in the pooling aggregation</p>
 <p><span class="math display">\[F(\boldsymbol{\varepsilon}) \propto \left({\frac {1}{2\pi \sigma ^{2}}}\right)^{\frac{w\log(n)}{2}} \exp \left(-{\frac {\log(n)}{2\sigma ^2}}\textit{MSE}\right).\]</span></p>
 <p>This scheme was designed to minimize the strength of <span class="math inline">\(1/n\)</span></p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="probability-aggregation.html#cb105-1" aria-hidden="true" tabindex="-1"></a>f_prob <span class="ot">&lt;-</span> <span class="cf">function</span>(n, s, x) {</span>
-<span id="cb105-2"><a href="probability-aggregation.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  w <span class="ot">&lt;-</span> <span class="fu">log</span>(n) <span class="sc">/</span> n</span>
-<span id="cb105-3"><a href="probability-aggregation.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> s<span class="sc">^</span><span class="dv">2</span>))<span class="sc">^</span>(n <span class="sc">*</span> w <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>w <span class="sc">*</span> n <span class="sc">/</span> <span class="dv">2</span> <span class="sc">/</span> (s<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> x)</span>
-<span id="cb105-4"><a href="probability-aggregation.html#cb105-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb105-5"><a href="probability-aggregation.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fun_plot_prob</span>(f_prob, sta, pressure_maps)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f_prob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">s</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span></span>
+<span>  <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">w</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">w</span> <span class="op">*</span> <span class="va">n</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">/</span> <span class="op">(</span><span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="va">x</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">fun_plot_prob</span><span class="op">(</span><span class="va">f_prob</span>, <span class="va">sta</span>, <span class="va">pressure_maps</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-108-1.png" width="672"></div>
 </div>
-<div id="validation" class="section level3 hasAnchor" number="7.3.4">
-<h3><span class="header-section-number">B.3.4</span> Validation<a href="probability-aggregation.html#validation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Validation of uncertainty estimation is relatively difficult, especially when there are only a few datapoints and we assume that the behaviour of the bird might differ between calibration sites (equipement and retrival) and the rest of its journey.</p>
+<div id="validation" class="section level3" number="7.3.4">
+<h3>
+<span class="header-section-number">B.3.4</span> Validation<a class="anchor" aria-label="anchor" href="#validation"><i class="fas fa-link"></i></a>
+</h3>
+<p>Validation of uncertainty estimation is relatively difficult, especially when there are only a few datapoints and we assume that the behaviour of the bird might differ between calibration sites (equipment and retrival) and the rest of its journey.</p>
 <p>In the figure below, some examples of uncertainty estimate are shown. Ideally, we want the colored area to be small (low uncertainty), but when assessing an uncertainty, we also want the red cross to fall within the colored area. That is, if the red cross is too often outside, our estimator is too confident.</p>
-<p>Furthermore, the shape of the uncertainty can be strongly anisotripic (e.g., hoopoe bottom right) making the distance between the most likely point (blue) and true value (red cross) a poor measure of uncertainty.</p>
+<p>Furthermore, the shape of the uncertainty can be strongly anisotropic (e.g., hoopoe bottom right) making the distance between the most likely point (blue) and true value (red cross) a poor measure of uncertainty.</p>
 <div class="figure">
-<img src="assets/probability-aggregation-map-uncertainty.png" style="width:100.0%" alt="" />
-<p class="caption">Uncertainty of pressure mismatch (colorscale) for the equipement period shwoing the true equipement sire (red cross) wihtin the probability map estimated and the most likely value</p>
+<img src="assets/probability-aggregation-map-uncertainty.png" style="width:100.0%" alt=""><p class="caption">Uncertainty of pressure mismatch (colorscale) for the equipment period showing the true equipment sire (red cross) within the probability map estimated and the most likely value</p>
 </div>
-<p>Assessing uncertainty relies on checking that that the red cross is distributed according to each uncertainty shape. A more formal way to quantifiying the uncertainty is of the quantile of the true value <span class="math inline">\(q=p(\boldsymbol{x}\leq \boldsymbol{x}_{true})\)</span>, which corresponds to the proability that the variable is less than or equal to the true value. So, if the true value belongs to the distribution, the distribution of its quantile should be uniform.</p>
+<p>Assessing uncertainty relies on checking that that the red cross is distributed according to each uncertainty shape. A more formal way to quantifiying the uncertainty is of the quantile of the true value <span class="math inline">\(q=p(\boldsymbol{x}\leq \boldsymbol{x}_{true})\)</span>, which corresponds to the probability that the variable is less than or equal to the true value. So, if the true value belongs to the distribution, the distribution of its quantile should be uniform.</p>
 <p>This can be visualize with the empirical cumulative distribution of the quantiles which should fall on the 1:1 line (like a qq-plot). The two extreme cases (<span class="math inline">\(w=1\)</span> and <span class="math inline">\(w=1/n\)</span>) show overconfidence (above the line) and underconfidence (below the line) respectively. Indeed, the distribution of quantile using the <span class="math inline">\(w=1/n\)</span> method shows a lot of quantile values between 0.9-1, which indicates that the true value is within the 90% uncertainty contour (underconfident).</p>
-<p><img src="assets/probability-aggregation-qq.png" style="width:100.0%" /></p>
-<p>The method chosen (<span class="math inline">\(w=\log(n)/n\)</span>) is doing better than both, but is still in general underconfident. Because the calibration the validation is performed with rather long temporal serie (equipement and retrival), one can expect that the labelisation of pressure is better/easier than for other places. Thus, it seems more appropriate to be slightly underconfident while the method is being developed.</p>
+<div class="inline-figure"><img src="assets/probability-aggregation-qq.png" style="width:100.0%"></div>
+<p>The method chosen (<span class="math inline">\(w=\log(n)/n\)</span>) is doing better than both, but is still in general underconfident. Because the calibration the validation is performed with rather long temporal serie (equipment and retrival), one can expect that the labelisation of pressure is better/easier than for other places. Thus, it seems more appropriate to be slightly underconfident while the method is being developed.</p>
 <p>The covariance aggregation scheme was implemented by computing the covariance matrix of the multi-variate Gaussian distribution. The covariance function was build using the exact on the variogram of each species. This is, in theory, the more correct method, but it looks too overconfident. Thus we didn’t use it for now.</p>
-<p>Looking forward, calibration is highly dependant on the local topography and the ability of the bird to move up and down. Manual edition/labeling has also a strong impact.</p>
+<p>Looking forward, calibration is highly dependant on the local topography and the ability of the bird to move up and down. Manual edition/labelling has also a strong impact.</p>
 
 </div>
 </div>
 </div>
-<h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-Allard2012a" class="csl-entry">
-Allard, Denis, A. Comunian, and Philippe Renard. 2012. <span>“Probability Aggregation Methods in Geoscience.”</span> <em>Mathematical Geosciences</em> 44 (July): 545–81. <a href="https://doi.org/10.1007/s11004-012-9396-3">https://doi.org/10.1007/s11004-012-9396-3</a>.
-</div>
-</div>
-            </section>
 
-          </div>
-        </div>
-      </div>
-<a href="labelling-tracks.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="gridded-gibbs-sampler.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+  <div class="chapter-nav">
+<div class="prev"><a href="labelling-tracks.html"><span class="header-section-number">A</span> Labelling tracks</a></div>
+<div class="next"><a href="gridded-gibbs-sampler.html"><span class="header-section-number">C</span> Gridded Gibbs sampler</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#probability-aggregation"><span class="header-section-number">B</span> Probability aggregation</a></li>
+<li>
+<a class="nav-link" href="#problem-presentation"><span class="header-section-number">B.1</span> Problem presentation</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#error-term"><span class="header-section-number">B.1.1</span> Error term</a></li>
+<li><a class="nav-link" href="#error-term-for-the-great-reed-warbler"><span class="header-section-number">B.1.2</span> Error term for the Great Reed Warbler</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#gaussian-likelihood-function"><span class="header-section-number">B.2</span> Gaussian likelihood function</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#independance-of-errors"><span class="header-section-number">B.2.1</span> Independance of errors</a></li>
+<li><a class="nav-link" href="#quantification-of-the-errors-dependance"><span class="header-section-number">B.2.2</span> Quantification of the errors dependance</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#probability-aggregation-1"><span class="header-section-number">B.3</span> Probability aggregation</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#introduction-to-log-linear-pooling"><span class="header-section-number">B.3.1</span> Introduction to Log-linear pooling</a></li>
+<li><a class="nav-link" href="#log-linear-pooling-w1n"><span class="header-section-number">B.3.2</span> Log-linear pooling, \(w=1/n\)</a></li>
+<li><a class="nav-link" href="#log-linear-pooling-w-lognn"><span class="header-section-number">B.3.3</span> Log-linear pooling, \(w = \log(n)/n\)</a></li>
+<li><a class="nav-link" href="#validation"><span class="header-section-number">B.3.4</span> Validation</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/Rafnuss/GeoPressureManual//blob/main/B-probability-aggregation.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/Rafnuss/GeoPressureManual//edit/main/B-probability-aggregation.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>A User Manual for GeoPressureR</strong>" was written by Raphaël Nussbaumer. </p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": true,
-"facebook": false,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/Rafnuss/GeoPressureManual/edit/main/B-probability-aggregation.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
-});
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -647,7 +420,22 @@ gitbook.start({
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
-
 </html>

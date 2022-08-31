@@ -20,7 +20,7 @@ We implemented the gridded gibbs approach will the following procedure:
 
 ![*Illustration of the gridded gibbs sampler for the 6th stationary period of a specific iteration. On one hand, we can compute the static probability based on the combinaison of pressure  and light. On the other hand, we can compute the conditional proability of transition based on the position of the previous and next stationary period (green dot). Based on both information, we can sample possible position (small white dots).*](assets/gridded-gibbs-1.png){width=100%}
 
-The gibbs samples presents several advantages compare to traditional MH. First, by accepting all propostion, it is generally faster to run. Second, it is simple to implement and easier to setup as no step size is necessary. Thirdly, it can sample discontinuous probability space easily, thus allowing to “jump” over the sea. 
+The gibbs samples presents several advantages compare to traditional MH. First, by accepting all propositions, it is generally faster to run. Second, it is simple to implement and easier to setup as no step size is necessary. Thirdly, it can sample discontinuous probability space easily, thus allowing to “jump” over the sea. 
 However, Gibbs samples remains sensitive to local minimun in the case where consecutive states are correlated. This is typically the case if several short flights follows a long flight (e.g. pre-breeding stopover in Lybia for 18IC inFigure 8). The next flight constrains so much the position, that gibbs sampler cannot explore correctly the space.This could be solved by using a block gibbs sampler, where the position of all stationary periods separated by short flights are re-sampled together. 
 
 

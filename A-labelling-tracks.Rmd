@@ -11,13 +11,13 @@ load("data/1_pressure/18LX_pressure_prob.Rdata")
 
 ## Labelling principles
 
-Labelling (manually) your tracks is imperative because geopressure requires highly precise and well-defined pressure timeseries of a fixed/constant locoation both in horizontal (geographical: +/- 10-50km) and vertical (altitude: +/- 2m).  
+Labelling (manually) your tracks is imperative because geopressure requires highly precise and well-defined pressure timeseries of a fixed/constant location both in horizontal (geographical: +/- 10-50km) and vertical (altitude: +/- 2m).  
 
 The procedure involves labelling (1) activity data when the bird is migrating and (2) identifying pressure datapoints to be discarded from the matching exercise.
 
 1. **Activity labelling defines stationary periods and flight duration**. A stationary periods is defined by period during which the bird is considered static relative to the size of the grid (~10-50km). The start and end of the stationary period is then used to define the pressure timeseries to be matched. Since flight duration is the key input in the movement model, having an accurate flight duration is critical to correctly estimate the distance traveled by the bird between two stationary periods.
  
-2. **Pressure labelling allows to eliminate vertical (altitudinal) movement of the bird.** The pressure timeseries matching algorithm is sensitive to pressure variation of a few hPa, such that even a altitudinal movement of a couple of meters can throw off the estimation map for short stationary period. Since the reanalysis data to be matched is provided at a single pressure level, we must discard all data points fromt the geolocator pressure data corresponding to a different elevation.
+2. **Pressure labelling allows to eliminate vertical (altitudinal) movement of the bird.** The pressure timeseries matching algorithm is sensitive to pressure variation of a few hPa, such that even a altitudinal movement of a couple of meters can throw off the estimation map for short stationary period. Since the reanalysis data to be matched is provided at a single pressure level, we must discard all data points from the geolocator pressure data corresponding to a different elevation.
 
 Each species' migration behaviour is so specific that **manual editing remains the fastest option**. Indeed, small movement corresponding to small change of pressure and high activity can correspond to local movement (birds essentially stays at the same location) or slow migration. Expertise on your bird expected migration style will be essential to correctly label your tracks.
 
@@ -30,7 +30,7 @@ pam <- pam_classify(pam, min_duration = 30)
 trainset_write(pam, pathname = system.file("extdata", package = "GeoPressureR"), filename = "18LX_act_pres-labeled-v1.csv")
 ```
 
-Finally, labeling is an **iterative process** where you will need to check the validity of the pressure timeseries at stationary period against the reanalysis data (more on this later). You can expect to spend between 30sec (e.g. Mangrove Kingfisher) to 10min (e.g. Eurasian Nightjar) per track depending on the species' migrating complexity.
+Finally, labelling is an **iterative process** where you will need to check the validity of the pressure timeseries at stationary period against the reanalysis data (more on this later). You can expect to spend between 30sec (e.g. Mangrove Kingfisher) to 10min (e.g. Eurasian Nightjar) per track depending on the species' migrating complexity.
 
 
 ## Introduction to TRAINSET
@@ -45,14 +45,14 @@ A few tips:
 
 - **Keyboard shortcuts** can considerably speed up navigation (zoom in/out, move left/right) and labelling (add/remove a label), specifically with `SHIFT`.
 - Because of the large number of datapoints, keeping a narrow temporal window will avoid your browser from becoming slow or irresponsive.
-- Change the `Active Seties` and `Reference Series` depending on what you are labeling but use **both timeseries at the same time** to figure out what the bird might be doing.
+- Change the `Active Seties` and `Reference Series` depending on what you are labelling but use **both timeseries at the same time** to figure out what the bird might be doing.
 - Adapt with the **y-axis range** to each stationary period to properly see the small (but essential) pressure variations which are not visible in the full view
 - TRAINSET offers more flexibility with the label than required: you can add and remove label values (bottom-right of the page). In order for `trainset_read()` to work, do not change/edit/add any label, simply use the ones offered : `TRUE` and `FALSE`.
 
 
 ## Four tests to check labelling
 
-To improve and evaluate the quality of your labeling, you can use these four tests.
+To improve and evaluate the quality of your labelling, you can use these four tests.
 
 ### Test 1: Duration of stationary periods and flights
 
@@ -73,7 +73,7 @@ Depending on your specific species, you may want to check the activity labelling
 
 ### Test 2: Pressure timeseries
 
-In the second check, we visually inspect that the pressure timeseries of each stationary period are (1) correctly groups and (2) do not includes pressure outliar (altitudinal movement).
+In the second check, we visually inspect that the pressure timeseries of each stationary period are (1) correctly groups and (2) do not includes pressure outlier (altitudinal movement).
 
 ```{r}
 pam <- trainset_read(pam, pathname = "data/1_pressure/labels/", filename = "18LX_act_pres-labeled-v2.csv")
@@ -111,7 +111,7 @@ pam <- pam_sta(pam)
 
 sta_id_keep <- pam$sta$sta_id[difftime(pam$sta$end, pam$sta$start, units = "hours") > 12]
 pam$pressure$sta_id[!(pam$pressure$sta_id %in% sta_id_keep)] <- NA
-message("Number of stationay period to query: ", length(sta_id_keep))
+message("Number of stationary period to query: ", length(sta_id_keep))
 ```
 
 We can estimate the probability map for each stationary period with the following code. We will cover these fours functions in more details in the vignette [Pressure Map]. For each stationary period, we locate the best match and query the pressure timeseries with `geopressure_ts()` at this location.
@@ -138,7 +138,7 @@ ggplotly(p, dynamicTicks = T) %>% layout(showlegend = F)
 ```
 
 
-You can use this figure to identify periods where there is a mismatch between the geolocator and ERA5, usually indicative of altitudinal movement of the bird. Depending on the situation, there are mulitple way of labeling this mismatch. In the easier case, the bird simply flew within the same stationary site (<10-50km) for a short time and came back to the same location. In such case, you can simply label out the pressure timeserie during the temporary change of altitude. If the bird changed altitude but never came back to the same elevation, there a different way of solving this. You can either considered that the new altitude is a new stationay period and label the activity data. Otherwise, you can label out the pressure timerise of the shorter period. It is essential that the resulting pressure timeserie matches the ERA5 pressure at everywhere. Matches are usually better for the longer periods.  Looking at the activity data during the same period can also help understand what the bird is doing.
+You can use this figure to identify periods where there is a mismatch between the geolocator and ERA5, usually indicative of altitudinal movement of the bird. Depending on the situation, there are multiple way of labelling this mismatch. In the easier case, the bird simply flew within the same stationary site (<10-50km) for a short time and came back to the same location. In such case, you can simply label out the pressure timeserie during the temporary change of altitude. If the bird changed altitude but never came back to the same elevation, there a different way of solving this. You can either considered that the new altitude is a new stationary period and label the activity data. Otherwise, you can label out the pressure timeserie of the shorter period. It is essential that the resulting pressure timeserie matches the ERA5 pressure at everywhere. Matches are usually better for the longer periods.  Looking at the activity data during the same period can also help understand what the bird is doing.
 
 In this example, removing a few more pressure datapoints can improve the match, especially for short stopover (e.g. 2017-9-11). See below for the final labeled file.
 
@@ -181,9 +181,9 @@ for (i_r in seq_along(pressure_timeserie)) {
 
 In the following section, we use examples to illustrate common challenges that may be encountered during manual editing, and offer suggestions on how to address them. 
 
-### Outliars during flights due to low bird activity
+### Outliers during flights due to low bird activity
 
-During a flight, single activity measurements can display low activity due to e.g. short gliding flights with no flapping. The automatic labelling of activity with the KNN classifier may mislabel these points as stationary periods, as illustrated in the example below for the night of the 31st of August. A single mislabeled point can incorrectly split the flight into multiple short flights. This error is highlighted with Test #1 described above. However, birds may also display lower activity at the beginning or end of their flight, which is often misclassified, as illustrated in all three nights in the example below and would not be picked up by Test #1.
+During a flight, single activity measurements can display low activity due to e.g. short gliding flights with no flapping. The automatic labelling of activity with the KNN classifier may mislabel these points as stationary periods, as illustrated in the example below for the night of the 31st of August. A single mislabeled point can incorrectly split the flight into multiple short flights. This error is highlighted with Test #1 described above. However, birds may also display lower activity at the beginning or end of their flight, which is often miss-classified, as illustrated in all three nights in the example below and would not be picked up by Test #1.
 
 ![](assets/labelling-tracks-1.png){width=100%}
 

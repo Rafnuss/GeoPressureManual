@@ -24,3 +24,6 @@ Imports:
 Remotes: 
     rstudio/bookdown,
     rafnuss/GeoPressureR
+Suggests:
+    spelling
+Language: en-US

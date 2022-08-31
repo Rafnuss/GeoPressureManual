@@ -1,28 +1,28 @@
 --- 
 title: "A User Manual for GeoPressureR"
+author: "Raphaël Nussbaumer"
 site: bookdown::bookdown_site
-output: bookdown::gitbook
+output: bookdown::bs4_book
 bibliography: ["book.bib"]
-biblio-style: "apalike"
+csl: chicago-fullnote-bibliography.csl
 link-citations: yes
 github-repo: rafnuss/GeoPressureManual
 description: "Learn how to use GeoPressureR with the Great Reed Warbler 18LX."
 url: "https://raphaelnussbaumer.com/GeoPressureManual/"
 favicon: "assets/geopressuremanual.ico"
 cover-image: "assets/cover.png"
+suppress-bibliography: true
 ---
 
 # Introduction {-}
 
-<img src="assets/cover.png" style="float: right;margin: 0 1rem 0 1rem;box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);" width="250" height="328"/>
-
-Understanding the temporal and spatial use of habitats by wildlife is crucial to apprehend ecological relationships in nature. Tracking small birds and bats requires tags of less than 2g, therefore lightweight geolocators are currently the most affordable and widespread option. Recent multi-sensor geolocators now capture accelerometer and pressure data in addition to light, offering new potential to refine the accuracy of bird positioning. In particular, as atmospheric pressure varies with space and time, pressure timeseries at a single location have a unique signature which can be used for global positioning independent of light recordings.
+<img src="assets/cover.png" class="cover" width="250" height="328"/>Understanding the temporal and spatial use of habitats by wildlife is crucial to apprehend ecological relationships in nature. Tracking small birds and bats requires tags of less than 2g, therefore lightweight geolocators are currently the most affordable and widespread option. Recent multi-sensor geolocators now capture accelerometer and pressure data in addition to light, offering new potential to refine the accuracy of bird positioning. In particular, as atmospheric pressure varies with space and time, pressure timeseries at a single location have a unique signature which can be used for global positioning independent of light recordings.
 
 ## Geolocation by pressure
 
 The best introduction to geolocation by pressure is, in my opinion, to watch a video about it. Here is a 10min presentation which present the motivation, provides an overview of the method and illustrates some possible results. 
 
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/U7jAK9nZNQU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="388" src="https://www.youtube.com/embed/U7jAK9nZNQU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 These two papers provide more detail on the method:
 
@@ -38,7 +38,7 @@ The GeoPressure suite includes several tools:
 - [GeoPressureR](https://github.com/Rafnuss/GeoPressureR) is the main R package which implements the full method and functionalities
 - [GeoPressureManual]() is the user guide developed to help you learn to use GeoPressureR
 - [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) is a [template Github repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) to help kickstart your project 
-- [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is a JSON API that makes it easy to compute the mismatch of a geolocator pressure timeseries with the atmospheric pressure from ERA5 reanalysis data. This API is called directly by the functions [`geopressure_map()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_map.html) and [`geopressure_ts()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts.html) in GeoPressureR, so you don't have to worry about it. 
+- [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is a JSON API that makes it easy to compute the mismatch of a geolocator pressure timeseries with the atmospheric pressure from ERA5 reanalysis data. This API is called directly by the functions `geopressure_map()` and `geopressure_ts()` in GeoPressureR, so you don't have to worry about it. 
 
 
 ## Installation

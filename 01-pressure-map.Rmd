@@ -14,15 +14,15 @@ pam <- pam_read(
 )
 ```
 
-[`pam_read()`](https://raphaelnussbaumer.com/GeoPressureR/reference/pam_read.html) currently support data from Swiss Ornithological Institute files (`*.pressure`, `*.lux`, `*.acceleration`) and Migrate Technology (`.deg`, `*.lux`). For other file format, please contact me ([submit a Github issue](https://github.com/Rafnuss/GeoPressureR/issues/new) or [email](mailto:rafnuss@gmail.com)).
+`pam_read()` currently support data from Swiss Ornithological Institute files (`*.pressure`, `*.lux`, `*.acceleration`) and Migrate Technology (`.deg`, `*.lux`). For other file format, please contact me ([submit a Github issue](https://github.com/Rafnuss/GeoPressureR/issues/new) or [email](mailto:rafnuss@gmail.com)).
 
 ## Label tracks
 
-To ensure the high level of precision needed for the pressure match, we must manually edit the activity classification and  the pressure timeseries to be matched. We suggest doing this with TRAINSET. [Labelling tracks] is dedicated to this exercise and includes tips and best practices. Here, we will just walk through the main step of the workflow.
+To ensure the high level of precision needed for the pressure match, we must manually edit the activity classification and  the pressure time series to be matched. We suggest doing this with TRAINSET. [labelling tracks] is dedicated to this exercise and includes tips and best practices. Here, we will just walk through the main step of the workflow.
 
 ### Automatic classification of activity
 
-We initialize the labeling file with an automatic classification of activity. We first use a [k-mean clustering](https://en.wikipedia.org/wiki/K-means_clustering) to group periods of low and high activity and then classify high activities lasting more than 30 minutes as migratory activities. See more possible classifications in the [PALMr manual](https://kiranlda.github.io/PAMLrManual/index.html).
+We initialize the labelling file with an automatic classification of activity. We first use a [k-mean clustering](https://en.wikipedia.org/wiki/K-means_clustering) to group periods of low and high activity and then classify high activities lasting more than 30 minutes as migratory activities. See more possible classifications in the [PALMr manual](https://kiranlda.github.io/PAMLrManual/index.html).
 
 ```{r, results='hide'}
 pam <- pam_classify(pam, min_duration = 30)
@@ -31,7 +31,7 @@ pam <- pam_classify(pam, min_duration = 30)
 If your track has only pressure data and no acceleration data, see [this gitub issue](https://github.com/Rafnuss/GeoPressureR/discussions/26).
 
 ### Edit activity on TRAINSET
-Use [`trainset_write()`](https://raphaelnussbaumer.com/GeoPressureR/reference/trainset_write.html) to export the automatically generated classifications in a `csv` file, which can be opened in TRAINSET: [https://trainset.geocene.com/](https://trainset.geocene.com/).
+Use `trainset_write()` to export the automatically generated classifications in a `csv` file, which can be opened in TRAINSET: [https://trainset.geocene.com/](https://trainset.geocene.com/).
 
 ```{r}
 trainset_write(pam, pathname = "data/1_pressure/labels/")
@@ -39,9 +39,9 @@ trainset_write(pam, pathname = "data/1_pressure/labels/")
 ```
 
 
-![*Printscreen of the manual classification in TRAINSET. See [Labelling tracks] for more information.*](assets/labelling-tracks-0.png){width=100%}
+![*Print screen of the manual classification in TRAINSET. See [labelling tracks] for more information.*](assets/labelling-tracks-0.png){width=100%}
 
-When you have finished the manual editing, export the new `csv` file (TRAINSET will add `-labeled` in the name) in `/data/1_pressure/labels/`) and read this file with [`trainset_read()`](https://raphaelnussbaumer.com/GeoPressureR/reference/trainset_read.html).
+When you have finished the manual editing, export the new `csv` file (TRAINSET will add `-labeled` in the name) in `/data/1_pressure/labels/`) and read this file with `trainset_read()`.
 
 ```{r}
 pam <- trainset_read(pam, pathname = "data/1_pressure/labels/")
@@ -49,14 +49,14 @@ pam <- trainset_read(pam, pathname = "data/1_pressure/labels/")
 
 ## Identify stationary periods {#identify-stationary-periods}
 
-Based on the activity labeling, [`pam_sta()`](https://raphaelnussbaumer.com/GeoPressureR/reference/pam_sta.html) creates a table of stationary periods as illustrated below.
+Based on the activity labelling, `pam_sta()` creates a table of stationary periods as illustrated below.
 
 ```{r}
 pam <- pam_sta(pam)
 knitr::kable(head(pam$sta))
 ```
 
-We can visualize the pressure measurements for each grouped stationary period (symbolized by a different color). The back dots represents the pressure labeled as outliar and these datapoint will not be matched.
+We can visualize the pressure measurements for each grouped stationary period (symbolized by a different color). The back dots represents the pressure labeled as outlier and these data-point will not be matched.
 
 ```{r}
 pressure_na <- pam$pressure
@@ -77,8 +77,8 @@ ggplotly(p, dynamicTicks = T) %>%
   )
 ```
 
-## Compute mistmatch maps {#computing-mistmatch-maps}
-Now that we have clean pressure timeseries for each stationary period, we are ready to match each one with atmospheric pressure data (ERA5). To overcome the challenge of computing mismatch on such a large dataset, this R package uses the [API GeoPressure](https://github.com/Rafnuss/GeoPressureAPI) to perform the computation on Google Earth Engine.
+## Compute mismatch maps {#computing-mismatch-maps}
+Now that we have clean pressure time series for each stationary period, we are ready to match each one with atmospheric pressure data (ERA5). To overcome the challenge of computing mismatch on such a large data-set, this R package uses the [API GeoPressure](https://github.com/Rafnuss/GeoPressureAPI) to perform the computation on Google Earth Engine.
 
 Initially, it is easier and faster to query only long stationary periods (in the example below, we select only periods longer than 12hrs). You can do so by setting the pressure of the stationary periods you wish to discard to `NA`.
 
@@ -87,25 +87,25 @@ sta_id_keep <- pam$sta$sta_id[difftime(pam$sta$end, pam$sta$start, units = "hour
 pam$pressure$sta_id[!(pam$pressure$sta_id %in% sta_id_keep)] <- NA
 ```
 
-We can now query the data on the API with [`geopressure_map()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_map.html). A detailed description of the parameters can be found [here](https://raphaelnussbaumer.com/GeoPressureAPI/#request). This will take a couple of minutes to run.
+We can now query the data on the API with `geopressure_map()`. A detailed description of the parameters can be found [here](https://raphaelnussbaumer.com/GeoPressureAPI/#request). This will take a couple of minutes to run.
 
 ```{r, cache=TRUE, results='hide', message=FALSE}
 pressure_maps <- geopressure_map(
   pam$pressure,
   extent = c(50, -16, 0, 23), # coordinates of the map to request (N, W, S, E)
   scale = 2, # request on a 1/2=0.5° grid to make the code faster
-  max_sample = 250, # limit the query to the first 250 datapoints.
+  max_sample = 250, # limit the query to the first 250 data-points.
   margin = 30 # roughly equivalent to 3hPa
 )
 ```
 
-[`geopressure_map()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_map.html) returns a list of two rasters for each stationary periods. The first is the mean square error ($\textbf{MSE}$) between the pressure timeseries and ERA5 map. The second ($\textbf{z}_{thr}$) is the proportion of datapoints in the pressure timeseries which correspond to an altitude that falls between the min and max altitude of each grid cell. Read more about these values and how they are computed [here](https://raphaelnussbaumer.com/GeoPressureAPI/#description).
+`geopressure_map()` returns a list of two rasters for each stationary periods. The first is the mean square error ($\textbf{MSE}$) between the pressure time series and ERA5 map. The second ($\textbf{z}_{thr}$) is the proportion of data-points in the pressure time series which correspond to an altitude that falls between the min and max altitude of each grid cell. Read more about these values and how they are computed [here](https://raphaelnussbaumer.com/GeoPressureAPI/#description).
 
 ## Compute probability maps
 
 We then combine the two rasters in a single probability map using
 $$\textbf{P} = \exp \left(-w \frac{\textbf{MSE}}{s} \right) [\textbf{z}_{thr}>thr]$$
-where $s$ is the standard deviation of pressure and $thr$ is the threshold mask. Because the auto-correlation of the timeseries is not accounted for in this equation, we use a log-linear pooling weight $w=\log(n) - 1$, where $n$ is the number of datapoints in the timeseries. [Probability aggregation] describing the influence of log-linear pooling and length of timeseries will be added later. 
+where $s$ is the standard deviation of pressure and $thr$ is the threshold mask. Because the auto-correlation of the time series is not accounted for in this equation, we use a log-linear pooling weight $w=\log(n) - 1$, where $n$ is the number of data-points in the time series. [Probability aggregation] describing the influence of log-linear pooling and length of time series will be added later. 
 
 ```{r}
 pressure_prob <- geopressure_prob_map(
@@ -167,12 +167,12 @@ where $z_{ERA}$, $T_{ERA}$ and $P_{ERA}$  respectively correspond to the ground 
 
 To illustrate the benefit of using this equation, we will compute the bird's altitude for its first stationary period using (1) GeoPressureR and (2) the barometric equation using standard atmosphere condition.
 
-We first determine the position of the bird by using the most likely postion using [`geopressure_map2path`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_map2path.html)
+We first determine the position of the bird by using the most likely position using `geopressure_map2path`
 ```{r}
 pt <- geopressure_map2path(pressure_prob[1])
 ```
 
-And then call the function [`geopressure_ts()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts.html) with the subset of pressure containing `sta_id==1`
+And then call the function `geopressure_ts()` with the subset of pressure containing `sta_id==1`
 
 ```{r, cache=TRUE, results='hide', message=FALSE}
 pressure_timeserie_1 <- geopressure_ts(pt$lon, pt$lat, pressure = subset(pam$pressure, sta_id == 1))
@@ -203,17 +203,17 @@ ggplotly(p) %>%
   layout(legend = list(orientation = "h", x = -0.5))
 ```
 
-The function [`geopressure_ts()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts.html) also returns the ground level pressure timeseries from ERA5 at the location specified. This is useful to check whether there is a good match between the pressure measured by the geolocator and the one at the assumed location. This operation is typically used to check the quality of the manual labelling (see [Labelling tracks]).
+The function `geopressure_ts()` also returns the ground level pressure time series from ERA5 at the location specified. This is useful to check whether there is a good match between the pressure measured by the geolocator and the one at the assumed location. This operation is typically used to check the quality of the manual labelling (see [labelling tracks]).
 
 ## Compute pressure and altitude for the path
 
-We can repeat the computation of the pressure timeserie for all stationary periods. First we compute all the most likely position from the probability map of pressure. 
+We can repeat the computation of the pressure time series for all stationary periods. First we compute all the most likely position from the probability map of pressure. 
 
 ```{r}
 path <- geopressure_map2path(pressure_prob)
 ```
  
-Secondly, we can use [`geopressure_ts_path()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts_path.html) which basically call [`geopressure_ts()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts.html) in parallel for all stationary periods. We can additionally request to compute the altitude during the next flight flight with `include_flight = c(0,1)`. Note that if a position of the path is over water, it will be moved to the closest point onshore.
+Secondly, we can use `geopressure_ts_path()` which basically call `geopressure_ts()` in parallel for all stationary periods. We can additionally request to compute the altitude during the next flight flight with `include_flight = c(0,1)`. Note that if a position of the path is over water, it will be moved to the closest point onshore.
 
 ```{r, cache=TRUE, results='hide', message=FALSE, warning=F}
 pressure_timeserie <- geopressure_ts_path(path, pam$pressure, include_flight = c(0, 1))
@@ -247,7 +247,7 @@ ggplotly(p, dynamicTicks = T) %>% layout(showlegend = F)
 ```
 
 
-## Save {.unlisted}
+## Save
 ```{r}
 save(
   pressure_timeserie,

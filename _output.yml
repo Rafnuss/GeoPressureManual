@@ -1,5 +1,12 @@
-bookdown::gitbook:
+bookdown::bs4_book:
+  theme:
+    primary: "#8d5903"
+  repo:
+    base: https://github.com/Rafnuss/GeoPressureManual/
+    branch: main
   css: style.css
+  includes:
+    in_header: google_analytics.html
   config:
     toc:
       collapse: section

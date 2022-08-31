@@ -2,7 +2,7 @@
 
 This chapter covers important pre-processing steps to ensure that modelling the trajectory with a graph is possible and successful. Firstly, we will aligned the maps of pressure and light and create a `static_prob` variable containing all the information necessary for modeling the trajectory (incl. flight info).
 
-But before moving too quickly, we need to carefully check that pressure, light and flight duration data allow for a coherent trajectory. It is possible (even probable) that some manual editing of the pressure data labeling will be required, especially for short stopovers.
+But before moving too quickly, we need to carefully check that pressure, light and flight duration data allow for a coherent trajectory. It is possible (even probable) that some manual editing of the pressure data labelling will be required, especially for short stopovers.
 
 ## Combine pressure and light
 
@@ -89,7 +89,7 @@ tmp[lat_calib_id, lon_calib_id] <- 1
 values(static_prob[[length(static_prob)]]) <- tmp
 ```
 
-Finally, we can retrive the pressure and altitude from the most likely postion of the combined map of pressure and light. 
+Finally, we can retrieve the pressure and altitude from the most likely position of the combined map of pressure and light. 
 
 ```{r, cache=TRUE, results='hide', message=FALSE, warning=FALSE}
 path <- geopressure_map2path(static_prob)
@@ -115,17 +115,17 @@ To help you with this task, we have developed a shiny app `GeoPressureViz` which
 
     1.  The maps showing your the trajectory of the bird. The size of the circles indicates the duration of the stopover (hover over them to get more info).
 
-    2.  The bottom panel showing the pressure timeserie. The grey line is the raw day (`pam$pressure`), the black dots are pressure labeled as outliar, colored lines are the normalized pressure at the best match (i.e., `static_timeserie$pressure0`) and the color match the map dots.
+    2.  The bottom panel showing the pressure timeserie. The grey line is the raw day (`pam$pressure`), the black dots are pressure labeled as outlier, colored lines are the normalized pressure at the best match (i.e., `static_timeserie$pressure0`) and the color match the map dots.
 
     3.  The side panel provides key information and helps you navigates the app
 
 3.  A central parameter to play with carefully is the "Minimum duration". This will filter the entire dataset and replot the map and figure to select only stopover of such duration or higher. Try changing this value once and wait a bit for the figure to update. As shorter stationary period are less certain, their position is often wrong. That's ok for now.
 
-4.  Toogle the "Full Track" button to move to the stationary period view. The side panel will change and provides you with more options.
+4.  Toggle the "Full Track" button to move to the stationary period view. The side panel will change and provides you with more options.
 
-5.  Change the stationary period with the drop down or previous/next button. Exept from the first sta., three dots, two lines and two circle will appears on the map, and the pressure timeserie will update to zoom exactly on this stationary period. The color of the timeserie informs you on which dots on the map is the current stationary period, the two others begin the previous and next one.
+5.  Change the stationary period with the drop down or previous/next button. Except from the first sta., three dots, two lines and two circle will appears on the map, and the pressure timeserie will update to zoom exactly on this stationary period. The color of the timeserie informs you on which dots on the map is the current stationary period, the two others begin the previous and next one.
 
-6.  The circles indicates the distance from and to the previous and last stationay period location based on the speed slider on the side pannel (default if 40km/h). You can edit the speed to see how this impact the distances.
+6.  The circles indicates the distance from and to the previous and last stationary period location based on the speed slider on the side panel (default if 40km/h). You can edit the speed to see how this impact the distances.
 
 7.  You can choose to display the probabily map of pressure (`pressure_prob`) , light (`light_prob`) or combines (`static_prob`).
 
@@ -139,9 +139,9 @@ With GeoPressureViz, we want to check that the probability map is coherent with 
 
 I suggest starting by selecting only long stopovers (24-72hours depending on your application), as this will help to draw out the general trajectory followed by the bird, and only later adding the shorter stopovers which could raise more confusion (the best match of pressure is often completely off).
 
-Following the same recommendation than in [Labelling tracks], you want the non-outliar pressure of each stationary period to match a single elevation timeserie (bottom panel). You can check on the map that the pressure location seem coherent by selecting only "pressure" in the probability map display. Usually, it's pretty obvious when there is an issue on the map. 
+Following the same recommendation than in [Labelling tracks], you want the non-outlier pressure of each stationary period to match a single elevation timeserie (bottom panel). You can check on the map that the pressure location seem coherent by selecting only "pressure" in the probability map display. Usually, it's pretty obvious when there is an issue on the map. 
 
-So, to correct any issue, go back to trainset and edit (1) labeling of activity to split or combine stationary periods and (2) labeling the pressure timeserie to exclude certain datapoints from the match. The good match of the timeserie is essential and will require several iteration. 
+So, to correct any issue, go back to trainset and edit (1) labelling of activity to split or combine stationary periods and (2) labelling the pressure timeserie to exclude certain datapoints from the match. The good match of the timeserie is essential and will require several iteration. 
 
 Some additional notes:
 - The distance is computed based on an assumed average groundspeed. Birds can fly with a groundspeed up to 120-150 km/h (with wind support) although their usual average is around 40km/h. 
@@ -175,7 +175,7 @@ shiny::runApp(system.file("geopressureviz", package = "GeoPressureR"), launch.br
 
 ## Final checks
 
-These checks are performed when creating the graph [`graph_create()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_create.html), but for pedagogical reason, I thought it would be better to introduce them step by step here as they will also help you to get a better sense of the specific movement/trajectory of the bird you are modeling.
+These checks are performed when creating the graph `graph_create()`, but for pedagogical reason, I thought it would be better to introduce them step by step here as they will also help you to get a better sense of the specific movement/trajectory of the bird you are modeling.
 
 ### Check 1
 
@@ -191,7 +191,7 @@ tmp <- unlist(lapply(static_prob_n, sum)) == 0
 if (any(tmp)) {
   warning(paste0(
     "The `static_prob` provided has a probability map equal to ",
-    "zero for the stationay period: ", which(tmp)
+    "zero for the stationary period: ", which(tmp)
   ))
 }
 ```
