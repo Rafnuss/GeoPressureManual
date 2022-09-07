@@ -23,67 +23,19 @@ usethis::edit_r_environ()
 This will allow you to retrieve them whenever you need with
 
 ```{r, eval=F}
-cds_key <- Sys.getenv("cds_key")
-cds_user <- Sys.getenv("cds_user")
-wf_set_key(user = cds_user, key = cds_key, service = "cds")
+Sys.getenv("cds_key")
+Sys.getenv("cds_user")
 ```
 
 To efficiently query only the data needed, we will sub-select the pressure level needed for each flight. We enter the [37 pressure level of ERA-5](https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation#ERA5:datadocumentation-Levellistings) and define the geographical area.
 
 ```{r, eval=F}
-possible_pressure <- c(1, 2, 3, 5, 7, 10, 20, 30, 50, 70, seq(100, 250, 25), seq(300, 750, 50), seq(775, 1000, 25))
-area <- extent(static_prob[[1]])
-area <- c(area@ymax, area@xmin, area@ymin, area@xmax)
+graph_download_wind(pam,
+                    area = static_prob, # area accept also c(50, -16, 0, 23)
+                    )
 ```
 
-It will be faster to send all the requests (one per flight) with `wf_request()` using `transfer = F` without waiting to get the data from one before requesting the next. These query can be very quick or sometime take a couple of hours, usually not more. You can monitor easily at <https://cds.climate.copernicus.eu/cdsapp#!/yourrequests> the status of your requests, delete them or download them manually if needed.
-
-```{r, eval=F}
-req <- list()
-for (i_s in seq_len(nrow(pam$sta) - 1)) {
-  # Get the timeserie of the flight on a 1 hour resolution
-  flight_time <- seq(round(pam$sta$end[i_s] - 30 * 60, units = "hours"), round(pam$sta$start[i_s + 1] + 30 * 60, units = "hours"), by = 60 * 60)
-
-  # Find the pressure level needed during this flight
-  flight_id <- flight_time[1] <= pam$pressure$date & pam$pressure$date <= tail(flight_time, 1)
-  pres_id_min <- sum(!(min(pam$pressure$obs[flight_id]) < possible_pressure))
-  pres_id_max <- sum(max(pam$pressure$obs[flight_id]) > possible_pressure) + 1
-  flight_pres_id <- seq(pres_id_min, min(pres_id_max, length(possible_pressure)))
-
-  # Prepare the query
-  request <- list(
-    dataset_short_name = "reanalysis-era5-pressure-levels",
-    product_type = "reanalysis",
-    format = "netcdf",
-    variable = c("u_component_of_wind", "v_component_of_wind"),
-    pressure_level = possible_pressure[flight_pres_id],
-    year = sort(unique(format(flight_time, "%Y"))),
-    month = sort(unique(format(flight_time, "%m"))),
-    day = sort(unique(format(flight_time, "%d"))),
-    time = sort(unique(format(flight_time, "%H:%M"))),
-    # area is specified as N, W, S, E
-    area = area
-  )
-  # We can send the query without downloading the data. This allows to send all of them and then wait to get them back later.
-  req[[i_s]] <- wf_request(user = cds_user, request = request, transfer = F)
-}
-```
-
-We suggest to save the wind data file in `data/5_wind_graph/`
-
-```{r}
-dir_save <- "data/5_wind_graph/18LX"
-dir.create(dir_save, showWarnings = F)
-```
-
-The following code will return the status of the request if then have not yet been processed, or return the data otherwise. I suggest to check on [<https://cds.climate.copernicus.eu/cdsapp#!/yourrequests>] if the request have been completed before running this code. It can take a couple of minutes to a few hours.
-
-```{r, eval=F}
-for (i_s in seq(1, length(req))) {
-  filename <- paste0("18LX_", i_s, ".nc")
-  wf_transfer(url = basename(req[[i_s]]$get_url()), service = "cds", user = cds_user, path = dir_save, filename = filename)
-}
-```
+This should not take anytime between a couple of minutes to an hour depending on the number of flights. If you have any issue with the download, you can monitor the requests at <https://cds.climate.copernicus.eu/cdsapp#!/yourrequests>.
 
 ## Create graph
 
@@ -98,8 +50,10 @@ grl <- graph_create(static_prob, thr_prob_percentile = .99, thr_gs = 150)
 We can compute the windspeed experienced by the bird if he had flew each possible transition (i.e. edge in the graph). Based on this windspeed and groundspeed, we also compute the airspeed. All of these are stored as complex value with the real part representing the E-W component and the imaginary part corresponding to the N-S.
 
 ```{r, cache=TRUE, message=F, results='hide'}
-filename <- paste0(dir_save, "/", "18IC_")
-grl <- graph_add_wind(grl, pressure = pam$pressure, filename = "data/5_wind_graph/18LX/18LX_", thr_as = 100)
+grl <- graph_add_wind(grl, 
+                      pressure = pam$pressure, 
+                      filename = "data/5_wind_graph/18LX/18LX_", 
+                      thr_as = 100)
 ```
 
 ## Compute the transition probability
