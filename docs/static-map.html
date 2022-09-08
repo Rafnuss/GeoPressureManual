@@ -164,10 +164,11 @@
 <h2>
 <span class="header-section-number">3.2</span> Check track with GeoPressureViz<a class="anchor" aria-label="anchor" href="#check-track-with-geopressureviz"><i class="fas fa-link"></i></a>
 </h2>
-<p>Now that we have combine pressure and light, we need to verify that the data is coherent. <strong>This is a really important step, so bear with me here</strong>.</p>
-<p>In <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, we had already checked that the pressure timeseries measured by the geolocator are consistent with a least one location on the map. But we didn’t checked that these position are (1) coherent with light data, and (2) within reach of one other considering the flight duration and realistic bird flight speed.</p>
-<p>To help you with this task, we have developed a shiny app <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move.</p>
-<p><a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" title="GeoPressureViz Demo"></a><em>Screenshot of the <a href="https://rafnuss.shinyapps.io/GeoPressureViz/">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler 18LX, based on (1) the pressure and light match (map colorscale and timeserie) and (2) potential flight distances from previous and next stationary period (circles).</em></p>
+<p>Now that we have combined pressure and light, we need to verify that the data is coherent.</p>
+<p>In <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, we already checked that the pressure timeseries measured by the geolocator are consistent with a least one location on the map. However, we didn’t check whether these locations are (1) coherent with light data, and (2) within reach of one another, considering flight duration and realistic flight speed.</p>
+<p>To carry out these checks, we developed a [Shiny app] (<a href="https://shiny.rstudio.com/" class="uri">https://shiny.rstudio.com/</a>) called <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that <strong>this is a visualization tool only</strong> and as such, does not change/modify anything on your data. The main goal is to check any issue with the labeling of pressure and the secondary goal is to give you a more intuitive sense of how your bird is moving. This can be a useful platform to discuss the bird trajectory with your collaborators.</p>
+<p>If you notice any inconsistency, go back to the labellisation step (for pressure and light) and check again.</p>
+<p><a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" width="100%"></a><em>Screenshot of the <a href="https://rafnuss.shinyapps.io/GeoPressureViz/">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler 18LX, based on (1) the pressure and light match (map colorscale and timeserie) and (2) potential flight distances from previous and next stationary period (circles).</em></p>
 <div id="navigate-geopressureviz" class="section level3" number="3.2.1">
 <h3>
 <span class="header-section-number">3.2.1</span> Navigate GeoPressureViz<a class="anchor" aria-label="anchor" href="#navigate-geopressureviz"><i class="fas fa-link"></i></a>
@@ -186,24 +187,27 @@
 <li><p>Toggle the “Full Track” button to move to the stationary period view. The side panel will change and provides you with more options.</p></li>
 <li><p>Change the stationary period with the drop down or previous/next button. Except from the first sta., three dots, two lines and two circle will appears on the map, and the pressure timeserie will update to zoom exactly on this stationary period. The color of the timeserie informs you on which dots on the map is the current stationary period, the two others begin the previous and next one.</p></li>
 <li><p>The circles indicates the distance from and to the previous and last stationary period location based on the speed slider on the side panel (default if 40km/h). You can edit the speed to see how this impact the distances.</p></li>
-<li><p>You can choose to display the probabily map of pressure (<code>pressure_prob</code>) , light (<code>light_prob</code>) or combines (<code>static_prob</code>).</p></li>
-<li><p>Because some location are completely off, it is helpful to change their location to check the coherence of distance with the next/previous stationary period. Use the button “Start Editing” to do that. Every time you will click on the map, it will update the position. Once you’re happy with the position, you can click again the button to disable the editing mode.</p></li>
-<li><p>Finally, you can update the pressure timeserie with the new position that you’ve edited with the button “Query pressure”. This runs pressure_ts on the background, so it will be slow (especially for long stationary period). This feature is quite unstable, so use carefully, and be aware that you might have to restart the app if it crashes.</p></li>
+<li><p>You can choose to display the probability map of pressure (<code>pressure_prob</code>) , light (<code>light_prob</code>) or combined (<code>static_prob</code>).</p></li>
+<li><p>Because some location of the most likely path can be completely off (hence the need for a trajectory model), it might be helpful to change temporarily their location to check the coherence of distance with the next/previous stationary period. Use the button “Start Editing” to do that. Every time you will click on the map, it will update the position. Once you’re happy with the position, you can click again the button to disable the editing mode.</p></li>
+<li><p>Finally, you can also check the pressure timeserie with the new position that you’ve edited with the button “Query pressure”. This runs <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts.html">geopressure_ts()</a></code> on the background, so it will be slow (especially for long stationary period). This feature is quite unstable, so use carefully, and be aware that you might have to restart the app if it crashes (submit <a href="https://github.com/Rafnuss/GeoPressureR/issues/new">an issue</a> with reproducible example).</p></li>
 </ol>
 </div>
 <div id="check-your-data" class="section level3" number="3.2.2">
 <h3>
 <span class="header-section-number">3.2.2</span> Check your data<a class="anchor" aria-label="anchor" href="#check-your-data"><i class="fas fa-link"></i></a>
 </h3>
-<p>With GeoPressureViz, we want to check that the probability map is coherent with the flight distance from the previous/next location.</p>
-<p>I suggest starting by selecting only long stopovers (24-72hours depending on your application), as this will help to draw out the general trajectory followed by the bird, and only later adding the shorter stopovers which could raise more confusion (the best match of pressure is often completely off).</p>
+<p>With GeoPressureViz, we want to check that the probability map is coherent with the flight distance from the previous/next location and ultimately that a overal trajectory is possible/present in the data.</p>
+<p>I suggest starting by selecting only long stopovers (24-72 hours depending on your application), as this will help to draw out the general trajectory followed by the bird, and only later adding the shorter stopovers which could raise more confusion (the best match of pressure is often completely off).</p>
 <p>Following the same recommendation than in <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, you want the non-outlier pressure of each stationary period to match a single elevation timeserie (bottom panel). You can check on the map that the pressure location seem coherent by selecting only “pressure” in the probability map display. Usually, it’s pretty obvious when there is an issue on the map.</p>
 <p>So, to correct any issue, go back to trainset and edit (1) labelling of activity to split or combine stationary periods and (2) labelling the pressure timeserie to exclude certain datapoints from the match. The good match of the timeserie is essential and will require several iteration.</p>
-<p>Some additional notes:
-- The distance is computed based on an assumed average groundspeed. Birds can fly with a groundspeed up to 120-150 km/h (with wind support) although their usual average is around 40km/h.
-- The default position of the bird in GeoPressureViz is based on the most likely position from the static probability map. This is (usually) not the correct location.
-- Bird tend to flight directly to their main destination. Most detour are artifact, or you really need a long stationary period with a good match of pressure.
-- The most regular issue I faced is a small vertical movement of the bird during a 2-8 days stopover. Shorter stopover are usually easy as the bird doesn’t move much but each species is different.</p>
+<p>Some additional notes:</p>
+<ul>
+<li>The distance is computed based on an assumed average groundspeed. Birds can fly with a groundspeed up to 120-150 km/h (with wind support) although their usual average is around 40km/h.</li>
+<li>The default position of the bird in GeoPressureViz is based on the most likely position from the static probability map. This is (usually) not the correct location.</li>
+<li>Bird tend to flight directly to their main destination. Most detour are artifact, or you really need a long stationary period with a good match of pressure.</li>
+<li>The most regular issue I faced is a small vertical movement of the bird during a 2-8 days stopover. Shorter stopover are usually easy as the bird doesn’t move much but each species is different.</li>
+<li>Wind data is not yet included and might explain some longer flight (sometimes up to 100km/h).</li>
+</ul>
 </div>
 <div id="run-geopressureviz" class="section level3" number="3.2.3">
 <h3>
