@@ -60,11 +60,11 @@ We can visualize the pressure measurements for each grouped stationary period (s
 
 ```{r}
 pressure_na <- pam$pressure
-pressure_na$obs[pressure_na$isoutliar | pressure_na$sta_id == 0] <- NA
+pressure_na$obs[pressure_na$isoutlier | pressure_na$sta_id == 0] <- NA
 p <- ggplot() +
   geom_line(data = pam$pressure, aes(x = date, y = obs), col = "grey") +
   geom_line(data = pressure_na, aes(x = date, y = obs, col = as.factor(sta_id))) +
-  geom_point(data = subset(pam$pressure, isoutliar), aes(x = date, y = obs), colour = "black") +
+  geom_point(data = subset(pam$pressure, isoutlier), aes(x = date, y = obs), colour = "black") +
   theme_bw() +
   scale_y_continuous(name = "Pressure (hPa)") +
   scale_colour_manual(values = rep(RColorBrewer::brewer.pal(9, "Set1"), times = 8))
@@ -236,7 +236,7 @@ names(col) <- levels(factor(c(0, pam$sta$sta_id)))
 
 p <- ggplot() +
   geom_line(data = pam$pressure, aes(x = date, y = obs), colour = "grey") +
-  geom_point(data = subset(pam$pressure, isoutliar), aes(x = date, y = obs), colour = "black") +
+  geom_point(data = subset(pam$pressure, isoutlier), aes(x = date, y = obs), colour = "black") +
   # geom_line(data = pressure_na, aes(x = date, y = obs, color = factor(sta_id))) +
   geom_line(data = subset(do.call("rbind", pressure_timeserie), sta_id != 0), aes(x = date, y = pressure0, col = factor(sta_id))) +
   theme_bw() +

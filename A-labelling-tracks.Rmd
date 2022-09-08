@@ -85,11 +85,11 @@ col <- col[1:(nrow(pam$sta) + 1)]
 names(col) <- levels(factor(c(0, pam$sta$sta_id)))
 
 pressure_na <- pam$pressure
-pressure_na$obs[pressure_na$isoutliar | pressure_na$sta_id == 0] <- NA
+pressure_na$obs[pressure_na$isoutlier | pressure_na$sta_id == 0] <- NA
 p <- ggplot() +
   geom_line(data = pam$pressure, aes(x = date, y = obs), col = "grey") +
   geom_line(data = pressure_na, aes(x = date, y = obs, col = factor(sta_id))) +
-  geom_point(data = subset(pam$pressure, isoutliar), aes(x = date, y = obs), colour = "black") +
+  geom_point(data = subset(pam$pressure, isoutlier), aes(x = date, y = obs), colour = "black") +
   theme_bw() +
   scale_colour_manual(values = col) +
   scale_y_continuous(name = "Pressure (hPa)")
@@ -128,7 +128,7 @@ We can now look at a similar figure of pressure timeseries, but this time compar
 ```{r}
 p <- ggplot() +
   geom_line(data = pam$pressure, aes(x = date, y = obs), colour = "grey") +
-  geom_point(data = subset(pam$pressure, isoutliar), aes(x = date, y = obs), colour = "black") +
+  geom_point(data = subset(pam$pressure, isoutlier), aes(x = date, y = obs), colour = "black") +
   geom_line(data = subset(do.call("rbind", pressure_timeserie), sta_id != 0), aes(x = date, y = pressure0, col = factor(sta_id))) +
   theme_bw() +
   scale_colour_manual(values = col) +
@@ -148,7 +148,7 @@ pam <- pam_sta(pam)
 
 p <- ggplot() +
   geom_line(data = pam$pressure, aes(x = date, y = obs), colour = "grey") +
-  geom_point(data = subset(pam$pressure, isoutliar), aes(x = date, y = obs), colour = "black") +
+  geom_point(data = subset(pam$pressure, isoutlier), aes(x = date, y = obs), colour = "black") +
   geom_line(data = subset(do.call("rbind", pressure_timeserie), sta_id != 0), aes(x = date, y = pressure0, col = factor(sta_id))) +
   theme_bw() +
   theme_bw() +
@@ -169,7 +169,7 @@ par(mfrow = c(5, 6), mar = c(1, 1, 3, 1))
 for (i_r in seq_along(pressure_timeserie)) {
   if (!is.null(pressure_timeserie[[i_r]])) {
     i_s <- unique(pressure_timeserie[[i_r]]$sta_id)
-    df3 <- merge(pressure_timeserie[[i_r]], subset(pam$pressure, !isoutliar & sta_id == i_s), by = "date")
+    df3 <- merge(pressure_timeserie[[i_r]], subset(pam$pressure, !isoutlier & sta_id == i_s), by = "date")
     df3$error <- df3$pressure0 - df3$obs
     hist(df3$error, main = i_s, xlab = "", ylab = "")
     abline(v = 0, col = "red")
