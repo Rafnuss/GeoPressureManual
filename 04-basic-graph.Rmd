@@ -46,8 +46,8 @@ The graph returned is a list of the edges of the graph containing:
 - `gs`:average ground speed required to make that transition (km/h) as complex number representing the E-W as real and S-N as imaginary.
 - `ps`: static probability of each target node
 - `sz`: size of the 3d grid lat-lon-sta
-- `equipement`: node(s) of the first sta (index in the 3d grid lat-lon-sta)
-- `retrival`: node(s) of the last sta (index in the 3d grid lat-lon-sta)
+- `equipment`: node(s) of the first sta (index in the 3d grid lat-lon-sta)
+- `retrieval`: node(s) of the last sta (index in the 3d grid lat-lon-sta)
 - `flight_duration`: list of flight duration to next sta in hours
 - `lat`: list of the `static_prob` latitude in cell center
 - `lon`: list of the `static_prob` longitude in cell center
@@ -79,9 +79,9 @@ g <- graph_from_data_frame(data.frame(
   to = grl$t,
   weight = -log(grl$p)
 ))
-# In case there are no retrival site, we select the position with the highest probability according to the marginal
-# retrival <- which.max(as.matrix(static_prob_marginal[[length(static_prob_marginal)]])) + grl$sz[1] * grl$sz[2] * (grl$sz[3] - 1)
-sp <- shortest_paths(g, from = paste(grl$equipement), to = paste(grl$retrival))
+# In case there are no retrieval site, we select the position with the highest probability according to the marginal
+# retrieval <- which.max(as.matrix(static_prob_marginal[[length(static_prob_marginal)]])) + grl$sz[1] * grl$sz[2] * (grl$sz[3] - 1)
+sp <- shortest_paths(g, from = paste(grl$equipment), to = paste(grl$retrieval))
 # Convert igraph representation to lat-lon
 shortest_path <- graph_path2lonlat(as.numeric(sp$vpath[[1]]$name), grl)
 ```
