@@ -20,7 +20,8 @@ Imports:
     plotly,
     RColorBrewer,
     leaflet,
-    leaflet.extras
+    leaflet.extras,
+    dyplr
 Remotes: 
     rstudio/bookdown,
     rafnuss/GeoPressureR
