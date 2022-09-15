@@ -18,27 +18,38 @@ suppress-bibliography: true
 
 <img src="assets/cover.png" class="cover" width="250" height="328"/>Understanding the temporal and spatial use of habitats by wildlife is crucial to apprehend ecological relationships in nature. Tracking small birds and bats requires tags of less than 2g, therefore lightweight geolocators are currently the most affordable and widespread option. Recent multi-sensor geolocators now capture accelerometer and pressure data in addition to light, offering new potential to refine the accuracy of bird positioning. In particular, as atmospheric pressure varies with space and time, pressure timeseries at a single location have a unique signature which can be used for global positioning independent of light recordings.
 
-## Geolocation by pressure
+## What can you do with GeoPressureR?
 
-The best introduction to geolocation by pressure is, in my opinion, to watch a video about it. Here is a 10min presentation which present the motivation, provides an overview of the method and illustrates some possible results. 
+This package can be broken down in two parts: 
 
-<iframe width="100%" height="388" src="https://www.youtube.com/embed/U7jAK9nZNQU?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ 1. Convert a pressure timeserie into probability map(s) of positions. The corresponding steps are described in the chapter [Pressure map] of this manual, and the corresponding publication is @Nussbaumer2022a.
+ 2. Produce a trajectory model integrating pressure, light, movement and wind data. The methodology to achieve this is covered in chapters [Basic graph] and [Wind graph] and the corresponding publication is @Nussbaumer2022b.
+ 
+For a quick overview, here is a 10 min presentation which presents the motivation, provides an overview of the method and illustrates possible results. 
 
-These two papers provide more detail on the method:
+<iframe width="100%" height="388" src="https://www.youtube.com/embed/U7jAK9nZNQU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-> Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Global positioning with animal-borne pressure sensors, 14 June 2022, PREPRINT (Version 2) available at Research Square <https://doi.org/10.21203/rs.3.rs-1381915/v2>
+## What do you need to use GeoPressureR?
 
-> Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Inferring bird’s trajectory from multi-sensor geolocators and remote sensing with a graphical model, 25 May 2022, PREPRINT (Version 1) available at Research Square <https://doi.org/10.21203/rs.3.rs-1693751/v1>
+In order to be able to use GeoPressureR, you will need at minimum a timeserie of pressure measurements with a minimal temporal resolution of 1hr. Accelerometer and light data are optional.
 
+GeoPressureR works best for species with a clear separation of stationary and migratory periods, as opposed to birds moving continuously and gradually over large distances (10-50km) or altitude (>10m). As such, areal feeders such as swifts or bee-eaters or mountainous species do not lend themselves well to this method. 
+
+Acceleration data can be helpful to define the periods of flight if your bird flies at low altitude or if pressure data is measured on a coarse temporal resolution (>5min). 
+
+Light data can also be helpful to speed-up the building of the trajectory modeling by allowing to quickly narrow down possible locations during short stationary periods.
+
+Feel free to [contact me](mailto:rafnuss@gmail.com) to discuss your data and study species. 
 
 ## The GeoPressure suite
 
 The GeoPressure suite includes several tools: 
 
-- [GeoPressureR](https://github.com/Rafnuss/GeoPressureR) is the main R package which implements the full method and functionalities
-- [GeoPressureManual]() is the user guide developed to help you learn to use GeoPressureR
-- [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) is a [template Github repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) to help kickstart your project 
-- [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is a JSON API that makes it easy to compute the mismatch of a geolocator pressure timeseries with the atmospheric pressure from ERA5 reanalysis data. This API is called directly by the functions `geopressure_map()` and `geopressure_ts()` in GeoPressureR, so you don't have to worry about it. 
+- [GeoPressureR](https://github.com/Rafnuss/GeoPressureR) is the main R package.
+- GeoPressureViz is a shiny app included in GeoPressureR to visualize the trajectory of your bird. See the [GeoPressureViz] chapter for an introduction and [the demo for 18LX](https://rafnuss.shinyapps.io/GeoPressureViz/).
+- [GeoPressureManual]() is the user guide developed to help you learn to use GeoPressureR.
+- [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) is a [template Github repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) to help kickstart your project.
+- [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is the JSON API used by GeoPressureR under the hood to query the ERA5 reanalysis data with Google Earth Engine.
 
 
 ## Installation
