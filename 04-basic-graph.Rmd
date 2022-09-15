@@ -114,6 +114,8 @@ Estimating the position of the bird for each stationary period is generally the 
 static_prob_marginal <- graph_marginal(grl)
 ```
 
+You can use [GeoPressureViz] to check the result of `graph_marginal()` and how it compares to `static_prob`.
+
 <details>
 
 <summary>See code for figure </summary>

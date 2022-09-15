@@ -102,42 +102,11 @@ Now that we have combined pressure and light, we need to verify that the data is
 
 In [Labelling tracks], we already checked that the pressure timeseries measured by the geolocator are consistent with a least one location on the map. However, we didn't check whether these locations are (1) coherent with light data, and (2) within reach of one another, considering flight duration and realistic flight speed.
 
-To carry out these checks, we developed a [Shiny app] (https://shiny.rstudio.com/) called `GeoPressureViz` which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that **this is a visualization tool only** and as such, does not change/modify anything on your data. The main goal is to check any issue with the labeling of pressure and the secondary goal is to give you a more intuitive sense of how your bird is moving. This can be a useful platform to discuss the bird trajectory with your collaborators. 
+To carry out these checks, you can use the shiny app `GeoPressureViz` which helps you visualize the overall trajectory of the bird as well as each step-by-step move. 
 
-If you notice any inconsistency, go back to the labellisation step (for pressure and light) and check again.
+Learn more about this app in the dedicated chapter [GeoPressureViz].
 
-<a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" width="100%"/></a>*Screenshot of the [GeoPressureViz demo](https://rafnuss.shinyapps.io/GeoPressureViz/) showing the estimated position at one stationary period of the Great Reed Warbler 18LX, based on (1) the pressure and light match (map colorscale and timeserie) and (2) potential flight distances from previous and next stationary period (circles).*
-
-### Navigate GeoPressureViz
-
-1.  Open [the demo for 18LX](https://rafnuss.shinyapps.io/GeoPressureViz/)
-
-2.  The viewer has three panels:
-
-    1.  The maps showing your the trajectory of the bird. The size of the circles indicates the duration of the stopover (hover over them to get more info).
-
-    2.  The bottom panel showing the pressure timeserie. The grey line is the raw day (`pam$pressure`), the black dots are pressure labeled as outlier, colored lines are the normalized pressure at the best match (i.e., `static_timeserie$pressure0`) and the color match the map dots.
-
-    3.  The side panel provides key information and helps you navigates the app
-
-3.  A central parameter to play with carefully is the "Minimum duration". This will filter the entire dataset and replot the map and figure to select only stopover of such duration or higher. Try changing this value once and wait a bit for the figure to update. As shorter stationary period are less certain, their position is often wrong. That's ok for now.
-
-4.  Toggle the "Full Track" button to move to the stationary period view. The side panel will change and provides you with more options.
-
-5.  Change the stationary period with the drop down or previous/next button. Except from the first sta., three dots, two lines and two circle will appears on the map, and the pressure timeserie will update to zoom exactly on this stationary period. The color of the timeserie informs you on which dots on the map is the current stationary period, the two others begin the previous and next one.
-
-6.  The circles indicates the distance from and to the previous and last stationary period location based on the speed slider on the side panel (default if 40km/h). You can edit the speed to see how this impact the distances.
-
-7.  You can choose to display the probability map of pressure (`pressure_prob`) , light (`light_prob`) or combined (`static_prob`).
-
-8.  Because some location of the most likely path can be completely off (hence the need for a trajectory model), it might be helpful to change temporarily their location to check the coherence of distance with the next/previous stationary period. Use the button "Start Editing" to do that. Every time you will click on the map, it will update the position. Once you're happy with the position, you can click again the button to disable the editing mode.
-
-9.  Finally, you can also check the pressure timeserie with the new position that you've edited with the button "Query pressure". This runs `geopressure_ts()` on the background, so it will be slow (especially for long stationary period). This feature is quite unstable, so use carefully, and be aware that you might have to restart the app if it crashes (submit [an issue](https://github.com/Rafnuss/GeoPressureR/issues/new) with reproducible example).
-
-
-### Check your data
-
-With GeoPressureViz, we want to check that the probability map is coherent with the flight distance from the previous/next location and ultimately that a overal trajectory is possible/present in the data.
+With GeoPressureViz, we want to check that the probability map is coherent with the flight distance from the previous/next location and ultimately that a overal trajectory is possible/present in the data. If you notice any inconsistency, go back to the labellisation step (for pressure and light) and check again.
 
 I suggest starting by selecting only long stopovers (24-72 hours depending on your application), as this will help to draw out the general trajectory followed by the bird, and only later adding the shorter stopovers which could raise more confusion (the best match of pressure is often completely off).
 
@@ -152,29 +121,6 @@ Some additional notes:
 - Bird tend to flight directly to their main destination. Most detour are artifact, or you really need a long stationary period with a good match of pressure. 
 - The most regular issue I faced is a small vertical movement of the bird during a 2-8 days stopover. Shorter stopover are usually easy as the bird doesn't move much but each species is different.
 - Wind data is not yet included and might explain some longer flight (sometimes up to 100km/h).
-
-### Run GeoPressureViz
-
-To run the visualization, you will need to save the data as `~/geopressureviz.RData` (I cannot find a good way to pass variable to a shiny app instance, [let me know if you have a suggestion](https://github.com/Rafnuss/GeoPressureR/issues/14)).
-
-The minimum information needed is `pam` and `static_prob`, but to see the difference between light and pressure, you can also add `light_prob` and `pressure_prob`. To see the match of pressure timeserie in the bottom panel, add `pressure_timeserie`.
-
-```{r, eval = F}
-geopressureviz <- list(
-  pam = pam,
-  static_prob = static_prob,
-  pressure_prob = pressure_prob,
-  light_prob = light_prob,
-  pressure_timeserie = static_timeserie
-)
-save(geopressureviz, file = "~/geopressureviz.RData")
-```
-
-Run the app in the browser for best view with
-
-```{r, eval=F}
-shiny::runApp(system.file("geopressureviz", package = "GeoPressureR"), launch.browser = getOption("browser"))
-```
 
 ## Final checks
 

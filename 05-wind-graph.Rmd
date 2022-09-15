@@ -239,7 +239,7 @@ m
 
 ## Output 3: Simulated paths
 
-Same as [Basic graph]
+Same as [Basic graph].
 
 ```{r, results='hide', message=FALSE}
 nj <- 10 # Number of simulation
@@ -248,47 +248,14 @@ path_sim <- graph_simulation(grl, nj = nj)
 
 ## GeoPressureViz
 
-We can also visualize the shortest path and marginal map in GeoPressureViz. 
-
-First, we need to query the pressure timeserie on the shortest path location. 
+We can also visualize the shortest path and marginal map in [GeoPressureViz]. First, we need to query the pressure timeserie on the shortest path location. 
 
 ```{r, cache = T, message=F, results='hide', warning=FALSE}
 shortest_path <- as.data.frame(grl$shortest_path)
 shortest_path_timeserie <- geopressure_ts_path(shortest_path, pam$pressure)
 ```
 
-Then, we need to load a lot of the previous data and aligned them (same stationary period). We finally write the file in your home directory.
-
-```{r, eval = F}
-grl <- readRDS(system.file("extdata", "18LX_grl.rda", package = "GeoPressureR"))
-grl_marginal <- readRDS(system.file("extdata", "18LX_grl_marginal.rda", package = "GeoPressureR"))
-shortest_path_timeserie <- readRDS(system.file("extdata", "18LX_shortest_path_timeserie.rda", package = "GeoPressureR"))
-static_prob <- readRDS(system.file("extdata", "18LX_static_prob.rda", package = "GeoPressureR"))
-light_prob <- readRDS(system.file("extdata", "18LX_light_prob.rda", package = "GeoPressureR"))
-pressure_prob <- readRDS(system.file("extdata", "18LX_pressure_prob.rda", package = "GeoPressureR"))
-
-sta_marginal <- unlist(lapply(grl_marginal, function(x) raster::metadata(x)$sta_id))
-sta_pres <- unlist(lapply(pressure_prob, function(x) raster::metadata(x)$sta_id))
-sta_light <- unlist(lapply(light_prob, function(x) raster::metadata(x)$sta_id))
-pressure_prob <- pressure_prob[sta_pres %in% sta_marginal]
-light_prob <- light_prob[sta_light %in% sta_marginal]
-
-geopressureviz <- list(
-  pam = pam,
-  static_prob = static_prob,
-  static_prob_marginal = grl_marginal,
-  pressure_prob = pressure_prob,
-  light_prob = light_prob,
-  pressure_timeserie = shortest_path_timeserie
-)
-save(geopressureviz, file = "~/geopressureviz.RData")
-```
-
-And start the app!
-
-```{r, eval=F}
-shiny::runApp(system.file("geopressureviz", package = "GeoPressureR"), launch.browser = getOption("browser"))
-```
+See [GeoPressureViz] for the instruction on how to launch GeoPressureViz.
 
 ## Compute flight energy
 
