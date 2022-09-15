@@ -7,7 +7,7 @@
 <title>Chapter 3 Static map | A User Manual for GeoPressureR</title>
 <meta name="author" content="Raphaël Nussbaumer">
 <meta name="description" content="This chapter covers important pre-processing steps to ensure that modelling the trajectory with a graph is possible and successful. Firstly, we will aligned the maps of pressure and light and...">
-<meta name="generator" content="bookdown 0.28.2 with bs4_book()">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
 <meta property="og:title" content="Chapter 3 Static map | A User Manual for GeoPressureR">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://raphaelnussbaumer.com/GeoPressureManual/static-map.html">
@@ -68,9 +68,10 @@
 <li><a class="" href="wind-graph.html"><span class="header-section-number">5</span> Wind graph</a></li>
 <li class="book-part">Appendix</li>
 <li><a class="" href="labelling-tracks.html"><span class="header-section-number">A</span> Labelling tracks</a></li>
-<li><a class="" href="probability-aggregation.html"><span class="header-section-number">B</span> Probability aggregation</a></li>
-<li><a class="" href="gridded-gibbs-sampler.html"><span class="header-section-number">C</span> Gridded Gibbs sampler</a></li>
-<li><a class="" href="resources.html"><span class="header-section-number">D</span> Resources</a></li>
+<li><a class="" href="geopressureviz-1.html"><span class="header-section-number">B</span> GeoPressureViz</a></li>
+<li><a class="" href="probability-aggregation.html"><span class="header-section-number">C</span> Probability aggregation</a></li>
+<li><a class="" href="gridded-gibbs-sampler.html"><span class="header-section-number">D</span> Gridded Gibbs sampler</a></li>
+<li><a class="" href="resources.html"><span class="header-section-number">E</span> Resources</a></li>
 </ul>
 
         <div class="book-extra">
@@ -166,37 +167,9 @@
 </h2>
 <p>Now that we have combined pressure and light, we need to verify that the data is coherent.</p>
 <p>In <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, we already checked that the pressure timeseries measured by the geolocator are consistent with a least one location on the map. However, we didn’t check whether these locations are (1) coherent with light data, and (2) within reach of one another, considering flight duration and realistic flight speed.</p>
-<p>To carry out these checks, we developed a [Shiny app] (<a href="https://shiny.rstudio.com/" class="uri">https://shiny.rstudio.com/</a>) called <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that <strong>this is a visualization tool only</strong> and as such, does not change/modify anything on your data. The main goal is to check any issue with the labeling of pressure and the secondary goal is to give you a more intuitive sense of how your bird is moving. This can be a useful platform to discuss the bird trajectory with your collaborators.</p>
-<p>If you notice any inconsistency, go back to the labellisation step (for pressure and light) and check again.</p>
-<p><a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" width="100%"></a><em>Screenshot of the <a href="https://rafnuss.shinyapps.io/GeoPressureViz/">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler 18LX, based on (1) the pressure and light match (map colorscale and timeserie) and (2) potential flight distances from previous and next stationary period (circles).</em></p>
-<div id="navigate-geopressureviz" class="section level3" number="3.2.1">
-<h3>
-<span class="header-section-number">3.2.1</span> Navigate GeoPressureViz<a class="anchor" aria-label="anchor" href="#navigate-geopressureviz"><i class="fas fa-link"></i></a>
-</h3>
-<ol style="list-style-type: decimal">
-<li><p>Open <a href="https://rafnuss.shinyapps.io/GeoPressureViz/">the demo for 18LX</a></p></li>
-<li>
-<p>The viewer has three panels:</p>
-<ol style="list-style-type: decimal">
-<li><p>The maps showing your the trajectory of the bird. The size of the circles indicates the duration of the stopover (hover over them to get more info).</p></li>
-<li><p>The bottom panel showing the pressure timeserie. The grey line is the raw day (<code>pam$pressure</code>), the black dots are pressure labeled as outlier, colored lines are the normalized pressure at the best match (i.e., <code>static_timeserie$pressure0</code>) and the color match the map dots.</p></li>
-<li><p>The side panel provides key information and helps you navigates the app</p></li>
-</ol>
-</li>
-<li><p>A central parameter to play with carefully is the “Minimum duration”. This will filter the entire dataset and replot the map and figure to select only stopover of such duration or higher. Try changing this value once and wait a bit for the figure to update. As shorter stationary period are less certain, their position is often wrong. That’s ok for now.</p></li>
-<li><p>Toggle the “Full Track” button to move to the stationary period view. The side panel will change and provides you with more options.</p></li>
-<li><p>Change the stationary period with the drop down or previous/next button. Except from the first sta., three dots, two lines and two circle will appears on the map, and the pressure timeserie will update to zoom exactly on this stationary period. The color of the timeserie informs you on which dots on the map is the current stationary period, the two others begin the previous and next one.</p></li>
-<li><p>The circles indicates the distance from and to the previous and last stationary period location based on the speed slider on the side panel (default if 40km/h). You can edit the speed to see how this impact the distances.</p></li>
-<li><p>You can choose to display the probability map of pressure (<code>pressure_prob</code>) , light (<code>light_prob</code>) or combined (<code>static_prob</code>).</p></li>
-<li><p>Because some location of the most likely path can be completely off (hence the need for a trajectory model), it might be helpful to change temporarily their location to check the coherence of distance with the next/previous stationary period. Use the button “Start Editing” to do that. Every time you will click on the map, it will update the position. Once you’re happy with the position, you can click again the button to disable the editing mode.</p></li>
-<li><p>Finally, you can also check the pressure timeserie with the new position that you’ve edited with the button “Query pressure”. This runs <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts.html">geopressure_ts()</a></code> on the background, so it will be slow (especially for long stationary period). This feature is quite unstable, so use carefully, and be aware that you might have to restart the app if it crashes (submit <a href="https://github.com/Rafnuss/GeoPressureR/issues/new">an issue</a> with reproducible example).</p></li>
-</ol>
-</div>
-<div id="check-your-data" class="section level3" number="3.2.2">
-<h3>
-<span class="header-section-number">3.2.2</span> Check your data<a class="anchor" aria-label="anchor" href="#check-your-data"><i class="fas fa-link"></i></a>
-</h3>
-<p>With GeoPressureViz, we want to check that the probability map is coherent with the flight distance from the previous/next location and ultimately that a overal trajectory is possible/present in the data.</p>
+<p>To carry out these checks, you can use the shiny app <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move.</p>
+<p>Learn more about this app in the dedicated chapter <a href="geopressureviz-1.html#geopressureviz-1">GeoPressureViz</a>.</p>
+<p>With GeoPressureViz, we want to check that the probability map is coherent with the flight distance from the previous/next location and ultimately that a overal trajectory is possible/present in the data. If you notice any inconsistency, go back to the labellisation step (for pressure and light) and check again.</p>
 <p>I suggest starting by selecting only long stopovers (24-72 hours depending on your application), as this will help to draw out the general trajectory followed by the bird, and only later adding the shorter stopovers which could raise more confusion (the best match of pressure is often completely off).</p>
 <p>Following the same recommendation than in <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, you want the non-outlier pressure of each stationary period to match a single elevation timeserie (bottom panel). You can check on the map that the pressure location seem coherent by selecting only “pressure” in the probability map display. Usually, it’s pretty obvious when there is an issue on the map.</p>
 <p>So, to correct any issue, go back to trainset and edit (1) labelling of activity to split or combine stationary periods and (2) labelling the pressure timeserie to exclude certain datapoints from the match. The good match of the timeserie is essential and will require several iteration.</p>
@@ -209,26 +182,6 @@
 <li>Wind data is not yet included and might explain some longer flight (sometimes up to 100km/h).</li>
 </ul>
 </div>
-<div id="run-geopressureviz" class="section level3" number="3.2.3">
-<h3>
-<span class="header-section-number">3.2.3</span> Run GeoPressureViz<a class="anchor" aria-label="anchor" href="#run-geopressureviz"><i class="fas fa-link"></i></a>
-</h3>
-<p>To run the visualization, you will need to save the data as <code>~/geopressureviz.RData</code> (I cannot find a good way to pass variable to a shiny app instance, <a href="https://github.com/Rafnuss/GeoPressureR/issues/14">let me know if you have a suggestion</a>).</p>
-<p>The minimum information needed is <code>pam</code> and <code>static_prob</code>, but to see the difference between light and pressure, you can also add <code>light_prob</code> and <code>pressure_prob</code>. To see the match of pressure timeserie in the bottom panel, add <code>pressure_timeserie</code>.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">geopressureviz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>  pam <span class="op">=</span> <span class="va">pam</span>,</span>
-<span>  static_prob <span class="op">=</span> <span class="va">static_prob</span>,</span>
-<span>  pressure_prob <span class="op">=</span> <span class="va">pressure_prob</span>,</span>
-<span>  light_prob <span class="op">=</span> <span class="va">light_prob</span>,</span>
-<span>  pressure_timeserie <span class="op">=</span> <span class="va">static_timeserie</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">geopressureviz</span>, file <span class="op">=</span> <span class="st">"~/geopressureviz.RData"</span><span class="op">)</span></span></code></pre></div>
-<p>Run the app in the browser for best view with</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"geopressureviz"</span>, package <span class="op">=</span> <span class="st">"GeoPressureR"</span><span class="op">)</span>, launch.browser <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html">getOption</a></span><span class="op">(</span><span class="st">"browser"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-</div>
-</div>
 <div id="final-checks" class="section level2" number="3.3">
 <h2>
 <span class="header-section-number">3.3</span> Final checks<a class="anchor" aria-label="anchor" href="#final-checks"><i class="fas fa-link"></i></a>
@@ -239,7 +192,7 @@
 <span class="header-section-number">3.3.1</span> Check 1<a class="anchor" aria-label="anchor" href="#check-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>A first and easy check is that there be at least one location with a probability greater than 1 for each stationary period.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">static_prob_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">static_prob</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">probt</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="va">probt</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">probt</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
@@ -258,7 +211,7 @@
 <span class="header-section-number">3.3.2</span> Check 2<a class="anchor" aria-label="anchor" href="#check-2"><i class="fas fa-link"></i></a>
 </h3>
 <p>Secondly, we check that there always be at least one possible transition from one stationary period to the next.</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i_s</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">cur</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span></span>
 <span>  <span class="va">cur</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cur</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">F</span></span>
@@ -283,7 +236,7 @@
 <h2>
 <span class="header-section-number">3.4</span> Save<a class="anchor" aria-label="anchor" href="#save-2"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">pam</span>,</span>
 <span>  <span class="va">static_prob</span>,</span>
 <span>  <span class="va">static_timeserie</span>,</span>
@@ -292,7 +245,10 @@
 
 </div>
 </div>
-  <div class="chapter-nav">
+<script>
+document.getElementsByClassName("book-toc")[0].insertAdjacentHTML("afterend",
+                "<div class='text-center'><a href='https://github.com/Rafnuss/GeoPressureTemplate' target='_blank' class='btn btn-sm btn-outline-primary' role='button'>Start your own study</a></div>");
+</script><div class="chapter-nav">
 <div class="prev"><a href="light-map.html"><span class="header-section-number">2</span> Light map</a></div>
 <div class="next"><a href="basic-graph.html"><span class="header-section-number">4</span> Basic graph</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
@@ -300,13 +256,7 @@
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#static-map"><span class="header-section-number">3</span> Static map</a></li>
 <li><a class="nav-link" href="#combine-pressure-and-light"><span class="header-section-number">3.1</span> Combine pressure and light</a></li>
-<li>
-<a class="nav-link" href="#check-track-with-geopressureviz"><span class="header-section-number">3.2</span> Check track with GeoPressureViz</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#navigate-geopressureviz"><span class="header-section-number">3.2.1</span> Navigate GeoPressureViz</a></li>
-<li><a class="nav-link" href="#check-your-data"><span class="header-section-number">3.2.2</span> Check your data</a></li>
-<li><a class="nav-link" href="#run-geopressureviz"><span class="header-section-number">3.2.3</span> Run GeoPressureViz</a></li>
-</ul>
-</li>
+<li><a class="nav-link" href="#check-track-with-geopressureviz"><span class="header-section-number">3.2</span> Check track with GeoPressureViz</a></li>
 <li>
 <a class="nav-link" href="#final-checks"><span class="header-section-number">3.3</span> Final checks</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#check-1"><span class="header-section-number">3.3.1</span> Check 1</a></li>

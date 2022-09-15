@@ -1,4 +1,5 @@
-geolocation-by-pressure
+what-can-you-do-with-geopressurer
+what-do-you-need-to-use-geopressurer
 the-geopressure-suite
 installation
 pressure-map
@@ -21,9 +22,6 @@ save-1
 static-map
 combine-pressure-and-light
 check-track-with-geopressureviz
-navigate-geopressureviz
-check-your-data
-run-geopressureviz
 final-checks
 check-1
 check-2
@@ -60,6 +58,9 @@ importance-of-zooming-in-before-editing-outliers
 short-stationary-halts-between-flights
 mountainous-species
 examples
+geopressureviz-1
+navigate-geopressureviz
+run-geopressureviz
 probability-aggregation
 problem-presentation
 error-term
