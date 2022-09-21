@@ -33,22 +33,10 @@ GeoPressureR includes a [Shiny app](https://shiny.rstudio.com/) called `GeoPress
 
 ## Run GeoPressureViz
 
-To run the visualization, you will need to save the data as `~/geopressureviz.RData` (I cannot find a good way to pass variable to a shiny app instance, [let me know if you have a suggestion](https://github.com/Rafnuss/GeoPressureR/issues/14)).
-
-The minimum information needed is `pam` and `static_prob`, but to see the difference between light and pressure, you can also add `light_prob` and `pressure_prob`. To see the match of pressure timeserie in the bottom panel, add `pressure_timeserie`.
-
-All probability map provided must have the same `sta_id`, you can use this code to ensure this condition 
+To run the visualization, use the `geopressureviz()` function. The minimum information needed is `pam` and `static_prob`, but to see the difference between light and pressure, you can also add `light_prob` and `pressure_prob`. To see the match of pressure timeserie in the bottom panel, add `pressure_timeserie`. The visualization will only display the stationary period present in `static_prob`.
 
 ```{r, eval = F}
-sta_marginal <- unlist(lapply(grl_marginal, function(x) raster::metadata(x)$sta_id))
-sta_pres <- unlist(lapply(pressure_prob, function(x) raster::metadata(x)$sta_id))
-sta_light <- unlist(lapply(light_prob, function(x) raster::metadata(x)$sta_id))
-pressure_prob <- pressure_prob[sta_pres %in% sta_marginal]
-light_prob <- light_prob[sta_light %in% sta_marginal]
-```
-
-```{r, eval = F}
-geopressureviz <- list(
+path_modified <- geopressureviz(
   pam = pam, # required
   pressure_prob = pressure_prob, # optional
   light_prob = light_prob, # optional
@@ -56,11 +44,6 @@ geopressureviz <- list(
   static_prob_marginal = grl_marginal, # optional
   pressure_timeserie = static_timeserie # optional. Could be either: pressure_timeserie, static_timeserie, shortest_path_timeserie
 )
-save(geopressureviz, file = "~/geopressureviz.RData")
 ```
 
-Run the app in the browser for best view with
-
-```{r, eval=F}
-shiny::runApp(system.file("geopressureviz", package = "GeoPressureR"), launch.browser = getOption("browser"))
-```
+Note that if you close the app from the browser, it should return the path that you have interactively created as a data.frame.

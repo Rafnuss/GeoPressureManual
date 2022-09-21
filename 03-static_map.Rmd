@@ -104,6 +104,16 @@ In [Labelling tracks], we already checked that the pressure timeseries measured 
 
 To carry out these checks, you can use the shiny app `GeoPressureViz` which helps you visualize the overall trajectory of the bird as well as each step-by-step move. 
 
+```{r, eval = F}
+geopressureviz(
+  pam = pam,
+  pressure_prob = pressure_prob,
+  light_prob = light_prob
+  static_prob = static_prob, 
+  pressure_timeserie = static_timeserie 
+)
+```
+
 Learn more about this app in the dedicated chapter [GeoPressureViz].
 
 With GeoPressureViz, we want to check that the probability map is coherent with the flight distance from the previous/next location and ultimately that a overal trajectory is possible/present in the data. If you notice any inconsistency, go back to the labellisation step (for pressure and light) and check again.

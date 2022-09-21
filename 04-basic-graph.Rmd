@@ -116,6 +116,17 @@ static_prob_marginal <- graph_marginal(grl)
 
 You can use [GeoPressureViz] to check the result of `graph_marginal()` and how it compares to `static_prob`.
 
+```{r, eval = F}
+geopressureviz(
+  pam = pam,
+  pressure_prob = pressure_prob,
+  light_prob = light_prob
+  static_prob = static_prob, 
+  pressure_timeserie = shortest_path_timeserie,
+  static_prob_marginal = static_prob_marginal
+)
+```
+
 <details>
 
 <summary>See code for figure </summary>

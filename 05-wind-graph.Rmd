@@ -246,7 +246,7 @@ nj <- 10 # Number of simulation
 path_sim <- graph_simulation(grl, nj = nj)
 ```
 
-## GeoPressureViz
+## Run GeoPressureViz
 
 We can also visualize the shortest path and marginal map in [GeoPressureViz]. First, we need to query the pressure timeserie on the shortest path location. 
 
@@ -255,7 +255,16 @@ shortest_path <- as.data.frame(grl$shortest_path)
 shortest_path_timeserie <- geopressure_ts_path(shortest_path, pam$pressure)
 ```
 
-See [GeoPressureViz] for the instruction on how to launch GeoPressureViz.
+```{r, eval = F}
+geopressureviz(
+  pam = pam,
+  pressure_prob = pressure_prob,
+  light_prob = light_prob
+  static_prob = static_prob, 
+  pressure_timeserie = shortest_path_timeserie,
+  static_prob_marginal = grl_marginal
+)
+```
 
 ## Compute flight energy
 
