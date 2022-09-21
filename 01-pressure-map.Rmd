@@ -77,8 +77,8 @@ ggplotly(p, dynamicTicks = T) %>%
   )
 ```
 
-## Compute mismatch maps {#computing-mismatch-maps}
-Now that we have clean pressure time series for each stationary period, we are ready to match each one with atmospheric pressure data (ERA5). To overcome the challenge of computing mismatch on such a large data-set, this R package uses the [API GeoPressure](https://github.com/Rafnuss/GeoPressureAPI) to perform the computation on Google Earth Engine.
+## Compute pressure maps
+Now that we have clean pressure time series for each stationary period, we are ready to match each one with a weather reanalysis dataset (ERA5). To overcome the challenge of handling such a large dataset, GeoPressureR uses the [API GeoPressure](https://github.com/Rafnuss/GeoPressureAPI) to perform the computation on Google Earth Engine.
 
 Initially, it is easier and faster to query only long stationary periods (in the example below, we select only periods longer than 12hrs). You can do so by setting the pressure of the stationary periods you wish to discard to `NA`.
 

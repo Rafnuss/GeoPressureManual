@@ -126,7 +126,7 @@ twl$sta_id[tmp[, 1]] <- tmp[, 2]
 
 ## Compute probability map
 
-We first define a grid on which to compute the probabilities. For ease of comparison with the pressure-derived map, we load the grid size and resolution from `pressure_prob` (computed [Pressure map | Computing mismatch maps](#computing-mismatch-maps)
+We first define a grid on which to compute the probabilities. For ease of comparison with the pressure-derived map, we load the grid size and resolution from `pressure_prob` (computed in [Pressure map])
 
 ```{r}
 g <- as.data.frame(pressure_prob[[1]], xy = TRUE)
