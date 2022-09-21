@@ -68,7 +68,7 @@
 <li><a class="" href="wind-graph.html"><span class="header-section-number">5</span> Wind graph</a></li>
 <li class="book-part">Appendix</li>
 <li><a class="" href="labelling-tracks.html"><span class="header-section-number">A</span> Labelling tracks</a></li>
-<li><a class="" href="geopressureviz-1.html"><span class="header-section-number">B</span> GeoPressureViz</a></li>
+<li><a class="" href="geopressureviz.html"><span class="header-section-number">B</span> GeoPressureViz</a></li>
 <li><a class="active" href="probability-aggregation.html"><span class="header-section-number">C</span> Probability aggregation</a></li>
 <li><a class="" href="gridded-gibbs-sampler.html"><span class="header-section-number">D</span> Gridded Gibbs sampler</a></li>
 <li><a class="" href="resources.html"><span class="header-section-number">E</span> Resources</a></li>
@@ -108,14 +108,14 @@
 <span class="header-section-number">C.1.2</span> Error term for the Great Reed Warbler<a class="anchor" aria-label="anchor" href="#error-term-for-the-great-reed-warbler"><i class="fas fa-link"></i></a>
 </h3>
 <p>Let’s load the data data and filter</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/1_pressure/18LX_pressure_prob.Rdata"</span><span class="op">)</span></span>
 <span><span class="va">sta_id_keep</span> <span class="op">&lt;-</span> <span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">sta_id</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html">difftime</a></span><span class="op">(</span><span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">end</span>, <span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">start</span>, units <span class="op">=</span> <span class="st">"hours"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">12</span><span class="op">]</span></span>
 <span><span class="va">pam</span><span class="op">$</span><span class="va">pressure</span><span class="op">$</span><span class="va">sta_id</span><span class="op">[</span><span class="op">!</span><span class="op">(</span><span class="va">pam</span><span class="op">$</span><span class="va">pressure</span><span class="op">$</span><span class="va">sta_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sta_id_keep</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
 <p>We are using <a href="https://raphaelnussbaumer.com/GeoPressureServer/#description">the GeoPressure API</a> with the <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_map.html">geopressure_map()</a></code> function to measure the mismatch of the pressure series. Because the API can realistically return only a single map per stationary period, it aggregates the error timeseries with the Mean Squared Error (MSE),
 <span class="math display">\[\mathit{MSE} = \frac{1}{n}\sum_{t=1}^{n} \varepsilon[t]^2.\]</span></p>
 <p>We can post-process the data to get back some basic metadata, such as the number of datapoints of each stationay period used. We also compute the position with the minimum MSE</p>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">raster_mse_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i_s</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">pressure_maps</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -207,7 +207,7 @@
 <div class="inline-figure">
 <img src="assets/Appendix_F_4.png" style="width:100.0%" alt="Histogram of the error term">
 They all look close enough to a Gaussian distribution. In the case of the Great Reed Warbler, the standard deviation is around 0.5.</div>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span></code></pre></div>
 <p>Therefore, assuming a Gaussian distribution of our error, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Non-independent_variables">Gaussian likelikhood</a> of a multivariate normal distribution is given by
 <span class="math display">\[ f(\boldsymbol{\varepsilon})={\frac {1}{(2\pi)^{n/2} \sqrt{\det(\boldsymbol{\Sigma})}}}\exp \left(-\frac{1}{2} \boldsymbol{\varepsilon} \boldsymbol{\Sigma}^{-1} \boldsymbol{\varepsilon} \right).\]</span>
@@ -221,12 +221,12 @@ with the vector notation <span class="math inline">\(\boldsymbol{\varepsilon }=[
 <p>We can re-write this equation as a function of the MSE
 <span class="math display">\[ f_{ind}(\boldsymbol{\varepsilon})=\left({\frac {1}{2\pi \sigma ^{2}}}\right)^{n/2}\exp \left(-n{\frac {\mathit{MSE}}{2\sigma ^2}}\right).\]</span></p>
 <p>Using this equation, we can compute the probability for each stationary periods. In the code below, we define a likelihood function <code>f_prob</code> as a function of <span class="math inline">\(n\)</span>, <span class="math inline">\(\sigma\)</span> and the MSE.</p>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f_prob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">s</span>, <span class="va">MSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">n</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span> <span class="op">*</span> <span class="va">MSE</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">/</span> <span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>We define a function below to display the MSE and probability for 8 stationary periods based on a likelihood function. This function will be used later to compare with other likelihood function.</p>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fun_plot_prob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">f_prob</span>, <span class="va">sta</span>, <span class="va">pressure_maps</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">raster_prob_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i_s</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">pressure_maps</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -256,9 +256,9 @@ with the vector notation <span class="math inline">\(\boldsymbol{\varepsilon }=[
 <span>    <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">sta</span><span class="op">$</span><span class="va">lon</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span>, <span class="va">sta</span><span class="op">$</span><span class="va">lat</span><span class="op">[</span><span class="va">i_s</span><span class="op">]</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fun_plot_prob</span><span class="op">(</span><span class="va">f_prob</span>, <span class="va">sta</span>, <span class="va">pressure_maps</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-102-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-103-1.png" width="672"></div>
 <p>Assuming independance, the Gaussian likelihood transforms the MSE into probability with narrow ranges of uncertainties. So narrow that for long stationary period (i_s=1 and 17), the entire map is 0.</p>
 <p>This comes from the multiplication of probability assumed in the independence case (see equation above). The underlying assuming of the multiplication operator is the <a href="https://en.wikipedia.org/wiki/Logical_conjunction">conjunction of probabilities</a>, where aggregating two information is done with the AND operator: <span class="math inline">\(P(A~\text{and}~B) = P(A)\times P(B)\)</span>. Only the information content overlapping every datapoint of information is kept.</p>
 </div>
@@ -311,13 +311,13 @@ which, with our Gaussian assumption, we can written,
 <span class="math display">\[ F(\boldsymbol{\varepsilon})={\frac {1}{\sigma\sqrt{2\pi} }}\exp \left(-{\frac {1}{2\sigma ^2}\mathit{MSE}}\right),\]</span>
 which can be interpreted as the Gaussian probability distributions of the MSE. The length of the timeseries <span class="math inline">\(n\)</span> has disappeared from the equation, so that the aggregation dependence only on the mean square of the errors, regardless of how many datapoints.</p>
 <p>We can try this and see the influence on the probability map.</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f_prob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">s</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">w</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">n</span></span>
 <span>  <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">w</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">w</span> <span class="op">*</span> <span class="va">n</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">/</span> <span class="op">(</span><span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">fun_plot_prob</span><span class="op">(</span><span class="va">f_prob</span>, <span class="va">sta</span>, <span class="va">pressure_maps</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-103-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-104-1.png" width="672"></div>
 <p>As expected from the disappearance of n, the uncertainty is now completely independent from the duration of the stationary period.</p>
 <p>This is again obviously not what we want, but it shows the other extreme of the log-linear pooling.</p>
 </div>
@@ -328,13 +328,13 @@ which can be interpreted as the Gaussian probability distributions of the MSE. T
 <p>For this study, we chose to use <span class="math inline">\(w=\frac{\log(n)}{n}\)</span>, which result in the pooling aggregation</p>
 <p><span class="math display">\[F(\boldsymbol{\varepsilon}) \propto \left({\frac {1}{2\pi \sigma ^{2}}}\right)^{\frac{w\log(n)}{2}} \exp \left(-{\frac {\log(n)}{2\sigma ^2}}\textit{MSE}\right).\]</span></p>
 <p>This scheme was designed to minimize the strength of <span class="math inline">\(1/n\)</span></p>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f_prob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">s</span>, <span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span></span>
 <span>  <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">w</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">w</span> <span class="op">*</span> <span class="va">n</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">/</span> <span class="op">(</span><span class="va">s</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="va">x</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">fun_plot_prob</span><span class="op">(</span><span class="va">f_prob</span>, <span class="va">sta</span>, <span class="va">pressure_maps</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-104-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-105-1.png" width="672"></div>
 </div>
 <div id="validation" class="section level3" number="8.3.4">
 <h3>
@@ -361,7 +361,7 @@ which can be interpreted as the Gaussian probability distributions of the MSE. T
 document.getElementsByClassName("book-toc")[0].insertAdjacentHTML("afterend",
                 "<div class='text-center'><a href='https://github.com/Rafnuss/GeoPressureTemplate' target='_blank' class='btn btn-sm btn-outline-primary' role='button'>Start your own study</a></div>");
 </script><div class="chapter-nav">
-<div class="prev"><a href="geopressureviz-1.html"><span class="header-section-number">B</span> GeoPressureViz</a></div>
+<div class="prev"><a href="geopressureviz.html"><span class="header-section-number">B</span> GeoPressureViz</a></div>
 <div class="next"><a href="gridded-gibbs-sampler.html"><span class="header-section-number">D</span> Gridded Gibbs sampler</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>

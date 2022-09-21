@@ -68,7 +68,7 @@
 <li><a class="" href="wind-graph.html"><span class="header-section-number">5</span> Wind graph</a></li>
 <li class="book-part">Appendix</li>
 <li><a class="" href="labelling-tracks.html"><span class="header-section-number">A</span> Labelling tracks</a></li>
-<li><a class="" href="geopressureviz-1.html"><span class="header-section-number">B</span> GeoPressureViz</a></li>
+<li><a class="" href="geopressureviz.html"><span class="header-section-number">B</span> GeoPressureViz</a></li>
 <li><a class="" href="probability-aggregation.html"><span class="header-section-number">C</span> Probability aggregation</a></li>
 <li><a class="" href="gridded-gibbs-sampler.html"><span class="header-section-number">D</span> Gridded Gibbs sampler</a></li>
 <li><a class="" href="resources.html"><span class="header-section-number">E</span> Resources</a></li>
@@ -168,7 +168,14 @@
 <p>Now that we have combined pressure and light, we need to verify that the data is coherent.</p>
 <p>In <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, we already checked that the pressure timeseries measured by the geolocator are consistent with a least one location on the map. However, we didn’t check whether these locations are (1) coherent with light data, and (2) within reach of one another, considering flight duration and realistic flight speed.</p>
 <p>To carry out these checks, you can use the shiny app <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move.</p>
-<p>Learn more about this app in the dedicated chapter <a href="geopressureviz-1.html#geopressureviz-1">GeoPressureViz</a>.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="static-map.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geopressureviz</span>(</span>
+<span id="cb47-2"><a href="static-map.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pam =</span> pam,</span>
+<span id="cb47-3"><a href="static-map.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pressure_prob =</span> pressure_prob,</span>
+<span id="cb47-4"><a href="static-map.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">light_prob =</span> light_prob</span>
+<span id="cb47-5"><a href="static-map.html#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">static_prob =</span> static_prob, </span>
+<span id="cb47-6"><a href="static-map.html#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pressure_timeserie =</span> static_timeserie </span>
+<span id="cb47-7"><a href="static-map.html#cb47-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Learn more about this app in the dedicated chapter <a href="geopressureviz.html#geopressureviz">GeoPressureViz</a>.</p>
 <p>With GeoPressureViz, we want to check that the probability map is coherent with the flight distance from the previous/next location and ultimately that a overal trajectory is possible/present in the data. If you notice any inconsistency, go back to the labellisation step (for pressure and light) and check again.</p>
 <p>I suggest starting by selecting only long stopovers (24-72 hours depending on your application), as this will help to draw out the general trajectory followed by the bird, and only later adding the shorter stopovers which could raise more confusion (the best match of pressure is often completely off).</p>
 <p>Following the same recommendation than in <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, you want the non-outlier pressure of each stationary period to match a single elevation timeserie (bottom panel). You can check on the map that the pressure location seem coherent by selecting only “pressure” in the probability map display. Usually, it’s pretty obvious when there is an issue on the map.</p>
@@ -192,7 +199,7 @@
 <span class="header-section-number">3.3.1</span> Check 1<a class="anchor" aria-label="anchor" href="#check-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>A first and easy check is that there be at least one location with a probability greater than 1 for each stationary period.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">static_prob_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">static_prob</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">probt</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="va">probt</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">probt</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
@@ -211,7 +218,7 @@
 <span class="header-section-number">3.3.2</span> Check 2<a class="anchor" aria-label="anchor" href="#check-2"><i class="fas fa-link"></i></a>
 </h3>
 <p>Secondly, we check that there always be at least one possible transition from one stationary period to the next.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i_s</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">cur</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span></span>
 <span>  <span class="va">cur</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cur</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">F</span></span>
@@ -236,7 +243,7 @@
 <h2>
 <span class="header-section-number">3.4</span> Save<a class="anchor" aria-label="anchor" href="#save-2"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">pam</span>,</span>
 <span>  <span class="va">static_prob</span>,</span>
 <span>  <span class="va">static_timeserie</span>,</span>

@@ -8,7 +8,7 @@ label-tracks
 automatic-classification-of-activity
 edit-activity-on-trainset
 identify-stationary-periods
-computing-mismatch-maps
+compute-pressure-maps
 compute-probability-maps
 compute-altitude
 compute-pressure-and-altitude-for-the-path
@@ -41,7 +41,7 @@ compute-the-transition-probability-1
 output-1-shortest-path-1
 output-2-marginal-probability-map-1
 output-3-simulated-paths-1
-geopressureviz
+run-geopressureviz
 compute-flight-energy
 save-4
 labelling-tracks
@@ -58,9 +58,9 @@ importance-of-zooming-in-before-editing-outliers
 short-stationary-halts-between-flights
 mountainous-species
 examples
-geopressureviz-1
+geopressureviz
 navigate-geopressureviz
-run-geopressureviz
+run-geopressureviz-1
 probability-aggregation
 problem-presentation
 error-term
