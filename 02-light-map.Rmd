@@ -1,6 +1,8 @@
 # Light map
 
-In this vignette, we use light data to estimate the position of the Great Reed Warbler (18LCX) at each stationary period. A more thorough introduction to geolocation with light data can be found on <https://geolocationmanual.vogelwarte.ch/> [@Lisovski2020].
+In this vignette, we use light data to estimate the position of the Great Reed Warbler (18LCX) at each stationary period by constructing a probability map. This step can be done based on various methods: see @Basson2016 and @Bindoff2018. 
+
+Here we use an approach based on the simple threshold based method, using a calibration of zenith angle. A more thorough introduction to geolocation with light data can be found on <https://geolocationmanual.vogelwarte.ch/> [@Lisovski2020]. 
 
 We first load the data generated in [Pressure map].
 
@@ -19,7 +21,7 @@ tm_calib_1 <- c(pam$sta$start[1], pam$sta$end[1])
 
 ## Annotate twilights
 
-To find the time of twilight, we can use `find_twilights()`, a function performing the same task than `TwGeos::FindTwilight()`, but differently.
+To find the time of twilight, we can use `find_twilights()`, a function performing the same task than [`TwGeos::FindTwilight()`](https://rdrr.io/github/slisovski/TwGeos/man/findTwilights.html), but using a matrix representation. This approach is faster but less general (e.g., require regularly spaced light data). If it doesn't work with your data, use `TwGeos::FindTwilight()`.
 
 By default, the threshold is the first and last of light day (i.e., `pam$light$obs>0`). The `shift_k` argument is identical to the `offset` in `GeoLight` functions.
 
@@ -30,7 +32,7 @@ twl <- find_twilights(pam$light,
 )
 ```
 
-We can visualize the twilight with `TwGeos` functions.
+We can visualize the twilight with `TwGeos` visualization functions.
 
 ```{r}
 raw_geolight <- data.frame(
