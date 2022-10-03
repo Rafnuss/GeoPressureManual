@@ -10,7 +10,7 @@ load("data/3_static/18LX_static_prob.Rdata")
 
 ## Download wind data
 
-Wind data is available at high resolution (1hr, 0.25°, 37 pressure level) on [ERA5 hourly data on pressure levels](https://doi.org/10.24381/cds.bd0915c6). And this data is easily accessible through the [`ecmwfr`](https://bluegreen-labs.github.io/ecmwfr) package. As the flight are of short duration, we suggest to download a file for each flight.
+Wind data is available at high resolution (1hr, 0.25°, 37 pressure level) on [ERA5 hourly data on pressure levels](https://doi.org/10.24381/cds.bd0915c6). And this data is easily accessible through the [`ecmwfr`](https://bluegreen-labs.github.io/ecmwfr) package. 
 
 The first step is to setup-up your CDS access. You will need to create an account on [https://cds.climate.copernicus.eu/](https://cds.climate.copernicus.eu/user/register) to generate your API key and uid number. You can stored them in your `.Rprofile` with the commented code.
 
@@ -27,15 +27,25 @@ Sys.getenv("cds_key")
 Sys.getenv("cds_user")
 ```
 
-To efficiently query only the data needed, we will sub-select the pressure level needed for each flight. We enter the [37 pressure level of ERA-5](https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation#ERA5:datadocumentation-Levellistings) and define the geographical area.
+As the flight are of short duration, we suggest to download a file for each flight, this can be done automatically with `graph_download_wind` which uses [`wf_request_batch()`](https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests) to make all requests in parallel. 
 
 ```{r, eval=F}
 graph_download_wind(pam,
-                    area = static_prob, # area accept also c(50, -16, 0, 23)
-                    )
+  area = static_prob, # area accept also c(50, -16, 0, 23)
+)
 ```
 
-This should not take anytime between a couple of minutes to an hour depending on the number of flights. If you have any issue with the download, you can monitor the requests at <https://cds.climate.copernicus.eu/cdsapp#!/yourrequests>.
+If you have any issue with the download, you can monitor the requests at <https://cds.climate.copernicus.eu/cdsapp#!/yourrequests>. In case you have a lot of flight to requests (>20), for instance if you want to download the data for multiple tracks at once. It is best to use `transfer=FALSE` which makes the request and return the URL for the download without waiting for the download to be available. You can then transfer the file using the URL. 
+
+```{r, eval=F}
+requests <- graph_download_wind(pam,
+  area = static_prob,
+  transfer = FALSE
+)
+lapply(requests, function(x) {
+  x$transfer()
+})
+```
 
 ## Create graph
 
@@ -50,10 +60,11 @@ grl <- graph_create(static_prob, thr_prob_percentile = .99, thr_gs = 150)
 We can compute the windspeed experienced by the bird if he had flew each possible transition (i.e. edge in the graph). Based on this windspeed and groundspeed, we also compute the airspeed. All of these are stored as complex value with the real part representing the E-W component and the imaginary part corresponding to the N-S.
 
 ```{r, cache=TRUE, message=F, results='hide'}
-grl <- graph_add_wind(grl, 
-                      pressure = pam$pressure, 
-                      filename = "data/5_wind_graph/18LX/18LX_", 
-                      thr_as = 100)
+grl <- graph_add_wind(grl,
+  pressure = pam$pressure,
+  filename = "data/5_wind_graph/18LX/18LX_",
+  thr_as = 100
+)
 ```
 
 ## Compute the transition probability
@@ -259,8 +270,8 @@ shortest_path_timeserie <- geopressure_ts_path(shortest_path, pam$pressure)
 geopressureviz(
   pam = pam,
   pressure_prob = pressure_prob,
-  light_prob = light_prob
-  static_prob = static_prob, 
+  light_prob = light_prob,
+  static_prob = static_prob,
   pressure_timeserie = shortest_path_timeserie,
   static_prob_marginal = grl_marginal
 )
