@@ -35,15 +35,15 @@ graph_download_wind(pam,
 )
 ```
 
-If you have any issue with the download, you can monitor the requests at <https://cds.climate.copernicus.eu/cdsapp#!/yourrequests>. In case you have a lot of flight to requests (>20), for instance if you want to download the data for multiple tracks at once. It is best to use `transfer=FALSE` which makes the request and return the URL for the download without waiting for the download to be available. You can then transfer the file using the URL. 
+You can monitor the requests at <https://cds.climate.copernicus.eu/cdsapp#!/yourrequests>.
+
+In case you have a lot of flight for which you need to download the data and don't want to block your console, you might consider using a [RStudio background job](https://solutions.rstudio.com/r/jobs/) which can be easily called with the [job package](https://lindeloev.github.io/job/):
 
 ```{r, eval=F}
-requests <- graph_download_wind(pam,
-  area = static_prob,
-  transfer = FALSE
-)
-lapply(requests, function(x) {
-  x$transfer()
+job::job({
+  graph_download_wind(pam,
+    area = static_prob, # area accept also c(50, -16, 0, 23)
+  )
 })
 ```
 
