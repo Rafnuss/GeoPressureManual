@@ -18,7 +18,26 @@ pam <- pam_read(
 
 ## Label tracks
 
-To ensure the high level of precision needed for the pressure match, we must manually edit the activity classification and  the pressure time series to be matched. We suggest doing this with TRAINSET. [labelling tracks] is dedicated to this exercise and includes tips and best practices. Here, we will just walk through the main step of the workflow.
+The labeling of the track is two-fold: 
+- Indicate the flight periods by adding a logical (`TRUE` or `FALSE`) for each acceleration measurement: `pam$acceleration$ismig`.
+- Identify outlier pressure measurement which should not be use for estimating position as a logical in  `pam$pressure$isoutliar`.
+
+To ensure the high level of precision needed for the pressure match, we strongly suggest to use a manually labeling through TRAINSET. The chapter [labelling tracks] is dedicated to this exercise and includes tips and best practices. Here, we will just walk through the main step of the workflow.
+
+### No acceleration data ?
+
+If no acceleration data is available for your tracks, we suggest you to create a fake acceleration data, using for instance the pressure dataset:
+
+```{r, eval=F}
+pam$acceleration = pam$pressure
+pam$acceleration$obs = 0 # you could also keep the pressure measurement for ease of identification in TRAINSET
+pam$acceleration$obs[1] = 1 # trick to avoid y axis issue in TRAINSET (see https://github.com/Rafnuss/GeoPressureR/discussions/26)
+pam$acceleration$ismig = FALSE
+```
+
+Note that while this will use the temporal resolution of the pressure measure, any resolution of activity can be used.  
+
+You won't be able to use `pam_classify()`, so skip the next sub-section. You can try some other classification of migration such as change point analysis (e.g., https://kiranlda.github.io/PAMLrManual/soar.html#classify-using-a-changepoint-analysis), but in most case, it is often easier to classify directly your track manually.
 
 ### Automatic classification of activity
 
@@ -27,8 +46,6 @@ We initialize the labelling file with an automatic classification of activity. W
 ```{r, results='hide'}
 pam <- pam_classify(pam, min_duration = 30)
 ```
-
-If your track has only pressure data and no acceleration data, see [this gitub issue](https://github.com/Rafnuss/GeoPressureR/discussions/26).
 
 ### Edit activity on TRAINSET
 Use `trainset_write()` to export the automatically generated classifications in a `csv` file, which can be opened in TRAINSET: [https://trainset.geocene.com/](https://trainset.geocene.com/).
