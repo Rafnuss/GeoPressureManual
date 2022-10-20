@@ -2,7 +2,7 @@
 
 ## Publications
 
-> Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Global positioning with animal-borne pressure sensors, 14 June 2022, PREPRINT (Version 2) available at Research Square <https://doi.org/10.21203/rs.3.rs-1381915/v2>
+> Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Global positioning with animal-borne pressure sensors, 5 October 2022, PREPRINT (Version 3) available at Research Square <https://doi.org/10.21203/rs.3.rs-1381915/v3>
 
 > Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Inferring bird’s trajectory from multi-sensor geolocators and remote sensing with a graphical model, 25 May 2022, PREPRINT (Version 1) available at Research Square <https://doi.org/10.21203/rs.3.rs-1693751/v1>
 
@@ -22,4 +22,5 @@ List of all research projects using `GeoPressureR` with links to the code used t
 | Woodland Kingfisher | [Rafnuss/WoodlandKingfisher](https://github.com/Rafnuss/WoodlandKingfisher) | Osinubi et al. (in prep.)                                              |
 | Northern Wheatear   | [Rafnuss/Val-Piora-Wheatear](https://github.com/Rafnuss/Val-Piora-Wheatear) | Rime et al. (in prep.)                                                 |
 | Red-capped Robin-chat and Mangrove Kingfisher   | [Rafnuss/MK-RCRC](https://github.com/Rafnuss/MK-RCRC/) | collecting data                                                 |
-| Swainson's Warbler   | [grhyne/SWWA_Pressure](https://github.com/grhyne/SWWA_Pressure) |  
+| Swainson's Warbler   | [grhyne/SWWA_Pressure](https://github.com/grhyne/SWWA_Pressure) | 
+| Siberian Rubythroat   | [ksakuras/Siberian-rubythroat-China](https://github.com/ksakuras/Siberian-rubythroat-China) | 
