@@ -28,6 +28,7 @@
 <script src="libs/leaflet-binding-2.1.1/leaflet.js"></script><script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script><script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script><link href="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.css" rel="stylesheet">
 <script src="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.js"></script><link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet">
 <script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script><link href="libs/fontawesome-4.7.0/font-awesome.min.css" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/Rafnuss/GeoPressureManual/main/assets/geopressuremanual.ico">
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NJ17NCTPB5"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -66,6 +67,7 @@
 <li><a class="" href="static-map.html"><span class="header-section-number">3</span> Static map</a></li>
 <li><a class="" href="basic-graph.html"><span class="header-section-number">4</span> Basic graph</a></li>
 <li><a class="" href="wind-graph.html"><span class="header-section-number">5</span> Wind graph</a></li>
+<li><a class="" href="export-and-visual.html"><span class="header-section-number">6</span> Export and Visual</a></li>
 <li class="book-part">Appendix</li>
 <li><a class="" href="labelling-tracks.html"><span class="header-section-number">A</span> Labelling tracks</a></li>
 <li><a class="active" href="geopressureviz.html"><span class="header-section-number">B</span> GeoPressureViz</a></li>
@@ -79,13 +81,13 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="geopressureviz" class="section level1" number="7">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="geopressureviz" class="section level1" number="8">
 <h1>
 <span class="header-section-number">B</span> GeoPressureViz<a class="anchor" aria-label="anchor" href="#geopressureviz"><i class="fas fa-link"></i></a>
 </h1>
 <p>GeoPressureR includes a <a href="https://shiny.rstudio.com/">Shiny app</a> called <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that <strong>this is a visualization tool only</strong> and as such, does not change/modify anything on your data. The main goal is to check any issue with the labeling of pressure and the secondary goal is to give you a more intuitive sense of how your bird is moving. This can be a useful platform to discuss the bird trajectory with your collaborators.</p>
 <p><a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" width="100%"></a><em>Screenshot of the <a href="https://rafnuss.shinyapps.io/GeoPressureViz/">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler 18LX, based on (1) the pressure and light match (map colorscale and timeserie) and (2) potential flight distances from previous and next stationary period (circles).</em></p>
-<div id="navigate-geopressureviz" class="section level2" number="7.1">
+<div id="navigate-geopressureviz" class="section level2" number="8.1">
 <h2>
 <span class="header-section-number">B.1</span> Navigate GeoPressureViz<a class="anchor" aria-label="anchor" href="#navigate-geopressureviz"><i class="fas fa-link"></i></a>
 </h2>
@@ -108,12 +110,12 @@
 <li><p>Finally, you can also check the pressure timeserie with the new position that you’ve edited with the button “Query pressure”. This runs <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts.html">geopressure_ts()</a></code> on the background, so it will be slow (especially for long stationary period). This feature is quite unstable, so use carefully, and be aware that you might have to restart the app if it crashes (submit <a href="https://github.com/Rafnuss/GeoPressureR/issues/new">an issue</a> with reproducible example).</p></li>
 </ol>
 </div>
-<div id="run-geopressureviz-1" class="section level2" number="7.2">
+<div id="run-geopressureviz-1" class="section level2" number="8.2">
 <h2>
 <span class="header-section-number">B.2</span> Run GeoPressureViz<a class="anchor" aria-label="anchor" href="#run-geopressureviz-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>To run the visualization, use the <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz()</a></code> function. The minimum information needed is <code>pam</code> and <code>static_prob</code>, but to see the difference between light and pressure, you can also add <code>light_prob</code> and <code>pressure_prob</code>. To see the match of pressure timeserie in the bottom panel, add <code>pressure_timeserie</code>. The visualization will only display the stationary period present in <code>static_prob</code>.</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_modified</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span></span>
 <span>  pam <span class="op">=</span> <span class="va">pam</span>, <span class="co"># required</span></span>
 <span>  pressure_prob <span class="op">=</span> <span class="va">pressure_prob</span>, <span class="co"># optional</span></span>

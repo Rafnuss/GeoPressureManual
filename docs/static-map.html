@@ -28,6 +28,7 @@
 <script src="libs/leaflet-binding-2.1.1/leaflet.js"></script><script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script><script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script><link href="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.css" rel="stylesheet">
 <script src="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.js"></script><link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet">
 <script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script><link href="libs/fontawesome-4.7.0/font-awesome.min.css" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/Rafnuss/GeoPressureManual/main/assets/geopressuremanual.ico">
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NJ17NCTPB5"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -66,6 +67,7 @@
 <li><a class="active" href="static-map.html"><span class="header-section-number">3</span> Static map</a></li>
 <li><a class="" href="basic-graph.html"><span class="header-section-number">4</span> Basic graph</a></li>
 <li><a class="" href="wind-graph.html"><span class="header-section-number">5</span> Wind graph</a></li>
+<li><a class="" href="export-and-visual.html"><span class="header-section-number">6</span> Export and Visual</a></li>
 <li class="book-part">Appendix</li>
 <li><a class="" href="labelling-tracks.html"><span class="header-section-number">A</span> Labelling tracks</a></li>
 <li><a class="" href="geopressureviz.html"><span class="header-section-number">B</span> GeoPressureViz</a></li>
@@ -90,12 +92,12 @@
 <span class="header-section-number">3.1</span> Combine pressure and light<a class="anchor" aria-label="anchor" href="#combine-pressure-and-light"><i class="fas fa-link"></i></a>
 </h2>
 <p>Start by loading the data computed in <a href="light-map.html#light-map">Light map</a> and <a href="pressure-map.html#pressure-map">Pressure map</a>.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/1_pressure/18LX_pressure_prob.Rdata"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/2_light/18LX_light_prob.Rdata"</span><span class="op">)</span></span></code></pre></div>
 <p>We first need to retrieve the pressure and light data for the same stationary period.</p>
 <p>When running this code for the first time, it is recommended to start by keeping only long stationary periods (e.g. <code>thr_sta_dur=5\*24</code> hours), and when all the check below are passing, you can reduce this threshold to zero.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">thr_sta_dur</span> <span class="op">&lt;-</span> <span class="fl">0</span> <span class="co"># in hours</span></span>
 <span><span class="va">sta_pres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">pressure_prob</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/metadata.html">metadata</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">sta_id</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sta_light</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">light_prob</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/metadata.html">metadata</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">sta_id</span><span class="op">)</span><span class="op">)</span></span>
@@ -106,7 +108,7 @@
 <span><span class="va">pressure_prob</span> <span class="op">&lt;-</span> <span class="va">pressure_prob</span><span class="op">[</span><span class="va">sta_pres</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sta_id_keep</span><span class="op">]</span></span>
 <span><span class="va">light_prob</span> <span class="op">&lt;-</span> <span class="va">light_prob</span><span class="op">[</span><span class="va">sta_light</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">sta_id_keep</span><span class="op">]</span></span></code></pre></div>
 <p>We then need to keep all the flights between consecutive stationary period separate so that we can estimate the wind support correctly.</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i_f</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">sta_id_keep</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">from_sta_id</span> <span class="op">&lt;-</span> <span class="va">sta_id_keep</span><span class="op">[</span><span class="va">i_f</span><span class="op">]</span></span>
@@ -119,7 +121,7 @@
 <span><span class="op">}</span></span>
 <span><span class="va">flight</span><span class="op">[[</span><span class="va">i_f</span> <span class="op">+</span> <span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>We compute the static probability with the product of light and pressure probability maps, and add the flight duration in the metadata. <code>static_prob</code> is the consolidate variable containing all the information necessary to run the graph functions.</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">static_prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html">mapply</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">light</span>, <span class="va">pressure</span>, <span class="va">flight</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># define static prob as the product of light and pressure prob</span></span>
 <span>  <span class="va">static_prob</span> <span class="op">&lt;-</span> <span class="va">light</span> <span class="op">*</span> <span class="va">pressure</span></span>
@@ -135,7 +137,7 @@
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span></span>
 <span><span class="op">}</span>, <span class="va">light_prob</span>, <span class="va">pressure_prob</span>, <span class="va">flight</span><span class="op">)</span></span></code></pre></div>
 <p>We overwrite the probability of the first and last stationary periods with the known location of the equipment/retrieval sites.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lon_calib</span> <span class="op">&lt;-</span> <span class="fl">17.05</span></span>
 <span><span class="va">lat_calib</span> <span class="op">&lt;-</span> <span class="fl">48.9</span></span>
 <span></span>
@@ -157,7 +159,7 @@
 <span><span class="va">tmp</span><span class="op">[</span><span class="va">lat_calib_id</span>, <span class="va">lon_calib_id</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="fu">values</span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">tmp</span></span></code></pre></div>
 <p>Finally, we can retrieve the pressure and altitude from the most likely position of the combined map of pressure and light.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_map2path.html">geopressure_map2path</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span></span>
 <span><span class="va">static_timeserie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_ts_path.html">geopressure_ts_path</a></span><span class="op">(</span><span class="va">path</span>, <span class="va">pam</span><span class="op">$</span><span class="va">pressure</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -168,13 +170,13 @@
 <p>Now that we have combined pressure and light, we need to verify that the data is coherent.</p>
 <p>In <a href="labelling-tracks.html#labelling-tracks">Labelling tracks</a>, we already checked that the pressure timeseries measured by the geolocator are consistent with a least one location on the map. However, we didn’t check whether these locations are (1) coherent with light data, and (2) within reach of one another, considering flight duration and realistic flight speed.</p>
 <p>To carry out these checks, you can use the shiny app <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="static-map.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geopressureviz</span>(</span>
-<span id="cb47-2"><a href="static-map.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pam =</span> pam,</span>
-<span id="cb47-3"><a href="static-map.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pressure_prob =</span> pressure_prob,</span>
-<span id="cb47-4"><a href="static-map.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">light_prob =</span> light_prob</span>
-<span id="cb47-5"><a href="static-map.html#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">static_prob =</span> static_prob, </span>
-<span id="cb47-6"><a href="static-map.html#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pressure_timeserie =</span> static_timeserie </span>
-<span id="cb47-7"><a href="static-map.html#cb47-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="static-map.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geopressureviz</span>(</span>
+<span id="cb48-2"><a href="static-map.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pam =</span> pam,</span>
+<span id="cb48-3"><a href="static-map.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pressure_prob =</span> pressure_prob,</span>
+<span id="cb48-4"><a href="static-map.html#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">light_prob =</span> light_prob</span>
+<span id="cb48-5"><a href="static-map.html#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">static_prob =</span> static_prob, </span>
+<span id="cb48-6"><a href="static-map.html#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">pressure_timeserie =</span> static_timeserie </span>
+<span id="cb48-7"><a href="static-map.html#cb48-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Learn more about this app in the dedicated chapter <a href="geopressureviz.html#geopressureviz">GeoPressureViz</a>.</p>
 <p>With GeoPressureViz, we want to check that the probability map is coherent with the flight distance from the previous/next location and ultimately that a overal trajectory is possible/present in the data. If you notice any inconsistency, go back to the labellisation step (for pressure and light) and check again.</p>
 <p>I suggest starting by selecting only long stopovers (24-72 hours depending on your application), as this will help to draw out the general trajectory followed by the bird, and only later adding the shorter stopovers which could raise more confusion (the best match of pressure is often completely off).</p>
@@ -199,7 +201,7 @@
 <span class="header-section-number">3.3.1</span> Check 1<a class="anchor" aria-label="anchor" href="#check-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>A first and easy check is that there be at least one location with a probability greater than 1 for each stationary period.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">static_prob_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">static_prob</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">probt</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="va">probt</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">probt</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
@@ -218,7 +220,7 @@
 <span class="header-section-number">3.3.2</span> Check 2<a class="anchor" aria-label="anchor" href="#check-2"><i class="fas fa-link"></i></a>
 </h3>
 <p>Secondly, we check that there always be at least one possible transition from one stationary period to the next.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i_s</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">cur</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="va">i_s</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span></span>
 <span>  <span class="va">cur</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">cur</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">F</span></span>
@@ -243,8 +245,8 @@
 <h2>
 <span class="header-section-number">3.4</span> Save<a class="anchor" aria-label="anchor" href="#save-2"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">pam</span>,</span>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span></span>
 <span>  <span class="va">static_prob</span>,</span>
 <span>  <span class="va">static_timeserie</span>,</span>
 <span>  file <span class="op">=</span> <span class="st">"data/3_static/18LX_static_prob.Rdata"</span></span>

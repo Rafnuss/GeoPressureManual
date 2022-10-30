@@ -90,5 +90,6 @@ library(RColorBrewer)
 # Interactif figure library
 library(leaflet)
 library(leaflet.extras)
+library(moveVis)
 ```
 

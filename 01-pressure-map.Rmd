@@ -24,7 +24,7 @@ The labeling of the track is two-fold:
 
 To ensure the high level of precision needed for the pressure match, we strongly suggest to use a manually labeling through TRAINSET. The chapter [labelling tracks] is dedicated to this exercise and includes tips and best practices. Here, we will just walk through the main step of the workflow.
 
-### No acceleration data ?
+### No acceleration data
 
 If no acceleration data is available for your tracks, we suggest you to create a fake acceleration data, using for instance the pressure dataset:
 

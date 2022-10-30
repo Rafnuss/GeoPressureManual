@@ -21,7 +21,8 @@ Imports:
     RColorBrewer,
     leaflet,
     leaflet.extras,
-    dyplr
+    dyplr,
+    moveVis
 Remotes: 
     rstudio/bookdown,
     rafnuss/GeoPressureR

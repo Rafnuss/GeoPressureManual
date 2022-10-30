@@ -183,7 +183,7 @@ for (i_s in seq_len(length(static_prob) - 1)) {
 ## Save
 
 ```{r}
-save(pam,
+save(
   static_prob,
   static_timeserie,
   file = "data/3_static/18LX_static_prob.Rdata"

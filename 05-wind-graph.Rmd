@@ -5,6 +5,7 @@ In this final chapter, we will add wind data to the graph to refine the transiti
 First load the static probability map. 
 
 ```{r}
+load("data/1_pressure/18LX_pressure_prob.Rdata")
 load("data/3_static/18LX_static_prob.Rdata")
 ```
 
@@ -37,12 +38,12 @@ graph_download_wind(pam,
 
 You can monitor the requests at <https://cds.climate.copernicus.eu/cdsapp#!/yourrequests>.
 
-In case you have a lot of flight for which you need to download the data and don't want to block your console, you might consider using a [RStudio background job](https://solutions.rstudio.com/r/jobs/) which can be easily called with the [job package](https://lindeloev.github.io/job/):
+In case you have a lot of tracks for which you need to download the data and don't want to block your console, you might consider using a [RStudio background job](https://solutions.rstudio.com/r/jobs/) which can be easily called with [jrstudioapi::jobRunScript](https://rstudio.github.io/rstudioapi/reference/jobRunScript.html) or the [job package](https://lindeloev.github.io/job/):
 
 ```{r, eval=F}
 job::job({
   graph_download_wind(pam,
-    area = static_prob, # area accept also c(50, -16, 0, 23)
+    area = static_prob,
   )
 })
 ```
@@ -75,6 +76,7 @@ We first search the morphological information of the Great Reed Warbler using th
 
 ```{r}
 bird <- flight_bird("Acrocephalus arundinaceus")
+bird
 ```
 
 Using the bird created, we can convert a airspeed into a probability using the power method in the function `flight_prob()`. See [Basic graph] for more information on `flight_prob()`.
@@ -253,7 +255,7 @@ m
 Same as [Basic graph].
 
 ```{r, results='hide', message=FALSE}
-nj <- 10 # Number of simulation
+nj <- 100 # Number of simulation
 path_sim <- graph_simulation(grl, nj = nj)
 ```
 

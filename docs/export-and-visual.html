@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Export and Visual | A User Manual for GeoPressureR</title>
+<meta name="author" content="Raphaël Nussbaumer">
+<meta name="description" content="In this extra chapter we will see how to create some additional figure and export the data  6.1 GeoPressureTemplate Basic Trajectory Wind Trajectory Basic Trajectory  6.2 MoveVis Let’s try to...">
+<meta name="generator" content="bookdown 0.29 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Export and Visual | A User Manual for GeoPressureR">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://raphaelnussbaumer.com/GeoPressureManual/export-and-visual.html">
+<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<meta property="og:description" content="In this extra chapter we will see how to create some additional figure and export the data  6.1 GeoPressureTemplate Basic Trajectory Wind Trajectory Basic Trajectory  6.2 MoveVis Let’s try to...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 Export and Visual | A User Manual for GeoPressureR">
+<meta name="twitter:description" content="In this extra chapter we will see how to create some additional figure and export the data  6.1 GeoPressureTemplate Basic Trajectory Wind Trajectory Basic Trajectory  6.2 MoveVis Let’s try to...">
+<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.0/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script><script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script><script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script><link href="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.css" rel="stylesheet">
+<script src="libs/lfx-fullscreen-1.0.2/lfx-fullscreen-prod.js"></script><link href="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.css" rel="stylesheet">
+<script src="libs/leaflet-awesomemarkers-2.0.3/leaflet.awesome-markers.min.js"></script><link href="libs/fontawesome-4.7.0/font-awesome.min.css" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/Rafnuss/GeoPressureManual/main/assets/geopressuremanual.ico">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NJ17NCTPB5"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-NJ17NCTPB5');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">A User Manual for GeoPressureR</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Introduction</a></li>
+<li><a class="" href="pressure-map.html"><span class="header-section-number">1</span> Pressure map</a></li>
+<li><a class="" href="light-map.html"><span class="header-section-number">2</span> Light map</a></li>
+<li><a class="" href="static-map.html"><span class="header-section-number">3</span> Static map</a></li>
+<li><a class="" href="basic-graph.html"><span class="header-section-number">4</span> Basic graph</a></li>
+<li><a class="" href="wind-graph.html"><span class="header-section-number">5</span> Wind graph</a></li>
+<li><a class="active" href="export-and-visual.html"><span class="header-section-number">6</span> Export and Visual</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="labelling-tracks.html"><span class="header-section-number">A</span> Labelling tracks</a></li>
+<li><a class="" href="geopressureviz.html"><span class="header-section-number">B</span> GeoPressureViz</a></li>
+<li><a class="" href="probability-aggregation.html"><span class="header-section-number">C</span> Probability aggregation</a></li>
+<li><a class="" href="gridded-gibbs-sampler.html"><span class="header-section-number">D</span> Gridded Gibbs sampler</a></li>
+<li><a class="" href="resources.html"><span class="header-section-number">E</span> Resources</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/Rafnuss/GeoPressureManual/">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="export-and-visual" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> Export and Visual<a class="anchor" aria-label="anchor" href="#export-and-visual"><i class="fas fa-link"></i></a>
+</h1>
+<p>In this extra chapter we will see how to create some additional figure and export the data</p>
+<div id="geopressuretemplate" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> GeoPressureTemplate<a class="anchor" aria-label="anchor" href="#geopressuretemplate"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><a href="https://raphaelnussbaumer.com/GeoPressureTemplate/basic_trajectory/18LX.html">Basic Trajectory</a></li>
+<li><a href="https://raphaelnussbaumer.com/GeoPressureTemplate/wind_trajectory/18LX.html">Wind Trajectory</a></li>
+<li><a href="https://raphaelnussbaumer.com/GeoPressureTemplate/basic_trajectory/18LX.html">Basic Trajectory</a></li>
+</ul>
+</div>
+<div id="movevis" class="section level2" number="6.2">
+<h2>
+<span class="header-section-number">6.2</span> <a href="https://movevis.org/index.html">MoveVis</a><a class="anchor" aria-label="anchor" href="#movevis"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let’s try to create some of the amazing visual trajectory from <a href="https://movevis.org/index.html">MoveVis</a></p>
+<p>We’ll need the <code>pam</code> structure to know the time and a path (lat, lon) which can come from any previously computed ones (simulations, shortes path, etc). Here we’ll use the shortest path from the wind graph result</p>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/1_pressure/18LX_pressure_prob.Rdata"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"data/5_wind_graph/18LX_wind_graph.Rdata"</span><span class="op">)</span></span>
+<span><span class="va">path</span> <span class="op">&lt;-</span> <span class="va">shortest_path</span></span></code></pre></div>
+<p>Because the path encode the position during the entire stationary period, we need to produce a data.frame with the position at the start and end of each stationary period (i.e., thebird did not moved in between). We can do this with this function.</p>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/path2df.html">path2df</a></span><span class="op">(</span><span class="va">pam</span>, <span class="va">path</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">frames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://movevis.org/reference/df2move.html">df2move</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu">CRS</span><span class="op">(</span><span class="st">"+proj=longlat +ellps=WGS84 +datum=WGS84"</span><span class="op">)</span>,</span>
+<span>             x <span class="op">=</span> <span class="st">"lon"</span>, y <span class="op">=</span> <span class="st">"lat"</span>, time <span class="op">=</span> <span class="st">"time"</span>, track_id <span class="op">=</span> <span class="st">"track_id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://movevis.org/reference/align_move.html">align_move</a></span><span class="op">(</span>res <span class="op">=</span> <span class="fl">24</span>, unit <span class="op">=</span> <span class="st">"hours"</span>, digit <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># Use midday position rather than midnight (while the bird could be flying)</span></span>
+<span>  <span class="fu"><a href="https://movevis.org/reference/subset_move.html">subset_move</a></span><span class="op">(</span>from <span class="op">=</span> <span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">end</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">-</span><span class="fl">3</span><span class="op">*</span><span class="fl">60</span><span class="op">*</span><span class="fl">60</span><span class="op">*</span><span class="fl">24</span>, to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">pam</span><span class="op">$</span><span class="va">sta</span><span class="op">$</span><span class="va">start</span>, <span class="fl">1</span><span class="op">)</span><span class="op">+</span><span class="fl">0</span><span class="op">*</span><span class="fl">60</span><span class="op">*</span><span class="fl">60</span><span class="op">*</span><span class="fl">24</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># remove the long equipement and retrival period duration</span></span>
+<span>  <span class="fu"><a href="https://movevis.org/reference/frames_spatial.html">frames_spatial</a></span><span class="op">(</span>equidistant <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>                 ext <span class="op">=</span> <span class="fu">extent</span><span class="op">(</span><span class="va">static_prob</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># </span></span>
+<span>  <span class="fu"><a href="https://movevis.org/reference/add_labels.html">add_labels</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># add some customizations, such as axis labels</span></span>
+<span>  <span class="fu"><a href="https://movevis.org/reference/add_timestamps.html">add_timestamps</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"label"</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://movevis.org/reference/add_progress.html">add_progress</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Checking temporal alignment...
+## Processing movement data...
+## Approximated animation duration: ≈ 10.88s at 25 fps for 272 frames
+## Retrieving and compositing basemap imagery...
+## Assigning raster maps to frames...
+## Creating frames...</code></pre>
+<p>It is worth checking what a frame looks like before generating the entire gif (taking around 10 min) with <code>frames[[100]]</code>. If you’re satisfy, then, go for it!</p>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://movevis.org/reference/animate_frames.html">animate_frames</a></span><span class="op">(</span><span class="va">frames</span>, out_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"assets/movevis_18LX.gif"</span><span class="op">)</span>, height <span class="op">=</span> <span class="fl">1000</span>, width <span class="op">=</span> <span class="fl">1000</span>, overwrite <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<p>And here is the map! Check out <a href="https://movevis.org/index.html#examples">moveVis examples for more idea</a></p>
+<div class="inline-figure"><img src="assets/movevis_18LX.gif" style="width:50.0%"></div>
+
+</div>
+</div>
+
+
+
+<script>
+document.getElementsByClassName("book-toc")[0].insertAdjacentHTML("afterend",
+                "<div class='text-center'><a href='https://github.com/Rafnuss/GeoPressureTemplate' target='_blank' class='btn btn-sm btn-outline-primary' role='button'>Start your own study</a></div>");
+</script><div class="chapter-nav">
+<div class="prev"><a href="wind-graph.html"><span class="header-section-number">5</span> Wind graph</a></div>
+<div class="next"><a href="labelling-tracks.html"><span class="header-section-number">A</span> Labelling tracks</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#export-and-visual"><span class="header-section-number">6</span> Export and Visual</a></li>
+<li><a class="nav-link" href="#geopressuretemplate"><span class="header-section-number">6.1</span> GeoPressureTemplate</a></li>
+<li><a class="nav-link" href="#movevis"><span class="header-section-number">6.2</span> MoveVis</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/Rafnuss/GeoPressureManual//blob/main/06-export_visual.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/Rafnuss/GeoPressureManual//edit/main/06-export_visual.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>A User Manual for GeoPressureR</strong>" was written by Raphaël Nussbaumer. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

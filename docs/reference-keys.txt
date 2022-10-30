@@ -5,6 +5,7 @@ installation
 pressure-map
 read-geolocator-data
 label-tracks
+no-acceleration-data
 automatic-classification-of-activity
 edit-activity-on-trainset
 identify-stationary-periods
@@ -44,6 +45,9 @@ output-3-simulated-paths-1
 run-geopressureviz
 compute-flight-energy
 save-4
+export-and-visual
+geopressuretemplate
+movevis
 labelling-tracks
 labelling-principles
 introduction-to-trainset
