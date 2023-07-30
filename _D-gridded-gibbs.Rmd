@@ -123,10 +123,10 @@ path[, nsta] <- which(as.matrix(static_prob[[nsta]]) == 1)
 Visualize the initial path
 ```{r, asis=T}
 path_ll <- arrayInd(path[1, ], nll)
-leaflet(width = "100%") %>%
-  addProviderTiles(providers$Stamen.TerrainBackground) %>%
-  addFullscreenControl() %>%
-  addPolylines(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = 1, color = "#808080", weight = 3) %>%
+leaflet(width = "100%") |>
+  addProviderTiles(providers$Stamen.TerrainBackground) |>
+  addFullscreenControl() |>
+  addPolylines(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = 1, color = "#808080", weight = 3) |>
   addCircles(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = 1, color = "#000", weight = 10)
 ```
 
@@ -164,14 +164,14 @@ for (j in seq(from = 2, to = nj)) {
 Illustration of the simulation with 10 paths
 
 ```{r}
-m <- leaflet(width = "100%") %>%
-  leaflet(width = "100%") %>%
-  addProviderTiles(providers$Stamen.TerrainBackground) %>%
+m <- leaflet(width = "100%") |>
+  leaflet(width = "100%") |>
+  addProviderTiles(providers$Stamen.TerrainBackground) |>
   addFullscreenControl()
 for (i in seq(from = 50, to = nj, length.out = 10)) {
   path_ll <- arrayInd(path[i, ], nll)
-  m <- m %>%
-    addPolylines(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = 0.7, weight = 1, color = "#808080") %>%
+  m <- m |>
+    addPolylines(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = 0.7, weight = 1, color = "#808080") |>
     addCircles(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = 1, weight = 1, color = "#000")
 }
 m
@@ -181,8 +181,8 @@ Compare the simulated position of each stationary period with the corresponding 
 
 ```{r, warning=F}
 li_s <- list()
-l <- leaflet(width = "100%") %>%
-  addProviderTiles(providers$Stamen.TerrainBackground) %>%
+l <- leaflet(width = "100%") |>
+  addProviderTiles(providers$Stamen.TerrainBackground) |>
   addFullscreenControl()
 for (i_r in seq_len(length(static_prob))) {
   i_s <- metadata(static_prob[[i_r]])$sta_id
@@ -191,14 +191,14 @@ for (i_r in seq_len(length(static_prob))) {
   li_s <- append(li_s, info_str)
 
   path_ll <- arrayInd(path[, i_r], nll)
-  l <- l %>%
-    addRasterImage(static_prob[[i_r]], opacity = 0.8, colors = "OrRd", group = info_str) %>%
+  l <- l |>
+    addRasterImage(static_prob[[i_r]], opacity = 0.8, colors = "OrRd", group = info_str) |>
     addCircles(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = .1, color = "#000", group = info_str)
 }
-l %>%
+l |>
   addLayersControl(
     overlayGroups = li_s,
     options = layersControlOptions(collapsed = FALSE)
-  ) %>%
+  ) |>
   hideGroup(tail(li_s, length(li_s) - 1))
 ```

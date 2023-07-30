@@ -1,0 +1,136 @@
+# Trajectory
+
+In this last chapter of the basic tutorial, we will continue to work with our Swainson's Warbler to see how to model the trajectory of the bird combining the observation model of pressure with a movement model of flight which account for likely speed to contains distances between stationay periods. We use an highly optimized [hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model) presented in details in @Nussbaumer2023b.
+
+From the perspective of an application, there are three mains steps:
+
+1. *Create the graph* representing the possible trajectory of the bird,
+2. Define the *movement model* in term of possible speed,
+3. Compute three *products* of the trajectory model: (1) the shortest path (i.e., the most likely trajectory, (2) the probability maps at each stationary period and (3) simulated paths sampled according to their likelihood. 
+
+If you haven't heard of Hidden Markov model, States-space model or mathematical graph, I strongly suggest to read this following section before moving to the actual code. A better indepth read of the review on State-space model for animal movement by @Patterson2008 would be even better!
+
+<details>
+<summary>Background on movement modeling</summary>
+
+A fundamental consideration is to be able to seperate the overall trajectory into discrete position which create, together a trajectory. Discrete animal movement is often model with a [Hidden Markov Model](https://en.wikipedia.org/wiki/Hidden_Markov_model), which conveniently separate the unknown position of the bird $X_t$ from some observation $Y_t$ which can be related to the position (e.g., pressure measurement). The keys model required to define the models are:
+
+- The observation model $P(Y_t | X_t)$, which provide the likelihood of observing the measurement assuming a known position. As you guess, this is exactly what our likelihood map computed earlier is doing!
+- The movement model $P(X_t+1|X_t)$ which define the probability that the bird has being flying between two stationary periods. 
+- An initial state $P(X_0)$ is also technically required but this doesn't not constitute a strong constrain in our case. 
+
+Our goal is to produce a probability map for each stationary period which account for all pressure measurement, this is, computing the probability $P(X_t=x_t|Y_0=y_0,...Y_t=y_t)$. If you are not familiar with the lower and capital case, $X_t$ represents the random variable (ie, the position of the bird at stationary period t), while x_t are all the actually value that $X$ can take, that is, the coordinate of pixels in our map.
+
+Because the number of possible position is limited (number of pixel on the map), we can actually solve the HHM exactly. This is in contrast to Markov Chain Monte Carlo (MCMC) algorithm that don't assume any discretization of the space but rely on an iterative approach to solve the model. 
+
+A graph is a convenient mathematical representation of a model which has state (node) with some relation between states (edge). Graph are very general and fundamental mathematical tool, but here, we use a specific graph structure corresponding to the HMM presented above: Two states X and Y for each time step t (nodes), and a observation and movement model (relating X_t to X_t+1 and Y_t to X_t). All the other relationship are assumed independent.
+
+Typically, in animal movement, the graph is only used to represent the HMM, but in our case, we acutally use the graph to store all discrete position on the map (ie. pixel) of all possible position of the bird at all time step (called trellis graph). You can think of the edges as a full 3D grid of lat x lon x stationary periods and the edges as all possible pairs of node between two consecutive stationay period. As you can imagine, the number of edges is tremendous 
+
+The novelty of @Nussbaumer2023b is to construct this graph with only the nodes and edges which are useful. See below
+
+</details>
+
+
+## Create the graph 
+
+We create the trellis graph with the function `graph_create()`, which perform the following steps: 
+
+1. We only keep the nodes of all locations within the `thr_likelihood`% percentile of the likelihood map.
+2. We only keep the nodes which are within reach of at least one nodes of the previous and one the next stationary period based on a average groundspeed `thr_gs` This is the key step which is efficiently computed with an image binary distance function [distmap()](https://rdrr.io/bioc/EBImage/man/distmap.html) from the [EBImage](https://github.com/aoles/EBImage) package, allowing to eliminate a great number of nodes without having to compute all the edges.
+3. We then build the edges based on the filtered nodes and the threshold groundspeed `thr_gs`.
+4. Finally, we prune the graph based on the flow graph constraint, that is, the nodes must be connected to the equipment node(s) and retrieval node(s). Indeed, after filtering, some nodes might be connected in a single direction (so called dead branch). We thus ensure that each node is on a path that connects the equipment site to the retrieval site. This operation is performed with the [Breadth-first search (BFS) algorithm](https://en.wikipedia.org/wiki/Breadth-first_search).
+
+These steps are explained and illustrated with more details in section 2.2 of @Nussbaumer2023b.
+
+```{r, warning = F, message=FALSE}
+graph <- graph_create(tag,
+  thr_likelihood = 0.90, # percentile 
+  thr_gs = 100 # km/h
+)
+```
+
+## Add movement model
+
+We then define the movement model by setting a parametric function converting groundspeed to probability. 
+
+In this basic tutorial, we use gamma distribution to model the probability of groundspeed. Because bird may flight back and forth over small distance, we give all groundspeed smaller than 15km/h the same probability than for 15 km/h (`low_speed_fix`).
+
+```{r}
+graph <- graph_add_movement(graph, 
+                            method = "gamma",
+                            shape = 7,
+                            scale = 7,
+                            low_speed_fix = 15)
+```
+
+We can disply the movement model
+
+```{r}
+plot_graph_movement(graph)
+```
+
+## Products
+### Product 1: Most likely path
+
+The graph can compute directly and efficiently the most likely path, that is, the set of positions for each stationary period which maximize the joint probability of the trajectory. 
+
+```{r, message=FALSE}
+path_most_likely <- graph_most_likely(graph)
+```
+
+In GeoPressureR, we store path as data.frame of the position (and other information taken from `graph$stap` for each stationary periods. A path can be displayed on the map with `plot_path()`
+
+```{r}
+plot_path(path_most_likely)
+```
+
+
+### Product 2: Marginal probability map
+
+Estimating the uncertainty of the position of the bird for each stationary period is generally the most sought-after output of tracking studies. While the pressure map provided some information at each stationary periods, we can now produce the probability map of the position accounting for all observation and all transition. In HMM, these maps correspond to the marginal distribution of a Markov process (see section 2.3.2 in @Nussbaumer2023b for more details).
+
+```{r, message=FALSE}
+marginal <- graph_marginal(graph)
+```
+
+
+It might be interesting to plot the marginal map with the most likely path
+
+```{r}
+plot_map(marginal, path = path_most_likely)
+```
+
+### Product 3: Simulated paths
+
+The most likely path does not represent well the uncertainty of the modeled trajectory. In addition, if you want to perform any post hoc computation (e.g., mean flight distance), it is often more convenient to simulated multiple paths, compute the metric on each of them (e.g. flight distance) and compute the summary statistic after (e.g. mean), instead of building this process within the HMM model which would require to compute the marginal of the pair-wise marginal distribution (typically very computational expensive). 
+
+Because the simulated trajectory are independent and sampled without error, you usually don't need many for any application.  
+
+```{r, message=FALSE}
+path_simulation <- graph_simulation(graph, 
+                                    nj = 10 # Number of simulation
+                                    )
+```
+
+```{r}
+plot_path(path_simulation)
+```
+
+
+## Save and export
+
+While the `tag` object is generally not too big, `graph` can be really heavy if the number of stationary periods are numerous.
+
+```{r}
+# format(object.size(graph), units = "MB")
+saveRDS(graph, file = "data/interim/graph-CB619.rds")
+```
+
+In addition or instead of to save the graph object, you might want to export the three outputs. The `data/processed` directory would be the right location for that, and using standard format which can be open with other software is a good solution. For paths (data.frame), a csv is be best option, while maps are best saved as geotiff using `terra::writeRaster`
+
+```{r, warning=F}
+write.csv(path_most_likely, "data/processed/CB619/path_most_likely.csv", row.names = FALSE)
+write.csv(path_simulation, "data/processed/CB619/path_simulation.csv", row.names = FALSE)
+writeRaster(map2rast(marginal), "data/processed/CB619/marginal.tif", filetype = "GTiff", overwrite = TRUE)
+```

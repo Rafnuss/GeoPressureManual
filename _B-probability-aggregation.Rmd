@@ -27,9 +27,7 @@ This way of building the error term has some important consequences. A timeserie
 Let's load the data data and filter
 
 ```{r}
-load("data/1_pressure/18LX_pressure_prob.Rdata")
-sta_id_keep <- pam$sta$sta_id[difftime(pam$sta$end, pam$sta$start, units = "hours") > 12]
-pam$pressure$sta_id[!(pam$pressure$sta_id %in% sta_id_keep)] <- NA
+tag <- readRDS(file = "data/interim/tag-18LX.rds")
 ```
 
 We are using [the GeoPressure API](https://raphaelnussbaumer.com/GeoPressureServer/#description) with the `geopressure_map()` function to measure the mismatch of the pressure series. Because the API can realistically return only a single map per stationary period, it aggregates the error timeseries with the Mean Squared Error (MSE), 
