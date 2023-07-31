@@ -12,16 +12,15 @@ BugReports: https://github.com/Rafnuss/GeoPressureManual/issues
 Imports: 
     bookdown,
     GeoPressureR,
+    downlit,
+    xml2,
     ecmwfr,
     GeoLocTools,
-    igraph,
     ggplot2,
-    gridExtra,
     plotly,
     RColorBrewer,
     leaflet,
     leaflet.extras,
-    dyplr,
     moveVis
 Remotes: 
     rstudio/bookdown,

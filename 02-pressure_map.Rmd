@@ -4,7 +4,7 @@ This chapter covers the main steps to determine the position of a bird from pres
 
 ## Define geographical and temporal parameters 
 
-The first preliminary step is to define some core parameters used throughout the rest of the analysis 
+The first step is to define the core parameters used to configure your map (and later, graph). These are added to `tag` object. 
 
 ```{r}
 tag <- tag_geostap(tag,
@@ -18,25 +18,23 @@ tag <- tag_geostap(tag,
 )
 ```
 
-Here are some indication to select the optimal parameters:
+A few indications to select optimal parameters:
 
-- `extent`: Smaller extent results in faster computation, but if the extent is too small and exclude a stationary period, the entire process will work and you will be able to produce a (wrong) trajectory!
-- `scale` is a strange be very clever way to define a map resolution. It's the number of pixels per 1° latitude-longitude.  (e.g., scale = 10 corresponds to 0.1°~10km). We recommend to start with with coarse scale `scale = 1 or 2` and large `extent` and once you have a better idea of the trajectory, refine the extent of the map. Use the maximal resolution `scale = 10` only for the final run to keep the code fast during development. 
-- `known` allows you to defines position of the bird at equipment and/or retrieval (but also any external source of information). This position can only be provided at the level of a stationary period. Setting this information will allow to significantly speed-up the computation by not computing the likelihood map for these generally long stationary periods.
+- `extent`: this defines the length (xmin, xmax, ymin, ymax) or coordinates (W, E, S, N) on which your map is built. A smaller extent results in faster computation, but careful: if the extent is too small and excludes a stationary period, the process will still work, leading you to build a wrong trajectory.
+- `scale`: this is the number of pixels per 1° latitude-longitude.  (e.g., scale = 10 corresponds to 0.1°~10km). We recommend starting with with a coarse scale `scale = 1 or 2` and a large `extent`, and refining these when you have a better idea of the trajectory. Use the maximal resolution `scale = 10` only for the final run to keep the code fast during development. 
+- `known` allows you to define the position of the bird at equipment and/or retrieval sites (as well as any external source of information). These positions can only be provided at the level of a stationary period. Setting this information significantly speeds up the computation by avoiding computing the likelihood map for these stationary periods.
 
 
 ## Compute pressure maps
 
-We are now ready to create the pressure maps! 
+We are now ready to create the pressure maps! To do so, we must match the timeseries of pressure of each stationary period with the surface level pressure dataset of [ERA5-Land hourly](https://doi.org/10.24381/cds.e2161bac) for all possible pixels of the maps. This is where the GeoPressureAPI comes in.
 
 <div class="alert alert-info" role="alert">
-<h4 class="alert-heading mt-2"><strong>How does the [ GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) works?</strong></h4>
-We want to match the timeseries of pressure of each stationary period with the surface level pressure dataset of [ERA5-Land hourly](https://doi.org/10.24381/cds.e2161bac) for all possible pixel of the maps. 
-
-To overcome the challenge of handling such a large dataset, `GeoPressureR` perform this computation on the Google Earth Engine server. The [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is a JSON API to generate the requests and download the resulting maps. 
+<h4 class="alert-heading mt-2"><strong>How does [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) work?</strong></h4>
+To overcome the challenges of handling a large dataset, `GeoPressureR` performs this computation on the Google Earth Engine server. The [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is a JSON API that generates the requests and downloads the resulting maps. 
 </div>
 
-The function `geopressure_map()` conveniently performs all the necessary steps, but for pedagogical reason, this tutorial will present the two steps.
+The function `geopressure_map()` conveniently performs all the necessary steps, but we still outline the steps below for a comprehensive understanding.
 
 ### Compute mismatch maps
 
@@ -46,21 +44,24 @@ tag <- geopressure_map_mismatch(tag,
                                 margin = 20)
 ```
 
-- `max_sample` can reduce the computational time by limiting the number of datapoints used in the match. This usually only impact the long stationary periods where the position is usually well defined. During labeling or when accuracy is not critical, it can be convenient to reduce this number between 50 or 100.
-- `margin` can usually be reduce to `10`-`20` if your bird does not change elevation level during its stationary period. 
+- `max_sample` reduces the computational time by limiting the number of data-points used in the match. This usually only impacts the long stationary periods where the position is usually well defined. During labelling, or when accuracy is not critical, it can be convenient to reduce this number between 50 to 100.
+- `margin` can usually be reduced to `10`-`20` if your bird does not change elevation level during its stationary period.
 
 <div class="alert alert-warning" role="alert">
 <h4 class="alert-heading mt-2"><strong>Taking a long time to compute?</strong></h4>
-This function is the most computationally intensive as it needs to (1) prepare the data (downscale, clean etc..), (2) sent a request on the GeoPressureAPI to generate the urls used for the computation on the google earth engine (GEE) server and (3) compute and download the map from the GEE server. 
+This function is the most computationally intensive as it needs to: 
+1. prepare the data (downscale, clean, etc..)
+2. send a request on the GeoPressureAPI to generate the URLs used on the Google Earth Engine (GEE) server
+3. compute and download the maps from the GEE server. 
 
-A progress bar will inform you of the progress, but the timing can be tricky to apprehend because of the computational optimization we used (request and computation in parralel) and variability of the GEE server availability.
+A progress bar informs you of the progress, but the timing can be tricky to apprehend because of the computational optimization we used (request and computation in parallel) and variability in the GEE server availability.
 
 </div> 
 
-Two new maps for each stationary periods have been computed at this stage:
+After running this API, two new maps for each stationary period have been computed:
 
 - `tag$map_pressure_mse` is the normalized mean square error $\textbf{MSE}$ between the pressure time series and ERA5 map. 
-- `tag$map_pressure_mash` is the proportion of data-points in the pressure time series which correspond to an altitude that falls between the min and max altitude of each grid cell (accounting for the `margin` parameter) $\textbf{z}_{thr}$. 
+- `tag$map_pressure_mask` is the proportion of data-points in the pressure time series which correspond to an altitude that falls between the min and max altitude of each grid cell (accounting for the `margin` parameter) $\textbf{z}_{thr}$. 
 
 ```{r, warning = F}
 plot(tag, type = "map_pressure_mse")
@@ -85,10 +86,10 @@ tag <- geopressure_map_likelihood(tag,
 
 <div class="alert alert-info" role="alert">
 <h4 class="alert-heading mt-2"><strong>Calibrating `sd`</strong></h4>
-The standard deviation `sd` ($\sigma$) plays a significant role in the uncertainty of your map. This value should ideally be [calibrated at based on long stationary period](labelling-tracks#test-4-histogram-of-pressure-error). See [Probability aggregation](probability-aggregation.html#gaussian-likelihood-function) for more information. The parameter $thr$ has less influence and can usually be left at `0.9`.
+The standard deviation `sd` ($\sigma$) plays a significant role in the uncertainty of your map. This value should ideally be [calibrated based on long stationary periods](labelling-tracks#test-4-histogram-of-pressure-error). See [Probability aggregation](probability-aggregation.html#gaussian-likelihood-function) for more information. The parameter $thr$ has less influence and can usually be left at `0.9`.
 </div>
 
-The resulting pressure likelihood map can be visualized with
+The resulting pressure likelihood map can be visualized with:
 
 ```{r, warning = F}
 plot(tag, type = "map_pressure")
@@ -97,7 +98,7 @@ plot(tag, type = "map_pressure")
 
 ## Save
 
-The `tag` object can be saved to avoid having to re-run the expensive computation of map. Use the `"data/interim"` folder (intermediate) for that. When saving tag, you also archive the functions parameters used, which can be retrieved with `tag$param`. 
+The `tag` object can be saved to avoid re-running the expensive computation of the map. Use the `"data/interim"` folder (intermediate) for that. When saving your tag, you also archive the functions parameters used, which can be retrieved with `tag$param`. 
 
 ```{r, warning=F}
 saveRDS(tag, file = "data/interim/tag-CB619.rds")

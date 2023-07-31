@@ -43,7 +43,7 @@ Labeling tracks involves the following two aspects:
 <h4 class="alert-heading mt-2"><strong>Important Note</strong></h4>
 Correctly labeling the track is the key step for accurate position estimation. This step requires time and effort. 
 
-We strongly suggest that you read attentively the recommendations for this step provided in <strong>[labelling tracks]</strong>, after following the basic and advanced tutorials (as labeling relies on functions and tools presented later in the tutorial).
+We strongly suggest that you read attentively the recommendations for this step provided in <strong>[labelling tracks]</strong>, after following the basic and advanced tutorials (as labelling relies on functions and tools presented later in the tutorial).
 </div>
 
 
