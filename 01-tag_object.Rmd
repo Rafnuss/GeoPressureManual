@@ -2,17 +2,17 @@
 
 # Tag object
 
-In this basic tutorial, we run through all the steps of GeoPressureR using only pressure data, with the simple example of a Swainson's Warbler. This bird presents a short migration route, with only a few stopovers, making it fast to compute. 
-
+<iframe src="https://macaulaylibrary.org/asset/450511651/embed" height="336" width="320" class="cover" frameborder="0" allowfullscreen></iframe>
+In this basic tutorial, we run through all the steps of GeoPressureR using only pressure data, with the simple example of a [Swainson's Warbler](https://ebird.org/species/swawar). This bird presents a short migration route, with only a few stopovers, making it fast to compute. 
 
 ## Create tag
 Tag is used synonymously with geolocator or datalogger. An object is an R list with an [S3 class](https://stat.ethz.ch/R-manual/R-devel/library/base/html/class.html))
 <div class="alert alert-info" role="alert">
 <h4 class="alert-heading mt-2"><strong>What is a `tag` object?</strong></h4>
-`tag` is an essential object in the GeoPressureR workflow, as it stores and aggregates all the information needed for geopositioning. Every step of the process builds on this tag data to produce the pressure map. 
+`tag` is an essential object in the GeoPressureR workflow, as it stores and aggregates all the information needed for geopositioning. Every step of the process builds on this tag object: starting from the raw data all the way to produce the pressure map. 
 </div>
 
-A `tag` object is created based on the raw geolocator data,
+The `tag` object is created based on the raw geolocator data
 
 ```{r, message = FALSE}
 tag <- tag_create("CB619", 
@@ -21,7 +21,7 @@ tag <- tag_create("CB619",
                   acceleration_file = NULL) 
 ```
 
-The raw data for this tag id should be stored in `"data/raw-tag/CB619/"` following the default structure described in [GeoPressureTermplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder). Because the data are recorded with a [Migrate Technology tag](https://www.migratetech.co.uk/), we use the file extension `pressure_file = "*.deg"`.
+The raw data for this tag id should be stored in `"data/raw-tag/CB619/"` following the default structure described in [GeoPressureTerplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder). Because the data are recorded with a [Migrate Technology tag](https://www.migratetech.co.uk/), we use the file extension `pressure_file = "*.deg"`.
 
 You can use the generic `plot()` function to visualize the tag data. 
 
@@ -36,32 +36,31 @@ Depending on when you equipped the bird and when your tag started recording data
 
 Labeling tracks involves the following two aspects: 
 
-1. Indicate the migratory flight periods which *define STAtionary Periods* (called `stap` in the code), during which the bird is assumed to remain at the same location (+/- tens of kilometers) and same elevation level (+/- few meters)
-2. *Discard pressure measurements* which should not be used to estimate position (due to, for example, sensor error, flight, minor/short change in elevation level, etc.) 
+1. Indicate the migratory flight periods which **define STAtionary Periods** (called `stap` in the code), during which the bird is assumed to remain at the same location (+/- tens of kilometers) and same elevation level (+/- few meters)
+2. **Discard pressure measurements** which should not be used to estimate position (due to, for example, sensor error, flight, minor/short change in elevation level, etc.) 
 
 <div class="alert alert-warning" role="alert">
 <h4 class="alert-heading mt-2"><strong>Important Note</strong></h4>
 Correctly labeling the track is the key step for accurate position estimation. This step requires time and effort. 
 
-We strongly suggest that you read attentively the recommendations for this step provided in <strong>[labelling tracks]</strong>, after following the basic and advanced tutorials (as labelling relies on functions and tools presented later in the tutorial).
+We strongly suggest that you read attentively the recommendations for this step provided in <strong>[labelling-tracks]</strong>, after following the basic and advanced tutorials (as labelling relies on functions and tools presented later in the tutorial).
 </div>
 
 
 ### Initialize and create the label .csv file
 
-Use `tag_label_write()` to initiate the label and create the label file to `"data/tag-label/CB619.csv"`.
+Use `tag_label_write()` to initiate the label (i.e., empty label column) and create the label file to `"data/tag-label/CB619.csv"`.
 
 ```{r, message=FALSE}
 tag_label_write(tag)
 ```
 
-If no label has been defined in `tag` yet (such as in our case), `tag_label_write()` uses `tag_label_auto()` to initiate the first label file. With acceleration data, it can generate the flight label labels automatically, though some manual editing will still be required. When no acceleration data is available (as in our case), the file will be empty and must be edited manually. 
 
 ### Label manually on Trainset
 
 Open [https://trainset.raphaelnussbaumer.com/](https://trainset.raphaelnussbaumer.com/) and click on "Upload Tag Label" to load your .csv file. Instructions on how to label the file can be found in the dedicated chapter [labelling tracks]. Once you have finished, export the new `csv` file in the same folder `/data/tag-label/CB619-labeled.csv` (TRAINSET will automatically add `-labeled` in the name).
 
-![*Print screen of the manual classification in TRAINSET. See [labelling tracks] for more information.*](assets/labelling-tracks-0.png){width=100%}
+![*Print screen of the manual classification in TRAINSET. See [labelling-tracks] for more information.*](assets/labelling-tracks-0.png){width=100%}
 
 ### Read labelled file
 
