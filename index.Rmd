@@ -53,9 +53,9 @@ The GeoPressure suite includes several tools:
 
 This manual provides an easy entry point into pressure positioning. It includes three parts: 
 
-- [Basic tutorial] runs through the entire workflow using a simple track of pressure only, with the example of a Swainson's Warbler.
-- [Advanced tutorial] explores additional functionalities of the package using light, acceleration, and wind data, through the example of a Great Reed Warbler.
-- [Labeling tools] introduces labeling, a critical step in the workflow. Although it is briefly mentioned in the first two tutorials, this complex procedure requires a comprehensive understanding of the method and tools of the package, which is why it is described in more depth here. We strongly recommended reading this section attentively for optimal results.
+- [basic-tutorial] runs through the entire workflow using a simple track of pressure only, with the example of a Swainson's Warbler.
+- [advanced-tutorial] explores additional functionalities of the package using light, acceleration, and wind data, through the example of a Great Reed Warbler.
+- [labeling-tools] introduces labeling, a critical step in the workflow. Although it is briefly mentioned in the first two tutorials, this complex procedure requires a comprehensive understanding of the method and tools of the package, which is why it is described in more depth here. We strongly recommended reading this section attentively for optimal results.
 
 Feel free to simply go through the manual, or to [clone the repository]() to run the examples at your own pace.
 

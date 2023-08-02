@@ -100,5 +100,5 @@ plot_path(path_simulation)
 # saveRDS(graph, file = "data/interim/graph-CB619.rds") Too big
 write.csv(path_most_likely, "data/processed/18LX/path_most_likely.csv", row.names = FALSE)
 write.csv(path_simulation, "data/processed/18LX/path_simulation.csv", row.names = FALSE)
-terra::writeRaster(map2rast(marginal), "data/processed/18LX/marginal.tif", filetype = "GTiff", overwrite=TRUE)
+writeRaster(map2rast(marginal), "data/processed/18LX/marginal.tif", filetype = "GTiff", overwrite=TRUE)
 ```

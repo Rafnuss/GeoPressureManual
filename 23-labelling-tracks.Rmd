@@ -23,7 +23,7 @@ Acceleration data can significantly improve our understanding of bird movement. 
 
 <div class="alert alert-alert" role="alert">
 <h4 class="alert-heading mt-2"><strong>Which timeseries de label?</strong></h4>
-When acceleration data is available, label `flight` on the acceleration timeseries and `discard` on the pressure timeseries. In absence of acceleration data, both labels are done on the pressure timeseries
+When acceleration data is available, label `flight` on the acceleration timeseries and `discard` on the pressure timeseries. In absence of acceleration data, both labels are done on the pressure timeseries.
 </div>
 
 
@@ -42,7 +42,21 @@ plot(tag, type = "acceleration")
 
 More classifications method are describe in the [PALMr manual](https://kiranlda.github.io/tagLrManual/index.html).
 
-## The process
+
+## Elevation period
+
+It is common for bird to change elevation level within the same stationary period. 
+Resolution of interest is max 10-25km, bird performed movement withing this area which can result in drastic change in pressure due to elevaiton while temporal variation are the same. 
+Particularly in area with elevation change, birds might be moving daily, or using different site within the same general area. 
+
+To help circuvint such behavirou while preserving a max of data to be match with ERA5, you can label difference elevation level with TRAINSET. By default, no label could be assumed to be `"elev_1"`. You can then add a new elevation level by clicking the + sign on the bottm right of the screen and label specific period (doesn't have to be continous). 
+
+*Illustration*
+
+
+
+
+## The process (remove?)
 
 Labelling is an **iterative process** where you will need to check the validity of the pressure timeseries at stationary period against the reanalysis data (more on this later). You can expect to spend between 30sec to 10-30min per track depending on the species' migrating complexity (acceleration data, number of flight, altitude of flight etc...).
 
@@ -90,16 +104,6 @@ A few tips
 - Adapt with the **y-axis range** to each stationary period to properly see the small (but essential) pressure variations which are not visible in the full view
 
 
-## Elevation period
-
-It is common for bird to change elevation level within the same stationary period. 
-Resolution of interest is max 10-25km, bird performed movement withing this area which can result in drastic change in pressure due to elevaiton while temporal variation are the same. 
-Particularly in area with elevation change, birds might be moving daily, or using different site within the same general area. 
-
-To help circuvint such behavirou while preserving a max of data to be match with ERA5, you can label difference elevation level with TRAINSET. By default, no label could be assumed to be `"elev_1"`. You can then add a new elevation level by clicking the + sign on the bottm right of the screen and label specific period (doesn't have to be continous). 
-
-*Illustration*
-
 
 
 
@@ -127,6 +131,7 @@ Depending on your specific species and desire level of precision, you may want t
 
 In the second check, we visually inspect that the pressure timeseries of each stationary period are (1) correctly groups and (2) do not includes pressure outlier (e.g., altitudinal movement). We can use the generic `plot()` function with a `tag` object to display the timeserie and print messages on the quality of the resulting pressure timeseries of each stationary periods. 
 
+
 Note that the plot shows the preprocess data (see `geopressure_map_preprocess()`), which is designed to be efficiently match against ERA-5 data: remove flight and outliar, as well as downscaling to 1 hours. 
 
 ```{r}
@@ -137,20 +142,20 @@ Ploting this figure with [Plotly](https://plotly.com/r/) allows you to zoom-in a
 
 ### Check 3: Pressure timeseries match
 
-At this stage we should have a label file in a roughly good shape. The next checks will increase in complexity and computational cost but will allow to subsentially improve the final trajectory. The general scheme is to perform these step iteratively:
+At this stage we should have a label file in a roughly good shape. The next checks will increase in complexity and computational cost but will allow to nicely fine-tune the final trajectory. The general scheme for the following check will be to perform the following steps iteratively:
 
-1. Estimate our best guest of the trajectory (i.e. a `path`) 
-2. Compute the ERA-5 on this path (i.e., `pressurepath`), 
+1. Estimate our current best guest of the trajectory (i.e. a `path`) 
+2. Compute the ERA-5 pressure on this path (i.e., `pressurepath`), 
 3. Compare the ERA-5 pressure to the tag pressure
-4. Refine the label: identify outliar, merge or split stationary periods, use elevation level
+4. Refine the label: (1) label outliar, (2) merge or split stationary periods, (3) use elevation level
 
 Check 3 will use the light and pressure likelihood map to estimate the path. 
 
 First, let's compute these maps on a coarse map (e.g. `scale = 1`) and low precision of mismatch (e.g. `max_sample = 50`) to minimize the computational cost.
 
-```{r, cache = T}
+```{r, cache = T, message=F, results='hide'}
 tag <- tag_create("18LX", crop_start = "2017-06-20", crop_end = "2018-05-02") |> 
-  tag_label("data/tag-label/18LX-labeled-v3.csv", display_check = FALSE) |> 
+  tag_label("data/tag-label/18LX-labeled-v3.csv") |> 
   tag_geostap(
     extent = c(-16, 23, 0, 50),
     scale = 1,
@@ -186,11 +191,14 @@ Using `plot_pressurepath()`, we can visualize the pressure timeseries of the tag
 plot_pressurepath(pressurepath)
 ```
 
-What is an outliar?
-The conversion of the means squared error (MSE) into a likelihood performed by `geopressure_map_likelihood()` assumes that the error distribution of pressure is normaly distributed. This has important consequences in that it will not perform well if larg error are present, typically resulting in a map with a single possible pixels. 
-Assuming this gaussian distribution also allows us to define more formally a a test for outliar, which is to any value further than +/- 3 standard deviation. 
-`plot_pressurepath()` displays with an orange triangle any outliar value for you to check. 
+<div class="alert alert-info" role="alert">
+<h4 class="alert-heading mt-2"><strong>What is an outliar?</strong></h4>
+The conversion of the means squared error (MSE) into a likelihood performed by `geopressure_map_likelihood()` assumes that the error distribution of pressure is normally distributed. This has important consequences in that it will not perform well in presence of large error, typically resulting in a map with a single possible pixels. 
 
+Assuming this normal distribution also allows us to define more formally a test for outliar: any value further than +/- 3 standard deviation. This standard deviation is defined by the parameter `sd`, with a default value of 1. 
+
+`plot_pressurepath()` displays with an orange triangle any outliar value for you to check manually. 
+</div>
 
 Even if not marked as ouliar, you can use this figure to identify any periods where there is a mismatch between the geolocator and ERA5, usually indicative of altitudinal movement of the bird. Depending on the situation, there are multiple way of labelling this mismatch. 
 
@@ -204,43 +212,92 @@ Iterative process, remove a bit and then see if the position improve.
 
 Need to keep in mind that some position might be completly off.
 
-Update
+Once you're happy with your new labels, we need to update tag. I order to avoid having to run `geopressure_map()` and `pressurepath_create()` for the full timeserie, `tag_upate()` and `pressurepath_upate()` helps you to only update the stationary periods that have changed. 
 
-```{r, cache = T}
+```{r, cache=T, message=F, results='hide'}
 tag <- tag_update(tag, file = "data/tag-label/18LX-labeled-v4.csv")
+pressurepath <- pressurepath_update(pressurepath, tag)
 ```
 
-### Check 4
+### Check 4: Histogram of pressure error
+
+In addition to the pressure timeseries, you should also look at the histogram of the pressure error (geolocator-ERA5). 
+
+- For long stationary periods (over 5 days), you want to check that there is a single [mode](https://en.wikipedia.org/wiki/Mode_(statistics)) in your distribution. Two modes indicate that the bird is spending time at two different altitudes. This is usual when birds have a day site and a night roost at different elevations. Use `elev_x` label.
+- The red vertical dotted line indicates +/-3 sd which can be helpful to identify when outliar are present (identical to the orange dot in the timesrie plot).
+- Stationary period which have an empirical sd greater than the one used (`sd`), are highlighted in red. The likelihood map for these stationary period might not be correct. 
 
 
 ```{r}
- plot_pressurepath(pressurepath, type = "hist", plot_plotly = FALSE)
+plot_pressurepath(pressurepath, type = "hist", plot_plotly = FALSE)
 ```
 
-
-
-### Test 4: Histogram of pressure error
-
-Finally, you can also look at the histogram of the pressure error (geolocator-ERA5). 
-For long stationary periods (over 5 days), you want to check that there is a single [mode](https://en.wikipedia.org/wiki/Mode_(statistics)) in your distribution. Two modes indicate that the bird is spending time at two different altitudes. This is usual when birds have a day site and a night roost at different elevations. 
+<div class="alert alert-info" role="alert">
+<h4 class="alert-heading mt-2"><strong>How to calibrate of sd?</strong></h4>
 You might also want to check the spread of the distribution. This value can guide you in setting the standard deviation parameter `s` in `geopressure_prob_map()`.
+In this, a `sd=1` (default value) seems adequate, maybe 0.8-0.9 would still be ok
+</div>
+
+
+### Check 5: GeoPressureViz
+
+Another important tool to be using while checking the label with pressurepath is using the shiny app GeoPressureViz. This can be used in parrallel to checks 3-5.
+
+The chapter geopressureviz gives a nice introduction to it and how to use it.
+
+```{r, eval = F}
+geopressureviz(
+  tag = tag, # required
+  pressurepath = pressurepath, # optional
+)
+```
+
+You are essentially checking the same issue as mentioned above, but now using the liekely distance between stationary period, you check the pressure of a realistic path. 
+
+<div class="alert alert-warning" role="alert">
+<h4 class="alert-heading mt-2"><strong>Can you "draw" the trajectory?</strong></h4>
+A very good test before building the graph which is a bit more of black box, is to see if you can manually roughly draw a path from the combinaison of the pressure/light map and the flight duration. You should be able to move the position of the trajectory such that the flight distance are realistic and positing ar likely according to the likelihood maps. If not, check your label, if so, you can move to build your graph!
+Remember that bird can have a much larger groundspeed when wind is blowing their way (up to 150km/h for instance). These are usually only for very long flight, but in such case, the circle on geopressureviz will look too small, but that's ok. 
+</div>
+
+In geopressureviz, use the "start editing" to modify the path to something likely based on long stationary period. Query pressure at the new edited location to figure out potential vertical movement during these short stationary period which needs to be labeled. 
+
+### Check 6: Most likely path
+
+Labeling shoudld really by checked at almost each fo the step of the workflow. It is recommended to always check your most likely path with the same checked performed in 3-5. 
+
+```{r, cache=T, message=F, results='hide'}
+# Update tag and pressurepath
+tag <- tag_update(tag, file = "data/tag-label/18LX-labeled.csv")
+
+# Build graph, add wing, add movement
+graph <- graph_create(tag) |>
+  graph_add_wind(tag$pressure) |>
+  graph_add_movement(bird = bird_create("Acrocephalus arundinaceus"))
+
+# Compute most likely path
+path_most_likely <- graph_most_likely(graph)
+
+# Compute the corresponding pressurepath
+pressurepath <- pressurepath_create(tag, path = path_most_likely)
+```
+
+The same figure can be checked again and hopefully everythin matches really well now! If not, it is important to troubleshoot!
 
 ```{r}
-par(mfrow = c(5, 6), mar = c(1, 1, 3, 1))
-for (i_r in seq_along(pressure_timeserie)) {
-  if (!is.null(pressure_timeserie[[i_r]])) {
-    i_s <- unique(pressure_timeserie[[i_r]]$sta_id)
-    df3 <- merge(pressure_timeserie[[i_r]], subset(tag$pressure, !isoutlier & sta_id == i_s), by = c("date","obs","isoutlier","sta_id"))
-    df3$error <- df3$pressure0 - df3$obs
-    hist(df3$error, main = i_s, xlab = "", ylab = "")
-    abline(v = 0, col = "red")
-  }
-}
+plot_pressurepath(pressurepath)
+plot_pressurepath(pressurepath, type = "hist", plot_plotly = FALSE)
 ```
+
+
+
 
 ## Common challenges and tips to address them
 
 In the following section, we use examples to illustrate common challenges that may be encountered during manual editing, and offer suggestions on how to address them. 
+
+
+
 
 ### Outliers during flights due to low bird activity
 
@@ -320,30 +377,4 @@ Luckily, by definition mountainous species live in specific areas, which restric
 
 ## Examples
 
-```{css, echo=FALSE}
-#loader {
-    border: 4px solid #f3f3f3; /* Light grey */
-    border-top: 4px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 12px;
-    height: 12px;
-    animation: spin 2s linear infinite;
-    display: inline-block;
-    vertical-align: top;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-```
-<link rel="stylesheet" href="https://raw.githubusercontent.com/Rafnuss/GeoPressureMAT/main/html/AllTracksPressureWithReanalysis.css">
-<label for="track">Choose a track:</label>
-<select id="track">
-    <option value='18IC'>Great Reed Warbler (18IC)</option><option value='18LX'>Great Reed Warbler (18LX)</option><option value='22BK'>Tawny Pipit (22BK)</option><option value='22BN'>Tawny Pipit (22BN)</option><option value='22KT'>Eurasian Nightjar (22KT)</option><option value='24FF'>Eurasian Nightjar (24FF)</option><option value='24TA'>Red-capped Robin-Chat (24TA)</option><option value='24UL'>Mangrove Kingfisher (24UL)</option><option value='16LP'>Woodland Kingfisher (16LP)</option><option value='20IK'>Woodland Kingfisher (20IK)</option><option value='22QL'>Eurasian Wryneck (22QL)</option><option value='22QO'>Eurasian Wryneck (22QO)</option><option value='20OA'>Ring Ouzel (20OA)</option><option value='20OE'>Ring Ouzel (20OE)</option><option value='16AQ'>Eurasian Hoopoe (16AQ)</option><option value='16DM'>Eurasian Hoopoe (16DM)</option>
-</select>
-<div id="loader"></div>
-<div id="plotlyID" style="width:100%;height:500px;"></div>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly-basic.min.js"></script>-->
-<script src="https://raw.githubusercontent.com/Rafnuss/GeoPressureMAT/main/html/AllTracksPressureWithReanalysis.js"></script>
-<a href="https://raphaelnussbaumer.com/GeoPressureMAT/html/AllTracksPressureWithReanalysis.html">View in full screen</a>
+???

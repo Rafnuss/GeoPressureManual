@@ -42,6 +42,9 @@ Pressurepath can appear as a strange concept at first, but you'll see that it's 
 pressurepath <- pressurepath_create(tag, path = path_most_likely, include_flight = TRUE)
 ```
 
+Note that if a position of the path is over water, it will be moved to the closest point onshore.
+
+
 ```{r}
 plot_pressurepath(pressurepath)
 ```
@@ -56,40 +59,39 @@ Another nice output of the GeoPressureAPI is to compute the altitude of the bird
 plot_pressurepath(pressurepath, type = "altitude")
 ```
 
-We can additionally request to compute the altitude during the next flight flight with `include_flight = c(0,1)`. Note that if a position of the path is over water, it will be moved to the closest point onshore.
+The `include_flight` is particularly useful here as it can help you compute altitude during the flight.
 
-The offset visible between the two timeseries corresponds to the altitude difference between ERA5 groundlevel altitude and the bird location. `geopressure_timeseries` can compute this altitude directly if you supply the `pressure` argument. We also benefit to known the temperature at ERA-5 groundlevel to adjust the barometric equation. 
+To extract the altitude for further analysis, I suggest useing the output of `pressurepath2altitude()` which convinently provide a single altitude estimate per time. Indeed, altitude is computed based on a single position reference (i.e., the positions of the path). However during a flight, the bird is actually moving. `include_flight` control which reference stationary period `stap_ref` is used and in general, both the previous and next stap_id are used.  `pressurepath2altitude()` will combine the estimate the altitude estimate from the two stap_id to return the most accurate flight alitutude.
 
-The second operation you can perform with GeoPressureR is to compute the exact altitude of the bird $z_{gl}$ from its pressure measurement $P_{gl}$ using the barometric equation, correcting for the natural variation of pressure and temperature, 
+
+<div class="alert alert-info" role="alert">
+<h4 class="alert-heading mt-2"><strong>Why using GeoPressureAPI for altitude?</strong></h4>
+
+Computing the bird altitude $z_{gl}$ from its pressure measurement $P_{gl}$ is always done using the barometric equation. Using GeoPressureAPI, we include in this equation the actual ground-level pressure $P_{ERA}$ and ground temperature $T_{ERA}$, thus correcting for the natural variation of pressure and temperature, 
 $$ z_{gl}(x)=z_{ERA5}(x) + \frac{T_{ERA5}(x)}{L_b}  \left( \frac{P_{gl}}{P_{ERA5}(x)} \right) ^{\frac{RL_b}{g M}-1},$$
 where $z_{ERA}$, $T_{ERA}$ and $P_{ERA}$  respectively correspond to the ground level elevation, temperature at 2m and ground level pressure of ERA5, $L_b$  is the standard temperature lapse rate, $R$ is the universal gas constant, $g$ is the gravity constant and  $M$ is the molar mass of air. See more information [on the GeoPressureAPI documentation](https://raphaelnussbaumer.com/GeoPressureAPI/#description-1).
 
-```{r, cache=TRUE, message=FALSE}
-ts <- geopressure_timeseries(lat = tag$stap$known_lat[1], lon = tag$stap$known_lon[1], pressure = tag$pressure[tag$pressure$stap_id==1,])
-```
 We can compare the altitude produced to the one computed without the correction for temperature and pressure:
 
-```{r}
+```{r, collapse = TRUE}
+# include=FALSE
 Lb <- -0.0065
 R <- 8.31432
 g0 <- 9.80665
 M <- 0.0289644
 T0 <- 273.15 + 15
 P0 <- 1013.25
-ts$altitude_uncorrected <- T0 / Lb * ((ts$pressure_tag / P0)^(-R * Lb / g0 / M) - 1)
-```
+pressurepath$altitude_uncorrected <- T0 / Lb * ((pressurepath$pressure_tag / P0)^(-R * Lb / g0 / M) - 1)
 
-and visualize this comparison:
-
-```{r}
-p <- ggplot(ts) +
+p <- ggplot(pressurepath[pressurepath$stap_id == 1,]) +
   geom_line(aes(x = date, y = altitude, colour = "Corrected elevation with ERA5")) +
   geom_line(aes(x = date, y = altitude_uncorrected, colour = "Uncorrected elevation")) +
   theme_bw() + ylab("Pressure (hPa)") +
   scale_color_manual(values = c("Corrected elevation with ERA5" = "black", "Uncorrected elevation" = "red"))
-
-plotly::layout(ggplotly(p), legend = list(orientation = "h"))
+plotly::layout(plotly::ggplotly(p), legend = list(orientation = "h"))
 ```
+
+</div>
 
 
 

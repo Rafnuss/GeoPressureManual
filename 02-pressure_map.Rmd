@@ -101,5 +101,5 @@ plot(tag, type = "map_pressure")
 The `tag` object can be saved to avoid re-running the expensive computation of the map. Use the `"data/interim"` folder (intermediate) for that. When saving your tag, you also archive the functions parameters used, which can be retrieved with `tag$param`. 
 
 ```{r, warning=F}
-saveRDS(tag, file = "data/interim/tag-CB619.rds")
+save_tag(tag)
 ```
