@@ -1,10 +1,10 @@
-# (PART) Labeling tools {-} 
+# (PART) Labelling tools {-} 
 
 # Pressurepath
 
-In this chapter, we will mainly see what a `pressurepath` object is and how to use it, for instance, to compute the altitude of the bird throughout its trajectory. 
+In this chapter, we will see what a `pressurepath` object is and how to use it to compute the altitude of the bird throughout its trajectory. 
 
-We are going to use the result from the Great Reed warbler 18LX from the advance tutorial.
+We will use results from the Great Reed Warbler (18LX), used in the [Advanced tutorial].
 
 ```{r}
 tag <- readRDS(file = "data/interim/tag-18LX.rds")
@@ -14,9 +14,9 @@ path_most_likely <- read.csv("data/processed/18LX/path_most_likely.csv")
 
 ## Timeseries at a single position
 
-Before creating a full `pressurepath`, I would like to start with the basic building block of a pressurepath which is to retrieve the pressure timeserie from ERA-5 at a single location. Similarly to `geopressure_map_mismatch`, it relies on [pressure timeseries entry point of GeoPressureAPI](https://raphaelnussbaumer.com/GeoPressureAPI/#pressure-timeseries). This function will create an Google Earth Engine request to be run on the GEE server which will return the timeseries as a csv file, and finally we read this csv file as a data.frame.
+Before creating a full `pressurepath`, let's start with the basic building block of a pressurepath, which is to retrieve the pressure timeseries from ERA-5 at a single location. Similarly to `geopressure_map_mismatch`, it relies on the [pressure timeseries entry point of GeoPressureAPI](https://raphaelnussbaumer.com/GeoPressureAPI/#pressure-timeseries). This function creates a Google Earth Engine request to be run on the GEE server, which will return the timeseries as a .csv file. We then read this csv file as a data.frame.
 
-Let's start by a simple example using the first stationary period
+Let's start by a simple example using the first stationary period:
 
 ```{r, cache=TRUE, message=FALSE}
 ts <- geopressure_timeseries(lat = tag$stap$known_lat[1], lon = tag$stap$known_lon[1], start_time = tag$stap$start[1], end_time = tag$stap$end[1])
@@ -31,41 +31,41 @@ p <- ggplot() +
 layout(ggplotly(p), legend = list(orientation = "h"))
 ```
 
-Moment d'émotion: this figure was the one that made me realise the potential of pressure to determine the position! The accuracy of the reanalysis data and the precision of the tag was such that position estimation from pressure should offer a good complementarity with light data! 
+*Side note: this figure was the one that made me realize the potential of pressure to determine the bird's position! The accuracy of the reanalysis data and the precision of the tag were such that position estimates from pressure could effectively complement light data!*
 
 
 ## Pressurepath
 
-Pressurepath can appear as a strange concept at first, but you'll see that it's a very convinient concept to visualize and label your track data. The basic idea behind is to compute the pressure timeseries that the tag would record along a specific path. To do that, `pressurepath_create()` basically call `geopressure_timeseries()` in parallel for all stationary periods and combine the resulting timeseries. 
+Pressurepath is a convenient concept to visualize and label your track data. The basic idea behind it is to compute the pressure timeseries that the tag would record along a specific path. To do that, `pressurepath_create()` basically calls `geopressure_timeseries()` in parallel for all stationary periods and combines the resulting timeseries. 
 
 ```{r, cache=TRUE, message=FALSE, warning = F}
 pressurepath <- pressurepath_create(tag, path = path_most_likely, include_flight = TRUE)
 ```
 
-Note that if a position of the path is over water, it will be moved to the closest point onshore.
+Note that if a position on the path is over water, it is automatically moved to the closest point onshore.
 
 
 ```{r}
 plot_pressurepath(pressurepath)
 ```
 
-
-
 ## Altitude
 
-Another nice output of the GeoPressureAPI is to compute the altitude of the bird throughout its trajectory. 
+The GeoPressureAPI is able to compute the altitude of the bird throughout its trajectory, which can be useful for further analysis. 
 
 ```{r}
 plot_pressurepath(pressurepath, type = "altitude")
 ```
 
-The `include_flight` is particularly useful here as it can help you compute altitude during the flight.
+The `include_flight` function is particularly useful here as it helps compute altitude during the flight.
 
-To extract the altitude for further analysis, I suggest useing the output of `pressurepath2altitude()` which convinently provide a single altitude estimate per time. Indeed, altitude is computed based on a single position reference (i.e., the positions of the path). However during a flight, the bird is actually moving. `include_flight` control which reference stationary period `stap_ref` is used and in general, both the previous and next stap_id are used.  `pressurepath2altitude()` will combine the estimate the altitude estimate from the two stap_id to return the most accurate flight alitutude.
+To extract the altitude, I suggest using the output of `pressurepath2altitude()` which conveniently provides a single altitude estimate per timestep. Indeed, altitude is computed based on a single position reference (i.e., the positions of the path), while the bird is moving during its flight. 
+
+`include_flight` controls which reference stationary periods `stap_ref` are used (in general, both the previous and next stap_id are used).  `pressurepath2altitude()` combines the altitude estimates from the two stap_id to return the most accurate flight altitude.
 
 
 <div class="alert alert-info" role="alert">
-<h4 class="alert-heading mt-2"><strong>Why using GeoPressureAPI for altitude?</strong></h4>
+<h4 class="alert-heading mt-2"><strong>Why use GeoPressureAPI for altitude?</strong></h4>
 
 Computing the bird altitude $z_{gl}$ from its pressure measurement $P_{gl}$ is always done using the barometric equation. Using GeoPressureAPI, we include in this equation the actual ground-level pressure $P_{ERA}$ and ground temperature $T_{ERA}$, thus correcting for the natural variation of pressure and temperature, 
 $$ z_{gl}(x)=z_{ERA5}(x) + \frac{T_{ERA5}(x)}{L_b}  \left( \frac{P_{gl}}{P_{ERA5}(x)} \right) ^{\frac{RL_b}{g M}-1},$$

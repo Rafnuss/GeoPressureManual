@@ -1,12 +1,12 @@
 # Trajectory with wind
 
-In this final chapter, we will add wind data to the graph to refine the transition probability based on an assumed airspeed of the bird rather than groundspeed [@Werfeli2020].
+In this chapter, we add wind data to the graph. This enables us to refine the transition probability as it is now based on the assumed airspeed of the bird rather than its groundspeed [@Werfeli2020].
 
 ## Download wind data
 
-Wind data is available at high resolution (1hr, 0.25°, 37 pressure level) on [ERA5 hourly data on pressure levels](https://doi.org/10.24381/cds.bd0915c6). And this data is easily accessible through the [`ecmwfr`](https://bluegreen-labs.github.io/ecmwfr) package. 
+Wind data is available at high resolution (1hr, 0.25°, 37 pressure level) on [ERA5 hourly data on pressure levels](https://doi.org/10.24381/cds.bd0915c6). This data is easily accessible through the [`ecmwfr`](https://bluegreen-labs.github.io/ecmwfr) package. 
 
-The first step is to setup-up your CDS access. You will need to create an account on [https://cds.climate.copernicus.eu/](https://cds.climate.copernicus.eu/user/register) to generate your API key and uid number. You can stored them as environment variables in your `.Rprofile` with `Sys.setenv()`.
+The first step is to setup-up your CDS access. You will need to create an account on [https://cds.climate.copernicus.eu/](https://cds.climate.copernicus.eu/user/register) to generate your API key and uid number. You can store them as environment variables in your `.Rprofile` with `Sys.setenv()`.
 
 ```{r, eval=F}
 Sys.setenv(cds_key = "Insert_your_CDS_API_KEY_here")
@@ -14,14 +14,14 @@ Sys.setenv(cds_user = "Insert_your_CDS_UID_here")
 usethis::edit_r_environ() # opens .Rprofile
 ```
 
-This will allow you to retrieve them whenever you want with
+This allows you to retrieve them whenever you want with:
 
 ```{r, eval=F}
 Sys.getenv("cds_key")
 Sys.getenv("cds_user")
 ```
 
-As the flight are of short duration, we download a file for each flight, this can be done automatically with `graph_download_wind` which uses [`wf_request_batch()`](https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests) to make all requests in parallel. 
+As the flights tend to be of short duration, we download a file for each flight. This can be done automatically with `graph_download_wind`, which uses [`wf_request_batch()`](https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests) to make all the requests in parallel. 
 
 ```{r, eval=F}
 tag_download_wind(tag)
@@ -29,7 +29,7 @@ tag_download_wind(tag)
 
 You can monitor the requests at <https://cds.climate.copernicus.eu/cdsapp#!/yourrequests>.
 
-In case you have a lot of tracks for which you need to download the data and don't want to block your console, you might consider using a [RStudio background job](https://solutions.rstudio.com/r/jobs/) which can be easily called with [jrstudioapi::jobRunScript](https://rstudio.github.io/rstudioapi/reference/jobRunScript.html) or the [job package](https://lindeloev.github.io/job/):
+In case you have a lot of tracks for which you need to download wind data and don't want to block your console, you might consider using an [RStudio background job](https://solutions.rstudio.com/r/jobs/), which can be easily called with [jrstudioapi::jobRunScript](https://rstudio.github.io/rstudioapi/reference/jobRunScript.html) or the [job package](https://lindeloev.github.io/job/):
 
 ```{r, eval=F}
 job::job({
@@ -39,7 +39,7 @@ job::job({
 
 ## Create graph
 
-As for the Swainson's Warbler, we need to create the trellis graph
+Similar to the example of the [Swainson's Warbler] in the Basic Tutorial, we first need to create the trellis graph:
 
 ```{r, cache=TRUE, message=F, results='hide'}
 graph <- graph_create(tag)
@@ -47,7 +47,9 @@ graph <- graph_create(tag)
 
 ## Add wind to graph
 
-We can compute the average windspeed experienced by the bird for each edge in the graph. This process can be quite long as we need to interpolate in a 4D grid (lat-lon-pressure level-time) the position of the bird along its flight. Then, based on this average windspeed and the known groundspeed, we also compute the airspeed. All of these are stored as complex value with the real part representing the E-W component and the imaginary part corresponding to the N-S.
+We then compute the average windspeed experienced by the bird for each edge of the graph. This process can be quite long as we need to interpolate the position of the bird along its flight on a 4D grid (lat-lon-pressure level-time). 
+
+We then compute the airspeed based on the average windspeed and the known groundspeed All of these are stored as complex values with the real part representing the E-W component and the imaginary part corresponding to the N-S component.
 
 ```{r, cache=TRUE, message=F, results='hide'}
 graph <- graph_add_wind(graph, pressure = tag$pressure)
@@ -55,17 +57,17 @@ graph <- graph_add_wind(graph, pressure = tag$pressure)
 
 ## Add movement model
 
-Now that we have computed the airspeed required for performing the transition of all edges of the graph, we can improve the movement model by defining the probability of airspeed rather than groundspeed. Indeed, airspeed is typically much more contrained than groundspeed as it depends only on the bird while groundspeed can be significantly influenced by the windspeed and wind direction. 
+Now that we have computed the airspeed that would be theoretically required to perform the transitions of each edge of the graph, we can improve the movement model by defining the probability of airspeed rather than groundspeed. Indeed, airspeed is typically more constrained than groundspeed as it depends only on the bird while groundspeed can be significantly influenced by windspeed and wind direction. 
 
-While you can still defined the movement model with parameteric function (gamma or logit), we will see how to use the mechanical power curve. The power curve express the energy required from a bird to flight at a certain airspeed based on aerodynamic theory. See more details in section 2.2.5 of @Nussbaumer2023b and in @Pennycuick2008.
+While you can still define the movement model with a parametric function (gamma or logit), we will see how to use the mechanical power curve. The power curve expresses the energy required for a bird to fly at a certain airspeed based on aerodynamic theory. See more details in section 2.2.5 of @Nussbaumer2023b and in @Pennycuick2008.
 
-First, we search the morphological information of the Great Reed Warbler using the [AVONET database](https://doi.org/10.6084/m9.figshare.16586228.v5). See `flight_bird()` for more details.
+First, we search for morphological information on the Great Reed Warbler using the [AVONET database](https://doi.org/10.6084/m9.figshare.16586228.v5). See `flight_bird()` for more details.
 
 ```{r}
 bird <- bird_create("Acrocephalus arundinaceus")
 ```
 
-Then, using the bird created, we can convert a airspeed into a probability using the power method in the function `flight_prob()`. 
+Using the bird created, we can convert an airspeed into a probability using the power method in the function `flight_prob()`. 
 The energy is then converted to a probability using a parametric function of the inverse cube.
 
 ```{r}
@@ -78,7 +80,7 @@ plot_graph_movement(graph)
 
 ## Products
 
-We can compute the same three product than with the Swainson's Warbler
+We can then compute the same three products as for the Swainson's Warbler:
 
 ```{r,  message=F, results='hide'}
 path_most_likely <- graph_most_likely(graph)

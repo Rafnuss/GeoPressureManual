@@ -87,6 +87,6 @@ plot(tag, type = "pressure")
 ```
 
 <div class="alert alert-info" role="alert">
-<h4 class="alert-heading mt-2"><strong>What is the pre-processing?</strong></h4>
+<h4 class="alert-heading mt-2"><strong>What is pre-processing?</strong></h4>
 You might notice some discrepancies between the raw data (grey) and the pre-processed pressure timeseries of each stationary period (colored line). As the pre-processed timeseries will compared to weather re-analysis data (ERA-5), it should include only pressure measurements at the same location, on the ground, and be on a 1hr resolution. The black dots show the discarded pressure points, corresponding to bird vertical movement rather than natural variation of pressure.
 </div>
