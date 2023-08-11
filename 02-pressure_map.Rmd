@@ -1,105 +1,118 @@
 # Pressure map
 
-This chapter covers the main steps to determine the position of a bird from pressure data. This code is a direct implementation of the method introduced in @Nussbaumer2023a.
+This chapter covers the main steps to determine the position of a bird from pressure data. This code is a direct implementation of the method introduced in Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14043" target="_blank">2023a</a>).
 
-## Define geographical and temporal parameters 
+## Define geographical and temporal parameters
 
-The first step is to define the core parameters used to configure your map (and later, graph). These are added to `tag` object. 
+The first step is to define the parameters used to configure your map (and later the graph). These are added to `tag` object.
 
-```{r}
-tag <- tag_geostap(tag,
+```{r 02-setmap}
+tag <- tag_set_map(tag,
   extent = c(-100, -68, 0, 40), # coordinates of the map to request (W, E, S, N)
   scale = 2, # request on a 1/2=0.5° grid, coarse, but fast
   known = data.frame(
-    stap_id = 1, 
-    known_lat = 37.286812, 	
+    stap_id = 1,
+    known_lat = 37.286812,
     known_lon = -82.304972
-    )
+  )
 )
 ```
 
 A few indications to select optimal parameters:
 
-- `extent`: this defines the length (xmin, xmax, ymin, ymax) or coordinates (W, E, S, N) on which your map is built. A smaller extent results in faster computation, but careful: if the extent is too small and excludes a stationary period, the process will still work, leading you to build a wrong trajectory.
-- `scale`: this is the number of pixels per 1° latitude-longitude.  (e.g., scale = 10 corresponds to 0.1°~10km). We recommend starting with with a coarse scale `scale = 1 or 2` and a large `extent`, and refining these when you have a better idea of the trajectory. Use the maximal resolution `scale = 10` only for the final run to keep the code fast during development. 
-- `known` allows you to define the position of the bird at equipment and/or retrieval sites (as well as any external source of information). These positions can only be provided at the level of a stationary period. Setting this information significantly speeds up the computation by avoiding computing the likelihood map for these stationary periods.
+- `extent`: this defines the length (`xmin`, `xmax`, `ymin`, `ymax`) or coordinates (W, E, S, N) on which your map is built. A smaller extent results in faster computation, but careful: if the extent is too small and excludes the true position of the bird, the process will still work, leading you to build a wrong trajectory.
+- `scale`: this is the number of pixels per 1° latitude-longitude. (e.g., scale = 10 corresponds to 0.1°\~10km). We recommend starting with with a coarse scale `scale = 1 or 2` and a large `extent`, and refining these when you have a better idea of the trajectory. Use the maximal resolution `scale = 10` only for the final run to keep the code fast during development.
+- `known` allows you to define the position of the bird at equipment and/or retrieval sites (as well as any known position, e.g. observed in the field). These positions can only be provided at the level of a stationary period. Setting this information significantly speeds up the computation by avoiding computing the likelihood map for these stationary periods and narrowing down the size of the graph.
 
+::: {.alert .alert-info role="alert"}
+<h4 class="alert-heading mt-2"><strong>What is a GeoPressureR  `map`?</strong></h4>
+In GeoPressureR, a `map` object is a container for a spatio-temporal variable, such as the likelihood of pressure. It is therefore defined by its spatial characteristic (`extent` and `scale`), but also with a temporal dimension in terms of stationary periods. The data is stored as a list of matrix, one matrix (or layer) for each stationary periods.
+
+See `map_create()` for technical characteristic of a GeoPressureR `map`.
+:::
 
 ## Compute pressure maps
 
-We are now ready to create the pressure maps! To do so, we must match the timeseries of pressure of each stationary period with the surface level pressure dataset of [ERA5-Land hourly](https://doi.org/10.24381/cds.e2161bac) for all possible pixels of the maps. This is where the GeoPressureAPI comes in.
+We are now ready to create the pressure maps! 
 
-<div class="alert alert-info" role="alert">
-<h4 class="alert-heading mt-2"><strong>How does [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) work?</strong></h4>
-To overcome the challenges of handling a large dataset, `GeoPressureR` performs this computation on the Google Earth Engine server. The [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is a JSON API that generates the requests and downloads the resulting maps. 
-</div>
+To do so, we must match the timeseries of pressure of each stationary period with the surface level pressure dataset of [ERA5-Land hourly](https://doi.org/10.24381/cds.e2161bac) for all possible pixels of the maps. 
 
-The function `geopressure_map()` conveniently performs all the necessary steps, but we still outline the steps below for a comprehensive understanding.
+::: {.alert .alert-warning role="alert"}
+<h4 class="alert-heading mt-2">
+<strong>How does [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) work?</strong>
+</h4>
+
+To overcome the challenges of handling the large ERA5 dataset of pressure, we performs the mismatch computation directly on the [Google Earth Engine](https://developers.google.com/earth-engine/) server which has access to the [ERA-5 dataset](https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_HOURLY) and returns directly the map of mismatch. 
+
+The [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is a JSON API which serves as an interface to the GEE server.
+:::
+
+The function `geopressure_map()` conveniently performs all the necessary steps, but we will still outline the steps below for a comprehensive understanding.
 
 ### Compute mismatch maps
 
-```{r, cache = TRUE, message=FALSE}
-tag <- geopressure_map_mismatch(tag, 
-                                max_sample = 100, 
-                                margin = 20)
+```{r 02-geopressure_map_mismatch, cache = TRUE, message=FALSE}
+tag <- geopressure_map_mismatch(tag,
+  max_sample = 100,
+  margin = 20
+)
 ```
 
-- `max_sample` reduces the computational time by limiting the number of data-points used in the match. This usually only impacts the long stationary periods where the position is usually well defined. During labelling, or when accuracy is not critical, it can be convenient to reduce this number between 50 to 100.
-- `margin` can usually be reduced to `10`-`20` if your bird does not change elevation level during its stationary period.
+-   `max_sample` reduces the computational time by limiting the number of data-points used in the match. This usually only impacts the long stationary periods where the position is usually well defined. During labelling, or when accuracy is not critical, it can be convenient to reduce this number between `50` to `100`.
+-   `margin` can usually be reduced to `10`-`20` if your bird does not change elevation level during its stationary period.
 
-<div class="alert alert-warning" role="alert">
+::: {.alert .alert-warning role="alert"}
 <h4 class="alert-heading mt-2"><strong>Taking a long time to compute?</strong></h4>
+
 This function is the most computationally intensive as it needs to: 
-1. prepare the data (downscale, clean, etc..)
-2. send a request on the GeoPressureAPI to generate the URLs used on the Google Earth Engine (GEE) server
-3. compute and download the maps from the GEE server. 
 
-A progress bar informs you of the progress, but the timing can be tricky to apprehend because of the computational optimization we used (request and computation in parallel) and variability in the GEE server availability.
+1. Pre-process the data (i.e., downscale, clean, etc..) 
+2. Generate the requests on the GeoPressureAPI, generate the URLs which can be used on the Google Earth Engine (GEE) server to compute the mistmatch maps. 
+3. Send the request on the GEE server
+4. Wait for computation on the GEE server, and download of the map. 
 
-</div> 
+A progress bar will informs you of the progress, but the timing can be tricky to apprehend because of the computational optimization we used (request and computation in parallel) and variability in the GEE server availability.
+:::
 
-After running this API, two new maps for each stationary period have been computed:
+This functions returns the `tag` with two maps:
 
-- `tag$map_pressure_mse` is the normalized mean square error $\textbf{MSE}$ between the pressure time series and ERA5 map. 
-- `tag$map_pressure_mask` is the proportion of data-points in the pressure time series which correspond to an altitude that falls between the min and max altitude of each grid cell (accounting for the `margin` parameter) $\textbf{z}_{thr}$. 
+-   `tag$map_pressure_mse` $\textbf{MSE}$ is a GeoPressureR `map` of the normalized mean square error between the pressure time series and ERA5 map.
+-   `tag$map_pressure_mask` $\textbf{z}_{thr}$ is a GeoPressureR `map` of the proportion of data-points in the pressure time series which correspond to an altitude that falls between the min and max altitude of each grid cell (accounting for the `margin` parameter).
 
 ```{r, warning = F}
 plot(tag, type = "map_pressure_mse")
 ```
 
 ```{r, warning = F}
-plot(tag, type = "map_pressure_mask")
+# This is an alternative and equivalent way to plot a map in tag
+plot(tag$map_pressure_mask)
 ```
 
 ### Compute likelihood maps
 
-We combine and convert these two maps into a single likelihood map using
-$$f \propto \exp \left(-w(n) \frac{\textbf{MSE}}{\sigma^2} \right) [\textbf{z}_{thr}>thr_{mask}]$$
-where $\sigma$ is the standard deviation of pressure and $thr_{mask}$ is the threshold of the mask. Because the auto-correlation of the time series is not accounted for in this equation, we use a log-linear pooling weight $w(n)=\log(n)/n$, where $n$ is the number of data-points in the time series.
+We combine and convert these two maps into a single likelihood map using $$f \propto \exp \left(-w(n) \frac{\textbf{MSE}}{\sigma^2} \right) [\textbf{z}_{thr}>thr_{mask}]$$ where $\sigma$ is the standard deviation of pressure and $thr_{mask}$ is the threshold of the mask. 
+
+Because the auto-correlation of the time series is not accounted for in this equation, we use a log-linear pooling weight $w(n)=\log(n)/n$, where $n$ is the number of data-points in the time series. See [Probability aggregation](probability-aggregation.html#gaussian-likelihood-function) for more information. 
 
 ```{r}
-tag <- geopressure_map_likelihood(tag,
-                                  sd = 1,
-                                  thr_mask = 0.9,
-                                  log_linear_pooling_weight = \(n) log(n)/n )
+tag <- geopressure_map_likelihood(
+  tag,
+  sd = 1,
+  thr_mask = 0.9,
+  log_linear_pooling_weight = \(n) log(n) / n
+)
 ```
 
-<div class="alert alert-info" role="alert">
+::: {.alert .alert-warning role="alert"}
 <h4 class="alert-heading mt-2"><strong>Calibrating `sd`</strong></h4>
-The standard deviation `sd` ($\sigma$) plays a significant role in the uncertainty of your map. This value should ideally be [calibrated based on long stationary periods](labelling-tracks#test-4-histogram-of-pressure-error). See [Probability aggregation](probability-aggregation.html#gaussian-likelihood-function) for more information. The parameter $thr$ has less influence and can usually be left at `0.9`.
-</div>
+
+The standard deviation `sd` ($\sigma$) plays a significant role in the spread of the uncertainty of your map. This value should ideally be calibrated based on a long stationary period, but it is usually safe to start with a value of `1` and adjust this value based on the [check #4 of the labeling procedure](labelling tracks#test-4-histogram-of-pressure-error). 
+
+The parameter $thr_{mask}$ has less influence and can usually be left at `0.9`.
+:::
 
 The resulting pressure likelihood map can be visualized with:
 
 ```{r, warning = F}
-plot(tag, type = "map_pressure")
-```
-
-
-## Save
-
-The `tag` object can be saved to avoid re-running the expensive computation of the map. Use the `"data/interim"` folder (intermediate) for that. When saving your tag, you also archive the functions parameters used, which can be retrieved with `tag$param`. 
-
-```{r, warning=F}
-save_tag(tag)
+plot(tag$map_pressure)
 ```

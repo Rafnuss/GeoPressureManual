@@ -1,27 +1,33 @@
-# (PART) Basic Tutorial {-} 
+# (PART) Basic tutorial {-} 
 
 # Tag object
 
-<iframe src="https://macaulaylibrary.org/asset/450511651/embed" height="336" width="320" class="cover" frameborder="0" allowfullscreen></iframe>
 In this basic tutorial, we run through all the steps of GeoPressureR using only pressure data, with the simple example of a [Swainson's Warbler](https://ebird.org/species/swawar). This bird presents a short migration route, with only a few stopovers, making it fast to compute. 
 
+![*<small>Swainson's Warbler. 16 May 2022. Edisto Nature Trail, South Carolina, US. <a href="https://ebird.org/checklist/S110403474#swawar">eBird S110403474</a> | <a href="https://macaulaylibrary.org/asset/450511161">ML 450511161</a></small>*](assets/450511651.png){width=100%}
+
+
 ## Create tag
-Tag is used synonymously with geolocator or datalogger. An object is an R list with an [S3 class](https://stat.ethz.ch/R-manual/R-devel/library/base/html/class.html))
-<div class="alert alert-info" role="alert">
+
+::: {.alert .alert-info role="alert"}
 <h4 class="alert-heading mt-2"><strong>What is a `tag` object?</strong></h4>
-`tag` is an essential object in the GeoPressureR workflow, as it stores and aggregates all the information needed for geopositioning. Every step of the process builds on this tag object: starting from the raw data all the way to produce the pressure map. 
-</div>
+A [tag](https://www.movebank.org/cms/movebank-content/mb-data-model) refers to a geolocator or datalogger device, which can contain multiple sensors (e.g., pressure, light, acceleration). 
+
+In GeoPressureR, `tag` is an essential object (i.e., a [S3 class](https://stat.ethz.ch/R-manual/R-devel/library/base/html/class.html)) modified at each step of the workflow: not only does it store the raw logger data, but it also aggregates all the information needed to ultimately be able to model the bird's trajectory.
+:::
 
 The `tag` object is created based on the raw geolocator data
 
-```{r, message = FALSE}
-tag <- tag_create("CB619", 
-                  pressure_file = "*.deg",
-                  light_file = NULL,
-                  acceleration_file = NULL) 
+```{r 01-tag-create, message = FALSE}
+tag <- tag_create(
+  id = "CB619",
+  pressure_file = "*.deg",
+  light_file = NULL,
+  acceleration_file = NULL
+)
 ```
 
-The raw data for this tag id should be stored in `"data/raw-tag/CB619/"` following the default structure described in [GeoPressureTerplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder). Because the data are recorded with a [Migrate Technology tag](https://www.migratetech.co.uk/), we use the file extension `pressure_file = "*.deg"`.
+The raw data for this tag id should be stored in `"./data/raw-tag/CB619/"` following the default structure described in [GeoPressureTerplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder). Because the data are recorded with a [Migrate Technology](https://www.migratetech.co.uk/) tag, we use the file extension `pressure_file = "*.deg"`.
 
 You can use the generic `plot()` function to visualize the tag data. 
 
@@ -39,17 +45,17 @@ Labeling tracks involves the following two aspects:
 1. Indicate the migratory flight periods which **define STAtionary Periods** (called `stap` in the code), during which the bird is assumed to remain at the same location (+/- tens of kilometers) and same elevation level (+/- few meters)
 2. **Discard pressure measurements** which should not be used to estimate position (due to, for example, sensor error, flight, minor/short change in elevation level, etc.) 
 
-<div class="alert alert-warning" role="alert">
+::: {.alert .alert-danger role="alert"}
 <h4 class="alert-heading mt-2"><strong>Important Note</strong></h4>
 Correctly labeling the track is the key step for accurate position estimation. This step requires time and effort. 
 
-We strongly suggest that you read attentively the recommendations for this step provided in <strong>[labelling-tracks]</strong>, after following the basic and advanced tutorials (as labelling relies on functions and tools presented later in the tutorial).
-</div>
+As labelling relies on functions and tools presented later in the tutorial, we recommend to first follow the basic and advanced tutorials. After that, we strongly suggest that you <strong>read attentively the recommendations for this step provided in [labelling tracks]</strong>.
+:::
 
 
 ### Initialize and create the label .csv file
 
-Use `tag_label_write()` to initiate the label (i.e., empty label column) and create the label file to `"data/tag-label/CB619.csv"`.
+Use `tag_label_write()` to initiate the label (i.e., empty label) and create the label file to `"./data/tag-label/CB619.csv"`.
 
 ```{r, message=FALSE}
 tag_label_write(tag)
@@ -60,7 +66,7 @@ tag_label_write(tag)
 
 Open [https://trainset.raphaelnussbaumer.com/](https://trainset.raphaelnussbaumer.com/) and click on "Upload Tag Label" to load your .csv file. Instructions on how to label the file can be found in the dedicated chapter [labelling tracks]. Once you have finished, export the new `csv` file in the same folder `/data/tag-label/CB619-labeled.csv` (TRAINSET will automatically add `-labeled` in the name).
 
-![*Print screen of the manual classification in TRAINSET. See [labelling-tracks] for more information.*](assets/labelling-tracks-0.png){width=100%}
+![*Print screen of the manual laebeling of tag data in <a href="https://trainset.raphaelnussbaumer.com/">TRAINSET</a>. See [labelling tracks] for more information.*](assets/labelling-tracks-0.png){width=100%}
 
 ### Read labelled file
 
@@ -68,7 +74,7 @@ Read the exported file with `tag_label_read()` to update `tag$pressure` (and, wh
 
 ```{r, message=FALSE}
 tag <- tag_label_read(tag)
-kable(head(tag$pressure), format = "html")
+knitr::kable(head(tag$pressure), format = "html")
 ```
 
 ### Compute stationary period
@@ -77,7 +83,7 @@ kable(head(tag$pressure), format = "html")
 
 ```{r, message=FALSE}
 tag <- tag_label_stap(tag)
-kable(head(tag$stap), format = "html")
+knitr::kable(head(tag$stap), format = "html")
 ```
 
 Plotting the pressure timeserie of tag provides additional information:
@@ -86,7 +92,13 @@ Plotting the pressure timeserie of tag provides additional information:
 plot(tag, type = "pressure")
 ```
 
-<div class="alert alert-info" role="alert">
+::: {.alert .alert-info role="alert"}
 <h4 class="alert-heading mt-2"><strong>What is pre-processing?</strong></h4>
-You might notice some discrepancies between the raw data (grey) and the pre-processed pressure timeseries of each stationary period (colored line). As the pre-processed timeseries will compared to weather re-analysis data (ERA-5), it should include only pressure measurements at the same location, on the ground, and be on a 1hr resolution. The black dots show the discarded pressure points, corresponding to bird vertical movement rather than natural variation of pressure.
-</div>
+You might notice some discrepancies between the raw data (grey) and the **pre-processed pressure** timeseries of each stationary period (colored lines). 
+
+The pre-processing aligns the raw timeseries data to the weather re-analysis pressure data: that is, remove ouliars and downscale to 1hr resolution falling on the exact hour. 
+
+The black dots show the discarded pressure points (i.e., ouliars), corresponding to bird vertical movement rather than natural variation of pressure.
+::: 
+
+Once you've already created the tag label file (i.e., `CB619-labeled.csv`), you can use directly `tag_label()` to read the label and compute stationary periods.

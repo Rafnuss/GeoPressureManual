@@ -4,9 +4,9 @@
 
 ## Publications
 
-> Nussbaumer, R., Gravey, M., Briedis, M., & Liechti, F. (2023). Global positioning with animal-borne pressure sensors. *Methods in Ecology and Evolution*, 14, 1104– 1117. <https://doi.org/10.1111/2041-210X.14043>
+> Nussbaumer, R., Gravey, M., Briedis, M., & Liechti, F. (2023). Global positioning with animal-borne pressure sensors. *Methods in Ecology and Evolution*, 14, 1104–1117. <https://doi.org/10.1111/2041-210X.14043>
 
-> Nussbaumer, R., Gravey, M., Briedis, M., Liechti, F. & Sheldon, D. (2022) Reconstructing bird trajectories from pressure and wind data using a highly optimised hidden Markov model. *Methods in Ecology and Evolution*, 14, 1118– 1129. < https://doi.org/10.1111/2041-210X.14082>
+> Nussbaumer, R., Gravey, M., Briedis, M., Liechti, F. & Sheldon, D. (2023) Reconstructing bird trajectories from pressure and wind data using a highly optimised hidden Markov model. *Methods in Ecology and Evolution*, 14, 1118–1129. <https://doi.org/10.1111/2041-210X.14082>
 
 ## Presentations
 
@@ -14,9 +14,9 @@
 
 > Raphaël Nussbaumer, Mathieu Gravey, Felix Liechti. Improving the spatial accuracy of multi-sensor geolocators' position using atmospheric surface pressure. October 2021. *7th International Bio-logging Science Symposium*. PRESENTATION available at [Youtube](https://www.youtube.com/watch?v=0JsYU_xfKN8).
 
-## Projects using `GeoPressureR`
+## Projects using GeoPressureR
 
-List of all research projects using `GeoPressureR` with links to the code used to analyse and create figures. This might be helpful to get an idea of how to analyse your data and borrow some code sections for your own project. Feel free to [contact me](mailto:rafnuss@gmail.com) if you'd like to add your project on this list.
+List of all research projects using GeoPressureR with links to the code used to analyse and create figures. This might be helpful to get an idea of how to analyse your data and borrow some code sections for your own project. Feel free to [contact me](mailto:rafnuss@gmail.com) if you'd like to add your project on this list.
 
 | Species             | GeoPressureTemplate/code                                                    | Publication/status                                                     |
 |----------------|-----------------------------|---------------------------|

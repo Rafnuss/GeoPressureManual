@@ -28,7 +28,7 @@ However, Gibbs samples remains sensitive to local minimun in the case where cons
 
 We already pre-processed the light and pressure data data in the chapter [Static map]
 ```{r}
-load("data/3_static/18LX_static_prob.Rdata")
+load("./data/3_static/18LX_static_prob.Rdata")
 ```
 
 We first normalize the static probability (light and pressure combine) to ensure that the sum of all probabilities on the map is 1.
