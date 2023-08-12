@@ -1,8 +1,8 @@
 # Export and Visual
 
-In this extra chapter we will see how to create some additional figure and export the data
+In this chapter, we will see how to create some additional figure and export the data
 
-```{r, message=FALSE}
+```{r}
 load("./data/interim/18LX.Rdata")
 ```
 
@@ -12,9 +12,9 @@ In addition to saving the graph object, you might want to export the three produ
 
 For all data.frame format (e.g., `stap`, `pressurepath`, `path_most_likely` etc...), a `.csv` is the best option.
 
-### Stationary period
+### Stationary periods
 
-We can add some additional information on stationary periods such as altitude metric
+We can add additional information on stationary periods such as altitude metrics:
 ```{r, warning=F}
 altitude <- pressurepath2altitude(pressurepath)
 ```
@@ -38,11 +38,11 @@ stap$duration <- round(stap2duration(tag$stap),2)
 write.csv(stap, glue::glue("./data/processed/{tag$param$id}/stap.csv"), row.names = FALSE)
 ```
 
-Note that the most likely path contains all the information from `stap` and could be used instead if you wand to have the best estimate of the coordinate of the stationar periods.
+Note that the most likely path contains all the information from `stap` and could be used instead if you want to have the best estimate of the coordinates of stationary periods.
 
 ### Flights
 
-Similarly, flight can also be exported.
+Similarly, flights can also be exported:
 
 ```{r, warning=F}
 altitude_f <- altitude[altitude$stap_id == 0, ]
@@ -63,7 +63,7 @@ write.csv(flight, glue::glue("./data/processed/{tag$param$id}/flight.csv"), row.
 
 ### GeoPressureR maps
 
-GeoPressureR `maps` can be exported in a `.geotiff` file using `terra::writeRaster` after you convert them to a `terra::rast` using `rast.map()`
+GeoPressureR `maps` can be exported in a `.geotiff` file using `terra::writeRaster` after you convert them to a `terra::rast` using `rast.map()`.
 
 ```{r, warning=F}
 terra::writeRaster(rast.map(tag$map_pressure),
