@@ -10,7 +10,7 @@ In this chapter, we will see what a `pressurepath` object is and how to use it t
 
 Let's load the `tag` from the Great Reed Warbler (18LX) created in the [advanced tutorial].
 
-```{r, message=FALSE}
+```{r}
 load("./data/interim/18LX.Rdata")
 ```
 
@@ -23,7 +23,7 @@ Before creating a full `pressurepath`, we start with the basic building block of
 
 Let's start by retrieving the pressure at the known site of equipment, querying the same date as the first stationary period.
 
-```{r 21-geopressure-timeseries, cache=TRUE, message=FALSE}
+```{r 21-geopressure-timeseries, cache=TRUE}
 ts <- geopressure_timeseries(
   lat = tag$stap$known_lat[1],
   lon = tag$stap$known_lon[1],
@@ -60,7 +60,7 @@ You can think of a pressurepath as the timeseries of pressure that a tag would r
 The `pressurepath` data.frame returned also contains the original pressure `pressure_tag` which can [be very helpful for labelling](labelling track) and the altitude of the bird corrected for the natural variation of pressure.
 :::
 
-```{r 21-pressurepath-create, cache=TRUE, message=FALSE, warning = F}
+```{r 21-pressurepath-create, cache=TRUE, warning = F}
 pressurepath <- pressurepath_create(tag,
   path = path_most_likely,
   include_flight = TRUE

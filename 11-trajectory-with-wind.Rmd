@@ -43,7 +43,7 @@ job::job({
 
 Similar to the example of the Swainson's Warbler in the basic tutorial, we first need to create the trellis graph:
 
-```{r 11-graph-create, cache=TRUE, message=F, results='hide'}
+```{r 11-graph-create, cache=TRUE, message = FALSE}
 graph <- graph_create(tag)
 ```
 
@@ -53,7 +53,7 @@ We then compute the average windspeed experienced by the bird for each edge of t
 
 We then compute the airspeed based on this windspeed and the known groundspeed. All of these are stored as [complex values](https://stat.ethz.ch/R-manual/R-devel/library/base/html/complex.html) with the real part representing the E-W component and the imaginary part corresponding to the N-S component.
 
-```{r 11-add-wind, cache=TRUE, cache.lazy = FALSE, message=F, results='hide'}
+```{r 11-add-wind, cache=TRUE, cache.lazy = FALSE, , }
 graph <- graph_add_wind(graph, pressure = tag$pressure)
 ```
 
@@ -82,7 +82,7 @@ plot_graph_movement(graph)
 
 We can then compute the same three products as for the Swainson's Warbler:
 
-```{r 11-products, cache = TRUE, message=F, results='hide'}
+```{r 11-products, cache = TRUE, , }
 path_most_likely <- graph_most_likely(graph)
 marginal <- graph_marginal(graph)
 path_simulation <- graph_simulation(graph, nj = 10)

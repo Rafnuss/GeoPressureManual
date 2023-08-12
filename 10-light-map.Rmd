@@ -21,12 +21,13 @@ A more thorough introduction to geolocation with light data can be found in <htt
 
 Before getting into light data, we first need to create, label, and set the map for the `tag` object. We essentially perform the same steps than in [tag object] and [pressure map] in just a few lines using the native pipe operator `|>`. Note that this assumes the labelling has already been done.
 
-```{r 10-geopressure, cache = TRUE, message=FALSE, results='hide'}
+```{r 10-geopressure, cache = TRUE}
 tag <- tag_create("18LX",
   crop_start = "2017-06-20",
-  crop_end = "2018-05-02"
+  crop_end = "2018-05-02",
+  quiet = T
 ) |>
-  tag_label() |>
+  tag_label(quiet = T) |>
   tag_set_map(
     extent = c(-16, 23, 0, 50),
     scale = 4,
@@ -36,7 +37,7 @@ tag <- tag_create("18LX",
       known_lon = 17.05
     )
   ) |>
-  geopressure_map()
+  geopressure_map(quiet = T)
 ```
 
 ## Estimate twilights
@@ -65,7 +66,7 @@ Twilight outliers should be discarded from the analysis using Trainset <https://
 
 Use `twilight_label_write` to generate the twilight label `csv` file.
 
-```{r, message=FALSE, results='hide'}
+```{r, }
 twilight_label_write(tag)
 ```
 
@@ -97,7 +98,7 @@ The computation of the light likelihood map for each stationary period is perfor
 2. Compute a likelihood map for each twilight. This step consists of computing, for each pixel of the map, the zenith angle and the corresponding probability using the calibrated kernel distribution.
 3. Aggregate all likelihood maps of the same stationary period into a single map using a log-linear pooling. See [probability aggregation] for more information on log-linear pooling.
 
-```{r 10-geolight-map, message=FALSE, results='hide'}
+```{r 10-geolight-map, }
 tag <- geolight_map(tag, twl_calib_adjust = 1.4)
 ```
 

@@ -11,7 +11,7 @@ This involves three main steps:
 
 ## Background on movement modeling
 
-If you haven't heard of [Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model), [state-space models](https://doi.org/10.1016/j.tree.2007.10.009), or [trellis graphs](https://en.wikipedia.org/wiki/Trellis_(graph)), I recommend that you start by reading the following section, or - even better - read Patterson et al. ([2008](https://doi.org/10.1016/j.tree.2007.10.009) and Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) if you're feeling brave!
+If you haven't heard of [Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model), [state-space models](https://doi.org/10.1016/j.tree.2007.10.009), or [trellis graphs](https://en.wikipedia.org/wiki/Trellis_(graph)), I recommend that you start by reading the following section, or - even better - read Patterson et al. ([2008](https://doi.org/10.1016/j.tree.2007.10.009)) and Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) if you're feeling brave!
 
 <details>
 <summary>Click here to read a short summary of movement model</summary>
@@ -48,7 +48,7 @@ We create the trellis graph with the function `graph_create()`, which performs t
 
 These steps are explained and illustrated in more detail in [section 2.2 of Nussbaumer et al. (2023b)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0004-title)
 
-```{r 03-graph-create, cache = TRUE, warning = F, message=FALSE}
+```{r 03-graph-create, cache = TRUE, message = F}
 graph <- graph_create(tag,
   thr_likelihood = 0.90, # percentile express
   thr_gs = 100 # km/h
@@ -87,8 +87,8 @@ With the graph built, we can create three products which are presented in more d
 
 The graph can directly and efficiently compute the most likely path, that is, the set of positions for each stationary period which maximizes the joint probability of the trajectory. 
 
-```{r 03-graph-most-likely, message=FALSE}
-path_most_likely <- graph_most_likely(graph)
+```{r 03-graph-most-likely}
+path_most_likely <- graph_most_likely(graph, quiet = TRUE)
 ```
 
 In GeoPressureR, we store `path` as data.frame of the position (and other information taken from `graph$stap` for each stationary period). A path can be displayed on the map with `plot_path()`:
@@ -102,7 +102,7 @@ plot_path(path_most_likely)
 
 Estimating the uncertainty of the bird's position for each stationary period is generally the most sought-after output of tracking studies. While the pressure map provides some information for each stationary period, we can now produce the probability map of positions accounting for all observations and transitions. In the HMM, these maps correspond to the marginal distribution of a Markov process.
 
-```{r 03-graph-marginal, message=FALSE}
+```{r 03-graph-marginal}
 marginal <- graph_marginal(graph)
 ```
 
@@ -118,9 +118,10 @@ When you want to perform a post-hoc computation on the trajectory (e.g., mean fl
 
 As the simulated trajectories are independent and sampled without error, you usually don't need too many.
 
-```{r 03-graph-simulation, message=FALSE}
+```{r 03-graph-simulation}
 path_simulation <- graph_simulation(graph,
-  nj = 10 # Number of simulation
+  nj = 10, # Number of simulation
+  quiet = TRUE
 )
 ```
 

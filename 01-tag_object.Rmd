@@ -18,7 +18,7 @@ In GeoPressureR, `tag` is an essential object (i.e., a [S3 class](https://stat.e
 
 The `tag` object is created based on the raw geolocator data
 
-```{r 01-tag-create, message = FALSE}
+```{r 01-tag-create}
 tag <- tag_create(
   id = "CB619",
   pressure_file = "*.deg",
@@ -31,7 +31,7 @@ The raw data for this tag id should be stored in `"./data/raw-tag/CB619/"` follo
 
 You can use the generic `plot()` function to visualize the tag data. 
 
-```{r, warning = FALSE, message=FALSE}
+```{r, warning = FALSE}
 plot(tag, type = "pressure")
 ```
 
@@ -57,7 +57,7 @@ As labelling relies on functions and tools presented later in the tutorial, we r
 
 Use `tag_label_write()` to initiate the label (i.e., empty label) and create the label file to `"./data/tag-label/CB619.csv"`.
 
-```{r, message=FALSE}
+```{r}
 tag_label_write(tag)
 ```
 
@@ -72,7 +72,7 @@ Open [https://trainset.raphaelnussbaumer.com/](https://trainset.raphaelnussbaume
 
 Read the exported file with `tag_label_read()` to update `tag$pressure` (and, when relevant, `tag$acceleration`), with a new `label` column.
 
-```{r, message=FALSE}
+```{r}
 tag <- tag_label_read(tag)
 knitr::kable(head(tag$pressure), format = "html")
 ```
@@ -81,14 +81,14 @@ knitr::kable(head(tag$pressure), format = "html")
 
 `tag_label_stap()` then creates the stationary periods based on these labels:
 
-```{r, message=FALSE}
+```{r}
 tag <- tag_label_stap(tag)
 knitr::kable(head(tag$stap), format = "html")
 ```
 
 Plotting the pressure timeseries of tag provides additional information:
 
-```{r, warning = FALSE, message=FALSE}
+```{r, warning = FALSE}
 plot(tag, type = "pressure")
 ```
 
