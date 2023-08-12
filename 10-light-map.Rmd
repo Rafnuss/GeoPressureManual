@@ -7,19 +7,19 @@ rm(list = ls())
 
 # Light map
 
-In the advance tutorial, we will construct the same three output with a Great Reed Warbler (18LCX), but this time including light and wind data. The workflow is very similar and we will see how to run the same procedure much faster. 
+In the advanced tutorial, we will construct the same three outputs using the example of a Great Reed Warbler (18LX), this time including light and wind data. The workflow is very similar, we will see how to run the same procedure much faster. 
 
 ![*<small>Great Reed Warbler. 17 May 2019. Baranđanske slatine, Serbia. <a href="https://ebird.org/checklist/S56389245#eurwar1">eBird S56389245</a> | <a href="https://macaulaylibrary.org/asset/159594261">ML 159594261</a></small>*](assets/159594261.png){width=100%}
 
 The first chapter is focused on constructing a likelihood map from light data. This step is optional in the workflow, and typically does not drastically change the result, but can be helpful to increase the computational efficiency during the creation of the graph. 
 
-Here, we use an approach based on the threshold method and using a calibration of zenith angle (rather than time of sunrise). This approach is presented in more details in [section 2.4 of Nussbaumer et al. (2023a)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14043#mee314043-sec-0008-title)
+Here, we use an approach based on the threshold method and using a calibration of zenith angle (rather than time of sunrise). This approach is presented in more detail in [section 2.4 of Nussbaumer et al. (2023a)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14043#mee314043-sec-0008-title)
 
 A more thorough introduction to geolocation with light data can be found in <https://geolocationmanual.vogelwarte.ch/> (Lisovski et al., [2020](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13036)). Note that other methods producing likelihood maps could also be used such as the ones presented in Basson et al. ([2016](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12555)) or Bindoff et al. ([2018](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12953)).
 
 ## Basic tutorial catch up
 
-Before getting into light data, we first need to create, label and set the map for the `tag` object. We essentially perform the same steps than in [tag object] and [pressure map] in just a few lines using the native pipe operator `|>`. Note that this assumes the labelling has already been done.
+Before getting into light data, we first need to create, label, and set the map for the `tag` object. We essentially perform the same steps than in [tag object] and [pressure map] in just a few lines using the native pipe operator `|>`. Note that this assumes the labelling has already been done.
 
 ```{r 10-geopressure, cache = TRUE, message=FALSE, results='hide'}
 tag <- tag_create("18LX",
@@ -41,7 +41,7 @@ tag <- tag_create("18LX",
 
 ## Estimate twilights
 
-We find the twilight (time of sunrise and sunset every day) with `twilight_create()`, which performs the same tasks as [`TwGeos::FindTwilight()`](https://rdrr.io/github/slisovski/TwGeos/man/findTwilights.html), but useing a matrix representation. This approach is faster but less general (e.g., requires regularly spaced light data).
+We find the twilight (time of sunrise and sunset every day) with `twilight_create()`, which performs the same tasks as [`TwGeos::FindTwilight()`](https://rdrr.io/github/slisovski/TwGeos/man/findTwilights.html), but using a matrix representation. This approach is faster but less general (e.g., requires regularly spaced light data).
 
 By default, the threshold of light (`twl_thr = NULL`) defining when the twilight occurs is computed as the first and last light of the day (i.e., `tag$light$vale>0`). The `twl_offset` parameter is used to center the night/day for the matrix representation of light. A good centering is necessary to compute the correct twilight.
 
@@ -73,13 +73,13 @@ Click on "Upload Twilight Label" to customize the interface for twilight labelli
 
 ::: {.alert .alert-info role="alert"}
 <h4 class="alert-heading mt-2"><strong>How to pick out outliers?</strong></h4>
-Twilight outliar can be picked out visually when they don't follow a smooth line. 
+Twilight outliers can be picked out visually when they don't follow a smooth line. 
 
 The color of the dots indicative of the stationary period can be helpful to pick out outliers from a change in the bird's position: while changes in twilight within a stationary period should be smooth, changes between positions are abrupt. 
 
 Note that modifying the label of twilight to a different stationary period has no influence later on, as only `discard` labels are read with `twilight_label_read()`.
 
-**Do not over-edit the calibration period!**. The variability of twilight is important to build a calibration which adequately capture the range of uncertainty of a twilight. As it is easier to pick out outliar during long stationary periods than short ones, there is a risk of having more variability during short stationary periods and thus biases in the estimated position.
+**Do not over-edit the calibration period!**. The variability of twilight is important to build a calibration which adequately captures the range of uncertainty of a twilight. As it is easier to pick out outliers during long stationary periods than during shorter ones, there is a risk of having more variability during short stationary periods and thus biases in the estimated position.
 :::
 
 When you have finished labelling, export the file in the same folder keeping `-labeled` in the name (automatically added by Trainset). `twilight_label_read()` will automatically know which file to read.
@@ -94,7 +94,7 @@ plot(tag, type = "twilight")
 The computation of the light likelihood map for each stationary period is performed with `geolight_map()` and follows these three steps:
 
 1. Perform a calibration of the zenith angle (i.e., the angle of the sun at sunrise and sunset) with a kernel density (see `stats::kernel()`). This requires knowing the position of the bird for a least one stationary period. This position should be specified with the `known` data.frame in `tag_set_map()`. 
-2. Compute a likelihood map for each twilight. This step consists of computing for each pixel of the map the zenith angle and the corresponding probability using the calibrated kernel distribution.
+2. Compute a likelihood map for each twilight. This step consists of computing, for each pixel of the map, the zenith angle and the corresponding probability using the calibrated kernel distribution.
 3. Aggregate all likelihood maps of the same stationary period into a single map using a log-linear pooling. See [probability aggregation] for more information on log-linear pooling.
 
 ```{r 10-geolight-map, message=FALSE, results='hide'}
@@ -122,7 +122,7 @@ plot(tag, type = "map_light")
 ::: {.alert .alert-danger role="alert"}
 <h4 class="alert-heading mt-2"><strong>Light map vs pressure map?</strong></h4>
 
-It is worth checking how the likelihood map of light and pressure compare before building the graph. They should always overlap and if not, the tag and/or twilight labeling needs to be adjusted.
+It is worth checking how the likelihood map of light and pressure compare before building the graph. They should always overlap. If this is not the case, the tag and/or twilight labelling needs to be adjusted.
 
 ```{r, warning=F}
 plot(tag, type = "map")

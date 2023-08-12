@@ -1,8 +1,8 @@
 # Trajectory with wind
 
-In this second chapter of the advance tutorial, we will see how to model the trajectory of the Great Reed Warbler using wind data. 
+In this second chapter of the advanced tutorial, we will see how to model the trajectory of the Great Reed Warbler using wind data. 
 
-Wind can significantly contribute to a bird movement, explained up to 50% of the displacement! Accounting for wind allows to estimate the airspeed of each transition rather than groundspeed. As such, the movement model can be defined as the probability of a bird airspeed (rather than groundspeed), which is much more constrained and precise. The general approach on how this is done with the graph is presented in details in [section 2.2.4 of Nussbaumer et al. (2023b)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0008-title).
+Wind can significantly influence a bird's movement, explaining up to 50% of the displacement! Accounting for wind allows to estimate the airspeed of each transition rather than groundspeed. As such, the movement model can be defined as the probability of a bird's airspeed, which is much more constrained and precise. The general approach on how this is done with the graph is presented in detail in [section 2.2.4 of Nussbaumer et al. (2023b)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0008-title).
 
 ## Download wind data
 
@@ -23,7 +23,7 @@ Sys.getenv("cds_key")
 Sys.getenv("cds_user")
 ```
 
-As the flights tend to be of short duration, we suggest to download a file for each flight. This can be done automatically with `graph_download_wind()`, which uses [`wf_request_batch()`](https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests) to make all the requests in parallel. 
+As the flights tend to be of short duration, we suggest downloading a file for each flight. This can be done automatically with `graph_download_wind()`, which uses [`wf_request_batch()`](https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests) to make all the requests in parallel. 
 
 ```{r, eval=F}
 tag_download_wind(tag)
@@ -95,7 +95,7 @@ plot_path(path_simulation, plot_leaflet = F)
 
 ### Extract flight information (speed and energy)
 
-`path2edge()` provides a very nice function to retrieve all information related to an edge (i.e., flight)
+`path2edge()` provides a nice function to retrieve all the information related to an edge (i.e., flight):
 
 ```{r}
 edge_simulation <- path2edge(path_simulation, graph)
@@ -120,7 +120,7 @@ plotly::subplot(plotly::ggplotly(plot1), plotly::ggplotly(plot2), plotly::ggplot
 
 ### Airspeed distribution
 
-We can (and should) also check that our movement model is coherent with the distribution of flight speed assumed in the movement model 
+We can (and should) also check that our movement model is coherent with the distribution of flight speed assumed in the movement model:
 
 ```{r}
 plot_graph_movement(graph) + 
@@ -130,11 +130,11 @@ plot_graph_movement(graph) +
     )
 ```
 
-If you find anomalous flight speed, it might be worth checking if this/these flight(s) have been correctly labeled. 
+If you find anomalous flight speed, it might be worth checking if this/these flight(s) have been correctly labelled. 
 
 ## Save
 
-`graph` can become extremely big for such model and it might not be recommended to save it. Check its size with `format(object.size(graph), units = "MB")`.
+`graph` can become extremely big for such models and it might not be recommended to save it. Check its size with `format(object.size(graph), units = "MB")`.
 
 ```{r 11-save, warning=F}
 save(

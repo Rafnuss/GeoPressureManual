@@ -2,37 +2,37 @@
 
 In this last chapter of the basic tutorial, we model the full trajectory of the Swainson's Warbler by combining the observation model of pressure with a movement model of flight accounting for likely speed to constrain possible distances between stationary periods. To do so, we use a highly optimized [Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model) presented in Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>).
 
-This involves three mains steps:
+This involves three main steps:
 
 1. **Create the graph** representing the possible trajectory of the bird.
-2. Set the **movement model** which define how likely are each possible flight encoded in the graph.
-3. **Compute three products** of the trajectory model: (1) the shortest path (i.e., the most likely trajectory), (2) the probability maps at each stationary period (i.e., marginals), and (3) simulated paths sampled according to their likelihood. 
+2. Set the **movement model** which defines the likelihood of each possible flight encoded in the graph.
+3. **Compute three products** of the model: (1) the shortest path (i.e., the most likely trajectory), (2) the probability maps at each stationary period (i.e., marginals), and (3) simulated paths sampled according to their likelihood. 
 
 
 ## Background on movement modeling
 
-If you haven't heard of [Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model), [states-space models](https://doi.org/10.1016/j.tree.2007.10.009), or [trellis graphs](https://en.wikipedia.org/wiki/Trellis_(graph)), I recommend that you start by reading the following section. An even best suggestion would be to read Patterson et al. ([2008](https://doi.org/10.1016/j.tree.2007.10.009) and Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) if you feel the courage!
+If you haven't heard of [Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model), [state-space models](https://doi.org/10.1016/j.tree.2007.10.009), or [trellis graphs](https://en.wikipedia.org/wiki/Trellis_(graph)), I recommend that you start by reading the following section, or - even better - read Patterson et al. ([2008](https://doi.org/10.1016/j.tree.2007.10.009) and Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) if you're feeling brave!
 
 <details>
 <summary>Click here to read a short summary of movement model</summary>
 ::: {.alert .alert-info role="alert"}
 We start by making the fundamental assumption that the overall trajectory can be separated into **discrete** positions which, together, create a trajectory.
 
-This discretication allows us to use a [Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model), which conveniently distinguish the **unknown positions** of a bird $X_t$ from some **known observations** $Y_t$ which can be related to these positions (e.g., pressure or light measurement). Defining an HMM requires that we can compute:
+This discretization allows us to use a [Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model), which conveniently distinguishes the **unknown positions** of a bird $X_t$ from **known observations** $Y_t$ which can be related to these positions (e.g., pressure or light measurement). Defining an HMM requires that we can compute:
 
 1. An **observation model** $P(Y_t | X_t)$, which defines the likelihood of observing a measurement conditional to a known position. This is exactly what our pressure likelihood map computed in the previous chapter does.
-2. An **movement model** $P(X_t+1|X_t)$ which defines the probability that a bird was able to fly a specific distance between two consecutive stationary periods. 
+2. A **movement model** $P(X_t+1|X_t)$, defining the probability that a bird was able to fly a specific distance between two consecutive stationary periods. 
 3. An **initial state** $P(X_0)$, technically required but this does not constitute a strong constraint in our case. 
 
-Let say that our goal is to produce the probability map for each stationary period which accounts for all pressure measurements while maintain likely flights. This corresponds to the **marginal** probability map  $P(X_t=x_t|Y_0=y_0,...Y_t=y_t)$. If you are not familiar with the lower and capital case, $X_t$ represents the random variable (i.e., the position of the bird at a stationary period $t$), while $x_t$ is one specific value that $X$ can take, that is, the specific coordinates of pixels on our map.
+Let's say that our goal is to produce the probability map for each stationary period accounting for all pressure measurements while maintaining likely flights. This corresponds to the **marginal** probability map  $P(X_t=x_t|Y_0=y_0,...Y_t=y_t)$. If you are not familiar with the lower and capital case, $X_t$ represents the random variable (i.e., the position of the bird at a stationary period $t$), while $x_t$ is a specific value that $X$ can take, that is, the specific coordinates of pixels on the map.
 
-Because the number of possible positions is limited (i.e.,  number of pixels on the map), we can solve the HHM exactly. This is in contrast to Markov Chain Monte Carlo (MCMC) algorithm, which does not assume any discretization of the space but relies on an iterative approach to solve the model. 
+Because the number of possible positions is limited (i.e.,  number of pixels on the map), we can solve the HMM exactly. This is in contrast to Markov Chain Monte Carlo (MCMC) algorithm, which does not assume any discretization of space but relies on an iterative approach to solve the model. 
 
-A graph is a convenient mathematical representation of a model which has states (nodes) and some relations between these states (edges). Graphs are a general and fundamental mathematical tool, but here we use a specific graph structure corresponding to the HMM presented above: two states $X$ and $Y$ for each time step $t$ (nodes), and an observation and movement models (relating $X_t$ to $X_t+1$ and $Y_t$ to $X_t$ respectively). All other relationships are assumed to be independent.
+A graph is a convenient mathematical representation of a model which has states (nodes) and relations between these states (edges). Graphs are a general and fundamental mathematical tool, but here we use a specific graph structure corresponding to the HMM presented above: two states $X$ and $Y$ for each time step $t$ (nodes), and an observation and movement model (relating $X_t$ to $X_t+1$ and $Y_t$ to $X_t$ respectively). All other relationships are assumed to be independent.
 
-Typically in animal movement, the graph is only used to represent the random variable of the HMM, but in our case, we also use the concept of graph to store all discrete positions (i.e., pixels) of the bird at all timesteps, a [so-called trellis graph](https://en.wikipedia.org/wiki/Trellis_(graph)). 
+Typically in animal movement, the graph is only used to represent the random variable of the HMM, but in our case, we also use the concept of graph to store all discrete positions (i.e., pixels) of the bird at all timesteps, referred to as a [trellis graph](https://en.wikipedia.org/wiki/Trellis_(graph)). 
 
-You can think of the nodes as a full 3D grid of lat x lon x stationary period and the edges as all possible pairs of nodes between two consecutive stationary periods. As you can imagine, this results in a very high number of edges! The novelty of Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) is to construct this graph using only the useful nodes and edges, and thus to dramatically reduce the computational resources required.
+You can think of the nodes as a full 3D grid of lat x lon x stationary period and the edges as all possible pairs of nodes between two consecutive stationary periods. As you can imagine, this results in a very high number of edges! The novelty of Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) is to construct this graph using only the useful nodes and edges, thereby dramatically reducing the computational resources required.
 :::
 </details>
 
@@ -42,9 +42,9 @@ You can think of the nodes as a full 3D grid of lat x lon x stationary period an
 We create the trellis graph with the function `graph_create()`, which performs the following steps: 
 
 1. Keep only the nodes of all locations within a threshold percentile of the likelihood map `thr_likelihood`.
-2. Keep the nodes which are within reach of at least one node of the previous and one of the next stationary period. This is done by assuming a maximal possible groundspeed `thr_gs`. This key step is efficiently computed with the image binary distance function `EBImage::distmap()`.
+2. Keep only the nodes which are within reach of at least one node of the previous and one of the next stationary period. This is done by assuming a maximal possible groundspeed `thr_gs`. This key step is efficiently computed with the image binary distance function `EBImage::distmap()`.
 3. Build the edges based on the filtered nodes and the groundspeed threshold `thr_gs`.
-4. Prune the graph based on the flow graph constraint, that is, the all nodes must be connected to the equipment node(s) and retrieval node(s). Indeed, after filtering, some nodes might be connected in a single direction (so called dead branch).
+4. Prune the graph based on the flow graph constraint, that is, that all nodes must be connected to the equipment node(s) and retrieval node(s), to avoid dead branches (where some nodes are connected in a single direction).
 
 These steps are explained and illustrated in more detail in [section 2.2 of Nussbaumer et al. (2023b)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0004-title)
 
@@ -80,7 +80,7 @@ plot_graph_movement(graph)
 
 ## Products
 
-With the graph built, we can create three products which are presented in more details in [section 2.3 of Nussbaumer et al. (2023b)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0010-title)
+With the graph built, we can create three products which are presented in more detail in [section 2.3 of Nussbaumer et al. (2023b)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0010-title).
 
 
 ### Product 1: Most likely path
@@ -114,9 +114,9 @@ plot(marginal, path = path_most_likely)
 
 ### Product 3: Simulated paths
 
-When you want to perform a post hoc computation on the trajectory (e.g., mean flight distance), it is convenient to simulate multiple paths, compute the metric on each of them (e.g., flight distance) and compute the summary statistics afterwards (e.g., mean), instead of building this process within the HMM model which would require calculating the marginal of the pair-wise marginal distribution, typically very computationally expensive.
+When you want to perform a post-hoc computation on the trajectory (e.g., mean flight distance), it is convenient to simulate multiple paths, compute the metric on each of them (e.g., flight distance) and compute the summary statistics afterwards (e.g., mean), instead of building this process within the HMM model which would require calculating the marginal of the pair-wise marginal distribution, typically very computationally expensive.
 
-As the simulated trajectories are independent and sampled without error, you usually don't need too many
+As the simulated trajectories are independent and sampled without error, you usually don't need too many.
 
 ```{r 03-graph-simulation, message=FALSE}
 path_simulation <- graph_simulation(graph,

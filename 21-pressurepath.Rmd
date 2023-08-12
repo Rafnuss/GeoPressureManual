@@ -17,11 +17,11 @@ load("./data/interim/18LX.Rdata")
 
 ## Timeseries at a single position
 
-Before creating a full `pressurepath`, we start with the basic building block of a pressurepath, which is to retrieve the pressure timeseries from ERA-5 at a single location with `geopressure_timeseries`. 
+Before creating a full `pressurepath`, we start with the basic building block of a pressurepath, which is to retrieve the pressure timeseries from ERA5 at a single location with `geopressure_timeseries`. 
 
 `geopressure_timeseries` relies on the [pressure timeseries entry point of GeoPressureAPI](https://raphaelnussbaumer.com/GeoPressureAPI/#pressure-timeseries), which return the timeseries of pressure at a given latitude and longitude.
 
-Let's start by retrieving the pressure at the known site of equipment, querrying the same date as the first stationary period.
+Let's start by retrieving the pressure at the known site of equipment, querying the same date as the first stationary period.
 
 ```{r 21-geopressure-timeseries, cache=TRUE, message=FALSE}
 ts <- geopressure_timeseries(
@@ -32,7 +32,7 @@ ts <- geopressure_timeseries(
 )
 ```
 
-We can compare the retrieved ERA-5 pressure to the pressure measured on the Greate Reed Warbler to observe the match
+We can compare the retrieved ERA5 pressure to the pressure measured on the Great Reed Warbler:
 
 ```{r}
 p <- ggplot() +
@@ -47,7 +47,7 @@ layout(ggplotly(p), legend = list(orientation = "h"))
 ::: {.alert .alert-primary role="alert"}
 <h4 class="alert-heading mt-2"><strong>Nostalgia</strong></h4>
 
-This was the figure that made me realize the potential of pressure measurement to determine birds' position! The accuracy of the reanalysis data and the precision of the sensor were such that a  timeserie of pressure had only a few possible option on the map!
+This was the figure that made me realize the potential of pressure measurement to determine birds' position! The accuracy of the reanalysis data and the precision of the sensor were such that a timeseries of pressure had only a few possible options on the map!
 :::
 
 ## Pressurepath
@@ -55,9 +55,9 @@ This was the figure that made me realize the potential of pressure measurement t
 ::: {.alert .alert-info role="alert"}
 <h4 class="alert-heading mt-2"><strong>What is a `pressurepath`?</strong></h4>
 
-You can think of pressurepath as the timeseries of pressure that a tag would record on a bird traveling along a specified path. To do that, `pressurepath_create()` calls `geopressure_timeseries()` for each stationary periods and combines the resulting timeseries of ERA-5 pressure.
+You can think of a pressurepath as the timeseries of pressure that a tag would record on a bird traveling along a specified path. To do that, `pressurepath_create()` calls `geopressure_timeseries()` for each stationary period and combines the resulting timeseries of ERA5 pressure.
 
-The `pressurepath` data.frame returned also contains the original pressure `pressure_tag` which can [be very helpful for labeling](labelling track) and the altitude of the bird corrected for the natural variation of pressure.
+The `pressurepath` data.frame returned also contains the original pressure `pressure_tag` which can [be very helpful for labelling](labelling track) and the altitude of the bird corrected for the natural variation of pressure.
 :::
 
 ```{r 21-pressurepath-create, cache=TRUE, message=FALSE, warning = F}
@@ -67,7 +67,7 @@ pressurepath <- pressurepath_create(tag,
 )
 ```
 
-Note that if a position on the path is over water, it is automatically moved to the closest point onshore as we use ERA-5 Land.
+Note that if a position on the path is over water, it is automatically moved to the closest point onshore as we use ERA5 Land.
 
 ```{r}
 plot_pressurepath(pressurepath)
@@ -75,7 +75,7 @@ plot_pressurepath(pressurepath)
 
 ## Altitude
 
-`pressurepath` are the best way to compute the altitude of the bird throughout its trajectory, including flights. 
+`pressurepath` is the best way to compute the altitude of the bird throughout its trajectory, including flights. 
 ```{r}
 plot_pressurepath(pressurepath, type = "altitude")
 ```
@@ -101,14 +101,14 @@ P0 <- 1013.25
 pressurepath$altitude_uncorrected <- T0 / Lb * ((pressurepath$pressure_tag / P0)^(-R * Lb / g0 / M) - 1)
 ```
 
-However, we know that pressure and temperature are varying considerably over time and space leading to approximation in the altitude estimated. 
+However, we know that pressure and temperature vary considerably over time and space, leading to approximation in the altitude estimated. 
 
 Using GeoPressureAPI, we can adjust the barometric equation with the actual ground-level pressure $P_{ERA}$ and ground temperature $T_{ERA}$ retrieved from ERA5 at the bird's location $x$,
 $$ z_{gl}(x)=z_{ERA5}(x) + \frac{T_{ERA5}(x)}{L_b}  \left( \frac{P_{gl}}{P_{ERA5}(x)} \right) ^{\frac{RL_b}{g M}-1},$$
 
 See more information [on the GeoPressureAPI documentation](https://raphaelnussbaumer.com/GeoPressureAPI/#description-1)
 
-We can compare theses two altitude for the first stationary period,
+We can compare theses two altitudes for the first stationary period,
 
 ```{r, collapse = TRUE}
 p <- ggplot(pressurepath[pressurepath$stap_id == 1, ]) +
@@ -120,21 +120,21 @@ p <- ggplot(pressurepath[pressurepath$stap_id == 1, ]) +
 plotly::layout(plotly::ggplotly(p), legend = list(orientation = "h"))
 ```
 
-The uncorrected altitude estimate incorrectly produce 200m amplitude error in the altitude due to the natural variation of pressure. In contrast, the corrected altitude shows that the great reed warbler mostly stayed at the same location/altitude during the entire period.
+The uncorrected altitude estimate incorrectly produces a 200m amplitude error in the altitude due to the natural variation of pressure. In contrast, the corrected altitude shows that the Great Reed Warbler mostly stayed at the same location/altitude during the entire period.
 :::
 
 ::: {.alert .alert-warning role="alert"}
-<h4 class="alert-heading mt-2"><strong>How to estimate atlitude during flight?</strong></h4>
-The correction for altitude requires to know the actual position of the bird to retrieve the correct pressure and temperature at ground level. However, when the bird is flying, its position is constently changing, making the estimation of altitude more complicated.
+<h4 class="alert-heading mt-2"><strong>How to estimate altitude during flight?</strong></h4>
+The correction for altitude requires knowing the actual position of the bird to retrieve the correct pressure and temperature at ground level. However, when the bird is flying, its position changes constantly, making the estimation of altitude more complicated.
 
 The `include_flight` argument in `pressurepath_create()` is particularly useful here as it allows to compute altitude during the flight using the reference position of the previous/next stationary periods `stap_ref`.
 
-To extract a single altitude estimate during flight, I suggest using `pressurepath2altitude()` which conveniently combines the altitude estimates from the the previous and next `stap_ref`.
+To extract a single altitude estimate during a flight, I suggest using `pressurepath2altitude()` which conveniently combines the altitude estimates from the the previous and next `stap_ref`.
 :::
 
 ## Save
 
-`graph` can become extremely big for such model and it might not be recommended to save it. Check its size with `format(object.size(graph), units = "MB")`.
+The `graph` object can become extremely big for such models, and it might not be recommended to save it. Check its size with `format(object.size(graph), units = "MB")`.
 
 ```{r 21-save, warning=F}
 save(

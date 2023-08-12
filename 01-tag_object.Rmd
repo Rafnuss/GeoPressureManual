@@ -11,7 +11,7 @@ In this basic tutorial, we run through all the steps of GeoPressureR using only 
 
 ::: {.alert .alert-info role="alert"}
 <h4 class="alert-heading mt-2"><strong>What is a `tag` object?</strong></h4>
-A [tag](https://www.movebank.org/cms/movebank-content/mb-data-model) refers to a geolocator or datalogger device, which can contain multiple sensors (e.g., pressure, light, acceleration). 
+A [tag](https://www.movebank.org/cms/movebank-content/mb-data-model) refers to a geolocator or datalogger device that can contain multiple sensors (e.g., pressure, light, acceleration). 
 
 In GeoPressureR, `tag` is an essential object (i.e., a [S3 class](https://stat.ethz.ch/R-manual/R-devel/library/base/html/class.html)) modified at each step of the workflow: not only does it store the raw logger data, but it also aggregates all the information needed to ultimately be able to model the bird's trajectory.
 :::
@@ -27,7 +27,7 @@ tag <- tag_create(
 )
 ```
 
-The raw data for this tag id should be stored in `"./data/raw-tag/CB619/"` following the default structure described in [GeoPressureTerplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder). Because the data are recorded with a [Migrate Technology](https://www.migratetech.co.uk/) tag, we use the file extension `pressure_file = "*.deg"`.
+The raw data for this tag id should be stored in `"./data/raw-tag/CB619/"` following the default structure described in [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder). Because the data are recorded with a [Migrate Technology](https://www.migratetech.co.uk/) tag, we use the file extension `pressure_file = "*.deg"`.
 
 You can use the generic `plot()` function to visualize the tag data. 
 
@@ -40,16 +40,16 @@ Depending on when you equipped the bird and when your tag started recording data
 
 ## Label tag into stationary periods
 
-Labeling tracks involves the following two aspects: 
+Labelling tracks involves two steps: 
 
-1. Indicate the migratory flight periods which **define STAtionary Periods** (called `stap` in the code), during which the bird is assumed to remain at the same location (+/- tens of kilometers) and same elevation level (+/- few meters)
-2. **Discard pressure measurements** which should not be used to estimate position (due to, for example, sensor error, flight, minor/short change in elevation level, etc.) 
+1. Label periods of flight, which, by extension will **define the STAtionary Periods** (called `stap` in the code), during which the bird is assumed to remain at the same location (+/- tens of kilometers) and same elevation level (+/- few meters)
+2. **Discard pressure measurements** which should not be used to estimate position (due to, for example, sensor error, flight, minor/short changes in elevation level, etc.) 
 
 ::: {.alert .alert-danger role="alert"}
-<h4 class="alert-heading mt-2"><strong>Important Note</strong></h4>
-Correctly labeling the track is the key step for accurate position estimation. This step requires time and effort. 
+<h4 class="alert-heading mt-2"><strong>Important note</strong></h4>
+Correctly labelling the track requires time and effort, but is key to accurately estimate the bird's position. 
 
-As labelling relies on functions and tools presented later in the tutorial, we recommend to first follow the basic and advanced tutorials. After that, we strongly suggest that you <strong>read attentively the recommendations for this step provided in [labelling tracks]</strong>.
+As labelling relies on functions and tools presented later in the tutorial, we recommend first following the basic and advanced tutorials. After that, we strongly advise that you **read attentively the recommendations for this step provided in [labelling tracks]**.
 :::
 
 
@@ -66,7 +66,7 @@ tag_label_write(tag)
 
 Open [https://trainset.raphaelnussbaumer.com/](https://trainset.raphaelnussbaumer.com/) and click on "Upload Tag Label" to load your .csv file. Instructions on how to label the file can be found in the dedicated chapter [labelling tracks]. Once you have finished, export the new `csv` file in the same folder `/data/tag-label/CB619-labeled.csv` (TRAINSET will automatically add `-labeled` in the name).
 
-![*Print screen of the manual laebeling of tag data in <a href="https://trainset.raphaelnussbaumer.com/">TRAINSET</a>. See [labelling tracks] for more information.*](assets/labelling-tracks-0.png){width=100%}
+![*Print screen of the manual labelling of tag data in <a href="https://trainset.raphaelnussbaumer.com/">TRAINSET</a>. See [labelling tracks] for more information.*](assets/labelling-tracks-0.png){width=100%}
 
 ### Read labelled file
 
@@ -77,7 +77,7 @@ tag <- tag_label_read(tag)
 knitr::kable(head(tag$pressure), format = "html")
 ```
 
-### Compute stationary period
+### Compute stationary periods
 
 `tag_label_stap()` then creates the stationary periods based on these labels:
 
@@ -86,7 +86,7 @@ tag <- tag_label_stap(tag)
 knitr::kable(head(tag$stap), format = "html")
 ```
 
-Plotting the pressure timeserie of tag provides additional information:
+Plotting the pressure timeseries of tag provides additional information:
 
 ```{r, warning = FALSE, message=FALSE}
 plot(tag, type = "pressure")
@@ -94,11 +94,11 @@ plot(tag, type = "pressure")
 
 ::: {.alert .alert-info role="alert"}
 <h4 class="alert-heading mt-2"><strong>What is pre-processing?</strong></h4>
-You might notice some discrepancies between the raw data (grey) and the **pre-processed pressure** timeseries of each stationary period (colored lines). 
+You might notice some discrepancies between the raw data (grey) and the **pre-processed pressure timeseries** of each stationary period (colored lines). 
 
-The pre-processing aligns the raw timeseries data to the weather re-analysis pressure data: that is, remove ouliars and downscale to 1hr resolution falling on the exact hour. 
+The pre-processing aligns the raw timeseries data to the weather reanalysis pressure data, by removing ouliers and downscaling the resolution to 1hr falling on the exact hour. 
 
-The black dots show the discarded pressure points (i.e., ouliars), corresponding to bird vertical movement rather than natural variation of pressure.
+The black dots show the discarded pressure points (i.e., ouliers), corresponding to bird vertical movement rather than natural variation of pressure.
 ::: 
 
-Once you've already created the tag label file (i.e., `CB619-labeled.csv`), you can use directly `tag_label()` to read the label and compute stationary periods.
+Once you have created the tag label file (i.e., `CB619-labeled.csv`), you can use directly `tag_label()` to read the label and compute stationary periods.
