@@ -15,12 +15,12 @@ For all data.frame format (e.g., `stap`, `pressurepath`, `path_most_likely` etc.
 ### Stationary period
 
 We can add some additional information on stationary periods such as altitude metric
+```{r, warning=F}
+altitude <- pressurepath2altitude(pressurepath)
+```
 
 ```{r, warning=F}
-stap <- tag$stap
-
-altitude <- pressurepath2altitude(pressurepath)
-
+# Compute summury stat of altitude, grouping by stap_id
 stap <- merge(
   tag$stap,
   data.frame(
@@ -33,9 +33,9 @@ stap <- merge(
 )
 
 # Duration can also be computed with
-stap$duration <- stap2duration(tag$stap)
+stap$duration <- round(stap2duration(tag$stap),2)
 
-write.csv(stap, glue::glue("./data/processed/{tag$param$id}/path_most_likely.csv"), row.names = FALSE)
+write.csv(stap, glue::glue("./data/processed/{tag$param$id}/stap.csv"), row.names = FALSE)
 ```
 
 Note that the most likely path contains all the information from `stap` and could be used instead if you wand to have the best estimate of the coordinate of the stationar periods.
@@ -79,6 +79,10 @@ terra::writeRaster(rast.map(marginal),
   filetype = "GTiff", overwrite = TRUE
 )
 ```
+
+### Simulation paths
+
+
 
 ### Parameters
 

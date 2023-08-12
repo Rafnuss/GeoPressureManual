@@ -93,6 +93,45 @@ plot(marginal, path = path_most_likely)
 plot_path(path_simulation, plot_leaflet = F)
 ```
 
+### Extract flight information (speed and energy)
+
+`path2edge()` provides a very nice function to retrieve all information related to an edge (i.e., flight)
+
+```{r}
+edge_simulation <- path2edge(path_simulation, graph)
+edge_most_likely <- path2edge(path_most_likely, graph)
+knitr::kable(head(edge_most_likely))
+```
+
+
+```{r}
+edge_simulation$name <- glue::glue("{edge_simulation$stap_s}->{edge_simulation$stap_t}")
+plot1 <- ggplot(edge_simulation, aes(reorder(name, stap_s), abs(gs))) +
+  theme_bw() + ylab("gs") + geom_boxplot()
+plot2 <- ggplot(edge_simulation, aes(reorder(name, stap_s), abs(ws))) +
+  theme_bw() + ylab("ws") + geom_boxplot()
+plot3 <- ggplot(edge_simulation, aes(reorder(name, stap_s), abs(gs - ws))) +
+  theme_bw() + ylab("as") + geom_boxplot()
+plot4 <- ggplot(edge_simulation, aes(reorder(name, stap_s), duration)) +
+  theme_bw() + ylab("duration") + geom_point()
+
+plotly::subplot(plotly::ggplotly(plot1), plotly::ggplotly(plot2), plotly::ggplotly(plot3), plotly::ggplotly(plot4), nrows = 4, titleY = TRUE)
+```
+
+### Airspeed distribution
+
+We can (and should) also check that our movement model is coherent with the distribution of flight speed assumed in the movement model 
+
+```{r}
+plot_graph_movement(graph) + 
+  geom_histogram(
+      data = data.frame(as = abs(edge_simulation$gs - edge_simulation$ws)),
+      aes(x = as, y = after_stat(count) / sum(after_stat(count))), color="black", fill=NA, bins=100
+    )
+```
+
+If you find anomalous flight speed, it might be worth checking if this/these flight(s) have been correctly labeled. 
+
 ## Save
 
 `graph` can become extremely big for such model and it might not be recommended to save it. Check its size with `format(object.size(graph), units = "MB")`.
