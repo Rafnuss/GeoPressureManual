@@ -13,7 +13,7 @@ The first step is to setup-up your CDS access. You will need to create an accoun
 ```{r, eval=F}
 Sys.setenv(cds_key = "Insert_your_CDS_API_KEY_here")
 Sys.setenv(cds_user = "Insert_your_CDS_UID_here")
-usethis::edit_r_environ() # opens .Rprofile
+# opens .Rprofile with usethis::edit_r_environ() 
 ```
 
 You can then retrieve them whenever you want with:

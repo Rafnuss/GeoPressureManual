@@ -94,7 +94,7 @@ path_most_likely <- graph_most_likely(graph, quiet = TRUE)
 In GeoPressureR, we store `path` as data.frame of the position (and other information taken from `graph$stap` for each stationary period). A path can be displayed on the map with `plot_path()`:
 
 ```{r}
-knitr::kable(head(path_most_likely))
+kable(head(path_most_likely))
 plot_path(path_most_likely)
 ```
 
