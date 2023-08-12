@@ -1,27 +1,28 @@
 Package: GeoPressureManual
 Title: User Manual for GeoPressureR
-Description: Learn how to use GeoPressureR with the Great Reed Warbler 18LX.
-Version: 1.0.0
-Authors@R: 
+Description: Learn how to use GeoPressureR with examples.
+Version: 2.0.0
+Authors@R: c(
     person("Raphaël", "Nussbaumer", , "rafnuss@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-8185-1020"))
+           comment = c(ORCID = "0000-0002-8185-1020")),
+    person("Améline", "Nussbaumer", , "ameline.nussbaumer@gmail.com", role = "rev",
+           comment = c(ORCID = "0000-0003-1308-4154"))
+  )
 License: GPL (>= 3)
 Type: Book
 URL: https://github.com/Rafnuss/GeoPressureManual
 BugReports: https://github.com/Rafnuss/GeoPressureManual/issues
+Depends: 
+    R (>= 3.5.0)
 Imports: 
     bookdown,
     GeoPressureR,
-    ecmwfr,
-    GeoLocTools,
-    igraph,
+    job,
+    knitr,
     ggplot2,
-    gridExtra,
     plotly,
-    RColorBrewer,
-    leaflet,
-    leaflet.extras,
-    dyplr,
+    glue,
+    terra,
     moveVis
 Remotes: 
     rstudio/bookdown,
@@ -29,3 +30,4 @@ Remotes:
 Suggests:
     spelling
 Language: en-US
+Encoding: UTF-8

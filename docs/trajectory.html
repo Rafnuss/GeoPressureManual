@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Trajectory | A User Manual for GeoPressureR</title>
+<meta name="author" content="Raphaël Nussbaumer">
+<meta name="description" content="In this last chapter of the basic tutorial, we model the full trajectory of the Swainson’s Warbler by combining the observation model of pressure with a movement model of flight accounting for...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Trajectory | A User Manual for GeoPressureR">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://raphaelnussbaumer.com/GeoPressureManual/trajectory.html">
+<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<meta property="og:description" content="In this last chapter of the basic tutorial, we model the full trajectory of the Swainson’s Warbler by combining the observation model of pressure with a movement model of flight accounting for...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Trajectory | A User Manual for GeoPressureR">
+<meta name="twitter:description" content="In this last chapter of the basic tutorial, we model the full trajectory of the Swainson’s Warbler by combining the observation model of pressure with a movement model of flight accounting for...">
+<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.1.2.9000/leaflet.js"></script><script src="libs/leaflet-providers-1.13.0/leaflet-providers_1.13.0.js"></script><script src="libs/leaflet-providers-plugin-2.1.2.9000/leaflet-providers-plugin.js"></script><link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/Rafnuss/GeoPressureManual/main/assets/geopressuremanual.ico">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NJ17NCTPB5"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-NJ17NCTPB5');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">A User Manual for GeoPressureR</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Introduction</a></li>
+<li class="book-part">Basic tutorial</li>
+<li><a class="" href="tag-object.html"><span class="header-section-number">1</span> Tag object</a></li>
+<li><a class="" href="pressure-map.html"><span class="header-section-number">2</span> Pressure map</a></li>
+<li><a class="active" href="trajectory.html"><span class="header-section-number">3</span> Trajectory</a></li>
+<li class="book-part">Advanced tutorial</li>
+<li><a class="" href="light-map.html"><span class="header-section-number">4</span> Light map</a></li>
+<li><a class="" href="trajectory-with-wind.html"><span class="header-section-number">5</span> Trajectory with wind</a></li>
+<li class="book-part">Labelling tools</li>
+<li><a class="" href="pressurepath.html"><span class="header-section-number">6</span> Pressurepath</a></li>
+<li><a class="" href="geopressureviz.html"><span class="header-section-number">7</span> GeoPressureViz</a></li>
+<li><a class="" href="labelling-tracks.html"><span class="header-section-number">8</span> Labelling tracks</a></li>
+<li class="book-part">Appendix</li>
+<li><a class="" href="resources.html"><span class="header-section-number">A</span> Resources</a></li>
+<li><a class="" href="export-and-visual.html"><span class="header-section-number">B</span> Export and Visual</a></li>
+<li><a class="" href="probability-aggregation.html"><span class="header-section-number">C</span> Probability aggregation</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/Rafnuss/GeoPressureManual/">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="trajectory" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Trajectory<a class="anchor" aria-label="anchor" href="#trajectory"><i class="fas fa-link"></i></a>
+</h1>
+<p>In this last chapter of the basic tutorial, we model the full trajectory of the Swainson’s Warbler by combining the observation model of pressure with a movement model of flight accounting for likely speed to constrain possible distances between stationary periods. To do so, we use a highly optimized <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model">Hidden Markov model</a> presented in Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>).</p>
+<p>This involves three main steps:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Create the graph</strong> representing the possible trajectory of the bird.</li>
+<li>Set the <strong>movement model</strong> which defines the likelihood of each possible flight encoded in the graph.</li>
+<li>
+<strong>Compute three products</strong> of the model: (1) the shortest path (i.e., the most likely trajectory), (2) the probability maps at each stationary period (i.e., marginals), and (3) simulated paths sampled according to their likelihood.</li>
+</ol>
+<div id="background-on-movement-modeling" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Background on movement modeling<a class="anchor" aria-label="anchor" href="#background-on-movement-modeling"><i class="fas fa-link"></i></a>
+</h2>
+<p>If you haven’t heard of <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model">Hidden Markov model</a>, <a href="https://doi.org/10.1016/j.tree.2007.10.009">state-space models</a>, or <a href="https://en.wikipedia.org/wiki/Trellis_(graph)">trellis graphs</a>, I recommend that you start by reading the following section, or - even better - read Patterson et al. (<a href="https://doi.org/10.1016/j.tree.2007.10.009">2008</a>) and Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) if you’re feeling brave!</p>
+<details><summary>
+Click here to read a short summary of movement model
+</summary><div class="alert alert-info" role="alert">
+<p>We start by making the fundamental assumption that the overall trajectory can be separated into <strong>discrete</strong> positions which, together, create a trajectory.</p>
+<p>This discretization allows us to use a <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model">Hidden Markov model</a>, which conveniently distinguishes the <strong>unknown positions</strong> of a bird <span class="math inline">\(X_t\)</span> from <strong>known observations</strong> <span class="math inline">\(Y_t\)</span> which can be related to these positions (e.g., pressure or light measurement). Defining an HMM requires that we can compute:</p>
+<ol style="list-style-type: decimal">
+<li>An <strong>observation model</strong> <span class="math inline">\(P(Y_t | X_t)\)</span>, which defines the likelihood of observing a measurement conditional to a known position. This is exactly what our pressure likelihood map computed in the previous chapter does.</li>
+<li>A <strong>movement model</strong> <span class="math inline">\(P(X_t+1|X_t)\)</span>, defining the probability that a bird was able to fly a specific distance between two consecutive stationary periods.</li>
+<li>An <strong>initial state</strong> <span class="math inline">\(P(X_0)\)</span>, technically required but this does not constitute a strong constraint in our case.</li>
+</ol>
+<p>Let’s say that our goal is to produce the probability map for each stationary period accounting for all pressure measurements while maintaining likely flights. This corresponds to the <strong>marginal</strong> probability map <span class="math inline">\(P(X_t=x_t|Y_0=y_0,...Y_t=y_t)\)</span>. If you are not familiar with the lower and capital case, <span class="math inline">\(X_t\)</span> represents the random variable (i.e., the position of the bird at a stationary period <span class="math inline">\(t\)</span>), while <span class="math inline">\(x_t\)</span> is a specific value that <span class="math inline">\(X\)</span> can take, that is, the specific coordinates of pixels on the map.</p>
+<p>Because the number of possible positions is limited (i.e., number of pixels on the map), we can solve the HMM exactly. This is in contrast to Markov Chain Monte Carlo (MCMC) algorithm, which does not assume any discretization of space but relies on an iterative approach to solve the model.</p>
+<p>A graph is a convenient mathematical representation of a model which has states (nodes) and relations between these states (edges). Graphs are a general and fundamental mathematical tool, but here we use a specific graph structure corresponding to the HMM presented above: two states <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> for each time step <span class="math inline">\(t\)</span> (nodes), and an observation and movement model (relating <span class="math inline">\(X_t\)</span> to <span class="math inline">\(X_t+1\)</span> and <span class="math inline">\(Y_t\)</span> to <span class="math inline">\(X_t\)</span> respectively). All other relationships are assumed to be independent.</p>
+<p>Typically in animal movement, the graph is only used to represent the random variable of the HMM, but in our case, we also use the concept of graph to store all discrete positions (i.e., pixels) of the bird at all timesteps, referred to as a <a href="https://en.wikipedia.org/wiki/Trellis_(graph)">trellis graph</a>.</p>
+<p>You can think of the nodes as a full 3D grid of lat x lon x stationary period and the edges as all possible pairs of nodes between two consecutive stationary periods. As you can imagine, this results in a very high number of edges! The novelty of Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) is to construct this graph using only the useful nodes and edges, thereby dramatically reducing the computational resources required.</p>
+</div>
+</details>
+</div>
+<div id="create-the-graph" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Create the graph<a class="anchor" aria-label="anchor" href="#create-the-graph"><i class="fas fa-link"></i></a>
+</h2>
+<p>We create the trellis graph with the function <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_create.html">graph_create()</a></code>, which performs the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Keep only the nodes of all locations within a threshold percentile of the likelihood map <code>thr_likelihood</code>.</li>
+<li>Keep only the nodes which are within reach of at least one node of the previous and one of the next stationary period. This is done by assuming a maximal possible groundspeed <code>thr_gs</code>. This key step is efficiently computed with the image binary distance function <code><a href="https://rdrr.io/pkg/EBImage/man/distmap.html">EBImage::distmap()</a></code>.</li>
+<li>Build the edges based on the filtered nodes and the groundspeed threshold <code>thr_gs</code>.</li>
+<li>Prune the graph based on the flow graph constraint, that is, that all nodes must be connected to the equipment node(s) and retrieval node(s), to avoid dead branches (where some nodes are connected in a single direction).</li>
+</ol>
+<p>These steps are explained and illustrated in more detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0004-title">section 2.2 of Nussbaumer et al. (2023b)</a></p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_create.html">graph_create</a></span><span class="op">(</span><span class="va">tag</span>,</span>
+<span>  thr_likelihood <span class="op">=</span> <span class="fl">0.90</span>, <span class="co"># percentile express</span></span>
+<span>  thr_gs <span class="op">=</span> <span class="fl">100</span> <span class="co"># km/h</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="set-movement-model" class="section level2" number="3.3">
+<h2>
+<span class="header-section-number">3.3</span> Set movement model<a class="anchor" aria-label="anchor" href="#set-movement-model"><i class="fas fa-link"></i></a>
+</h2>
+<p>We then define the movement model by setting a parametric function converting groundspeed to probability.</p>
+<p>In this basic tutorial, we use the gamma distribution to model the probability of groundspeed.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_set_movement.html">graph_set_movement</a></span><span class="op">(</span><span class="va">graph</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"gamma"</span>,</span>
+<span>  shape <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>  scale <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>  low_speed_fix <span class="op">=</span> <span class="fl">15</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Because birds may fly back and forth over small distances, we give all groundspeeds under 15km/h the same probability as for 15 km/h <code>low_speed_fix</code>.</p>
+<p>We can check the parametric function created with</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/plot_graph_movement.html">plot_graph_movement</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
+</div>
+<div id="products" class="section level2" number="3.4">
+<h2>
+<span class="header-section-number">3.4</span> Products<a class="anchor" aria-label="anchor" href="#products"><i class="fas fa-link"></i></a>
+</h2>
+<p>With the graph built, we can create three products which are presented in more detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0010-title">section 2.3 of Nussbaumer et al. (2023b)</a>.</p>
+<div id="product-1-most-likely-path" class="section level3" number="3.4.1">
+<h3>
+<span class="header-section-number">3.4.1</span> Product 1: Most likely path<a class="anchor" aria-label="anchor" href="#product-1-most-likely-path"><i class="fas fa-link"></i></a>
+</h3>
+<p>The graph can directly and efficiently compute the most likely path, that is, the set of positions for each stationary period which maximizes the joint probability of the trajectory.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">path_most_likely</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_most_likely.html">graph_most_likely</a></span><span class="op">(</span><span class="va">graph</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>In GeoPressureR, we store <code>path</code> as data.frame of the position (and other information taken from <code>graph$stap</code> for each stationary period). A path can be displayed on the map with <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/plot_path.html">plot_path()</a></code>:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">path_most_likely</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="8%">
+<col width="3%">
+<col width="5%">
+<col width="9%">
+<col width="10%">
+<col width="20%">
+<col width="20%">
+<col width="8%">
+<col width="10%">
+<col width="6%">
+</colgroup>
+<thead><tr class="header">
+<th align="right">stap_id</th>
+<th align="right">j</th>
+<th align="right">ind</th>
+<th align="right">lat</th>
+<th align="right">lon</th>
+<th align="left">start</th>
+<th align="left">end</th>
+<th align="left">include</th>
+<th align="right">nb_sample</th>
+<th align="left">known</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2806</td>
+<td align="right">37.28681</td>
+<td align="right">-82.30497</td>
+<td align="left">2021-07-01 02:30:10</td>
+<td align="left">2021-09-24 00:00:10</td>
+<td align="left">TRUE</td>
+<td align="right">0</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">2895</td>
+<td align="right">32.75000</td>
+<td align="right">-81.75000</td>
+<td align="left">2021-09-24 11:30:10</td>
+<td align="left">2021-09-24 23:30:10</td>
+<td align="left">TRUE</td>
+<td align="right">12</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">3064</td>
+<td align="right">28.25000</td>
+<td align="right">-80.75000</td>
+<td align="left">2021-09-25 11:00:10</td>
+<td align="left">2021-09-25 23:30:10</td>
+<td align="left">TRUE</td>
+<td align="right">13</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">3075</td>
+<td align="right">22.75000</td>
+<td align="right">-80.75000</td>
+<td align="left">2021-09-26 13:00:10</td>
+<td align="left">2021-09-27 04:00:10</td>
+<td align="left">TRUE</td>
+<td align="right">15</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">2755</td>
+<td align="right">22.75000</td>
+<td align="right">-82.75000</td>
+<td align="left">2021-09-27 08:30:10</td>
+<td align="left">2022-04-06 00:30:10</td>
+<td align="left">TRUE</td>
+<td align="right">100</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="right">2824</td>
+<td align="right">28.25000</td>
+<td align="right">-82.25000</td>
+<td align="left">2022-04-06 10:30:10</td>
+<td align="left">2022-04-07 00:00:10</td>
+<td align="left">TRUE</td>
+<td align="right">13</td>
+<td align="left">FALSE</td>
+</tr>
+</tbody>
+</table></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/plot_path.html">plot_path</a></span><span class="op">(</span><span class="va">path_most_likely</span><span class="op">)</span></span></code></pre></div>
+<div id="htmlwidget-9ac4fb01e564a2b4f99a" style="width:100%;height:480px;" class="leaflet html-widget "></div>
+<script type="application/json" data-for="htmlwidget-9ac4fb01e564a2b4f99a">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Stamen.TerrainBackground",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addPolylines","args":[[[[{"lng":[-82.30497200000001,-81.75,-80.75,-80.75,-82.75,-82.25,-82.25,-82.75,-81.75],"lat":[37.286812,32.75,28.25,22.75,22.75,28.25,30.75,35.75,37.25]}]]],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"black","weight":5,"opacity":0.7,"fill":false,"fillColor":"black","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[37.286812,32.75,28.25,22.75,22.75,28.25,30.75,35.75,37.25],[-82.30497200000001,-81.75,-80.75,-80.75,-82.75,-82.25,-82.25,-82.75,-81.75],[18.21263753036445,5.045378491522287,5.097132734541368,5.334838230116768,22.29564002788418,5.196152422706632,9.69343894498722,5.243610795028083,16.53715828677587],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"grey","fillOpacity":0.8},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[22.75,37.286812],"lng":[-82.75,-80.75]}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="product-2-marginal-probability-map" class="section level3" number="3.4.2">
+<h3>
+<span class="header-section-number">3.4.2</span> Product 2: Marginal probability map<a class="anchor" aria-label="anchor" href="#product-2-marginal-probability-map"><i class="fas fa-link"></i></a>
+</h3>
+<p>Estimating the uncertainty of the bird’s position for each stationary period is generally the most sought-after output of tracking studies. While the pressure map provides some information for each stationary period, we can now produce the probability map of positions accounting for all observations and transitions. In the HMM, these maps correspond to the marginal distribution of a Markov process.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">marginal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_marginal.html">graph_marginal</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span></code></pre></div>
+<p>You can visualize the marginal map along with the most likely path:</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">marginal</span>, path <span class="op">=</span> <span class="va">path_most_likely</span><span class="op">)</span></span></code></pre></div>
+<div id="htmlwidget-3aebd27c0a3fd932507c" style="width:100%;height:480px;" class="leaflet html-widget "></div>
+<script type="application/json" data-for="htmlwidget-3aebd27c0a3fd932507c">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Stamen.TerrainBackground",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAABTCAYAAAAsnA/DAAACV0lEQVR4nO1ay23DMAylgx58CTpB1+sOnsA7dL1OUPjim3sS4LqSTEr8KdIDgiKAK/LpkSLFeHrO6wGNY9uXifL8Q8oRz3izdqAGVIUDulR6kG4JpaEN4IT098+Xqj0XpD/eP1XtuSCtjUG6F3RJurmOrKZUBTSlNAdhgMZIc8F9eHOpe4ZrpSUIAzgnLQWX4S2lcIA7paUJAzgjrUEYwBlpLXRJeuIeAedCFGNLI8RJpINDd/+DdTy2jhvSko5YEM/Waa3TVBvJg+xVCQN0enpHSVurLP2jornSdxv8nNcjfLhsJk9vbbWvfkjaN1faAm5yGmOTK8Rd3adTxAPZMRisQBOkudOtCdIA/4nX5LdJTmMd3vZlSuXz+ftzXg9KNJgrjb1/pzbqTBi7mdHmRKpknW3lVKxtmO6UZydNWe+uFFHXwvrN1oZyTVOoa5esm52c1Ix9ah2j2MmlSgzip7ck4djamOeypKmlQBIc6RHWKBoMlkxQa5ESoKRJQYW39evRwX7pxeNcx7d9mdiH/TFjHLjWeMyzqeeaIc2Jh1fHJPGnaedc2PNmoto/akOPgeWmkA2/AnGRfhgLK9LF92nPOXuHqiFCq8RZnaaGfHM5jQX3XbjUh7Mt8xkZN64/+MX+ipPWDOFcfx6+b/symTiUcoxr3bB2ymazpGv6BNOctrqnq5H2VNPVHcGOnCUvPa5fqEkdRrVwE3IA6ZLDTdxNc6J5qLlS+g5cG+NGaU0M0r1gkO4Fg3QvcF+nJZqWobQ3SLWmXSrNQlpCEckLCJvS1q9oUPALo5VzsNDDfb8AAAAASUVORK5CYII=",[[40,-99.99999999999999],[0,-68]],0.8,null,null,"#1 | 01 Jul 02:30 - 24 Sep 00:00"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAABTCAYAAAAsnA/DAAAFSklEQVR4nO2aT4gcRRTGf1XdPdOzfzIbdmNEiGTRiH9y8CB4MJcoqOBZkCBEFA85GEGEuIccxEPAg14EBVFQEg14Ui/BcwT1EFQkRgkmatRgEpPszGRmtqfredjMOsluz3RPV0/3uPtB09M93VXvq++9qvdqRk37h4Qxgi8OBkEAuX6+0n5FJWnDzcY0+5gzFQJCDEKoBINgAENyzcaG9EXdZIupECIoMRiEv5ZeTqRwF9q2ceOAsVEaluO5g0ErCIZw6y7GhvQ9nc2ESggwKAk5E+wfyrWh4O59Zziz8nkSj0nxqIiLn1KrQit92rmy8nnOlGkS0tCKFJ4NjEjpva35VO/vac1zrPQ7m8Vj0riUcFK1V2j3zgojIf2Bf2bVvfs6s7He3b80zzZPOBBuZ1Y0U+LgMvQcBuQU0/va87xdXj0Qa2HHrXUc1xB2NHJhkkbgUJMCTGS3h9NMiMsp93Ks5+MQPnKHz6ZqHcc5hzGaVrNMo+lx8PJeRZjO3tSkt5qJlM52I44/eoFdX2xh5wMncUsdwlATtMo06z6PnThgpavUpOX6YZSdYu2uh7/n4uMBIgoxGtP0WFqcoPZ31Ur7YIX0csVzs8c9357n3Zhxe/XYh0jZMLP7Gbzdv4IBdU2jWg76kZM2HQkAlVU9/WxrnjlPeN05u3Lv1HMnufu9e9d8/tyl9xHHgDKojotbV0xu/dk6YVin63RmS1YToRkqepOnKJUBdFtjSgplXDZt+ikThVf6yqrhhjI0TfT3fx48DsCVjz7h6ueHmfgRpr5TmROGlKR9ic6BPyv/xmJEZfDVE+e57bVd/LL/BDN7nqT+9Xba32zDeSh7wpByIiuLxkHjiqaEpiwOFTymxKVqSsyIR1U0sw7M39KgWm2w92yDT+83lP02pVKAcgx+pU15osWOw++MhHSqmG4rQ0UUghBePzoYAoS2CmmicQEv1Pyz6NNoerxZneLcHx08N8R1QpSGkhfg+21LlAbDypI1ZTxcNGUcTi+9GKnWq+7HUnIERwuOhiBUOFoouQbXNbSXHF6qP5252olI11oLCiDqnTlToSyaUzG3cl7gqAjL7uYqMMAb8lQxSHfJZoE96ogAKJZJC8JRyVbtvjGdJdkuLusAQfjSO8+DwdblmymrqEGIJD0KwgA1FWAQdnZmWVSB1YotCusyDV2T9KhUBqirDg3V4Qf3Ek3V4ZoK2Om9lemPirlvAX8b7FuZTM86i/99ESyfeidaW2JEzt6jVBtWL4NZ9r8R012MWuW4fdra8Mg9pnsRRbxL1pYYG+5dVNgOt7EgDauJp4nvXGI6rsG11oKKiufe62n/kCTxhtyV7mds7+BEDVQv4biDuWZyktWSdXN2FaVi2oRpkPLWSSdpb9BSlLStuHZbS0MHuZbtgUzTbt+dkyTu1O97W+HST6AkCUzms3eWhNdqO85zfUknXQqyhI3w6LYx1MbgMDuoaRElwDBJSiz3zvvv0d3+hy08etfxWmtBZfb7dG9nNpBkB2XQ4IwNaZvQRTUsS9yQtNtsuMiDGSv9S5rQx0Geg5K44/8D8Uzy4bjIi/TQ9XSRY3YQUm0ijCtxq0Yndfmxi+m4sF0LD2tDb1+575HZxrR/SLpH9/rmc+akR+nC/fLz7nWttaByMSjKMFvtdtuO6nNsSafJE3KN6bzq9JGRLtKaPnJD4m45Z1n05Dr6cbaOswiBwrgcRC85tokXJjkZ5aRWKKUHwdbAFEbpUWKD9HrBBun1gg3S6wWFX6ezSFo2lC4askpN16XSVkhnoUiWBYg1pfP+i0YS/Au5a4cFiTxKQQAAAABJRU5ErkJggg==",[[40,-99.99999999999999],[0,-68]],0.8,null,null,"#2 | 24 Sep 11:30 - 24 Sep 23:30"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAABTCAYAAAAsnA/DAAAF9klEQVR4nO2aSYgcVRjHf+/V0tU93T3JTLYxkSQSRNSDCAriAqJCvIkiGAx6CB6iIsZDdBByEKQzLiR6yEHNTQneRDxpwIMXFRElRD2oGBNwmWSMs6SXWj4PPTXp6emeXqqqF2f+MHQ3U/Xe93v/r95aKucUhCHXXGlSdXK9TiqQQZbZ7wCiqFOHQ61Jp9ehh0ndpjYMMXQUrUMnJVO6zsREtO50UvLUyklfNrC6Ls+ImDl9cTof2Mxrt+v7NdGg+zIjm9WVru5zxGC6fDhyBxGb00l0VZuDNAAbgxSjQSoWYIjJ6fpIbNFUVBCpzN1+HoAR30QAQbgQqcSrigwdAitRyGKHZYnGEbPtNL7JG+eseWnpu7lYqgK+8J6KPYkipXcYjRZFUNNDL2iPFAbb/ZFl19/ubm1YzlnzEne5E9zpbmODWGwIbDYFqUSAYY2O012nt6Ka0orqEOKzfCy2RZPC5EZvjB/MGQC+tv5aUc4DlR18Zl8gKyZawETxgTye6BSuK6frgd26TusafwQLg5QYS8D1eqi8E4CMGDxc3kk2MBgXM3Fg6AK6HrhRARYaG42F5g5324r/P1LeyUepc+wv7WZUNHnR5FCc4LGeTNI7Su9GwAaafGBiLkLaopdcTouBhWZv5VqygUEahQmUgX2lXeQUpDTYWsjYASwkQNhAbUOruu8huCG6+onCFIWNgSMGGTHJiokjmhExGFUKT6r3ZRU4SjGe8cg4HrblM7ZhHn6MG6+xOnN6mctVYAOFha46i8m37sHGKSpwLPe+WEaANgTH9siNFMnlF8jlF9i8fZrSM/eK8+zniae4amffO3T238Utmk2pKTHQmHI1pdNYZMViY2DzSfBkW4F/ed/Lkh+bZXTzZfLbZxi59Xf0g2cGAzrKflQrFY/fL0a+iB4po3bMEYz6WDf/nCj4qumdJGwoa+IyKltB2T6V7QFu3ki6yuZDVi+AgepzU662vZ9W+CPdLTs70ZqchjaE7pnLABUDWbAJLmawLgc4f5i4Z/YkeqjY97Msc/9Xan5qr1j5ItaFBSTtg3fVi8q7d0v5Yo7ipRxb3vgwFjOa9t49dRuYPvyopMfmMRwXEcgcOp1Y/X13OtRv3+3BdspoLZi2C5xOrK6G0L12GeC2Twvq5LaT4noGju01vOYV85Qc8fZFjm1gnAY48OeBhkCvWqekEiiOePGswgYKupnOuazYpIiioRin32Gfmo5wOFCvoYAG+Dh4YllqX2cf79r6vqT3PeZ7EiB4CJ7ycRE8AgThvDG/dN1caVLdYp0QAb53n14G/Wvl+aXfY6kpmSm/2Pbz3hen55XLFeVxRbl84x5UV5RLSfmUVcDWIMOEnwHgButtKeNRxuN6662GztYC59t8Pazh5CSpISvnFGTCz6BR/OQ+p3JOQbYEaX6pcQ1gl31MNAqhuh6Z1kXGAodzlUNtxZVzCrIaQ+zpPZ6akooKyAYWxuL54vnKCwqqjTlXd32Flcc/vy3C7bDflNCRGV1iS+o1+bvJeVbeKcjsImgr02Kbho6mjkpQdw7tiIECisqPlD1bU6+LIBSVD1TfbBDAV9JVuavunLRbYM4piIKGI6kpin/KL8XyuGxMHRWpqSc8O5stTS5xtBNzbOndCFhBMsBKEKqw9de100etCt2qQ2ilOBfFURqvPgu62hjs5M3huEaCZgZ08xZzW+nd79ejw/G3k+e2VuH1YcO15XS3inO8r42zVbmtGmdooOOUHtTAktQScNyOD3JjNgysvgFqO4K4Ku5no3Rc8f8BPPKAH0X9gu56PT3Iz2wrRdpEGFbwWIPuNOWH7pluV3EsXeOIobauodkNbVc5pyDhX/i7/jNx6F6m8Grz8/D3XGlS9SWgZoHFVW5YdrM6hxY6yjyhr890v9bpPYMepDG954G0u+Wc5KKnr63fCqBZZxRVA5Ny0HzIiRt8YCYnvezUBsrpVoqrYQbG6V5qHXqtaB16rWgdeq1o4MfpJCYt604PmpKamq5Jp2OBTsKRJBcgsTnd71c0OtF/E0x1n5Kbqz4AAAAASUVORK5CYII=",[[40,-99.99999999999999],[0,-68]],0.8,null,null,"#3 | 25 Sep 11:00 - 25 Sep 23:30"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAABTCAYAAAAsnA/DAAAEAElEQVR4nO2azWvUQBjGn8l2d9OPLVUKaqtUsVopSG8e9CT1IAoePEgFT55EFBFEXfWgeFiFSv+CeiriP+BJLUUQ9SIULWotVESwn7Y0bU2z3bxeTLvVZDfZzCSTZh9YSuh25v3NMzPvO9OwjJojRFyanmVevq+ICkRm1YQdgB95ddhSLJ2uQkdJlU5tIMLQflSFjouq0HFRLKEjV5H5SVWWIuU0D2AgYtC8JP305uVusaR2WgQwIDm0KEk5vUU5bEk6p0UDA5JBBwEMSAYdlGIJzXhfAZeaom76CmKKe4K2Air3N24Dt2tHGmiRgYQBXjJPB7WbBi3HjWyzAgMx3b1tocN2WfQ/FUOvvTU9y1pTj8gEwWQmCiAUEzf+HQACPzMcd++g3e5OPKYltgqdFZDHKkbyl4X1H7rTlo4qtfiZZ9CYiUVWwIjAvqRZ03fyZ9mJrh841rqII7X2+2tLqpfLWpfGaQA4OXzNdrDPsSc0qeh4bpznYoZU0E7am1CQKKjc2otEnr632sO2Er9QIwENAH3o2TC1m9MPK17foUAvT+wn43M7Fd50UP5DO2lzHTS/sod+f99H5mAnZdQczd46TQDw4lCO+rf3/wc4s3JjbRC8FjOhQKdfN4CGWmC824XkwTFW9wlIzieRWCbAUDBxfwja5Ba87b5Nc78y0JZTuIKntmCNao7cHnktBQqdUXM0f/cUrc40IH3hFUs2L8Ic7KTE4S+sftsoSx0YY8rxjyzdNoukamB5qQ5zC/WYXkxilpm2bS4UpVe38LYVmZ88nVFzxADUkIJaqkETpTGSv2Tbnvmyk4z2PNS2r7a/f9bVSyOjOzD+O4EBdRw7Cw345FCpZYocLyduZei/7SjEkIKCOkqiidIYzl+seCDPsAGaTOh4XzMNAEiSggIIJqOKDCp5c+Ln2odhHXxq5TqXomJHqpcMVlgDtjrV9Owah5uYhRUnBMBkhCmdD/DuVB9pzNgAbAfoZrmWhPayTuzE81D8zbjqa58B1uEruhis5AbVr5rSD2h+5aYrZ8vJ1fQO+/XoRjVHJug/x9yqOJVpepZxv+y364yHiuMs1265wYkMNE8psgYmUhUX7eUk82A6lnTFz14LejcKc1A8d7wZwH0nfD8KC7rio6XMa7acfJ2nowrONWivUz5ya9qteBxdecRQ3FdkbkPdKqPmyPpYz//+FA4d5BQuVZ9bz5qeZaEE5BQYr3attp36jCy0nzoh1DUd1jk9MGiZcnrggbi9chZ56JH6hRqnzcivpJlygHPK4Q0uTXES5KYmldPlxGtgpHE6SFWh46IqdFxUhY6LpM/TIoqWqtOySVRpGkunuUCLcETkAYSb02G/ouFFfwDgberQvmCyDQAAAABJRU5ErkJggg==",[[40,-99.99999999999999],[0,-68]],0.8,null,null,"#4 | 26 Sep 13:00 - 27 Sep 04:00"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAABTCAYAAAAsnA/DAAADBklEQVR4nO2aPW8TQRCG3704wQK5MEQCCVIgpPwFhBBC9IloKWj4Ej2dKxok01LQ0bgCRMkPoKGnAIkUcWEkIOkcDNiKA0u10tncx+7t7O5s7l7JiuJcdua5md2dnTvRafclItdk1hMm1yeuHOGsVmgHbGQaYaVaRrqBjklVUxuIGNpGDXRd1EDXRbWEjq4is9mqlKKKNAUwEBk0ldinN1V002IdaRfAAHNoV2KZ3q4irMQu0q6BAWbQPoABZtC+VEtoQd0CLkpRHVs+UtwIWjlU9j+6jmeNwwbapSMhwAv3aV+rqW/lLmTHFRio6eqdCR06yq4fKgaPdNkN7rT7Un2obOau3r6jveyHS/vBIx1CbOa0jk2qFGd1ns4DV7BNY9BCUUBTT7cooIH/wW3md5A5/bw7kJcu7uHKzffoXBvix9UpxJ8WTr5Zx8Hn8/i2s4HR7ga2Pz0SW8lA/kqO8O7o3gJ0+iZ02n1pkg1BoIfjE5juXMD88Aa2H78VXx7ckWunZvj4YRP7e+sYfe1i9LOFrWQgx8khJmKeC5b+Xhc+szhxtWV12n15eX4WZ/6u4bW8LZ6svpTnTk9xf//ugr3rrRcSAA7EHMOVsbFfZfDk0CbjPcQr2RXAU3kr8++bq8/k95XfWmOZpDhZGUrVTTEdu8q4hZ0Tm7aPrWMmdiaznjApYJwvZC6B8xa2susKoU23ApeimB5qjEqNwSodVFsVbVmmY2mld+jXo5X9qgeP5X2cvNmfZYxCaT91ui1F10UDTamEq2MutVC0Uw7M+WYWdiqUdJ9hmSjkTTE2fBzAndTDugoFXblzwnnOlsmqXRQrOKnTpikf3ZzWFfVZuKoPaVvRdEN1tfzAL+unc2ifKVxUn6vfJ7OeCOJQnmNU46qx82xGC21TJwSd06HO6d6gOe3p3h3RbTm7PPSwfqEmbzGyFZuUA/K3HGpwNsWJz0WNVaTLRHVj2ETapxrouqiBrosa6LqI/T7tomhpIs1NrkrTWkaaBNpFRFweQMgiHfoVDRP9A9mvoccqXaY8AAAAAElFTkSuQmCC",[[40,-99.99999999999999],[0,-68]],0.8,null,null,"#5 | 27 Sep 08:30 - 06 Apr 00:30"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAABTCAYAAAAsnA/DAAADpElEQVR4nO2aPYsTQRjHf7N52xjvNPemwilaiCDYWdr4EcQPYGOntRC8xkLO1sLKQuRA/AIWFjYHYmuhhSCIYOXdmdytd3ndHYtjMZ7ZZDc7szt72T+EsMlk5vnP/3nmeeYhYs5el2QcTqchooy3dBliMoppGxAHURX2MZNK56SzhGldGzJMOg5y0rOCnPSsYCZJZ64ii5OqfGRKaRWEIWOkVcF491al7jCMVloHYTCctC4Y6d66FPZhBOmStBCAhWCr+0ArYUjJvc94JwBY8GwAarJEXdqJEAbNSgtASEEZiyWvyilZYVFWqEiLAXVaVo8laSMBWxb4qtOYIeglLQVFBBVZ5JxXY9WzWcZiviCxBDQHZXbwcIRLSSYi8qFdqlvA4w6hh9ZreWn5gJWlXarVLp4ncH7X+NWq4XqCa1e/cWPzkXb2kUj7hCb9Juzp21y7JQHcQQGA8sk282tvzCCtM4W4769Ir+6CC4N3F9n6fJ4Lz1+kl7J050uAwVmP9qpLebtEr1mj9fO07iWDSSdBGKDwYYH5lX1ku0hXCjoHVe1r5mWoj6RUBvi4cZP5xT2K5R69doW91hzP6i/lveYdbTakXoZef/tEPC6/kjXbpVLy2Nkr86P/l+/l8lPp0Gff6isTI/D0TlJtgNvWhhQI2sLFEX02B3ePr9I+vhR2ARjg0Ree1rVGHmRJqwzwqX9ffC84bFttmqI7coyq6tEYpeFws50Rn/tk88ZgDGSCtOpwywRp+J94nPhOJabDGux0GiIonoef5+x1GcUbUld6nLHDmxO0UcOEw27myOJEV8oaXmucinELpknKKycdZb5JqSjqXGHtVlaGquqmRJ17mnnHdk6iuNO471WFyziBohQw2k9vnYRHzR1m3FjSUVOBTqgID3+OqRqD03RQ4yJIgGmKlFDunfbfo/31p714DOdxp9MQypv9oxZTgaM5PszYoHGZIa0SlqmG6cQ/RbvKiU3ezFDlX9SCPgzS3JTICx8H4lrq4bBIi/TU92mTY3YSYjURskpcqdFRXT5zMR0Wqu/C09owvFbqPTLVmLPXpf/yn4++ayedpAuPq8/9Z6fTEKkYFGSYqnn9uYPWzCzpOHVCqjGd1j09MdIm5fTEDQnbctZ56Ul198O0jnWEgDEuB8EpRzVxY4qTJA81o5SeBFUbY4zSSSInPSvISc8KctKzAuPztI6iJVfaNOgqTWdSaSWkdSii8wKiTOm0/6IRBX8A7cPaIrX7cvUAAAAASUVORK5CYII=",[[40,-99.99999999999999],[0,-68]],0.8,null,null,"#6 | 06 Apr 10:30 - 07 Apr 00:00"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAABTCAYAAAAsnA/DAAADBUlEQVR4nO1aTWsUQRB9k4nJKgwrKCh+RJIoonjwqCDk4tU/4MWTf8DbXMTbgj9HIVcRvHlQiJ7WgxcVLyE4ESa7q+OpYdxMz3RPV011Z+ZBCJvMdtXrV9VVXbtRMpoUCBxZnkY2z69wOeIzVqUdcIGtwgq9VHogHRLahjYQMGkXDKT7goF0X9BL0sF1ZC6lSiEopSkIA4GRpoL34U2lbhleKH1vfgE3/pw99ncOwoAnpLuGeHi/iDeQLWJMF+uYxgcA+BRWECO9M7uEJ1sZrm1+xmIR4+LeNl4d8hMGBEm/XfuO55sZbj7Yw+qZGdZPHyHbfclOGBAO7/G5AyQ7X/Drfo67t38Au93YFT3Ivn29jMN3W0g+rgHJvDO75ErX5eTyuPnN+23s749x68MU5zd+4vWdp8WjT8/YQzyymXsrQk3vMT2MktGkeDi7gqt/T+H6eI7feYz06LEfpDlP1Cr7oiWri/IhAe1BdlIJAz1tQytJS6vM/aGiuNJNG5yMJoX6obKpPb27VnvZD0774kpLwJucNrFJFeLi9+kydMQV2WEw6IAgSFOnWxCkgePEXfJbJKdNHc7yNNLlc/l1MpoUNtEgrrTp/Vu3UWXCpptZ2ZxwlayyrToVXRumJuXJSdus11SKbNcy9ZusDaWaptiu3Wbd2smJTTjV/Z8qXeoEsmlg2E9vTsJVa5s8V0vathRwgiI91BqtBoNtJqiu0AnQpkkxCm/pr0cr+20vHuU6nuVpZDX3tgVlaizXeJNndc8FQ5oSK746xon/mnbKhX3eTKP2z7ahN4HkplgbPgnEWfphU0iRbn2f9jlnm+A0RAiVOKnTtiEfXE6bgvou3NaHsi3xGRk1lj/wq/rNTrrLEK7rz9XrLE8jEYd0jlGtq9bW2QyWtEufIJrTUvf0zkj7VNM7d8R05Mx56fH6CzW6w8gV3oQcoC851MS9aU66PNS8UroJVBvjjdJdYiDdFwyk+4KBdF/gfZ3maFoGpX0DV2vaS6VJSHMownkBIVNa+isaNvgHvKWfqqek+94AAAAASUVORK5CYII=",[[40,-99.99999999999999],[0,-68]],0.8,null,null,"#7 | 07 Apr 05:00 - 14 Apr 00:30"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAABTCAYAAAAsnA/DAAADQElEQVR4nO1aTWsUQRB9vTsbNsJqFr/QRNCLGohBJQTxkJMng/9Af4THBS+CsEfx4M27iDfx5knIQfHkQfAUIvGDgJLoIkzC6niQgXGdnumv6q7JzIOwLMxW1etX1VXdGdHrDhMwRZQIjEV5eKN4IHTstowjIsaBpK1E2AQRiVVLLIwPow2Bt9HXwud0FU7BVmlKsFL6/LiPy+MZtAG8j36S+WGl9CpmsNjfxUEBdJLi0ExTG2Cg9MXxEXTQwuyvaSxd+IRW6zfivZMQMZ3PYKTvRqfQ7+0iAXDs6A7OLb7ByxfLeLU1jSfdDaBD59s76XtTczg99w031zeBbeD1jc84s/IOH9bmcfv7FtClj4FVTfuCd6Xv7H0E1oHHZ6dw/cEj/LgaY+PWKpafzXqLIUh6L8xv4tK1NXx5uoSdh31ceX7CawwixOx9/9Dxv/VrAJtWlSIIaVO4IAw0GxlPuFI3C9ZKUxAGmJOmAsv0plI4BTulqQkDzEj7IAwwI+0LtSTtfCIrSlEVXz5SXIt0GlDZb1QDz7PDhjRlICGIF/ZpX7upb0g3sv1KGKjp7p1LOrTK1Gf84EqXLXCvO0zSP1c+pbu3b7Un46D0H1zpEGBT0yo+XaU4q/O0jHhKtrkYtEAlSLsut0qQBv4nblPfQWpaNeBRPBCyes5+73WHiU42BFda9fwtW6gsYdXFzB1OqFpW1leRirYDU5nyzknr2CtrRbq2VON2Noa6uk3RtW1it/DmxObaxzYwHT9FpZIH8t2bknCebZXnCknrtgJKuCiP1IbRxaDJDaotZAKYDClK6R36bYXUv+nBI9vHR/FAkL5+4bI0Jnu8yrOy5ypD2iVaXAOjxD9Du0vDnBdTafzTHehVEHJRtB3vB+Ik87AqQpE2Pk9zrtkyWF0iVJW406B1U75yNa0K12dh0xiyvoLfkbnG5D/88j7JSftM4aL5PP0+igciSECywFzZTW3LfFaWtM2cELSmQ53TvZHm1NO9B6J65Ux56GH9Qo1sM7IFm5QD5C3HNXE2w4nPTY2V0mVwtTBslPaJhnRd0JCuCxrSdQH7Pk0xtDRKcwPVaFpLpZ2QplCE8gDiTOnQr2jo4A/opLZkRFzACAAAAABJRU5ErkJggg==",[[40,-99.99999999999999],[0,-68]],0.8,null,null,"#8 | 14 Apr 11:00 - 15 Apr 01:00"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAABTCAYAAAAsnA/DAAADBklEQVR4nO1aMWsUURD+9rKeF/A0RrBJdZ1oY2Er2FjZSFrBLmBnJ1xno9ensfUHKPgTFMQuloKVnEoIRKs1ukrIWj1Yz3277+2beTOb3Q9CONh7M9/7Zt7Mm9tkOlkU6DiyfJ74PD/ickQzUmkHVnH1eBMbxRjvzhw0PuursMGgtDR2fs+wngC740+sdlQofT+f4cW1BLevf8bb0Q+n77QNbUBY6d2LlzGb7ePG3ec4fvgRz84/wft0yW5XhPStP1u4s3mC7QcvcfTtArIvl/Dh5g6eJvyEASHSG0WK199PsHx8D1e2Mvz8Ncajo/1o9lXkdGyIkH51domDtRzraYE3X89FVRkQPMj20kPs4RBYi29bVZ12QUipMuhUTlMQBjpGmgrqw5tK3TJUK81BGFBOmgsqw5tLYQN1SnMTBpSRjkEYUEY6FnpJOqEeAdeFqIutGCHuRdo41PQdV8er1lFDmtMRCeK1dTrWaRob1oPstBIGenp6V5KWVpn7R0VxpZs2eDpZFOaPyqb19I6t9qofnPbFlZaAmpx2sUkV4qru0zbihuwwGAxAJ0hTp1snSAP/Ew/Jb5GcdnU4y+eJLZ/Ln6eTReETDeJKu96/bRtVJuy6mZXNCVfJKtuqUzG0YWpSnpy0z3pNpch3LVe/ydpQqmmK79pt1q2dnISMfUId87FTlypVYD+9OQlXre3yXC1p31LACYr0MGu0Ggy2maCGwiZAmybFKbylX4829ttePMp1PMvnCfmwv8oYBVZrvMuztuc6Q5oSI62OceKfpp1yYc2b6dT++Tb0LpDcFG/Dp4E4Sz/sCinSre/TmnO2CUFDhK4SJ3XaN+Q7l9OuoL4Lt/WhbEt8RkaN1R/8qv6zk44ZwnX9ufmc5fNExCGbY1TrmrVtNjtLOqRPEM1pqXt6NNKaanp0R1xHzpyXHtUv1NgOo1CoCTnAXnKoiatpTmIeaqqUbgLVxqhROiYG0n3BQLovGEj3BerrNEfTMiitDVytaS+VJiHNoQjnBYRMaelXNHzwF1VfpwQFCfEaAAAAAElFTkSuQmCC",[[40,-99.99999999999999],[0,-68]],0.8,null,null,"#9 | 15 Apr 05:30 - 11 Jun 22:30"]},{"method":"addCircleMarkers","args":[37.286812,-82.30497200000001,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":1},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[-82.30497200000001,-81.75,-80.75,-80.75,-82.75,-82.25,-82.25,-82.75,-81.75],"lat":[37.286812,32.75,28.25,22.75,22.75,28.25,30.75,35.75,37.25]}]]],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"black","weight":5,"opacity":0.7,"fill":false,"fillColor":"black","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[37.286812,32.75,28.25,22.75,22.75,28.25,30.75,35.75,37.25],[-82.30497200000001,-81.75,-80.75,-80.75,-82.75,-82.25,-82.25,-82.75,-81.75],[18.21263753036445,5.045378491522287,5.097132734541368,5.334838230116768,22.29564002788418,5.196152422706632,9.69343894498722,5.243610795028083,16.53715828677587],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"grey","fillOpacity":0.8},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[37.286812,-82.30497200000001,18.21263753036445,null,"#1 | 01 Jul 02:30 - 24 Sep 00:00",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[32.75,-81.75,5.045378491522287,null,"#2 | 24 Sep 11:30 - 24 Sep 23:30",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[28.25,-80.75,5.097132734541368,null,"#3 | 25 Sep 11:00 - 25 Sep 23:30",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[22.75,-80.75,5.334838230116768,null,"#4 | 26 Sep 13:00 - 27 Sep 04:00",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[22.75,-82.75,22.29564002788418,null,"#5 | 27 Sep 08:30 - 06 Apr 00:30",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[28.25,-82.25,5.196152422706632,null,"#6 | 06 Apr 10:30 - 07 Apr 00:00",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[30.75,-82.25,9.69343894498722,null,"#7 | 07 Apr 05:00 - 14 Apr 00:30",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[35.75,-82.75,5.243610795028083,null,"#8 | 14 Apr 11:00 - 15 Apr 01:00",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[37.25,-81.75,16.53715828677587,null,"#9 | 15 Apr 05:30 - 11 Jun 22:30",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLayersControl","args":[["#1 | 01 Jul 02:30 - 24 Sep 00:00","#2 | 24 Sep 11:30 - 24 Sep 23:30","#3 | 25 Sep 11:00 - 25 Sep 23:30","#4 | 26 Sep 13:00 - 27 Sep 04:00","#5 | 27 Sep 08:30 - 06 Apr 00:30","#6 | 06 Apr 10:30 - 07 Apr 00:00","#7 | 07 Apr 05:00 - 14 Apr 00:30","#8 | 14 Apr 11:00 - 15 Apr 01:00","#9 | 15 Apr 05:30 - 11 Jun 22:30"],[],{"collapsed":false,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[0,40],"lng":[-99.99999999999999,-68]}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="product-3-simulated-paths" class="section level3" number="3.4.3">
+<h3>
+<span class="header-section-number">3.4.3</span> Product 3: Simulated paths<a class="anchor" aria-label="anchor" href="#product-3-simulated-paths"><i class="fas fa-link"></i></a>
+</h3>
+<p>When you want to perform a post-hoc computation on the trajectory (e.g., mean flight distance), it is convenient to simulate multiple paths, compute the metric on each of them (e.g., flight distance) and compute the summary statistics afterwards (e.g., mean), instead of building this process within the HMM model which would require calculating the marginal of the pair-wise marginal distribution, typically very computationally expensive.</p>
+<p>As the simulated trajectories are independent and sampled without error, you usually don’t need too many.</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">path_simulation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_simulation.html">graph_simulation</a></span><span class="op">(</span><span class="va">graph</span>,</span>
+<span>  nj <span class="op">=</span> <span class="fl">10</span>, <span class="co"># Number of simulation</span></span>
+<span>  quiet <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/plot_path.html">plot_path</a></span><span class="op">(</span><span class="va">path_simulation</span><span class="op">)</span></span></code></pre></div>
+<div id="htmlwidget-fa48f9857c6daacdd390" style="width:100%;height:480px;" class="leaflet html-widget "></div>
+<script type="application/json" data-for="htmlwidget-fa48f9857c6daacdd390">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Stamen.TerrainBackground",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addPolylines","args":[[[[{"lng":[-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-85.25,-82.75,-82.25,-77.25,-83.25,-80.75,-82.75,-81.75,-84.75,-81.75,-78.25,-80.75,-81.25,-79.75,-80.75,-88.75,-78.25,-81.75,-80.25,-80.75,-83.75,-82.75,-79.25,-76.75,-79.75,-81.25,-79.75,-79.75,-82.25,-78.25,-81.75,-84.25,-80.25,-78.75,-83.25,-81.25,-83.25,-82.25,-81.25,-81.25,-85.25,-80.75,-82.75,-80.75,-82.25,-81.25,-82.75,-81.75,-82.25,-82.75,-82.75,-81.75,-82.75,-82.75,-82.75,-81.25,-82.25,-82.25,-83.25,-82.25,-83.75,-81.75,-82.25,-82.25,-82.25,-82.75,-82.75,-80.75,-81.75,-82.75,-82.75,-82.75,-83.25,-82.25,-81.75,-81.25,-82.25,-82.75,-80.75,-81.25],"lat":[37.286812,37.286812,37.286812,37.286812,37.286812,37.286812,37.286812,37.286812,37.286812,37.286812,30.75,31.75,31.75,37.25,31.25,33.75,31.75,31.75,29.75,31.25,26.75,27.75,27.75,33.25,32.75,30.75,26.75,25.75,26.25,26.75,22.25,22.75,21.25,25.25,21.75,26.25,21.75,21.75,22.75,22.75,22.25,22.25,22.75,22.75,22.75,22.75,22.75,22.75,22.75,22.25,29.75,27.75,28.25,28.75,27.75,28.25,29.75,28.25,28.75,28.25,30.25,29.75,31.25,30.25,30.25,29.75,31.25,30.75,30.25,31.25,35.75,37.25,36.75,36.25,35.75,36.75,35.75,37.75,37.25,35.75,36.25,36.75,36.75,37.75,36.75,38.25,37.25,37.25,38.25,37.75]}]]],null,[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],{"interactive":true,"className":"","stroke":true,"color":"black","weight":5,"opacity":0.7,"fill":false,"fillColor":"black","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[37.286812,37.286812,37.286812,37.286812,37.286812,37.286812,37.286812,37.286812,37.286812,37.286812,30.75,31.75,31.75,37.25,31.25,33.75,31.75,31.75,29.75,31.25,26.75,27.75,27.75,33.25,32.75,30.75,26.75,25.75,26.25,26.75,22.25,22.75,21.25,25.25,21.75,26.25,21.75,21.75,22.75,22.75,22.25,22.25,22.75,22.75,22.75,22.75,22.75,22.75,22.75,22.25,29.75,27.75,28.25,28.75,27.75,28.25,29.75,28.25,28.75,28.25,30.25,29.75,31.25,30.25,30.25,29.75,31.25,30.75,30.25,31.25,35.75,37.25,36.75,36.25,35.75,36.75,35.75,37.75,37.25,35.75,36.25,36.75,36.75,37.75,36.75,38.25,37.25,37.25,38.25,37.75],[-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-82.30497200000001,-85.25,-82.75,-82.25,-77.25,-83.25,-80.75,-82.75,-81.75,-84.75,-81.75,-78.25,-80.75,-81.25,-79.75,-80.75,-88.75,-78.25,-81.75,-80.25,-80.75,-83.75,-82.75,-79.25,-76.75,-79.75,-81.25,-79.75,-79.75,-82.25,-78.25,-81.75,-84.25,-80.25,-78.75,-83.25,-81.25,-83.25,-82.25,-81.25,-81.25,-85.25,-80.75,-82.75,-80.75,-82.25,-81.25,-82.75,-81.75,-82.25,-82.75,-82.75,-81.75,-82.75,-82.75,-82.75,-81.25,-82.25,-82.25,-83.25,-82.25,-83.75,-81.75,-82.25,-82.25,-82.25,-82.75,-82.75,-80.75,-81.75,-82.75,-82.75,-82.75,-83.25,-82.25,-81.75,-81.25,-82.25,-82.75,-80.75,-81.25],[18.21263753036445,18.21263753036445,18.21263753036445,18.21263753036445,18.21263753036445,18.21263753036445,18.21263753036445,18.21263753036445,18.21263753036445,18.21263753036445,5.045378491522287,5.045378491522287,5.045378491522287,5.045378491522287,5.045378491522287,5.045378491522287,5.045378491522287,5.045378491522287,5.045378491522287,5.045378491522287,5.097132734541368,5.097132734541368,5.097132734541368,5.097132734541368,5.097132734541368,5.097132734541368,5.097132734541368,5.097132734541368,5.097132734541368,5.097132734541368,5.334838230116768,5.334838230116768,5.334838230116768,5.334838230116768,5.334838230116768,5.334838230116768,5.334838230116768,5.334838230116768,5.334838230116768,5.334838230116768,22.29564002788418,22.29564002788418,22.29564002788418,22.29564002788418,22.29564002788418,22.29564002788418,22.29564002788418,22.29564002788418,22.29564002788418,22.29564002788418,5.196152422706632,5.196152422706632,5.196152422706632,5.196152422706632,5.196152422706632,5.196152422706632,5.196152422706632,5.196152422706632,5.196152422706632,5.196152422706632,9.69343894498722,9.69343894498722,9.69343894498722,9.69343894498722,9.69343894498722,9.69343894498722,9.69343894498722,9.69343894498722,9.69343894498722,9.69343894498722,5.243610795028083,5.243610795028083,5.243610795028083,5.243610795028083,5.243610795028083,5.243610795028083,5.243610795028083,5.243610795028083,5.243610795028083,5.243610795028083,16.53715828677587,16.53715828677587,16.53715828677587,16.53715828677587,16.53715828677587,16.53715828677587,16.53715828677587,16.53715828677587,16.53715828677587,16.53715828677587],null,[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"grey","fillOpacity":0.8},null,null,null,null,["#1, 84.9 days","#1, 84.9 days","#1, 84.9 days","#1, 84.9 days","#1, 84.9 days","#1, 84.9 days","#1, 84.9 days","#1, 84.9 days","#1, 84.9 days","#1, 84.9 days","#2, 0.5 days","#2, 0.5 days","#2, 0.5 days","#2, 0.5 days","#2, 0.5 days","#2, 0.5 days","#2, 0.5 days","#2, 0.5 days","#2, 0.5 days","#2, 0.5 days","#3, 0.5 days","#3, 0.5 days","#3, 0.5 days","#3, 0.5 days","#3, 0.5 days","#3, 0.5 days","#3, 0.5 days","#3, 0.5 days","#3, 0.5 days","#3, 0.5 days","#4, 0.6 days","#4, 0.6 days","#4, 0.6 days","#4, 0.6 days","#4, 0.6 days","#4, 0.6 days","#4, 0.6 days","#4, 0.6 days","#4, 0.6 days","#4, 0.6 days","#5, 190.7 days","#5, 190.7 days","#5, 190.7 days","#5, 190.7 days","#5, 190.7 days","#5, 190.7 days","#5, 190.7 days","#5, 190.7 days","#5, 190.7 days","#5, 190.7 days","#6, 0.6 days","#6, 0.6 days","#6, 0.6 days","#6, 0.6 days","#6, 0.6 days","#6, 0.6 days","#6, 0.6 days","#6, 0.6 days","#6, 0.6 days","#6, 0.6 days","#7, 6.8 days","#7, 6.8 days","#7, 6.8 days","#7, 6.8 days","#7, 6.8 days","#7, 6.8 days","#7, 6.8 days","#7, 6.8 days","#7, 6.8 days","#7, 6.8 days","#8, 0.6 days","#8, 0.6 days","#8, 0.6 days","#8, 0.6 days","#8, 0.6 days","#8, 0.6 days","#8, 0.6 days","#8, 0.6 days","#8, 0.6 days","#8, 0.6 days","#9, 57.7 days","#9, 57.7 days","#9, 57.7 days","#9, 57.7 days","#9, 57.7 days","#9, 57.7 days","#9, 57.7 days","#9, 57.7 days","#9, 57.7 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[21.25,38.25],"lng":[-88.75,-76.75]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="save" class="section level2" number="3.5">
+<h2>
+<span class="header-section-number">3.5</span> Save<a class="anchor" aria-label="anchor" href="#save"><i class="fas fa-link"></i></a>
+</h2>
+<p>You might want to save some of the key objects such as <code>tag</code> or <code>graph</code> in an <code>R</code> format. Use the <code>"./data/interim"</code> folder (intermediate) for that.</p>
+<p>Note that <code>graph</code> can be quite large if the number of stationary periods and grid resolution is high.</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">tag</span>,</span>
+<span>  <span class="va">graph</span>, <span class="co"># format(object.size(graph), units = "MB")</span></span>
+<span>  <span class="va">path_most_likely</span>,</span>
+<span>  <span class="va">path_simulation</span>,</span>
+<span>  <span class="va">marginal</span>,</span>
+<span>  file <span class="op">=</span> <span class="st">"./data/interim/CB619.RData"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>When saving <code>tag</code> and <code>graph</code>, you also archive the functions parameters used, which can be retrieved with <code>tag$param</code> and <code>graph$param</code>.</p>
+
+</div>
+</div>
+
+
+
+<script>
+document.getElementsByClassName("book-toc")[0].insertAdjacentHTML("afterend",
+                "<div class='text-center'><a href='https://github.com/Rafnuss/GeoPressureTemplate' target='_blank' class='btn btn-sm btn-outline-primary' role='button'>Start your own study</a></div>");
+</script><div class="chapter-nav">
+<div class="prev"><a href="pressure-map.html"><span class="header-section-number">2</span> Pressure map</a></div>
+<div class="next"><a href="light-map.html"><span class="header-section-number">4</span> Light map</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#trajectory"><span class="header-section-number">3</span> Trajectory</a></li>
+<li><a class="nav-link" href="#background-on-movement-modeling"><span class="header-section-number">3.1</span> Background on movement modeling</a></li>
+<li><a class="nav-link" href="#create-the-graph"><span class="header-section-number">3.2</span> Create the graph</a></li>
+<li><a class="nav-link" href="#set-movement-model"><span class="header-section-number">3.3</span> Set movement model</a></li>
+<li>
+<a class="nav-link" href="#products"><span class="header-section-number">3.4</span> Products</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#product-1-most-likely-path"><span class="header-section-number">3.4.1</span> Product 1: Most likely path</a></li>
+<li><a class="nav-link" href="#product-2-marginal-probability-map"><span class="header-section-number">3.4.2</span> Product 2: Marginal probability map</a></li>
+<li><a class="nav-link" href="#product-3-simulated-paths"><span class="header-section-number">3.4.3</span> Product 3: Simulated paths</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#save"><span class="header-section-number">3.5</span> Save</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/Rafnuss/GeoPressureManual//blob/main/03-trajectory.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/Rafnuss/GeoPressureManual//edit/main/03-trajectory.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>A User Manual for GeoPressureR</strong>" was written by Raphaël Nussbaumer. </p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
