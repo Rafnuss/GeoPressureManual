@@ -45,3 +45,7 @@ _main.Rmd
 # site
 # Only use when updating the website
 # docs/
+
+
+data/interim/*
+data/processed/18LX/*
