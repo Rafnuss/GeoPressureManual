@@ -53,8 +53,8 @@ We then compute the average windspeed experienced by the bird for each edge of t
 
 We then compute the airspeed based on this windspeed and the known groundspeed. All of these are stored as <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/complex.html" target="_blank">complex values</a> with the real part representing the E-W component and the imaginary part corresponding to the N-S component.
 
-```{r 11-add-wind, cache=TRUE, cache.lazy = FALSE}
-graph <- graph_add_wind(graph, pressure = tag$pressure, quiet = TRUE)
+```{r 11-add-wind, cache=TRUE, cache.lazy = FALSE, message=FALSE}
+graph <- graph_add_wind(graph, pressure = tag$pressure)
 ```
 
 ## Define movement model
@@ -82,14 +82,17 @@ plot_graph_movement(graph)
 
 We can then compute the same three products as for the Swainson's Warbler:
 
-```{r 11-products, cache = TRUE}
-path_most_likely <- graph_most_likely(graph, quiet = TRUE)
+```{r 11-products, cache = TRUE, message=FALSE}
+path_most_likely <- graph_most_likely(graph)
 marginal <- graph_marginal(graph)
-path_simulation <- graph_simulation(graph, nj = 10, quiet = TRUE)
+path_simulation <- graph_simulation(graph, nj = 10)
 ```
 
 ```{r}
 plot(marginal, path = path_most_likely)
+```
+
+```{r}
 plot_path(path_simulation, plot_leaflet = F)
 ```
 

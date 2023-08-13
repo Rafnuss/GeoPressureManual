@@ -37,18 +37,17 @@ The visualization can be started with your track using `geopressureviz()`.
 
 ```{r, eval = F}
 load("./data/interim/18LX.RData")
-path_modified <- geopressureviz(
+geopressureviz(
   tag = tag, # required
   pressurepath = pressurepath, # optional
   marginal = marginal, # optional
 )
 ```
 
-To store the data in `"./data/interim/18LX.RData"`, you can use directly
+If your data is stored in `"./data/interim/18LX.RData"`, you can use directly
 
 ```{r, eval = F}
 geopressureviz("18LX")
 ```
 
-
-Note that if you close the app from the browser, the function returns the path that you have interactively created `path_modified`.
+Note that the path of the shiny app can be retrieved from the global environment using `geopressure_path`.

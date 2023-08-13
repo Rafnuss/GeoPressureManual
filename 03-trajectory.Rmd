@@ -87,8 +87,8 @@ With the graph built, we can create three products which are presented in more d
 
 The graph can directly and efficiently compute the most likely path, that is, the set of positions for each stationary period which maximizes the joint probability of the trajectory. 
 
-```{r 03-graph-most-likely}
-path_most_likely <- graph_most_likely(graph, quiet = TRUE)
+```{r 03-graph-most-likely, message=FALSE}
+path_most_likely <- graph_most_likely(graph)
 ```
 
 In GeoPressureR, we store `path` as data.frame of the position (and other information taken from `graph$stap` for each stationary period). A path can be displayed on the map with `plot_path()`:
@@ -118,10 +118,9 @@ When you want to perform a post-hoc computation on the trajectory (e.g., mean fl
 
 As the simulated trajectories are independent and sampled without error, you usually don't need too many.
 
-```{r 03-graph-simulation}
+```{r 03-graph-simulation, message=FALSE}
 path_simulation <- graph_simulation(graph,
-  nj = 10, # Number of simulation
-  quiet = TRUE
+  nj = 10 # Number of simulation
 )
 ```
 

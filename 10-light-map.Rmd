@@ -15,19 +15,17 @@ This first chapter focuses on constructing a likelihood map from light data. Thi
 
 Here, we use an approach based on the threshold method and using a calibration of zenith angle (rather than time of sunrise). This approach is presented in more detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14043#mee314043-sec-0008-title" target="_blank">section 2.4 of Nussbaumer et al. (2023a)</a>
 
-A more thorough introduction to geolocation with light data can be found in <a href="https://geolocationmanual.vogelwarte.ch/" target="_blank">the geolocation manual drafted by Vogelwarte</a> (Lisovski et al., [2020](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13036)). Note that other methods producing likelihood maps could also be used such as the ones presented in Basson et al. (<a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12555" target="_blank"2016</a>) or Bindoff et al. (<a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12953" target="_blank">2018</a>.
+A more thorough introduction to geolocation with light data can be found in <a href="https://geolocationmanual.vogelwarte.ch/" target="_blank">the geolocation manual</a> (Lisovski et al., <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13036" target="_blank">2020</a>). Note that other methods producing likelihood maps could also be used such as the ones presented in Basson et al. (<a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12555" target="_blank">2016</a>) or Bindoff et al. (<a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12953" target="_blank">2018</a>).
 
 ## Basic tutorial catch up
 
 Before getting into light data, we first need to create, label, and set the map for the `tag` object. We essentially perform the same steps than in [tag object] and [pressure map] in just a few lines using the native pipe operator `|>`. Note that this assumes the labelling has already been done.
 
-```{r 10-geopressure, cache = TRUE}
+```{r 10-geopressure, cache = TRUE, message=FALSE}
 tag <- tag_create("18LX",
   crop_start = "2017-06-20",
-  crop_end = "2018-05-02",
-  quiet = T
-) |>
-  tag_label(quiet = T) |>
+  crop_end = "2018-05-02") |>
+  tag_label() |>
   tag_set_map(
     extent = c(-16, 23, 0, 50),
     scale = 4,
@@ -37,7 +35,7 @@ tag <- tag_create("18LX",
       known_lon = 17.05
     )
   ) |>
-  geopressure_map(quiet = T)
+  geopressure_map()
 ```
 
 ## Estimate twilights
@@ -98,8 +96,8 @@ The computation of the light likelihood map for each stationary period is perfor
 2. Compute a likelihood map for each twilight. This step consists of computing, for each pixel of the map, the zenith angle and the corresponding probability using the calibrated kernel distribution.
 3. Aggregate all likelihood maps of the same stationary period into a single map using a log-linear pooling. See [probability aggregation] for more information on log-linear pooling.
 
-```{r 10-geolight-map}
-tag <- geolight_map(tag, twl_calib_adjust = 1.4, quiet = TRUE) 
+```{r 10-geolight-map, message=FALSE}
+tag <- geolight_map(tag, twl_calib_adjust = 1.4) 
 ```
 
 The `twl_calib_adjust` parameter adjusts the smoothness of the fit (see `stats::density()`). Because the zenith angle error model is fitted with data only at the calibration site, and we are using it for all locations of the bird's journey, it is safer to assume a broader/smoother distribution (`twl_calib_adjust > 1`). 
@@ -120,7 +118,7 @@ plot(tag, type = "map_light")
 ```
 
 
-::: {.alert .alert-danger role="alert" style="margin-top: 10px;"}
+::: {.alert .alert-danger role="alert" style="margin-top: 20px;"}
 <h4 class="alert-heading mt-2"><strong>Light map vs pressure map?</strong></h4>
 
 It is worth checking how the likelihood map of light and pressure compare before building the graph. They should always overlap. If this is not the case, the tag and/or twilight labelling needs to be adjusted.

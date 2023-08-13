@@ -85,20 +85,20 @@
 <h1>
 <span class="header-section-number">7</span> GeoPressureViz<a class="anchor" aria-label="anchor" href="#geopressureviz"><i class="fas fa-link"></i></a>
 </h1>
-<p>GeoPressureR includes the <a href="https://shiny.rstudio.com/">shiny app</a> <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that <strong>this is a visualization tool only</strong> and as such, it cannot be used to make changes to your data. It offers a useful tool to label your tag and provides a convenient platform to discuss the overall trajectory with collaborators.</p>
-<p><a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" width="100%"></a><em>Screenshot of the <a href="https://rafnuss.shinyapps.io/GeoPressureViz/">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler (18LX), based on (1) the pressure and light match (map colorscale and timeseries) and (2) potential flight distances from the previous and next stationary periods (circles).</em></p>
+<p>GeoPressureR includes the <a href="https://shiny.rstudio.com/" target="_blank">shiny app</a> <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that <strong>this is a visualization tool only</strong> and as such, it cannot be used to make changes to your data. It offers a useful tool to label your tag and provides a convenient platform to discuss the overall trajectory with collaborators.</p>
+<p><a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" width="100%"></a><em>Screenshot of the <a href="https://rafnuss.shinyapps.io/GeoPressureViz/" target="_blank">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler (18LX), based on (1) the pressure and light match (map colorscale and timeseries) and (2) potential flight distances from the previous and next stationary periods (circles).</em></p>
 <div id="navigate-geopressureviz" class="section level2" number="7.1">
 <h2>
 <span class="header-section-number">7.1</span> Navigate GeoPressureViz<a class="anchor" aria-label="anchor" href="#navigate-geopressureviz"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
-<li><p>Open <a href="https://rafnuss.shinyapps.io/GeoPressureViz/">the demo for 18LX</a></p></li>
+<li><p>Open <a href="https://rafnuss.shinyapps.io/GeoPressureViz/" target="_blank">the demo for 18LX</a></p></li>
 <li>
 <p>The app has three panels:</p>
 <ol style="list-style-type: decimal">
-<li><p>The map showing the trajectory of the bird. The size of the circles indicates the duration of the stopover (hover over them to get more info).</p></li>
-<li><p>The bottom panel shows the <code>pressurepath</code> of the trajectory which must be computed beforehand. The grey line is the raw data (<code>pressurepath$pressure_tag</code>), the black dots are pressure points labelled as outliers, and colored lines are the normalized pressure at the best match location (i.e., <code>pressurepath$pressure_era5_norm</code>). The color matches the circles on the map.</p></li>
-<li><p>The side panel provides key information as well as tools to navigate the app.</p></li>
+<li><p><strong>Map</strong>: this displays the trajectory of the bird. The size of the circles indicates the duration of the stopover (hover over them to get more info).</p></li>
+<li><p><strong>Bottom panel</strong>: this shows the <code>pressurepath</code> of the trajectory which must be computed beforehand. The grey line is the raw data (<code>pressurepath$pressure_tag</code>), the black dots are pressure points labelled as outliers, and colored lines are the normalized pressure at the best match location (i.e., <code>pressurepath$pressure_era5_norm</code>). The color matches the circles on the map.</p></li>
+<li><p><strong>Side panel</strong>: this provides key information and tools to navigate the app.</p></li>
 </ol>
 </li>
 <li><p>The “Minimum duration” input allows to filter out short stationary periods on the map, similarly to <code>include_min_duration</code> in <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/tag_set_map.html">tag_set_map()</a></code>.</p></li>
@@ -115,17 +115,17 @@
 <span class="header-section-number">7.2</span> Run GeoPressureViz<a class="anchor" aria-label="anchor" href="#run-geopressureviz"><i class="fas fa-link"></i></a>
 </h2>
 <p>The visualization can be started with your track using <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz()</a></code>.</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"./data/interim/18LX.RData"</span><span class="op">)</span></span>
-<span><span class="va">path_modified</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span></span>
 <span>  tag <span class="op">=</span> <span class="va">tag</span>, <span class="co"># required</span></span>
 <span>  pressurepath <span class="op">=</span> <span class="va">pressurepath</span>, <span class="co"># optional</span></span>
 <span>  marginal <span class="op">=</span> <span class="va">marginal</span>, <span class="co"># optional</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>To store the data in <code>"./data/interim/18LX.RData"</code>, you can use directly</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<p>If your data is stored in <code>"./data/interim/18LX.RData"</code>, you can use directly</p>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code></pre></div>
-<p>Note that if you close the app from the browser, the function returns the path that you have interactively created <code>path_modified</code>.</p>
+<p>Note that the path of the shiny app can be retrieved from the global environment using <code>geopressure_path</code>.</p>
 
 </div>
 </div>

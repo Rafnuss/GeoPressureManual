@@ -74,7 +74,7 @@ Read the exported file with `tag_label_read()` to update `tag$pressure` (and, wh
 
 ```{r}
 tag <- tag_label_read(tag)
-kable(head(tag$pressure), format = "html")
+kable(head(tag$pressure))
 ```
 
 ### Compute stationary periods
@@ -83,7 +83,7 @@ kable(head(tag$pressure), format = "html")
 
 ```{r}
 tag <- tag_label_stap(tag)
-kable(head(tag$stap), format = "html")
+kable(head(tag$stap))
 ```
 
 Plotting the pressure timeseries of tag provides additional information:

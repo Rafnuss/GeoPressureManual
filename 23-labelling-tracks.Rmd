@@ -35,7 +35,7 @@ In the absence of acceleration data, both labels are applied to the pressure tim
 
 Let's see an example using acceleration data with 18LX.
 
-```{r}
+```{r, collapse = TRUE}
 tag <- tag_create("18LX",
   crop_start = "2017-06-20",
   crop_end = "2018-05-02"
@@ -123,13 +123,13 @@ Use the checks outlined below to evaluate and improve the quality of your labell
 
 The first test consists in checking the duration of flights and stationary periods. This is systematically checked when computing stationary periods and a message will give you feedback on where to find potential errors:
 
-```{r}
+```{r, collapse = TRUE}
 tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v1.csv")
 ```
 
 Here, I used the label produced by `tag_label_auto()` without making any edits on TRAINSET. In such cases, the most common error is that a flight is cut because the bird was inactive during a few data-points. You can correct this by cleaning up flights on TRAINSET (more on this below). 
 
-```{r}
+```{r, collapse = TRUE}
 tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v2.csv")
 ```
 
@@ -141,7 +141,7 @@ Here we visually inspect that the pressure timeseries of each stationary period 
 
 Note that the plot shows the preprocessed data (see `geopressure_map_preprocess()`), which is designed to be efficiently matched against ERA5 data (flight and outliers removed and data downscaled to 1 hour). 
 
-```{r}
+```{r, collapse = TRUE}
 plot(tag, type = "pressure")
 ```
 
@@ -160,7 +160,7 @@ This check uses the light and pressure likelihood maps to estimate the path.
 
 First, let's compute these maps on a coarse map (e.g. `scale = 1`) and low precision of mismatch (e.g. `max_sample = 50`) to minimize the computational cost.
 
-```{r 23-full-workflow, cache = T}
+```{r 23-full-workflow, cache = T, message = FALSE, collapse = TRUE}
 tag <- tag_create("18LX", crop_start = "2017-06-20", crop_end = "2018-05-02") |>
   tag_label("./data/tag-label/18LX-labeled-v3.csv") |>
   tag_set_map(
@@ -171,6 +171,7 @@ tag <- tag_create("18LX", crop_start = "2017-06-20", crop_end = "2018-05-02") |>
       known_lat = 48.9,
       known_lon = 17.05
     )
+    # include_min_duration = 24 # Filtering long stap might also be useful at first
   ) |> # Define a coarse grid during the labeling
   geopressure_map(max_sample = 50) # compute the likelihood maps for each stationary period with low precision
 
@@ -190,7 +191,7 @@ path <- tag2path(tag)
 
 Using this path, we can retrieve the ERA5 pressure along this path using `pressurepath_create`
 
-```{r 23-pressurepath-create, cache=T}
+```{r 23-pressurepath-create, cache=T, message=FALSE}
 pressurepath <- pressurepath_create(tag, path = path)
 ```
 
@@ -219,7 +220,7 @@ As a general guideline, it is better to remove a bit more for long stationary pe
 
 Once you're happy with your new labels, you have to update the tag object. To avoid running `geopressure_map()` and `pressurepath_create()` for the full timeseries, use `tag_upate()` and `pressurepath_upate()` to update only the stationary periods that have changed. 
 
-```{r, cache=T}
+```{r, cache=T, message=FALSE}
 tag <- tag_update(tag, file = "./data/tag-label/18LX-labeled-v4.csv")
 pressurepath <- pressurepath_update(pressurepath, tag)
 ```
@@ -273,7 +274,7 @@ In GeopressureViz, click on "Start editing" to modify the path to something like
 
 Labelling should really be checked at almost each step of the workflow. It is recommended to always check your most likely path with the same checks performed in 3-5. 
 
-```{r, cache=T, warning=FALSE}
+```{r, cache=T, warning=FALSE, message=FALSE}
 # Update tag and pressurepath
 tag <- tag_update(tag, file = "./data/tag-label/18LX-labeled.csv")
 

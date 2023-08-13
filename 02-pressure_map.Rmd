@@ -35,7 +35,7 @@ See `map_create()` for technical characteristics of a GeoPressureR `map`.
 
 We are now ready to create the pressure maps! 
 
-To do so, we must match the pressure timeseries of each stationary period with the surface level pressure dataset of <a href"https://doi.org/10.24381/cds.e2161bac" target="_blank">ERA5-Land hourly</a> for all possible pixels of the maps. 
+To do so, we must match the pressure timeseries of each stationary period with the surface level pressure dataset of <a href="https://doi.org/10.24381/cds.e2161bac" target="_blank">ERA5-Land hourly</a> for all possible pixels of the maps. 
 
 ::: {.alert .alert-warning role="alert"}
 <h4 class="alert-heading mt-2">
@@ -51,11 +51,10 @@ The function `geopressure_map()` conveniently performs all the necessary steps, 
 
 ### Compute mismatch maps
 
-```{r 02-geopressure_map_mismatch, cache = TRUE}
+```{r 02-geopressure_map_mismatch, cache = TRUE, message=FALSE}
 tag <- geopressure_map_mismatch(tag,
   max_sample = 100,
-  margin = 20,
-  quiet = TRUE # hide progress bar in rmarkdown
+  margin = 20
 )
 ```
 

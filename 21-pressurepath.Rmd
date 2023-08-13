@@ -23,7 +23,7 @@ Before creating a full `pressurepath`, we start with the basic building block of
 
 Let's start by retrieving the pressure at the known site of equipment, querying the same date as the first stationary period.
 
-```{r 21-geopressure-timeseries, cache=TRUE}
+```{r 21-geopressure-timeseries, cache=TRUE, message=FALSE}
 ts <- geopressure_timeseries(
   lat = tag$stap$known_lat[1],
   lon = tag$stap$known_lon[1],
@@ -34,7 +34,7 @@ ts <- geopressure_timeseries(
 
 We can compare the retrieved ERA5 pressure to the pressure measured on the Great Reed Warbler:
 
-```{r}
+```{r, echo=FALSE}
 p <- ggplot() +
   geom_line(data = ts, aes(x = date, y = pressure_era5, colour = "ERA5")) +
   geom_line(data = tag$pressure[tag$pressure$stap_id == 1, ], aes(x = date, y = value, colour = "tag")) +
@@ -60,11 +60,10 @@ You can think of a pressurepath as the timeseries of pressure that a tag would r
 The `pressurepath` data.frame returned also contains the original pressure `pressure_tag` which can [be very helpful for labelling](labelling track) and the altitude of the bird corrected for the natural variation of pressure.
 :::
 
-```{r 21-pressurepath-create, cache=TRUE, warning = F}
+```{r 21-pressurepath-create, cache=TRUE, warning = F, message=FALSE}
 pressurepath <- pressurepath_create(tag,
   path = path_most_likely,
-  include_flight = TRUE,
-  quiet = TRUE
+  include_flight = TRUE
 )
 ```
 
