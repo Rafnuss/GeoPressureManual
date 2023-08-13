@@ -1,20 +1,20 @@
 # GeoPressureViz
 
-GeoPressureR includes the [shiny app](https://shiny.rstudio.com/) `GeoPressureViz` which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that **this is a visualization tool only** and as such, it cannot be used to make changes to your data. It offers a useful tool to label your tag and provides a convenient platform to discuss the overall trajectory with collaborators.
+GeoPressureR includes the <a href="https://shiny.rstudio.com/" target="_blank">shiny app</a> `GeoPressureViz` which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that **this is a visualization tool only** and as such, it cannot be used to make changes to your data. It offers a useful tool to label your tag and provides a convenient platform to discuss the overall trajectory with collaborators.
 
-<a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" width="100%"/></a>*Screenshot of the [GeoPressureViz demo](https://rafnuss.shinyapps.io/GeoPressureViz/) showing the estimated position at one stationary period of the Great Reed Warbler (18LX), based on (1) the pressure and light match (map colorscale and timeseries) and (2) potential flight distances from the previous and next stationary periods (circles).*
+<a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" width="100%"/></a>*Screenshot of the <a href="https://rafnuss.shinyapps.io/GeoPressureViz/" target="_blank">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler (18LX), based on (1) the pressure and light match (map colorscale and timeseries) and (2) potential flight distances from the previous and next stationary periods (circles).*
 
 ## Navigate GeoPressureViz
 
-1.  Open [the demo for 18LX](https://rafnuss.shinyapps.io/GeoPressureViz/)
+1.  Open <a href="https://rafnuss.shinyapps.io/GeoPressureViz/" target="_blank">the demo for 18LX</a>
 
 2.  The app has three panels:
 
-    1.  The map showing the trajectory of the bird. The size of the circles indicates the duration of the stopover (hover over them to get more info).
+    1.  **Map**: this displays the trajectory of the bird. The size of the circles indicates the duration of the stopover (hover over them to get more info).
 
-    2.  The bottom panel shows the `pressurepath` of the trajectory which must be computed beforehand. The grey line is the raw data (`pressurepath$pressure_tag`), the black dots are pressure points labelled as outliers, and colored lines are the normalized pressure at the best match location (i.e., `pressurepath$pressure_era5_norm`). The color matches the circles on the map.
+    2.  **Bottom panel**: this shows the `pressurepath` of the trajectory which must be computed beforehand. The grey line is the raw data (`pressurepath$pressure_tag`), the black dots are pressure points labelled as outliers, and colored lines are the normalized pressure at the best match location (i.e., `pressurepath$pressure_era5_norm`). The color matches the circles on the map.
 
-    3.  The side panel provides key information as well as tools to navigate the app.
+    3.  **Side panel**: this provides key information and tools to navigate the app.
 
 3.  The "Minimum duration" input allows to filter out short stationary periods on the map, similarly to `include_min_duration` in `tag_set_map()`.
 

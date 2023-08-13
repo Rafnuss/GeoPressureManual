@@ -42,23 +42,21 @@ tag <- tag_create("18LX",
 )
 ```
 
-**Acceleration can be used to initialize the `flight` label automatically**. `tag_label_auto()` first classifies low and high activity using a [k-mean clustering](https://en.wikipedia.org/wiki/K-means_clustering), and then identifies and labels long periods of high activity (e.g., lasting more than 30 minutes) as flights.
+**Acceleration can be used to initialize the `flight` label automatically**. `tag_label_auto()` first classifies low and high activity using a <a href="https://en.wikipedia.org/wiki/K-means_clustering" taregt="_blank">k-mean clustering</a>, and then identifies and labels long periods of high activity (e.g., lasting more than 30 minutes) as flights.
 
 ```{r}
 tag <- tag_label_auto(tag, min_duration = 30)
 plot(tag, type = "acceleration")
 ```
 
-More classification methods are described in the [PALMr manual](https://kiranlda.github.io/tagLrManual/index.html).
+More classification methods are described in the <a href="https://kiranlda.github.io/PAMLrManual/index.html" target="_blank">PALMr manual</a>.
 
 
 ## Elevation period
 
-It is common for birds to change elevation level within the same stationary period (e.g., roost vs feeding site or altitudinal movements for mountainous species). 
+It is common for birds to change elevation level within the same stationary period (e.g., roost vs feeding site or altitudinal movements for mountainous species). Such movements can result in drastic variations in pressure, which interfere with the ERA5 matching exercise.
 
-Such movements can result in drastic variations in pressure, which interfere with the ERA-5 matching exercise.
-
-To circumvent this issue while preserving as much data as possible in the match, you can label pressure data with different **elevation levels** within the same stationary period by using `elev_x`. To do so, in Trainset click on the + sign in the bottom right to add a new elevation level. Note that the numbering of elevation levels does not have to be continuous. For instance, always apply the same elev_# to the roosting site as it is at the same elevation. 
+To circumvent this issue while preserving as much data as possible in the match, you can label pressure data with different **elevation levels** within the same stationary period by using `elev_x`. To do so, in TRAINSET click on the + sign in the bottom right to add a new elevation level. Note that the numbering of elevation levels does not have to be continuous. For instance, always apply the same elev_# to the roosting site as it is at the same elevation. 
 
 By default, when no `elev_x` label is assigned, all points within the stationary period are assumed to be at `"elev_1"`. 
 
@@ -75,7 +73,7 @@ The `tag_label()` function can be used to guide you through the entire labelling
 # 1. Create the csv label file `"./data/tag-label/18LX.csv"`
 tag_label_write(tag)
 
-# 2. Edit csv file on Trainset
+# 2. Edit csv file on TRAINSET
 # *on TRAINSET*
 
 # 3. Export csv file `"./data/tag-label/18LX-labeled.csv"`
@@ -96,14 +94,14 @@ Any subsequent modification of the csv file `"./data/tag-label/18LX-labeled.csv"
 We suggesting using TRAINSET, a web-based graphical tool for labelling timeseries. 
 
 ::: {.alert .alert-info role="alert"}
-<h4 class="alert-heading mt-2"><strong>New Trainset</strong></h4>
+<h4 class="alert-heading mt-2"><strong>New TRAINSET</strong></h4>
 We developed a customized version of TRAINSET for labelling tags and twilight data: 
 
-[https://trainset.raphaelnussbaumer.com/](https://trainset.raphaelnussbaumer.com/) 
+<a href="https://trainset.raphaelnussbaumer.com/" target="_blank">https://trainset.raphaelnussbaumer.com/</a> 
 
-Please report issues or bugs on the [Github repository](https://github.com/Rafnuss/trainset).
+Please report issues or bugs on the <a href="https://github.com/Rafnuss/trainset" target="_blank">Github repository</a>.
 
-The original [TRAINSET app](https://trainset.geocene.com/) therefore does not need to be used here.
+The original <a href="https://trainset.geocene.com/" target="_blank">TRAINSET app</a> therefore does not need to be used here.
 ::: 
 
 Start by uploading your .csv file (e.g., `data/tag-label/18LX.csv`) using the "Upload Tag Label" button.
@@ -123,13 +121,13 @@ Use the checks outlined below to evaluate and improve the quality of your labell
 
 ### Check 1: Duration of stationary periods and flights
 
-The first test consists in checking the duration of flights and stationary periods. This is systematically checked when computing stationary periods and a message will give you feedback on where to find potential errors.
+The first test consists in checking the duration of flights and stationary periods. This is systematically checked when computing stationary periods and a message will give you feedback on where to find potential errors:
 
 ```{r}
 tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v1.csv")
 ```
 
-Here, I used the label produced by `tag_label_auto()` without making any edits on TRAINSET. The most common error here is that a flight is cut because the bird was inactive during a few datapoints. You can correct this by cleaning up flights on TRAINSET (more on this below). 
+Here, I used the label produced by `tag_label_auto()` without making any edits on TRAINSET. In such cases, the most common error is that a flight is cut because the bird was inactive during a few data-points. You can correct this by cleaning up flights on TRAINSET (more on this below). 
 
 ```{r}
 tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v2.csv")
@@ -141,28 +139,28 @@ Depending on your species and desired level of precision, you may want to keep s
 
 Here we visually inspect that the pressure timeseries of each stationary period (1) is correctly grouped and (2) does not include pressure outliers (e.g., altitudinal movements). We can use the generic `plot()` function with a `tag` object to display the timeseries and print messages on the quality of the timeseries for each stationary period. 
 
-Note that the plot shows the preprocessed data (see `geopressure_map_preprocess()`), which is designed to be efficiently matched against ERA-5 data (flight and outliers removed and data downscaled to 1 hour). 
+Note that the plot shows the preprocessed data (see `geopressure_map_preprocess()`), which is designed to be efficiently matched against ERA5 data (flight and outliers removed and data downscaled to 1 hour). 
 
 ```{r}
 plot(tag, type = "pressure")
 ```
 
-Plotting this figure with [Plotly](https://plotly.com/r/) allows you to zoom-in and pan to check the timeseries of each stationary period manually. Make sure each stationary period does not include any pressure measurement from a flight or a vertical movement by using the `discard` label on TRAINSET.
+Plotting this figure with <a href="https://plotly.com/r/" target="_blank">Plotly</a> allows you to zoom-in and pan to check the timeseries of each stationary period manually. Make sure each stationary period does not include any pressure measurement from a flight or a vertical movement by using the `discard` label on TRAINSET.
 
 ### Check 3: Pressure timeseries match
 
 The next check is more complex and computationally costly but allows to fine-tune the final trajectory. The general idea is to perform the following steps iteratively:
 
 1. Estimate our current best guess of the trajectory (i.e. a `path`) 
-2. Compute the ERA-5 pressure on this path (i.e., `pressurepath`), 
-3. Compare the ERA-5 pressure to the tag pressure
+2. Compute the ERA5 pressure on this path (i.e., `pressurepath`), 
+3. Compare the ERA5 pressure to the tag pressure
 4. Refine the label accordingly: (1) label outliers, (2) merge or split stationary periods, and (3) use the `elev_x` label.
 
 This check uses the light and pressure likelihood maps to estimate the path. 
 
 First, let's compute these maps on a coarse map (e.g. `scale = 1`) and low precision of mismatch (e.g. `max_sample = 50`) to minimize the computational cost.
 
-```{r 23-full-workflow, cache = T, , }
+```{r 23-full-workflow, cache = T}
 tag <- tag_create("18LX", crop_start = "2017-06-20", crop_end = "2018-05-02") |>
   tag_label("./data/tag-label/18LX-labeled-v3.csv") |>
   tag_set_map(
@@ -192,7 +190,7 @@ path <- tag2path(tag)
 
 Using this path, we can retrieve the ERA5 pressure along this path using `pressurepath_create`
 
-```{r 23-pressurepath-create, cache=T, , }
+```{r 23-pressurepath-create, cache=T}
 pressurepath <- pressurepath_create(tag, path = path)
 ```
 
@@ -208,7 +206,7 @@ The conversion of the mean squared error (MSE) into a likelihood performed by `g
 
 Assuming this normal distribution allows us to define more formally outliers as any value outside +/- 3 standard deviation (`warning_std_thr`). This standard deviation is defined by the parameter `sd`, with a default value of 1. 
 
-`plot_pressurepath()` displays outliers with an orange warning sign so you can check each of them manually. 
+`plot_pressurepath()` displays outliers with an orange triangle so you can check each of them manually. 
 ::: 
 
 Besides outliers, you can use this figure to identify any period where there is a mismatch between the geolocator and ERA5, usually indicative of altitudinal movement of the bird. Depending on the situation, there are multiple ways of labelling this mismatch. 
@@ -221,7 +219,7 @@ As a general guideline, it is better to remove a bit more for long stationary pe
 
 Once you're happy with your new labels, you have to update the tag object. To avoid running `geopressure_map()` and `pressurepath_create()` for the full timeseries, use `tag_upate()` and `pressurepath_upate()` to update only the stationary periods that have changed. 
 
-```{r, cache=T, , }
+```{r, cache=T}
 tag <- tag_update(tag, file = "./data/tag-label/18LX-labeled-v4.csv")
 pressurepath <- pressurepath_update(pressurepath, tag)
 ```
@@ -275,7 +273,7 @@ In GeopressureViz, click on "Start editing" to modify the path to something like
 
 Labelling should really be checked at almost each step of the workflow. It is recommended to always check your most likely path with the same checks performed in 3-5. 
 
-```{r, cache=T, , }
+```{r, cache=T, warning=FALSE}
 # Update tag and pressurepath
 tag <- tag_update(tag, file = "./data/tag-label/18LX-labeled.csv")
 
@@ -285,10 +283,10 @@ graph <- graph_create(tag) |>
   graph_set_movement(bird = bird_create("Acrocephalus arundinaceus"))
 
 # Compute most likely path
-path_most_likely <- graph_most_likely(graph)
+path_most_likely <- graph_most_likely(graph, quiet = TRUE)
 
 # Compute the corresponding pressurepath
-pressurepath <- pressurepath_create(tag, path = path_most_likely)
+pressurepath <- pressurepath_create(tag, path = path_most_likely, quiet = TRUE)
 ```
 
 The same figure can be checked again and hopefully everything matches well now! If not, it is important to troubleshoot!

@@ -16,7 +16,7 @@
 
 ## Projects using GeoPressureR
 
-You can find below the list of all research projects using GeoPressureR with links to the code used to analyse and create figures. This might be helpful to get an idea of how to analyse your data and borrow some code sections for your own project. Feel free to [contact me](mailto:rafnuss@gmail.com) if you'd like to add your project on this list.
+You can find below the list of all research projects using GeoPressureR with links to the code used to analyse and create figures. This might be helpful to get an idea of how to analyse your data and borrow some code sections for your own project. Feel free to [contact me](mailto:rafnuss@gmail.com) if you'd like to add your project to this list.
 
 | Species             | GeoPressureTemplate/code                                                    | Publication/status                                                     |
 |----------------|-----------------------------|---------------------------|

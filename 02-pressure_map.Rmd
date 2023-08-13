@@ -21,12 +21,12 @@ tag <- tag_set_map(tag,
 A few indications to select optimal parameters:
 
 - `extent`: the length (`xmin`, `xmax`, `ymin`, `ymax`) or coordinates (W, E, S, N) on which your map is built. A smaller extent results in faster computation, but careful: if the extent is too small and excludes the true position of the bird, the process will still work, leading you to build a wrong trajectory.
-- `scale`: the number of pixels per 1° latitude-longitude. (e.g., scale = 10 corresponds to 0.1°\~10km). We recommend starting with a coarse scale `scale = 1 or 2` and a large `extent` and refining these when you have a better idea of the trajectory. Use the maximal resolution `scale = 10` only for the final run to keep the code fast during development.
+- `scale`: the number of pixels per 1° latitude-longitude. (e.g., scale = 10 corresponds to 0.1°\~10km). We recommend starting with a coarse `scale = 1 or 2` and a large `extent` and refining these when you have a better idea of the trajectory. Use the maximal resolution `scale = 10` only for the final run to keep the code fast during development.
 - `known`: the position of the bird at equipment and/or retrieval sites (as well as any known position, e.g. observed in the field). These positions can only be provided at the level of a stationary period. Setting this information significantly speeds up the computation by avoiding computing the likelihood map for these stationary periods and narrowing down the size of the graph.
 
 ::: {.alert .alert-info role="alert"}
 <h4 class="alert-heading mt-2"><strong>What is a GeoPressureR  `map`?</strong></h4>
-In GeoPressureR, a `map` object is a container for a spatio-temporal variable, such as the likelihood of pressure. It is therefore defined by its spatial characteristics (`extent` and `scale`), but also with a temporal dimension in terms of stationary periods. The data is stored as a list of matrix, one matrix (or layer) for each stationary period.
+In GeoPressureR, a `map` object is a container for a spatio-temporal variable, such as the likelihood of pressure. It is therefore defined by its spatial characteristics (`extent` and `scale`), but also with a temporal dimension in terms of stationary periods. The data is stored as a list of matrices, one matrix (or layer) for each stationary period.
 
 See `map_create()` for technical characteristics of a GeoPressureR `map`.
 :::
@@ -35,19 +35,19 @@ See `map_create()` for technical characteristics of a GeoPressureR `map`.
 
 We are now ready to create the pressure maps! 
 
-To do so, we must match the pressure timeseries of each stationary period with the surface level pressure dataset of [ERA5-Land hourly](https://doi.org/10.24381/cds.e2161bac) for all possible pixels of the maps. 
+To do so, we must match the pressure timeseries of each stationary period with the surface level pressure dataset of <a href"https://doi.org/10.24381/cds.e2161bac" target="_blank">ERA5-Land hourly</a> for all possible pixels of the maps. 
 
 ::: {.alert .alert-warning role="alert"}
 <h4 class="alert-heading mt-2">
 <strong>How does the [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) work?</strong>
 </h4>
 
-To overcome the challenges of handling the large ERA5 dataset of pressure, we perform the mismatch computation on the [Google Earth Engine](https://developers.google.com/earth-engine/) server which has access to the [ERA5 dataset](https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_HOURLY) and directly returns the map of mismatch. 
+To overcome the challenges of handling the large ERA5 dataset, we perform the mismatch computation on the <a href="https://developers.google.com/earth-engine/" target="_blank">Google Earth Engine</a> server which has access to the <a href="https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_HOURLY" target="_blank">ERA5 dataset</a> and directly returns the map of mismatch. 
 
-The [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is a JSON API which serves as an interface to the GEE server.
+The <a href="https://github.com/Rafnuss/GeoPressureAPI" target="_blank">GeoPressureAPI</a> is a JSON API which serves as an interface to the GEE server.
 :::
 
-The function `geopressure_map()` conveniently performs all the necessary steps, but we outline the steps below for a comprehensive understanding.
+The function `geopressure_map()` conveniently performs all the necessary steps, but we outline each step below for a comprehensive understanding.
 
 ### Compute mismatch maps
 
@@ -68,7 +68,7 @@ tag <- geopressure_map_mismatch(tag,
 This function is the most computationally intensive as it needs to: 
 
 1. Pre-process the data (i.e., downscale, clean, etc..) 
-2. Generate the requests on the GeoPressureAPI which return the URLs which can be used on the Google Earth Engine (GEE) server to compute the mismatch maps
+2. Generate the requests on the GeoPressureAPI which return the URLs that can be used on the Google Earth Engine (GEE) server to compute the mismatch maps
 3. Send the request on the GEE server
 4. Wait for the computation on the GEE server and download the map
 

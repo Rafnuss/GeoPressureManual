@@ -7,15 +7,15 @@ rm(list = ls())
 
 # Light map
 
-In the advanced tutorial, we will construct the same three outputs using the example of a Great Reed Warbler (18LX), this time including light and wind data. The workflow is very similar, we will see how to run the same procedure much faster. 
+In the advanced tutorial, we will construct the same three outputs using the example of a Great Reed Warbler (18LX), this time including light and wind data. The workflow is very similar, and we will see how to run the same procedure much faster. 
 
-![*<small>Great Reed Warbler. 17 May 2019. Baranđanske slatine, Serbia. <a href="https://ebird.org/checklist/S56389245#eurwar1">eBird S56389245</a> | <a href="https://macaulaylibrary.org/asset/159594261">ML 159594261</a></small>*](assets/159594261.png){width=100%}
+![*<small>Great Reed Warbler. 17 May 2019. Baranđanske slatine, Serbia. <a href="https://macaulaylibrary.org/asset/159594261">ML 159594261</a></small>*](assets/159594261.png){width=100%}
 
-The first chapter is focused on constructing a likelihood map from light data. This step is optional in the workflow, and typically does not drastically change the result, but can be helpful to increase the computational efficiency during the creation of the graph. 
+This first chapter focuses on constructing a likelihood map from light data. This step is optional in the workflow, and typically does not drastically change the result, but can be helpful to increase the computational efficiency during the creation of the graph. 
 
-Here, we use an approach based on the threshold method and using a calibration of zenith angle (rather than time of sunrise). This approach is presented in more detail in [section 2.4 of Nussbaumer et al. (2023a)](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14043#mee314043-sec-0008-title)
+Here, we use an approach based on the threshold method and using a calibration of zenith angle (rather than time of sunrise). This approach is presented in more detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14043#mee314043-sec-0008-title" target="_blank">section 2.4 of Nussbaumer et al. (2023a)</a>
 
-A more thorough introduction to geolocation with light data can be found in <https://geolocationmanual.vogelwarte.ch/> (Lisovski et al., [2020](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13036)). Note that other methods producing likelihood maps could also be used such as the ones presented in Basson et al. ([2016](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12555)) or Bindoff et al. ([2018](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12953)).
+A more thorough introduction to geolocation with light data can be found in <a href="https://geolocationmanual.vogelwarte.ch/" target="_blank">the geolocation manual drafted by Vogelwarte</a> (Lisovski et al., [2020](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/1365-2656.13036)). Note that other methods producing likelihood maps could also be used such as the ones presented in Basson et al. (<a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12555" target="_blank"2016</a>) or Bindoff et al. (<a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12953" target="_blank">2018</a>.
 
 ## Basic tutorial catch up
 
@@ -66,7 +66,7 @@ Twilight outliers should be discarded from the analysis using Trainset <https://
 
 Use `twilight_label_write` to generate the twilight label `csv` file.
 
-```{r, }
+```{r}
 twilight_label_write(tag)
 ```
 
@@ -80,7 +80,7 @@ The color of the dots indicative of the stationary period can be helpful to pick
 
 Note that modifying the label of twilight to a different stationary period has no influence later on, as only `discard` labels are read with `twilight_label_read()`.
 
-**Do not over-edit the calibration period!**. The variability of twilight is important to build a calibration which adequately captures the range of uncertainty of a twilight. As it is easier to pick out outliers during long stationary periods than during shorter ones, there is a risk of having more variability during short stationary periods and thus biases in the estimated position.
+**Do not over-edit the calibration period!** The variability of twilight is important to build a calibration which adequately captures the range of uncertainty of a twilight. As it is easier to pick out outliers during long stationary periods than during shorter ones, there is a risk of having more variability during short stationary periods and thus biases in the estimated position.
 :::
 
 When you have finished labelling, export the file in the same folder keeping `-labeled` in the name (automatically added by Trainset). `twilight_label_read()` will automatically know which file to read.
@@ -98,8 +98,8 @@ The computation of the light likelihood map for each stationary period is perfor
 2. Compute a likelihood map for each twilight. This step consists of computing, for each pixel of the map, the zenith angle and the corresponding probability using the calibrated kernel distribution.
 3. Aggregate all likelihood maps of the same stationary period into a single map using a log-linear pooling. See [probability aggregation] for more information on log-linear pooling.
 
-```{r 10-geolight-map, }
-tag <- geolight_map(tag, twl_calib_adjust = 1.4)
+```{r 10-geolight-map}
+tag <- geolight_map(tag, twl_calib_adjust = 1.4, quiet = TRUE) 
 ```
 
 The `twl_calib_adjust` parameter adjusts the smoothness of the fit (see `stats::density()`). Because the zenith angle error model is fitted with data only at the calibration site, and we are using it for all locations of the bird's journey, it is safer to assume a broader/smoother distribution (`twl_calib_adjust > 1`). 
@@ -120,7 +120,7 @@ plot(tag, type = "map_light")
 ```
 
 
-::: {.alert .alert-danger role="alert"}
+::: {.alert .alert-danger role="alert" style="margin-top: 10px;"}
 <h4 class="alert-heading mt-2"><strong>Light map vs pressure map?</strong></h4>
 
 It is worth checking how the likelihood map of light and pressure compare before building the graph. They should always overlap. If this is not the case, the tag and/or twilight labelling needs to be adjusted.

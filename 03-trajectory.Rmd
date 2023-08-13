@@ -1,6 +1,6 @@
 # Trajectory
 
-In this last chapter of the basic tutorial, we model the full trajectory of the Swainson's Warbler by combining the observation model of pressure with a movement model of flight accounting for likely speed to constrain possible distances between stationary periods. To do so, we use a highly optimized [Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model) presented in Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>).
+In this last chapter of the basic tutorial, we model the full trajectory of the Swainson's Warbler by combining the observation model of pressure with a movement model of flight accounting for likely speed to constrain possible distances between stationary periods. To do so, we use a highly optimized <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model" target="_blank">Hidden Markov model</a> presented in Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>).
 
 This involves three main steps:
 
@@ -11,14 +11,14 @@ This involves three main steps:
 
 ## Background on movement modeling
 
-If you haven't heard of [Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model), [state-space models](https://doi.org/10.1016/j.tree.2007.10.009), or [trellis graphs](https://en.wikipedia.org/wiki/Trellis_(graph)), I recommend that you start by reading the following section, or - even better - read Patterson et al. ([2008](https://doi.org/10.1016/j.tree.2007.10.009)) and Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) if you're feeling brave!
+If you haven't heard of <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model" target="_blank">Hidden Markov model</a>, <a href="https://doi.org/10.1016/j.tree.2007.10.009" target="_blank">state-space models</a>, or <a href="https://en.wikipedia.org/wiki/Trellis_(graph)" target="_blank">trellis graphs</a>, I recommend that you start by reading the following section, or - even better - read Patterson et al. ([2008](https://doi.org/10.1016/j.tree.2007.10.009)) and Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) if you're feeling brave!
 
 <details>
 <summary>Click here to read a short summary of movement model</summary>
 ::: {.alert .alert-info role="alert"}
 We start by making the fundamental assumption that the overall trajectory can be separated into **discrete** positions which, together, create a trajectory.
 
-This discretization allows us to use a [Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model), which conveniently distinguishes the **unknown positions** of a bird $X_t$ from **known observations** $Y_t$ which can be related to these positions (e.g., pressure or light measurement). Defining an HMM requires that we can compute:
+This discretization allows us to use a <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model" target="_blank">Hidden Markov model</a>, which conveniently distinguishes the **unknown positions** of a bird $X_t$ from **known observations** $Y_t$ which can be related to these positions (e.g., pressure or light measurement). Defining an HMM requires that we can compute:
 
 1. An **observation model** $P(Y_t | X_t)$, which defines the likelihood of observing a measurement conditional to a known position. This is exactly what our pressure likelihood map computed in the previous chapter does.
 2. A **movement model** $P(X_t+1|X_t)$, defining the probability that a bird was able to fly a specific distance between two consecutive stationary periods. 
@@ -30,7 +30,7 @@ Because the number of possible positions is limited (i.e.,  number of pixels on 
 
 A graph is a convenient mathematical representation of a model which has states (nodes) and relations between these states (edges). Graphs are a general and fundamental mathematical tool, but here we use a specific graph structure corresponding to the HMM presented above: two states $X$ and $Y$ for each time step $t$ (nodes), and an observation and movement model (relating $X_t$ to $X_t+1$ and $Y_t$ to $X_t$ respectively). All other relationships are assumed to be independent.
 
-Typically in animal movement, the graph is only used to represent the random variable of the HMM, but in our case, we also use the concept of graph to store all discrete positions (i.e., pixels) of the bird at all timesteps, referred to as a [trellis graph](https://en.wikipedia.org/wiki/Trellis_(graph)). 
+Typically in animal movement, the graph is only used to represent the random variable of the HMM, but in our case, we also use the concept of graph to store all discrete positions (i.e., pixels) of the bird at all timesteps, referred to as a <a href="https://en.wikipedia.org/wiki/Trellis_(graph)" target="_blank">trellis graphs</a>. 
 
 You can think of the nodes as a full 3D grid of lat x lon x stationary period and the edges as all possible pairs of nodes between two consecutive stationary periods. As you can imagine, this results in a very high number of edges! The novelty of Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) is to construct this graph using only the useful nodes and edges, thereby dramatically reducing the computational resources required.
 :::
@@ -131,7 +131,7 @@ plot_path(path_simulation)
 
 ## Save
 
-You might want to save some of the key objects such as `tag` or `graph` in an `R` format. Use the `"./data/interim"` folder (intermediate) for that. 
+You might want to save some of the key objects such as `tag` or `graph` in an `R` format. You can do so in the `"./data/interim"` folder. 
 
 Note that `graph` can be quite large if the number of stationary periods and grid resolution is high.
 

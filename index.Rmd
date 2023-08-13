@@ -19,11 +19,11 @@ suppress-bibliography: true
 
 <div class="row no-gutters">
 <div class="col">
-Determining the positions, and over time trajectories, of wildlife is crucial to apprehend ecological relationships in nature. Since satellite devices (e.g. GPS) are too heavy for most bird species, lightweight geolocators remain an essential tool for ecologists. 
+Determining the positions, and over time trajectories, of wildlife is crucial to apprehend ecological relationships in nature. Since satellite devices (e.g. GPS) are too heavy for most bird species, lightweight geolocators remain an essential tool to track bird movement. 
   
-Geolocation by pressure provides a new and exciting opportunity to determine the position of tracked birds with high precision. 
+Geolocation by pressure provides an exciting opportunity to determine the position of birds with high precision using small tracking devices. 
 
-As atmospheric pressure varies in space and time, a timeseries of pressure measurement recorded at a single location constitutes a unique signature which can be used for global positioning. 
+Indeed, as atmospheric pressure varies in space and time, a timeseries of pressure measurement recorded at a single location constitutes a unique signature which can be used for global positioning. 
 
 </div>
 <div class="col col-md-auto">
@@ -33,7 +33,7 @@ As atmospheric pressure varies in space and time, a timeseries of pressure measu
 
 
 
-The GeoPressure suite helps users tackle the challenges of geolocation by pressure and provides a toolkit to implement the two following methods published in the following two papers: 
+The GeoPressure suite helps users tackle the challenges of geolocation by pressure and provides a toolkit to implement two methods published in the following two papers: 
 
 - Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14043" target="_blank">2023a</a>) presents the method to estimate a map of likely positions from a pressure timeseries, 
 - Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) describes a new approach to reconstruct the full trajectory of a bird quickly and accurately, using pressure and wind data. 
@@ -69,11 +69,11 @@ The GeoPressure suite includes several tools:
 
 This manual provides an easy entry point into pressure positioning. It includes three parts: 
 
-- The [basic tutorial] runs through the entire workflow using a simple track of pressure only, with the example of a Swainson's Warbler.
-- The [advanced tutorial] explores additional functionalities of the package using light, acceleration, and wind data, through the example of a Great Reed Warbler.
-- [labeling tools] introduces labeling, a critical step in the workflow. Although it is briefly mentioned in the first two tutorials, this complex procedure requires a comprehensive understanding of the method and tools of the package, which is why it is described in more depth here. We strongly recommended reading this section attentively for optimal results.
+- The [basic tutorial](tag-object.html) runs through the entire workflow using a simple track of pressure only, with the example of a Swainson's Warbler.
+- The [advanced tutorial](light-map.html) explores additional functionalities of the package using light, acceleration, and wind data, through the example of a Great Reed Warbler.
+- [Labelling tools](pressurepath.html) introduces labelling, a critical step in the workflow. This is a complex procedure requiring a comprehensive understanding of the method and tools of the package, which is why it is described in more depth after the basic and advanced tutorials. We strongly recommended reading this section attentively for optimal results.
 
-Feel free to simply read through the manual, or to [fork the repository](https://github.com/Rafnuss/GeoPressureManual/fork) to run the examples yourself at your own pace.
+Feel free to read through the manual, or to [fork the repository](https://github.com/Rafnuss/GeoPressureManual/fork) to run the examples at your own pace.
 
 ## Code structure
 

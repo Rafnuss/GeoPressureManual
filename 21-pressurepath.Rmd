@@ -8,7 +8,7 @@ rm(list = ls())
 
 In this chapter, we will see what a `pressurepath` object is and how to use it to compute the altitude of the bird throughout its trajectory. 
 
-Let's load the `tag` from the Great Reed Warbler (18LX) created in the [advanced tutorial].
+Let's load the `tag` from the Great Reed Warbler (18LX) created in the [advanced tutorial](light-map.html).
 
 ```{r}
 load("./data/interim/18LX.Rdata")
@@ -19,7 +19,7 @@ load("./data/interim/18LX.Rdata")
 
 Before creating a full `pressurepath`, we start with the basic building block of a pressurepath, which is to retrieve the pressure timeseries from ERA5 at a single location with `geopressure_timeseries`. 
 
-`geopressure_timeseries` relies on the [pressure timeseries entry point of GeoPressureAPI](https://raphaelnussbaumer.com/GeoPressureAPI/#pressure-timeseries), which return the timeseries of pressure at a given latitude and longitude.
+`geopressure_timeseries` relies on the <a href="https://raphaelnussbaumer.com/GeoPressureAPI/#pressure-timeseries" target="_blank">pressure timeseries entry point of GeoPressureAPI</a> which return the timeseries of pressure at a given latitude and longitude.
 
 Let's start by retrieving the pressure at the known site of equipment, querying the same date as the first stationary period.
 
@@ -45,9 +45,9 @@ layout(ggplotly(p), legend = list(orientation = "h"))
 ```
 
 ::: {.alert .alert-primary role="alert"}
-<h4 class="alert-heading mt-2"><strong>Nostalgia</strong></h4>
+<h4 class="alert-heading mt-2"><strong>Eureka!</strong></h4>
 
-This was the figure that made me realize the potential of pressure measurement to determine birds' position! The accuracy of the reanalysis data and the precision of the sensor were such that a timeseries of pressure had only a few possible options on the map!
+This was the figure that made me realize the potential of pressure measurement to determine birds' position! The accuracy of the reanalysis data and the precision of the sensor were such that a timeseries of pressure had only a few possible options on the map.
 :::
 
 ## Pressurepath
@@ -63,7 +63,8 @@ The `pressurepath` data.frame returned also contains the original pressure `pres
 ```{r 21-pressurepath-create, cache=TRUE, warning = F}
 pressurepath <- pressurepath_create(tag,
   path = path_most_likely,
-  include_flight = TRUE
+  include_flight = TRUE,
+  quiet = TRUE
 )
 ```
 
@@ -83,7 +84,7 @@ plot_pressurepath(pressurepath, type = "altitude")
 ::: {.alert .alert-info role="alert"}
 <h4 class="alert-heading mt-2"><strong>Why use GeoPressureAPI for altitude?</strong></h4>
 
-Computing the bird altitude $z_{gl}$ from its pressure measurement $P_{gl}$ is best performed with the [barometric equation](https://en.wikipedia.org/wiki/Barometric_formula). 
+Computing the bird altitude $z_{gl}$ from its pressure measurement $P_{gl}$ is best performed with the <a href="https://en.wikipedia.org/wiki/Barometric_formula" target="_blank">barometric equation</a>
 
 $$ z_{gl}=z_0 + \frac{T_0}{L_b}  \left( \frac{P_{gl}}{P_0} \right) ^{\frac{RL_b}{g M}-1},$$
 
@@ -106,9 +107,9 @@ However, we know that pressure and temperature vary considerably over time and s
 Using GeoPressureAPI, we can adjust the barometric equation with the actual ground-level pressure $P_{ERA}$ and ground temperature $T_{ERA}$ retrieved from ERA5 at the bird's location $x$,
 $$ z_{gl}(x)=z_{ERA5}(x) + \frac{T_{ERA5}(x)}{L_b}  \left( \frac{P_{gl}}{P_{ERA5}(x)} \right) ^{\frac{RL_b}{g M}-1},$$
 
-See more information [on the GeoPressureAPI documentation](https://raphaelnussbaumer.com/GeoPressureAPI/#description-1)
+See more information on the <a href="https://raphaelnussbaumer.com/GeoPressureAPI/#description-1" target="_blank">GeoPressureAPI documentation</a>.
 
-We can compare theses two altitudes for the first stationary period,
+We can compare these two altitudes for the first stationary period,
 
 ```{r, collapse = TRUE}
 p <- ggplot(pressurepath[pressurepath$stap_id == 1, ]) +

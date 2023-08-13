@@ -1,6 +1,6 @@
 # Probability aggregation
 
-At the core of GeoPressure, we try to estimate the position of the bird based on a pressure mismatch of the geolocator and a weather reanalysis dataset ([ERA5](https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era5)). A major challenge in this process is the transformation of map of errors (mismatch) into a probability.
+At the core of GeoPressure, we try to estimate the position of the bird based on a pressure mismatch of the geolocator and a weather reanalysis dataset <a href="https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era5" target="_blank">ERA5</a>. A major challenge in this process is the transformation of map of errors (mismatch) into a probability.
 
 In this chapter, we present this challenge, look at the theory behind it, and explore possible solutions using Great Reed Warbler (18IC) as an example. 
 
@@ -24,13 +24,13 @@ This way of building the error term has some important consequences. A timeserie
 
 ### Error term for the Great Reed Warbler
 
-Let's load the data data and filter
+Let's load the data and filter
 
 ```{r}
 load("./data/interim/CB619.RData")
 ```
 
-We are using [the GeoPressure API](https://raphaelnussbaumer.com/GeoPressureServer/#description) with the `geopressure_map_mismatch()` function to measure the mismatch of the pressure series. Because the API can realistically return only a single map per stationary period, it aggregates the error timeseries with the Mean Squared Error (MSE), 
+We are using <a href="https://raphaelnussbaumer.com/GeoPressureServer/#description" target="_blank">the GeoPressure API</a> with the `geopressure_map_mismatch()` function to measure the mismatch of the pressure series. Because the API can realistically return only a single map per stationary period, it aggregates the error timeseries with the Mean Squared Error (MSE), 
 $$\mathit{MSE} = \frac{1}{n}\sum_{t=1}^{n} \varepsilon[t]^2.$$
 
 The MSE shows where the match of pressure is the best, excluding open water (ERA5-LAND does not support water). `tag$stap` also contains a column `nb_sample` which indicates the number of datapoints used to compute the MSE $n$. This value can only be up to the value `max_sample`. 
@@ -42,24 +42,24 @@ head( tag$stap)
 
 ## Gaussian likelihood function
 
-In order to find an appropriate likelihood function, we first need to assume a distribution of the error. The sources of the errors are (1) the sensor measurement error, (2) the ERA5 reanalysis error and (3) the attitudinal movement of the bird during this time. Because we are removing the mean error, we can ignore any long-term errors (e.g., constant temporal error in ERA5 or biases in the geolocator sensor). 
+In order to find an appropriate likelihood function, we first need to assume a distribution of the error. The sources of error are (1) the sensor measurement error, (2) the ERA5 reanalysis error and (3) the attitudinal movement of the bird during this time. Because we are removing the mean error, we can ignore any long-term errors (e.g., constant temporal error in ERA5 or biases in the geolocator sensor). 
 
 The figure below shows the error distribution at the known location of equipment and retrieval.
 
 ![Histogram of the error term](assets/Appendix_F_4.png){width=100%}
- They all look close enough to a Gaussian distribution. In the case of the Great Reed Warbler, the standard deviation is around 0.5.
+They all look close enough to a Gaussian distribution. In the case of the Great Reed Warbler, the standard deviation is around 0.5.
  
 ```{r}
 sd <- 0.5
 ```
 
-Therefore, assuming a Gaussian distribution of our error, the [Gaussian likelikhood](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Non-independent_variables)  of a multivariate normal distribution is given by 
+Therefore, assuming a Gaussian distribution of our error, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Non-independent_variables" target="_blank">Gaussian likelikhood</a>  of a multivariate normal distribution is given by 
 $$ f(\boldsymbol{\varepsilon})={\frac {1}{(2\pi)^{n/2} \sqrt{\det(\boldsymbol{\Sigma})}}}\exp \left(-\frac{1}{2} \boldsymbol{\varepsilon} \boldsymbol{\Sigma}^{-1} \boldsymbol{\varepsilon} \right).$$
 with the vector notation $\boldsymbol{\varepsilon }=[\varepsilon[1],\ldots,\varepsilon[n]]$ and where the covariance matrix $\boldsymbol{\Sigma}$ contains the variance of two datapoints $\boldsymbol{\Sigma}_{t_1,t_2} = \operatorname {E}[ \varepsilon[t_1] \varepsilon[t_2] ]$.
 
 ### Independance of errors
 
-As the covariance is difficult to quantify explicitly, we can first look at the very strong assumption of independence of the error, $\varepsilon_t \overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma)$. In this case, the [Gaussian likelikhood function](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Continuous_distribution,_continuous_parameter_space) $f_{ind}$ is simply the product of the normal probability density function of each error $\varepsilon[t]$, 
+As the covariance is difficult to quantify explicitly, we can first look at the very strong assumption of independence of the error, $\varepsilon_t \overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma)$. In this case, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Continuous_distribution,_continuous_parameter_space" target="_blank">Gaussian likelikhood function</a> $f_{ind}$ is simply the product of the normal probability density function of each error $\varepsilon[t]$, 
 $$ f_{ind}(\boldsymbol{\varepsilon})=\prod _{t=1}^{n}f_\mathcal{N}(\varepsilon[t])=\left({\frac {1}{2\pi \sigma ^{2}}}\right)^{n/2}\exp \left(-{\frac {\sum _{t=1}^{n}\varepsilon[t]^2}{2\sigma ^2}}\right).$$
 
 We can re-write this equation as a function of the MSE
@@ -74,11 +74,11 @@ plot(tag_tmp, type="map_pressure")
 
 Assuming independence, the Gaussian likelihood transforms the MSE into probability with narrow ranges of uncertainties. So narrow that for long stationary period (#7 and #9), the entire map is 0.
 
-This comes from the multiplication of probability assumed in the independence case (see equation above). The underlying assuming of the multiplication operator is the [conjunction of probabilities](https://en.wikipedia.org/wiki/Logical_conjunction), where aggregating two information is done with the AND operator: $P(A~\text{and}~B) = P(A)\times P(B)$. Only the information content overlapping every datapoint of information is kept. 
+This comes from the multiplication of probability assumed in the independence case (see equation above). The underlying assuming of the multiplication operator is the <a href="https://en.wikipedia.org/wiki/Logical_conjunction" target="_blank">conjunction of probabilities</a>, where aggregating two information is done with the AND operator: $P(A~\text{and}~B) = P(A)\times P(B)$. Only the information content overlapping every datapoint of information is kept. 
 
 ### Quantification of the errors dependance
 
-Ploting the auto-covariance at the calibration site for all the species allow us to see a temporal pattern in the error. For most bird, we can see a clear daily fluctuation which is certainly due to the bird daily movement for commute between feeding and roosting site. The auto-covariance is approaching 0 for all birds, which is expected as we removed the mean value. However, the [sill](https://en.wikipedia.org/wiki/Variogram) is reached between 6hours and 12 hours depending on birds (Hoopoe doesn't reach it after 3 days!).
+Ploting the auto-covariance at the calibration site for all the species allow us to see a temporal pattern in the error. For most bird, we can see a clear daily fluctuation which is certainly due to the bird daily movement for commute between feeding and roosting site. The auto-covariance approaches 0 for all birds, which is expected as we removed the mean value. However, the <a href="https://en.wikipedia.org/wiki/Variogram" target="_blank">sill</a> is reached between 6 and 12 hours depending on bird (the hoopoe doesn't reach it after 3 days!).
 
 ![Auto-covariance of the error term](assets/Appendix_F_3.png){width=100%}
 
@@ -92,7 +92,7 @@ From this observation, one option would be to construct a covariance matrix base
 
 In the rest of this vignette, we will take a different angle, re-framing the problem differently and exploring other options to compute the likelihood.
 
-In the field of [probability aggregation](https://link.springer.com/article/10.1007/s11004-012-9396-3), the problem of combining sources of information with overlapping/redundant content is frame as finding a pooling operator $F$ such that,
+In the field of <a href="https://link.springer.com/article/10.1007/s11004-012-9396-3" target="_blank">probability aggregation</a>, the problem of combining sources of information with overlapping/redundant content is frame as finding a pooling operator $F$ such that,
 $$p(\textbf{x}\mid \varepsilon[1],\ldots,\varepsilon[n]) \approx F(p(\textbf{x} \mid \varepsilon[1]) ,\ldots,p(\textbf{x} \mid \varepsilon[n])),$$
 which, with our Gaussian assumption, we can written,
 $$ F(f(\varepsilon[1]),\ldots,f(\varepsilon[n]))=F(\boldsymbol{\varepsilon})$$
@@ -161,7 +161,7 @@ Furthermore, the shape of the uncertainty can be strongly anisotropic (e.g., hoo
 
 Assessing uncertainty relies on checking that that the red cross is distributed according to each uncertainty shape. A more formal way to quantifiying the uncertainty is of the quantile of the true value $q=p(\boldsymbol{x}\leq \boldsymbol{x}_{true})$, which corresponds to the probability that the variable is less than or equal to the true value. So, if the true value belongs to the distribution, the distribution of its quantile should be uniform.
 
-This can be visualize with the empirical cumulative distribution of the quantiles which should fall on the 1:1 line (like a qq-plot). The two extreme cases ($w=1$ and $w=1/n$) show overconfidence (above the line) and  underconfidence (below the line) respectively. Indeed, the distribution of quantile using the $w=1/n$ method shows a lot of quantile values between 0.9-1, which indicates that the true value is within the 90% uncertainty contour (underconfident).
+This can be visualize with the empirical cumulative distribution of the quantiles which should fall on the 1:1 line (like a qq-plot). The two extreme cases ($w=1$ and $w=1/n$) show overconfidence (above the line) and  underconfidence (below the line) respectively. Indeed, the distribution of quantile using the $w=1/n$ method shows a lot of quantile values between 0.9-1, which indicates that the true value is within the 90% uncertainty contour (under-confident).
 
 
 ![](assets/probability-aggregation-qq.png){width=100%}
@@ -170,4 +170,4 @@ The method chosen ($w=\log(n)/n$) is doing better than both, but is still in gen
 
 The covariance aggregation scheme was implemented by computing the covariance matrix of the multi-variate Gaussian distribution. The covariance function was build using the exact on the variogram of each species. This is, in theory, the more correct method, but it looks too overconfident. Thus we didn't use it for now.
 
-Looking forward, calibration is highly dependant on the local topography and the ability of the bird to move up and down. Manual edition/labelling has also a strong impact. 
+Looking forward, calibration is highly dependent on the local topography and the ability of the bird to move up and down. Manual edition/labelling has also a strong impact. 
