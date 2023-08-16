@@ -125,7 +125,7 @@ path_simulation <- graph_simulation(graph,
 ```
 
 ```{r}
-plot_path(path_simulation)
+plot_path(path_simulation, plot_leaflet = FALSE)
 ```
 
 ## Save

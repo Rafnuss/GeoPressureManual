@@ -94,7 +94,7 @@ The computation of the light likelihood map for each stationary period is perfor
 
 1. Perform a calibration of the zenith angle (i.e., the angle of the sun at sunrise and sunset) with a kernel density (see `stats::kernel()`). This requires knowing the position of the bird for a least one stationary period. This position should be specified with the `known` data.frame in `tag_set_map()`. 
 2. Compute a likelihood map for each twilight. This step consists of computing, for each pixel of the map, the zenith angle and the corresponding probability using the calibrated kernel distribution.
-3. Aggregate all likelihood maps of the same stationary period into a single map using a log-linear pooling. See [probability aggregation] for more information on log-linear pooling.
+3. Aggregate all likelihood maps of the same stationary period into a single map using a log-linear pooling. See [probability aggregation](probability-aggregation.html#probability-aggregation-1) for more information on log-linear pooling.
 
 ```{r 10-geolight-map, message=FALSE}
 tag <- geolight_map(tag, twl_calib_adjust = 1.4) 
@@ -118,7 +118,7 @@ plot(tag, type = "map_light")
 ```
 
 
-::: {.alert .alert-danger role="alert" style="margin-top: 20px;"}
+::: {.alert .alert-warning role="alert" style="margin-top: 20px;"}
 <h4 class="alert-heading mt-2"><strong>Light map vs pressure map?</strong></h4>
 
 It is worth checking how the likelihood map of light and pressure compare before building the graph. They should always overlap. If this is not the case, the tag and/or twilight labelling needs to be adjusted.

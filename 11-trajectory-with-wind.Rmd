@@ -13,7 +13,7 @@ The first step is to set up your CDS access. You will need to create an account 
 ```{r, eval=F}
 Sys.setenv(cds_key = "Insert_your_CDS_API_KEY_here")
 Sys.setenv(cds_user = "Insert_your_CDS_UID_here")
-# opens .Rprofile with usethis::edit_r_environ() 
+# usethis::edit_r_environ() # opens .Rprofile
 ```
 
 You can then retrieve them whenever you want with:
@@ -88,9 +88,11 @@ marginal <- graph_marginal(graph)
 path_simulation <- graph_simulation(graph, nj = 10)
 ```
 
+
 ```{r}
 plot(marginal, path = path_most_likely)
 ```
+
 
 ```{r}
 plot_path(path_simulation, plot_leaflet = F)
@@ -103,7 +105,7 @@ plot_path(path_simulation, plot_leaflet = F)
 ```{r, message=FALSE}
 edge_simulation <- path2edge(path_simulation, graph)
 edge_most_likely <- path2edge(path_most_likely, graph)
-knitr::kable(head(edge_most_likely))
+knitr::kable(head(edge_most_likely), digits = 1)
 ```
 
 

@@ -2,7 +2,7 @@
 
 # Tag object
 
-In this basic tutorial, we run through all the steps of GeoPressureR using only pressure data, with the simple example of a [Swainson's Warbler](https://ebird.org/species/swawar). This bird presents a short migration route, with only a few stopovers, making it fast to compute. 
+In this basic tutorial, we run through all the steps of GeoPressureR using only pressure data, with the simple example of a [Swainson's Warbler](https://science.ebird.org/en/status-and-trends/species/swawar/abundance-map-weekly). This bird presents a short migration route, with only a few stopovers, making it fast to compute. 
 
 ![*<small>Swainson's Warbler. 16 May 2022. Edisto Nature Trail, South Carolina, US. <a href="https://macaulaylibrary.org/asset/450511161" target="_blank">ML 450511161</a></small>*](assets/450511651.png){width=100%}
 
@@ -21,13 +21,12 @@ The `tag` object is created based on the raw geolocator data
 ```{r 01-tag-create}
 tag <- tag_create(
   id = "CB619",
-  pressure_file = "*.deg",
   light_file = NULL,
   acceleration_file = NULL
 )
 ```
 
-The raw data for this tag id should be stored in `"./data/raw-tag/CB619/"` following the default structure described in [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder). Because the data is recorded with a [Migrate Technology](https://www.migratetech.co.uk/) tag, we use the file extension `pressure_file = "*.deg"`.
+The raw data for this tag id should be stored in `"./data/raw-tag/CB619/"` following the default structure described in [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder).
 
 You can use the generic `plot()` function to visualize the tag data. 
 
@@ -81,15 +80,15 @@ kable(head(tag$pressure))
 
 `tag_label_stap()` then creates the stationary periods based on these labels:
 
-```{r}
-tag <- tag_label_stap(tag)
+```{r, collapse=TRUE}
+tag <- tag_label_stap(tag, quiet = TRUE)
 kable(head(tag$stap))
 ```
 
 Plotting the pressure timeseries of tag provides additional information:
 
-```{r, warning = FALSE}
-plot(tag, type = "pressure")
+```{r, warning = FALSE, collapse=TRUE}
+plot(tag, type = "pressure", quiet = TRUE)
 ```
 
 ::: {.alert .alert-info role="alert"}

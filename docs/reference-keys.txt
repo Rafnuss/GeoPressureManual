@@ -53,12 +53,8 @@ elevation-period
 the-process
 introduction-to-trainset
 four-steps-to-check-labelling
-check-1-duration-of-stationary-periods-and-flights
-check-2-pressure-timeseries
-check-3-pressure-timeseries-match
-check-4-histogram-of-pressure-error
-check-5-geopressureviz
-check-6-most-likely-path
+simple-checks
+complex-checks
 resources
 publications
 presentations

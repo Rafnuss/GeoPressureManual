@@ -57,7 +57,7 @@ This was the figure that made me realize the potential of pressure measurement t
 
 You can think of a pressurepath as the timeseries of pressure that a tag would record on a bird traveling along a specified path. To do that, `pressurepath_create()` calls `geopressure_timeseries()` for each stationary period and combines the resulting timeseries of ERA5 pressure.
 
-The `pressurepath` data.frame returned also contains the original pressure `pressure_tag` which can [be very helpful for labelling](labelling track) and the altitude of the bird corrected for the natural variation of pressure.
+The `pressurepath` data.frame returned also contains the original pressure `pressure_tag` which can [be very helpful for labelling](labelling-tracks.html) and the altitude of the bird corrected for the natural variation of pressure.
 :::
 
 ```{r 21-pressurepath-create, cache=TRUE, warning = F, message=FALSE}

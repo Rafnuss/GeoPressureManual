@@ -5,8 +5,6 @@
 In the following section, we use examples to illustrate common challenges that may be encountered during manual editing, and offer suggestions on how to address them. 
 
 
-
-
 ### Low acceleration during flight
 
 During a flight, single acceleration measurements can be low due to e.g. to gliding, typical of the end of night. Yet, the bird was still flying and this should be included as flight duration and excluded from a stationary period.

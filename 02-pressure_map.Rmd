@@ -83,8 +83,9 @@ This function returns the `tag` with two maps:
 plot(tag, type = "map_pressure_mse")
 ```
 
+This is an alternative and identical way to plot a `map` from a `tag`.
+
 ```{r, warning = F}
-# This is an alternative and equivalent way to plot a map in tag
 plot(tag$map_pressure_mask)
 ```
 
@@ -108,7 +109,7 @@ tag <- geopressure_map_likelihood(
 
 The standard deviation `sd` ($\sigma$) plays an important role in the spread of the uncertainty of your map. It accounts for (1) error in reanalysis data (may vary spatially), (2) sensor error (very low), and (3) bird vertical movement (likely most significant, 1hPa = 10m e.g. up and down a tree). 
 
-This value should ideally be calibrated, but it is usually safe to start with a value of `1`. We see how to adjust this value in [check #4 of the labelling procedure](labelling tracks#test-4-histogram-of-pressure-error). 
+This value should ideally be calibrated, but it is usually safe to start with a value of `1`. We see how to adjust this value in [check #4 of the labelling procedure](labelling-tracks.html#check-4-histogram-of-pressure-error). 
 
 The parameter $thr_{mask}$ has less influence and can usually be left at `0.9`.
 :::

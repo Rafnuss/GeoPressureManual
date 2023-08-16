@@ -37,7 +37,7 @@ The MSE shows where the match of pressure is the best, excluding open water (ERA
 
 ```{r}
 plot(tag, type = "map_pressure_mse")
-head( tag$stap)
+kable(head(tag$stap))
 ```
 
 ## Gaussian likelihood function
