@@ -3,6 +3,10 @@
 The [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual/) is a great place to start learning about how to use [`GeoPressureR`](https://raphaelnussbaumer.com/GeoPressureR/), the R package which help researchers construct the trajectory of a bird equiped with an atmospheric pressure sensor.
 
 Using the examples of a Swainson's Warbler and a Great Reed Warbler, this user guide takes you through each step of the analysis in detail.
+<div align = center>
+<a href="https://raphaelnussbaumer.com/GeoPressureManual"><img src="https://img.shields.io/badge/📖%20open%20the%20manual%20📖-37a779?style=for-the-badge&color=%238D5903" style="height:40px;"/></a>
+</div>
+
 
 ## Table of content
 
