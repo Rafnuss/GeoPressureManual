@@ -11,7 +11,7 @@ label-manually-on-trainset
 read-labelled-file
 compute-stationary-periods
 pressure-map
-define-geographical-and-temporal-parameters
+define-geographical-and-temporal-parameters-of-the-map
 compute-pressure-maps
 compute-mismatch-maps
 compute-likelihood-maps
@@ -49,10 +49,10 @@ run-geopressureviz
 labelling-tracks
 labelling-principles
 with-or-without-acceleration-data
-elevation-period
 the-process
 introduction-to-trainset
-four-steps-to-check-labelling
+elevation-period
+labelling-checks
 simple-checks
 complex-checks
 resources

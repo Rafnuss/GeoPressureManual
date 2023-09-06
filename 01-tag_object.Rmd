@@ -13,17 +13,13 @@ In this basic tutorial, we run through all the steps of GeoPressureR using only 
 <h4 class="alert-heading mt-2"><strong>What is a `tag` object?</strong></h4>
 A [tag](https://www.movebank.org/cms/movebank-content/mb-data-model) refers to a geolocator or datalogger device that can contain multiple sensors (e.g., pressure, light, acceleration). 
 
-In GeoPressureR, `tag` is an essential object (i.e., a [S3 class](https://stat.ethz.ch/R-manual/R-devel/library/base/html/class.html)) modified at each step of the workflow: not only does it store the raw logger data, it also aggregates all the information needed to ultimately be able to model the bird's trajectory.
+In GeoPressureR, `tag` is an object (i.e., a [S3 class](https://stat.ethz.ch/R-manual/R-devel/library/base/html/class.html)) modified at each step of the workflow: not only does it store the raw logger data, it also aggregates all the information needed to ultimately be able to model the bird's trajectory.
 :::
 
 The `tag` object is created based on the raw geolocator data
 
 ```{r 01-tag-create}
-tag <- tag_create(
-  id = "CB619",
-  light_file = NULL,
-  acceleration_file = NULL
-)
+tag <- tag_create(id = "CB619")
 ```
 
 The raw data for this tag id should be stored in `"./data/raw-tag/CB619/"` following the default structure described in [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder).

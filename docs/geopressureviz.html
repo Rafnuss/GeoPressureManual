@@ -25,7 +25,7 @@
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="libs/leaflet-binding-2.1.2.9000/leaflet.js"></script><script src="libs/leaflet-providers-1.13.0/leaflet-providers_1.13.0.js"></script><script src="libs/leaflet-providers-plugin-2.1.2.9000/leaflet-providers-plugin.js"></script><link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/Rafnuss/GeoPressureManual/main/assets/geopressuremanual.ico">
+<script src="libs/leaflet-binding-2.2.0/leaflet.js"></script><script src="libs/leaflet-providers-1.13.0/leaflet-providers_1.13.0.js"></script><script src="libs/leaflet-providers-plugin-2.2.0/leaflet-providers-plugin.js"></script><link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/Rafnuss/GeoPressureManual/main/assets/geopressuremanual.ico">
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-NJ17NCTPB5"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -115,7 +115,7 @@
 <span class="header-section-number">7.2</span> Run GeoPressureViz<a class="anchor" aria-label="anchor" href="#run-geopressureviz"><i class="fas fa-link"></i></a>
 </h2>
 <p>The visualization can be started with your track using <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz()</a></code>.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"./data/interim/18LX.RData"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span></span>
 <span>  tag <span class="op">=</span> <span class="va">tag</span>, <span class="co"># required</span></span>
@@ -123,7 +123,7 @@
 <span>  marginal <span class="op">=</span> <span class="va">marginal</span>, <span class="co"># optional</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>If your data is stored in <code>"./data/interim/18LX.RData"</code>, you can use directly</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code></pre></div>
 <p>Note that the path of the shiny app can be retrieved from the global environment using <code>geopressure_path</code>.</p>
 

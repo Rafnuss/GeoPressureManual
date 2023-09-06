@@ -51,18 +51,6 @@ plot(tag, type = "acceleration")
 
 More classification methods are described in the <a href="https://kiranlda.github.io/PAMLrManual/index.html" target="_blank">PALMr manual</a>.
 
-
-## Elevation period
-
-It is common for birds to change elevation level within the same stationary period (e.g., roost vs feeding site or altitudinal movements for mountainous species). Such movements can result in drastic variations in pressure, which interfere with the ERA5 matching exercise.
-
-To circumvent this issue while preserving as much data as possible in the match, you can label pressure data with different **elevation levels** within the same stationary period by using `elev_x`. To do so, in TRAINSET click on the + sign in the bottom right to add a new elevation level. Note that the numbering of elevation levels does not have to be continuous. For instance, always apply the same elev_# to the roosting site as it is at the same elevation. 
-
-By default, when no `elev_x` label is assigned, all points within the stationary period are assumed to be at `"elev_1"`. 
-
-*Illustration to come*
-
-
 ## The process
 
 Labelling is an **iterative process** where you will need to check the validity of the pressure timeseries for a given stationary period against the reanalysis data several times. You can expect to spend 30sec to 30min per track, depending on the species' complexity (acceleration data, number of flights, altitude of flight etc...).
@@ -102,7 +90,7 @@ Please use this new version and report issues or bugs on the <a href="https://gi
 
 Start by uploading your .csv file (e.g., `data/tag-label/18LX.csv`) using the "Upload Tag Label" button.
 
-![*Initial view of TRAINSET after uploading a file*](assets/labelling-tracks-0.png){width=100%}
+![*Example of a labeled file on TRAINSET. First, the pressure timeseries is separated into stationary periods by "flight" label (red). When the bird is changing altitude or flying for short periods, the pressure datapoint are labeled as "discard" (gray) ](assets/labelling-tracks-0.png){width=100%}
 
 <strong>A few tips:</strong>
 
@@ -111,7 +99,20 @@ Start by uploading your .csv file (e.g., `data/tag-label/18LX.csv`) using the "U
 - Change the `Active Series` and `Reference Series` depending on what you are labelling but **use both timeseries at the same time** to help you determine what the bird might be doing.
 - **Adapt the y-axis range** to each stationary period to see the small (but essential) pressure variations which are not visible in the full view.
 
-## Four steps to check labelling
+
+## Elevation period
+
+It is common for birds to change elevation level within the same stationary period (e.g., roost vs feeding site or altitudinal movements for mountainous species). Such movements can result in drastic variations in pressure, which interfere with the ERA5 matching exercise.
+
+To circumvent this issue while preserving as much data as possible in the match, you can label pressure data with different **elevation levels** by using `elev_x` in TRAINSET To do so, click on the + sign in the bottom right to create a new elevation level (e.g., `elev_1`). Assign the new label to all pressure datapoints belonging to the same elevation period. You can use multiple elevation periods, but for computational reasons, try to limit them to a minimum. Unlabelled datapoints can essentially be thought of as `evel_0`.
+
+Note that the elevation levels do not have to be continuous: it's even better if the same elevation period comes back several times during the same stationary period. For instance, you can have unlabelled datapoints for the feeding site every day and labelled datapoints at the roosting location of every night as `elev_1`. 
+
+Note that you can restart the count of `elev_x` for each new stationary period (e.g., the datapoints from stap 1 labelled as `elev_1` are not connected to the datapoints from stap 2 also labelled as `elev_1`).
+
+![*Example of elevation periods label. "elev_x" label allows to identify periods when the bird changes altitude for a considerable amount of time within the same stationary period . Note that you can re-use the same elev label for two distinct stationary periods without implying the same elevation.*](assets/labelling-tracks-1.png){width=100%}
+
+## Labelling checks
 
 Use the checks outlined below to evaluate and improve the quality of your labelling.
 
@@ -131,22 +132,20 @@ Here, I used the label produced by `tag_label_auto()` without making any edits o
 tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v2.csv")
 ```
 
-** Check 2: Pressure timeseries **
+**Check 2: Pressure timeseries**
 
-Here we visually inspect that the pressure timeseries of each stationary period (1) is correctly grouped and (2) does not include pressure outliers (e.g., altitudinal movements) using the generic `plot()`. It is worth to zoom-in and pan on each individual stationary period manually to check this.
+Here we visually inspect that the pressure timeseries of each stationary period (1) is correctly grouped and (2) does not include pressure outliers (e.g., altitudinal movements). It is worth zooming-in and panning on each individual stationary period manually inspect the timeseries.
 
 ```{r, collapse = TRUE}
 plot(tag, type = "pressure")
 ```
 
 ::: {.alert .alert-warning role="alert"}
-<h4 class="alert-heading mt-2"><strong>How short can be a stationary period?</strong></h4>
+<h4 class="alert-heading mt-2"><strong>How short can a stationary period be?</strong></h4>
 
-It can be common and ok to have a few stationary period/flight shorter than the warning threshold of check 1 and 2 (default can be overwritten `warning_flight_duration = 2`, `warning_stap_duration = 6`, `warning_pressure_diff = 3`, `warning_stap_length = 12`).
+It can acceptable to have a few stationary periods/flights shorter than the warning threshold of check 1 and 2. Feel free to overwrite the default warning (e.g.,  `warning_flight_duration`).
 
-However, the number of likelihood map and, more importantly, the size of the graph can become very large, in particular if these maps are not informative, and in between long flight as all pixels will needs to be included in the graph.
-
-This is where the parameter `include_min_duration` from `tag_set_map()` is particularly useful: it allows to ignore the short stationary periods and merge flights. 
+However, having too many stationary periods will lead to slow code as the number of likelihood maps and, more importantly, the size of the graph will become excessively large. This is where the parameter `include_min_duration` from `tag_set_map()` is particularly useful: it allows to ignore the short stationary periods and merge flights. 
 
 Note, that while the `MSE` mismatch is usually not useful for stationary period shorter than a few hours, a single high or low pressure datapoint can indicate an high or low altitude location which are not common on the map!
 ::: 
@@ -185,7 +184,7 @@ tag <- tag |>
   geolight_map()
 ```
 
-** Check 3: Pressure timeseries match **
+**Check 3: Pressure timeseries match**
 
 From these maps, we can compute the path that goes through the stationary periods with the highest probability.
 
@@ -278,7 +277,7 @@ You should be able to move the position of the trajectory such that the flight d
 Remember that birds can have a much higher groundspeed when the wind is blowing their way (up to 150km/h for instance) - such extremes are usually restricted to long flights. In such cases, the circle on GeopressureViz will look too small, but that's ok. 
 </div>
 
-** Check 6: Most likely path **
+**Check 6: Most likely path**
 
 Labelling should finally be checked at the end of the workflow using the most-likely path. 
 

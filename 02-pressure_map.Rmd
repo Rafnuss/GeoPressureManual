@@ -2,7 +2,14 @@
 
 This chapter covers the main steps to determine the position of a bird from pressure data. This code is a direct implementation of the method introduced in Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14043" target="_blank">2023a</a>).
 
-## Define geographical and temporal parameters
+::: {.alert .alert-info role="alert"}
+<h4 class="alert-heading mt-2"><strong>What is a GeoPressureR  `map`?</strong></h4>
+In GeoPressureR, a `map` object is a container for a spatio-temporal variable, such as the likelihood of pressure. It is therefore defined by its spatial characteristics (`extent` and `scale`), but also with a temporal dimension in terms of stationary periods. The data is stored as a list of matrices, one matrix (or layer) for each stationary period.
+
+See `map_create()` for technical characteristics of a GeoPressureR `map`.
+:::
+
+## Define geographical and temporal parameters of the `map`
 
 The first step is to define the parameters used to configure your map (and later the graph). These are added to `tag` object.
 
@@ -24,12 +31,7 @@ A few indications to select optimal parameters:
 - `scale`: the number of pixels per 1° latitude-longitude. (e.g., scale = 10 corresponds to 0.1°\~10km). We recommend starting with a coarse `scale = 1 or 2` and a large `extent` and refining these when you have a better idea of the trajectory. Use the maximal resolution `scale = 10` only for the final run to keep the code fast during development.
 - `known`: the position of the bird at equipment and/or retrieval sites (as well as any known position, e.g. observed in the field). These positions can only be provided at the level of a stationary period. Setting this information significantly speeds up the computation by avoiding computing the likelihood map for these stationary periods and narrowing down the size of the graph.
 
-::: {.alert .alert-info role="alert"}
-<h4 class="alert-heading mt-2"><strong>What is a GeoPressureR  `map`?</strong></h4>
-In GeoPressureR, a `map` object is a container for a spatio-temporal variable, such as the likelihood of pressure. It is therefore defined by its spatial characteristics (`extent` and `scale`), but also with a temporal dimension in terms of stationary periods. The data is stored as a list of matrices, one matrix (or layer) for each stationary period.
-
-See `map_create()` for technical characteristics of a GeoPressureR `map`.
-:::
+In addition, you can specify which stationary periods to include in all subsequent analysis using the parameters `include_stap_id` and `include_min_duration` of `tag_set_map()`.
 
 ## Compute pressure maps
 

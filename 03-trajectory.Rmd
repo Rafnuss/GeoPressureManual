@@ -6,12 +6,12 @@ This involves three main steps:
 
 1. **Create the graph** representing the possible trajectory of the bird.
 2. Set the **movement model** which defines the likelihood of each possible flight encoded in the graph.
-3. **Compute three products** of the model: (1) the shortest path (i.e., the most likely trajectory), (2) the probability maps at each stationary period (i.e., marginals), and (3) simulated paths sampled according to their likelihood. 
+3. **Compute three products** of the model: (1) the most likely trajectory, (2) the probability maps at each stationary period (i.e., marginals), and (3) simulated paths sampled according to their likelihood. 
 
 
 ## Background on movement modeling
 
-If you haven't heard of <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model" target="_blank">Hidden Markov model</a>, <a href="https://doi.org/10.1016/j.tree.2007.10.009" target="_blank">state-space models</a>, or <a href="https://en.wikipedia.org/wiki/Trellis_(graph)" target="_blank">trellis graphs</a>, I recommend that you start by reading the following section, or - even better - read Patterson et al. ([2008](https://doi.org/10.1016/j.tree.2007.10.009)) and Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) if you're feeling brave!
+If you haven't heard of <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model" target="_blank">Hidden Markov model</a>, <a href="https://doi.org/10.1016/j.tree.2007.10.009" target="_blank">state-space models</a>, or <a href="https://en.wikipedia.org/wiki/Trellis_(graph)" target="_blank">trellis graphs</a>, I recommend that you start by reading the summary below, or - even better - read Patterson et al. ([2008](https://doi.org/10.1016/j.tree.2007.10.009)) and Nussbaumer et al. (<a href="https://doi.org/10.1111/2041-210X.14082" target="_blank">2023b</a>) if you're feeling brave!
 
 <details>
 <summary>Click here to read a short summary of movement model</summary>
@@ -85,7 +85,7 @@ With the graph built, we can create three products which are presented in more d
 
 ### Product 1: Most likely path
 
-The graph can directly and efficiently compute the most likely path, that is, the set of positions for each stationary period which maximizes the joint probability of the trajectory. 
+The graph can directly and efficiently compute the most likely path, that is, the set of positions for each stationary period which maximizes the joint probability of the trajectory. It finds the optimal compromise between the most likely position according to the pressure (and light) likelihood map and the realistic flight distance defined by the movement model. 
 
 ```{r 03-graph-most-likely, message=FALSE}
 path_most_likely <- graph_most_likely(graph)

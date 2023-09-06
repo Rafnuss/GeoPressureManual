@@ -1,7 +1,7 @@
 Package: GeoPressureManual
 Title: User Manual for GeoPressureR
 Description: Learn how to use GeoPressureR with examples.
-Version: 2.0.0
+Version: 2.0.1
 Authors@R: c(
     person("Raphaël", "Nussbaumer", , "rafnuss@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8185-1020")),
