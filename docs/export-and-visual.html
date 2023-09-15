@@ -86,7 +86,7 @@
 <span class="header-section-number">B</span> Export and Visual<a class="anchor" aria-label="anchor" href="#export-and-visual"><i class="fas fa-link"></i></a>
 </h1>
 <p>In this chapter, we will see how to create additional figures and export the data.</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"./data/interim/18LX.Rdata"</span><span class="op">)</span></span></code></pre></div>
 <div id="export-to-open-format" class="section level2" number="10.1">
 <h2>
@@ -99,9 +99,9 @@
 <span class="header-section-number">B.1.1</span> Stationary periods<a class="anchor" aria-label="anchor" href="#stationary-periods"><i class="fas fa-link"></i></a>
 </h3>
 <p>We can add additional information on stationary periods such as altitude metrics:</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">altitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/pressurepath2altitude.html">pressurepath2altitude</a></span><span class="op">(</span><span class="va">pressurepath</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute summary stats of altitude, grouped by stap_id</span></span>
 <span><span class="va">stap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span></span>
 <span>  <span class="va">tag</span><span class="op">$</span><span class="va">stap</span>,</span>
@@ -125,7 +125,7 @@
 <span class="header-section-number">B.1.2</span> Flights<a class="anchor" aria-label="anchor" href="#flights"><i class="fas fa-link"></i></a>
 </h3>
 <p>Similarly, flights can also be exported:</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">altitude_f</span> <span class="op">&lt;-</span> <span class="va">altitude</span><span class="op">[</span><span class="va">altitude</span><span class="op">$</span><span class="va">stap_id</span> <span class="op">==</span> <span class="fl">0</span>, <span class="op">]</span></span>
 <span><span class="va">flight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/stap2flight.html">stap2flight</a></span><span class="op">(</span><span class="va">tag</span><span class="op">$</span><span class="va">stap</span><span class="op">)</span>,</span>
@@ -145,7 +145,7 @@
 <span class="header-section-number">B.1.3</span> GeoPressureR maps<a class="anchor" aria-label="anchor" href="#geopressurer-maps"><i class="fas fa-link"></i></a>
 </h3>
 <p>GeoPressureR <code>maps</code> can be exported in a <code>.geotiff</code> file using <code><a href="https://rdrr.io/pkg/terra/man/writeRaster.html">terra::writeRaster</a></code> after you convert them to a <code><a href="https://rdrr.io/pkg/terra/man/rast.html">terra::rast</a></code> using <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/rast.map.html">rast.map()</a></code>.</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/writeRaster.html">writeRaster</a></span><span class="op">(</span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/rast.map.html">rast.map</a></span><span class="op">(</span><span class="va">tag</span><span class="op">$</span><span class="va">map_pressure</span><span class="op">)</span>,</span>
 <span>  <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"./data/processed/{tag$param$id}/map_pressure.tif"</span><span class="op">)</span>,</span>
 <span>  filetype <span class="op">=</span> <span class="st">"GTiff"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -169,7 +169,7 @@
 <span class="header-section-number">B.1.5</span> Parameters<a class="anchor" aria-label="anchor" href="#parameters"><i class="fas fa-link"></i></a>
 </h3>
 <p>During the entire workflow, <code>tag$param</code> and <code>graph$param</code> record all the essential parameters used to create the likelihood map and the graph. It is therefore interesting to export this structure for reproducibility.</p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/write.html">write</a></span><span class="op">(</span><span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op">(</span><span class="va">graph</span><span class="op">$</span><span class="va">param</span>, auto_unbox <span class="op">=</span> <span class="cn">TRUE</span>, pretty <span class="op">=</span> <span class="cn">TRUE</span>, force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  file <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"./data/processed/{tag$param$id}/param.json"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -185,7 +185,7 @@
 </h3>
 <p>Let’s try to create some beautiful visual trajectories using <a href="https://movevis.org/index.html" target="_blank">MoveVis</a>.</p>
 <p>Because the path encodes the position during the entire stationary period, we need to produce a data.frame with the position at the start and end of each stationary period. We can do this with the following function:</p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">moveVis</span><span class="op">)</span></span>
 <span><span class="va">path_most_likely</span><span class="op">$</span><span class="va">duration</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/stap2duration.html">stap2duration</a></span><span class="op">(</span><span class="va">path_most_likely</span><span class="op">)</span></span>
 <span></span>
@@ -209,10 +209,10 @@
 <span>  <span class="fu">add_timestamps</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"label"</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">add_progress</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>It is worth checking what a frame looks like before generating the entire gif (which takes around 10 min to compute), using:</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">frames</span><span class="op">[[</span><span class="fl">100</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>If you’re satisfied, then go for it!</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">animate_frames</span><span class="op">(</span><span class="va">frames</span>, out_file <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"./figures/movevis_{tag$param$id}.gif"</span><span class="op">)</span>, height <span class="op">=</span> <span class="fl">1000</span>, width <span class="op">=</span> <span class="fl">1000</span>, overwrite <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p>And here is the map! Check out <a href="https://movevis.org/index.html#examples" target="_blank">moveVis examples for more ideas</a>.</p>
 <div class="inline-figure"><img src="assets/movevis_18LX.gif" style="width:50.0%"></div>

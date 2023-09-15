@@ -150,7 +150,7 @@ However, having too many stationary periods will lead to slow code as the number
 Note, that while the `MSE` mismatch is usually not useful for stationary period shorter than a few hours, a single high or low pressure datapoint can indicate an high or low altitude location which are not common on the map!
 ::: 
 
-### Complex checks
+### Pressurepath checks
 
 The second set of checks are more complex and computationally costly but allows to fine-tune the final trajectory. Depending on your species and preference, they can be done in any order or in parrellel.
 
@@ -224,7 +224,7 @@ As a general guideline, it is better to remove a bit more for long stationary pe
 Once you're happy with your new labels, you have to update the tag object. To avoid running `geopressure_map()` and `pressurepath_create()` for the full timeseries, use `tag_upate()` and `pressurepath_upate()` to update only the stationary periods that have changed. 
 
 ```{r, cache=T, message=FALSE}
-tag <- tag_update(tag, file = "./data/tag-label/18LX-labeled-v4.csv")
+tag2 <- tag_update(tag, file = "./data/tag-label/18LX-labeled-v4.csv")
 pressurepath <- pressurepath_update(pressurepath, tag)
 ```
 
@@ -251,20 +251,22 @@ Note that you can use different a `sd` value to account for stationary periods w
 In this case, an `sd=1` (default value) seems adequate, though 0.8-0.9 might offer more precision positioning.
 :::
 
+### GeoPressureViz checks
 
 **Check 5: GeoPressureViz**
 
-The shiny app GeoPressureViz is another important tool to be used instead of or in parallel to check 4. The main adventages of using the apps are
+The shiny app GeoPressureViz is another important tool to be used instead of or in parallel to the pressurepath checks. The main advantages of using the apps are
 
-- Quickly test the pressurepath of different position for a single stationary period using "Start editing" and "query pressure".
-- Separate the likelihood of pressure and light to see where they disagree
+- Only query the pressurepath for position that need to be checked with "query pressure".
+- Quickly test the pressurepath of different position using "Start editing".
+- Separate the likelihood of pressure and light as well as flight duration to see where they agree/disagree
 - Filter-out short stationary period to see if they are coherent, before refining the trajectory by adding the shorter ones.
 
 More details on this app and how to use it can be found in the [GeopressureViz] chapter.
 
 ```{r, eval = F}
-geopressureviz(tag,# required
-               # pressurepath = pressurepath,
+geopressureviz(tag, # required
+               # path = pressurepath,
 )
 ```
 
@@ -277,13 +279,15 @@ You should be able to move the position of the trajectory such that the flight d
 Remember that birds can have a much higher groundspeed when the wind is blowing their way (up to 150km/h for instance) - such extremes are usually restricted to long flights. In such cases, the circle on GeopressureViz will look too small, but that's ok. 
 </div>
 
-**Check 6: Most likely path**
+### Final checks
 
-Labelling should finally be checked at the end of the workflow using the most-likely path. 
+**Check 6: Marignal and most likely path**
+
+Labelling should finally be checked at the end of the workflow using the marginal and most-likely path. 
 
 ```{r, cache=T, warning=FALSE, message=FALSE}
 # Update tag and pressurepath
-tag <- tag_update(tag, file = "./data/tag-label/18LX-labeled.csv")
+tag <- tag_update(tag, file = "./data/tag-label/18LX-labeled.csv", quiet = TRUE)
 
 # Build graph, add wing, add movement
 graph <- graph_create(tag) |>
@@ -297,21 +301,21 @@ path_most_likely <- graph_most_likely(graph, quiet = TRUE)
 marginal <- graph_marginal(graph)
 
 # Compute the corresponding pressurepath
-pressurepath <- pressurepath_create(tag, path = path_most_likely, quiet = TRUE)
+pressurepath_most_likely <- pressurepath_create(tag, path = path_most_likely, quiet = TRUE)
 ```
 
 The same figure can be checked again and hopefully everything matches well now! If not, it is important to troubleshoot!
 
 ```{r}
-plot_pressurepath(pressurepath)
-plot_pressurepath(pressurepath, type = "hist", plot_plotly = FALSE)
+plot_pressurepath(pressurepath_most_likely)
+plot_pressurepath(pressurepath_most_likely, type = "hist", plot_plotly = FALSE)
 ```
 
 A last check with geopressureviz is highly recommended to see the difference between the likelihood maps and the marginal map. Remember that [models are only as good as the data provided](https://en.wikipedia.org/wiki/Garbage_in,_garbage_out)!
 
 ```{r, eval = F}
 geopressureviz(tag,
-               pressurepath = pressurepath,
+               path = pressurepath_most_likely,
                marginal = marginal
 )
 ```

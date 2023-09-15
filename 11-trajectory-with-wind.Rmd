@@ -148,6 +148,8 @@ save(
   path_most_likely,
   path_simulation,
   marginal,
+  edge_simulation,
+  edge_most_likely,
   file = "./data/interim/18LX.RData"
 )
 ```

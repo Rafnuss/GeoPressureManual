@@ -54,7 +54,9 @@ introduction-to-trainset
 elevation-period
 labelling-checks
 simple-checks
-complex-checks
+pressurepath-checks
+geopressureviz-checks
+final-checks
 resources
 publications
 presentations

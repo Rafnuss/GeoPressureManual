@@ -56,12 +56,14 @@ The function `geopressure_map()` conveniently performs all the necessary steps, 
 ```{r 02-geopressure_map_mismatch, cache = TRUE, message=FALSE}
 tag <- geopressure_map_mismatch(tag,
   max_sample = 100,
-  margin = 20
+  margin = 20,
+  thr_mask = 0.95
 )
 ```
 
 - `max_sample` reduces the computational time by limiting the number of data-points used in the match. This usually only impacts long stationary periods where the position is well defined. During labelling, or when accuracy is not critical, it can be convenient to reduce this number between `50` to `100`.
 - `margin` can be reduced to `10`-`20` if your bird does not change elevation level during its stationary period.
+- `thr_mask` filter map based on absolute pressure threashold already on the GEE server to drastically reduce computational time (see below for details)
 
 ::: {.alert .alert-warning role="alert"}
 <h4 class="alert-heading mt-2"><strong>Taking a long time to compute?</strong></h4>
@@ -79,7 +81,7 @@ A progress bar will update you on the completion status, but the timing can be t
 This function returns the `tag` with two maps:
 
 -   `tag$map_pressure_mse` $\textbf{MSE}$ is a GeoPressureR `map` of the normalized mean square error between the pressure timeseries and ERA5 map.
--   `tag$map_pressure_mask` $\textbf{z}_{thr}$ is a GeoPressureR `map` of the proportion of data-points in the pressure timeseries which correspond to an altitude that falls between the min and max altitude of each grid cell (accounting for the `margin` parameter).
+-   `tag$map_pressure_mask` $\textbf{z}_{thr}$ is a GeoPressureR `map` of the proportion of data-points in the pressure timeseries which correspond to an altitude that falls between the min and max altitude of each grid cell (accounting for the `margin` parameter). `thr_mask` is used to compute the $\textbf{MSE}$ only on the pixels for which  $\textbf{z}_{thr}>thr_{mask}$.
 
 ```{r, warning = F}
 plot(tag, type = "map_pressure_mse")
@@ -101,7 +103,6 @@ Because the auto-correlation of the timeseries is not accounted for in this equa
 tag <- geopressure_map_likelihood(
   tag,
   sd = 1,
-  thr_mask = 0.9,
   log_linear_pooling_weight = \(n) log(n) / n
 )
 ```
