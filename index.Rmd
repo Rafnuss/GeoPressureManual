@@ -48,7 +48,7 @@ The only strict requirement is that your geolocator provides a continuous timese
 
 - GeoPressureR works best for species with a clear separation between stationary and migratory periods, as opposed to birds moving continuously over time and/or gradually over large distances (10-50km) or altitude (>10m). As such, aerial feeders such as swifts or bee-eaters or mountainous species do not lend themselves well to this method. 
 - Acceleration data can be helpful to define the periods of flight, especially if your bird flies at low altitude or if pressure data is measured on a coarse temporal resolution (>15min). 
-- Light data can accelerate building the trajectory model by allowing to quickly narrow down possible locations during short stationary periods, but overall it has limited benefit in most cases.
+- Light data can accelerate building the trajectory model by allowing to quickly narrow down possible locations during short stationary periods. Generally, for species with few long stopover, light data brings limited benefit, but it can be quite helpful for species with multiple short stopovers, and particularly if migrating on a east/west trajectory.
 - Knowing the equipment and retrieval sites can also be helpful, but it also works well without it.
 
 GeoPressureR can currently read Swiss Ornithological Institute (SOI) files (`*.pressure`, `*.lux`, `*.acceleration`), Migrate Technology files (`"*.deg"` and `"*.lux"`) and Lund CAnMove (`"*.xlsx"`). 

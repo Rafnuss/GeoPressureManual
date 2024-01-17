@@ -2,7 +2,7 @@
 
 # Tag object
 
-In this basic tutorial, we run through all the steps of GeoPressureR using only pressure data, with the simple example of a [Swainson's Warbler](https://science.ebird.org/en/status-and-trends/species/swawar/abundance-map-weekly). This bird presents a short migration route, with only a few stopovers, making it fast to compute. 
+In this basic tutorial, we go through the main steps of GeoPressureR using only pressure data, with the example of a [Swainson's Warbler](https://science.ebird.org/en/status-and-trends/species/swawar/abundance-map-weekly). This bird presents a short migration route, with only a few stopovers, making it easy to process and fast to compute. 
 
 ![*<small>Swainson's Warbler. 16 May 2022. Edisto Nature Trail, South Carolina, US. <a href="https://macaulaylibrary.org/asset/450511161" target="_blank">ML 450511161</a></small>*](assets/450511651.png){width=100%}
 
@@ -11,22 +11,21 @@ In this basic tutorial, we run through all the steps of GeoPressureR using only 
 
 ::: {.alert .alert-info role="alert"}
 <h4 class="alert-heading mt-2"><strong>What is a `tag` object?</strong></h4>
-A [tag](https://www.movebank.org/cms/movebank-content/mb-data-model) refers to a geolocator or datalogger device that can contain multiple sensors (e.g., pressure, light, acceleration). 
+A [tag](https://www.movebank.org/cms/movebank-content/mb-data-model#tags) is a specific geolocator or datalogger which can contain multiple sensors (e.g., pressure, light, acceleration). Because such archival tag are usually not re-equipped, we consider that it is associated with a single [deployment](https://www.movebank.org/cms/movebank-content/mb-data-model#deployments). 
 
-In GeoPressureR, `tag` is an object (i.e., a [S3 class](https://stat.ethz.ch/R-manual/R-devel/library/base/html/class.html)) modified at each step of the workflow: not only does it store the raw logger data, it also aggregates all the information needed to ultimately be able to model the bird's trajectory.
+In GeoPressureR, `tag` is an object (i.e., a [S3 class](https://stat.ethz.ch/R-manual/R-devel/library/base/html/class.html)) which is created with the raw logger data. It will be modified at each step of the workflow as it aggregates all the information needed to ultimately be able to model the bird's trajectory.
 :::
 
-The `tag` object is created based on the raw geolocator data
+The `tag` object is created based on the available data stored in `"./data/raw-tag/CB619/"` following the default structure described in [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder).
 
 ```{r 01-tag-create}
 tag <- tag_create(id = "CB619")
 ```
 
-The raw data for this tag id should be stored in `"./data/raw-tag/CB619/"` following the default structure described in [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder).
-
-You can use the generic `plot()` function to visualize the tag data. 
+You can use the generic `print()` and `plot()` function to visualize the tag data. 
 
 ```{r, warning = FALSE}
+print(tag)
 plot(tag, type = "pressure")
 ```
 
@@ -96,4 +95,4 @@ The pre-processing aligns the raw timeseries data to the weather reanalysis pres
 The black dots show the discarded pressure points (i.e., outliers), corresponding to bird vertical movement rather than natural variation of pressure.
 ::: 
 
-Once you have created the tag label file (i.e., `CB619-labeled.csv`), you can use `tag_label()` directly to read the label and compute stationary periods.
+The function `tag_label()` is a wrapper for `tag_label_write()`, `tag_label_read()` and `tag_label_stap()`, allowing you to process the label file (i.e., `CB619-labeled.csv`) in a single line.

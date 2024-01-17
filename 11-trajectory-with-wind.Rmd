@@ -2,7 +2,7 @@
 
 In this second chapter of the advanced tutorial, we will see how to model the trajectory of the Great Reed Warbler using wind data. 
 
-Wind can significantly influence a bird's movement, explaining up to 50% of the displacement! Accounting for wind allows to estimate the airspeed of each transition rather than groundspeed. As such, the movement model can be defined as the probability of a bird's airspeed, which is much more constrained and precise. The general approach on how this is done with the graph is presented in detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0008-title)" target="_blank">section 2.2.4 of Nussbaumer et al. (2023b)</a>.
+Wind can significantly influence a bird's movement, explaining up to 50% of the displacement! Accounting for wind allows to estimate the airspeed of each transition rather than groundspeed. As such, the movement model can be defined as the probability of a bird's airspeed, which is much more constrained and precise. This approach is presented in detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0008-title)" target="_blank">section 2.2.4 of Nussbaumer et al. (2023b)</a>.
 
 ## Download wind data
 
@@ -23,13 +23,13 @@ Sys.getenv("cds_key")
 Sys.getenv("cds_user")
 ```
 
-As the flights tend to be of short duration, we suggest downloading a file for each flight. This can be done automatically with `graph_download_wind()`, which uses <a href="https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests" target="_blank">`wf_request_batch()`</a> to make all the requests in parallel. 
+As the flights tend to be of short duration, we suggest downloading a file for each flight. This can be done automatically with `tag_download_wind()`, which uses <a href="https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests" target="_blank">`wf_request_batch()`</a> to make all the requests in parallel. 
 
 ```{r, eval=F}
-tag_download_wind(tag)
+tag_download_flight(tag)
 ```
 
-You can monitor the requests at <a href="https://cds.climate.copernicus.eu/cdsapp#!/yourrequests" target="_blank">https://cds.climate.copernicus.eu/cdsapp#!/yourrequests</a>.
+You can monitor the requests at <a href="https://cds.climate.copernicus.eu/cdsapp#!/yourrequests" target="_blank">https://cds.climate.copernicus.eu/cdsapp#!/yourrequests</a>. The files will be downloaded in `data/wind/`
 
 In case you have a lot of tracks for which you need to download wind data and don't want to block your console, you might consider using an <a href="https://solutions.rstudio.com/r/jobs/" target="_blank">RStudio background job</a>, which can be easily called with the <a href="https://lindeloev.github.io/job/" target="_blank">job package</a>:
 
@@ -43,8 +43,8 @@ job::job({
 
 Similar to the example of the Swainson's Warbler in the basic tutorial, we first need to create the trellis graph:
 
-```{r 11-graph-create, cache=TRUE, message = FALSE}
-graph <- graph_create(tag)
+```{r 11-graph-create, cache=TRUE}
+graph <- graph_create(tag, quiet = TRUE)
 ```
 
 ## Add wind to graph
@@ -53,27 +53,29 @@ We then compute the average windspeed experienced by the bird for each edge of t
 
 We then compute the airspeed based on this windspeed and the known groundspeed. All of these are stored as <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/complex.html" target="_blank">complex values</a> with the real part representing the E-W component and the imaginary part corresponding to the N-S component.
 
-```{r 11-add-wind, cache=TRUE, cache.lazy = FALSE, message=FALSE}
-graph <- graph_add_wind(graph, pressure = tag$pressure)
+```{r 11-add-wind, cache=TRUE, cache.lazy = FALSE}
+graph <- graph_add_wind(graph, pressure = tag$pressure, quiet = TRUE)
 ```
 
 ## Define movement model
 
-While you can still define the movement model with a parametric function (i.e., gamma or logit), we will see how to use the mechanical power curve. The power curve expresses the energy required for a bird to fly at a certain airspeed based on aerodynamic theory. See more details in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0009-title" target="_blank">section 2.2.5 of Nussbaumer et al. (2023b)</a>.
+While you can still define the movement model with a parametric function (i.e., gamma or logit), we find it more intuitive to use the mechanical power curve. The power curve expresses the energy required for a bird to fly at a certain airspeed based on aerodynamic theory. See more details in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0009-title" target="_blank">section 2.2.5 of Nussbaumer et al. (2023b)</a>.
 
 First, we search for morphological information on the Great Reed Warbler using the <a href="https://doi.org/10.6084/m9.figshare.16586228.v5" target="_blank">AVONET database</a>.
 
 ```{r}
 bird <- bird_create("Acrocephalus arundinaceus")
+print(bird)
 ```
 
-Using the bird created, we can set the movement model with
+Using the bird created, we can set the movement model by converting the airspeed to power, and power to a probability. This second step is still a parametric equation, which can be manually defined with `power2prob`. 
 
 ```{r}
 graph <- graph_set_movement(graph,
   method = "power",
   bird = bird,
-  power2prob = \(power) (1 / power)^3
+  power2prob = \(power) (1 / power)^3,
+  low_speed_fix = 15
 )
 plot_graph_movement(graph)
 ```
@@ -82,10 +84,10 @@ plot_graph_movement(graph)
 
 We can then compute the same three products as for the Swainson's Warbler:
 
-```{r 11-products, cache = TRUE, message=FALSE}
-path_most_likely <- graph_most_likely(graph)
-marginal <- graph_marginal(graph)
-path_simulation <- graph_simulation(graph, nj = 10)
+```{r 11-products, cache = TRUE}
+path_most_likely <- graph_most_likely(graph, quiet = TRUE)
+marginal <- graph_marginal(graph, quiet = TRUE)
+path_simulation <- graph_simulation(graph, nj = 10, quiet = TRUE)
 ```
 
 
@@ -95,14 +97,15 @@ plot(marginal, path = path_most_likely)
 
 
 ```{r}
-plot_path(path_simulation, plot_leaflet = F)
+plot_path(path_simulation, plot_leaflet = FALSE)
 ```
 
-### Extract flight information (speed and energy)
 
-`path2edge()` provides a nice function to retrieve all the information related to an edge (i.e., flight):
+### Extract flight information
 
-```{r, message=FALSE}
+The `path`variable contains all the information at the scale of the stationary period. However, to get flight information, you need to extract variable of the edge of the graph. `path2edge()` is the function for that!
+
+```{r}
 edge_simulation <- path2edge(path_simulation, graph)
 edge_most_likely <- path2edge(path_most_likely, graph)
 knitr::kable(head(edge_most_likely, 3), digits = 1)
@@ -112,27 +115,42 @@ knitr::kable(head(edge_most_likely, 3), digits = 1)
 ```{r}
 edge_simulation$name <- glue::glue("{edge_simulation$stap_s}->{edge_simulation$stap_t}")
 plot1 <- ggplot(edge_simulation, aes(reorder(name, stap_s), abs(gs))) +
-  theme_bw() + ylab("gs") + geom_boxplot()
+  theme_bw() +
+  ylab("gs") +
+  geom_boxplot()
 plot2 <- ggplot(edge_simulation, aes(reorder(name, stap_s), abs(ws))) +
-  theme_bw() + ylab("ws") + geom_boxplot()
+  theme_bw() +
+  ylab("ws") +
+  geom_boxplot()
 plot3 <- ggplot(edge_simulation, aes(reorder(name, stap_s), abs(gs - ws))) +
-  theme_bw() + ylab("as") + geom_boxplot()
+  theme_bw() +
+  ylab("as") +
+  geom_boxplot()
 plot4 <- ggplot(edge_simulation, aes(reorder(name, stap_s), duration)) +
-  theme_bw() + ylab("duration") + geom_point()
+  theme_bw() +
+  ylab("duration") +
+  geom_point()
 
-plotly::subplot(plotly::ggplotly(plot1), plotly::ggplotly(plot2), plotly::ggplotly(plot3), plotly::ggplotly(plot4), nrows = 4, titleY = TRUE)
+plotly::subplot(
+  plotly::ggplotly(plot1),
+  plotly::ggplotly(plot2),
+  plotly::ggplotly(plot3),
+  plotly::ggplotly(plot4),
+  nrows = 4, titleY = TRUE
+)
 ```
 
-### Airspeed distribution
+It's a good idea to check the distribution of ground speed (gs), winspeed (ws) and airspeed (as) and check for any outliers which might come from error in the labeling. Here you can see the high groundspeed (>100km/h between stap `24` and `25`) which is nicely explained by wind, as the corresponding airspeed is perfectly normal (~50km/h)
 
 We can (and should) also check that our movement model is coherent with the distribution of flight speed assumed in the movement model:
 
 ```{r}
-plot_graph_movement(graph) + 
+plot_graph_movement(graph) +
   geom_histogram(
-      data = data.frame(as = abs(edge_simulation$gs - edge_simulation$ws)),
-      aes(x = as, y = after_stat(count) / sum(after_stat(count))), color="black", fill=NA, bins=100
-    )
+    data = data.frame(as = abs(edge_simulation$gs - edge_simulation$ws)),
+    aes(x = as, y = after_stat(count) / sum(after_stat(count))),
+    color = "black", fill = NA, bins = 100
+  )
 ```
 
 If you find anomalous flight speed, it might be worth checking if this/these flight(s) have been correctly labelled. 

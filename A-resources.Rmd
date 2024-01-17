@@ -10,9 +10,13 @@
 
 ## Presentations
 
-> Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Leveraging light, pressure, activity, and wind data to improve geolocator positioning. August 2022. *28th International Ornithological Congress*. PRESENTATION available at [Youtube](https://youtu.be/U7jAK9nZNQU).
+> Raphaël Nussbaumer. GeoPressureR: Introduction and case studies. August 2023. *14th European Ornithologicals' Union Congress*. PRESENTATION available as [PDF](http://dx.doi.org/10.13140/RG.2.2.36144.53767).
 
-> Raphaël Nussbaumer, Mathieu Gravey, Felix Liechti. Improving the spatial accuracy of multi-sensor geolocators' position using atmospheric surface pressure. October 2021. *7th International Bio-logging Science Symposium*. PRESENTATION available at [Youtube](https://www.youtube.com/watch?v=0JsYU_xfKN8).
+> Raphaël Nussbaumer, Colin Jackson, Lennox Kirao, Felix Liechti. The potential of multi-sensor geolocators to study short-distance Afrotropical migrants. November 2022. *15th Pan-African Ornithological Congress*. PRESENTATION available as [PDF](http://dx.doi.org/10.13140/RG.2.2.28757.50408).
+
+> Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Leveraging light, pressure, activity, and wind data to improve geolocator positioning. August 2022. *28th International Ornithological Congress*. PRESENTATION available at [Youtube](https://youtu.be/U7jAK9nZNQU) and as [PDF](http://dx.doi.org/10.13140/RG.2.2.19199.28322).
+
+> Raphaël Nussbaumer, Mathieu Gravey, Felix Liechti. Improving the spatial accuracy of multi-sensor geolocators' position using atmospheric surface pressure. October 2021. *7th International Bio-logging Science Symposium*. PRESENTATION available at [Youtube](https://www.youtube.com/watch?v=0JsYU_xfKN8) and as [PDF](http://dx.doi.org/10.13140/RG.2.2.13199.71843).
 
 ## Projects using GeoPressureR
 
@@ -21,9 +25,12 @@ You can find below the list of all research projects using GeoPressureR with lin
 | Species             | GeoPressureTemplate/code                                                    | Publication/status                                                     |
 |----------------|-----------------------------|---------------------------|
 | Mongolian Nightjar  | [Rafnuss/MongolianNightjar](https://github.com/Rafnuss/MongolianNightjar)   | [Lathouwers et al. (2022)](https://doi.org/10.1007/s10336-022-02000-4) |
-| Woodland Kingfisher | [Rafnuss/WoodlandKingfisher](https://github.com/Rafnuss/WoodlandKingfisher) | Osinubi et al. (in prep.)                                              |
+| Woodland Kingfisher | [Rafnuss/WoodlandKingfisher](https://github.com/Rafnuss/WoodlandKingfisher) | Rime et al. (in prep.)                                              |
 | Northern Wheatear   | [Rafnuss/Val-Piora-Wheatear](https://github.com/Rafnuss/Val-Piora-Wheatear) | [Rime et al. (2023)](https://doi.org/10.1186/s40462-023-00381-6)       |
 | Red-capped Robin-chat and Mangrove Kingfisher   | [Rafnuss/MK-RCRC](https://github.com/Rafnuss/MK-RCRC/) |                                                  |
-| Swainson's Warbler   | [grhyne/SWWA_Pressure](https://github.com/grhyne/SWWA_Pressure) | Rhyne et al. (in prep) | 
-| Siberian Rubythroat   | [ksakuras/Siberian-rubythroat-China](https://github.com/ksakuras/Siberian-rubythroat-China) | Tianhao et al. (in prep) | 
+| Swainson's Warbler   | [grhyne/SWWA_Pressure](https://github.com/grhyne/SWWA_Pressure) [grhyne/Limnothlypis_Pressure_V3](https://github.com/grhyne/Limnothlypis_Pressure_V3)| Rhyne et al. (in review) | 
+| Siberian Rubythroat   | [ksakuras/Siberian-rubythroat-China](https://github.com/ksakuras/Siberian-rubythroat-China) | Tianhao et al. (in review) | 
+| European Starling   | *code not available* | [Vīgants et al. (2023)](https://doi.org/10.1111/jav.03080) | 
+| European Starling   | [Rafnuss/LatvianStarling](https://github.com/Rafnuss/LatvianStarling) | | 
+| Lesser Grey Shrike   | *code not available* | [Adamík et al. (2023)](https://doi.org/10.1007/s10336-023-02102-7) | 
 | European Starling   | [Rafnuss/LatvianStarling](https://github.com/Rafnuss/LatvianStarling) | | 
