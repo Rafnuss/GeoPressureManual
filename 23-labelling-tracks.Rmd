@@ -1,6 +1,6 @@
 # Labelling tracks
 
-```{r, echo=FALSE}
+```{r, echo = FALSE}
 rm(list = ls())
 ```
 
@@ -57,7 +57,7 @@ Labelling is an **iterative process** where you will need to check the validity 
 
 The `tag_label()` function can be used to guide you through the entire labelling process, but we also outline each step below:
 
-```{r, eval = F}
+```{r, eval = FALSE}
 # 1. Create the csv label file `"./data/tag-label/18LX.csv"`
 tag_label_write(tag)
 
@@ -163,9 +163,9 @@ The general idea is to perform the following steps iteratively:
 
 First, let's compute the light and pressure likelihood maps on a coarse map (e.g. `scale = 1`) and low precision of mismatch (e.g. `max_sample = 50`) to minimize the computational cost.
 
-```{r 23-full-workflow, cache = T, message = FALSE, collapse = TRUE}
-tag <- tag_create("18LX", crop_start = "2017-06-20", crop_end = "2018-05-02") |>
-  tag_label("./data/tag-label/18LX-labeled-v3.csv") |>
+```{r 23-full-workflow, cache = TRUE, collapse = TRUE}
+tag <- tag_create("18LX", crop_start = "2017-06-20", crop_end = "2018-05-02", quiet = TRUE) |>
+  tag_label("./data/tag-label/18LX-labeled-v3.csv", quiet = TRUE) |>
   tag_set_map(
     extent = c(-16, 23, 0, 50),
     scale = 1,
@@ -176,12 +176,12 @@ tag <- tag_create("18LX", crop_start = "2017-06-20", crop_end = "2018-05-02") |>
     )
     # include_min_duration = 24 # Filtering long stap might also be useful at first
   ) |>
-  geopressure_map(max_sample = 50)
+  geopressure_map(max_sample = 50, quiet = TRUE)
 
 tag <- tag |>
   twilight_create() |>
   twilight_label_read() |>
-  geolight_map()
+  geolight_map(quiet = TRUE)
 ```
 
 **Check 3: Pressure timeseries match**
@@ -194,8 +194,8 @@ path <- tag2path(tag)
 
 Note that this path is likely not realistic as no movement model has been included (i.e., no limitation on bird flight duration). This is fine at this stage: we don't really want to assume a realistic path, just to see what pressure can tell us without assuming anything.  Using this path, we can retrieve the ERA5 pressure along this path,
 
-```{r 23-pressurepath-create, cache=T, message=FALSE}
-pressurepath <- pressurepath_create(tag, path = path)
+```{r 23-pressurepath-create, cache = TRUE, message = FALSE}
+pressurepath <- pressurepath_create(tag, path = path, quiet = TRUE)
 ```
 
 We can compare the pressure timeseries of the tag (grey) to the pressurepath. Zoom on each stationary period to get a better sense of the likely natural variation of pressure. 
@@ -223,9 +223,9 @@ As a general guideline, it is better to remove a bit more for long stationary pe
 
 Once you're happy with your new labels, you have to update the tag object. To avoid running `geopressure_map()` and `pressurepath_create()` for the full timeseries, use `tag_upate()` and `pressurepath_upate()` to update only the stationary periods that have changed. 
 
-```{r, cache=T, message=FALSE}
-tag2 <- tag_update(tag, file = "./data/tag-label/18LX-labeled-v4.csv")
-pressurepath <- pressurepath_update(pressurepath, tag)
+```{r, cache = TRUE}
+tag2 <- tag_update(tag, file = "./data/tag-label/18LX-labeled-v4.csv", quiet = TRUE)
+pressurepath <- pressurepath_update(pressurepath, tag, quiet = TRUE)
 ```
 
 **Check 4: Histogram of pressure error**
@@ -264,7 +264,7 @@ The shiny app GeoPressureViz is another important tool to be used instead of or 
 
 More details on this app and how to use it can be found in the [GeopressureViz] chapter.
 
-```{r, eval = F}
+```{r, eval = FALSE}
 geopressureviz(tag, # required
                # path = pressurepath,
 )
@@ -285,20 +285,20 @@ Remember that birds can have a much higher groundspeed when the wind is blowing 
 
 Labelling should finally be checked at the end of the workflow using the marginal and most-likely path. 
 
-```{r, cache=T, warning=FALSE, message=FALSE}
+```{r, cache = TRUE, warning = FALSE}
 # Update tag and pressurepath
 tag <- tag_update(tag, file = "./data/tag-label/18LX-labeled.csv", quiet = TRUE)
 
 # Build graph, add wing, add movement
-graph <- graph_create(tag) |>
-  graph_add_wind(tag$pressure) |>
+graph <- graph_create(tag, quiet = TRUE) |>
+  graph_add_wind(tag$pressure, quiet = TRUE) |>
   graph_set_movement(bird = bird_create("Acrocephalus arundinaceus"))
 
 # Compute most likely path
 path_most_likely <- graph_most_likely(graph, quiet = TRUE)
 
 # Compute marginal
-marginal <- graph_marginal(graph)
+marginal <- graph_marginal(graph, quiet = TRUE)
 
 # Compute the corresponding pressurepath
 pressurepath_most_likely <- pressurepath_create(tag, path = path_most_likely, quiet = TRUE)
@@ -313,7 +313,7 @@ plot_pressurepath(pressurepath_most_likely, type = "hist", plot_plotly = FALSE)
 
 A last check with geopressureviz is highly recommended to see the difference between the likelihood maps and the marginal map. Remember that [models are only as good as the data provided](https://en.wikipedia.org/wiki/Garbage_in,_garbage_out)!
 
-```{r, eval = F}
+```{r, eval = FALSE}
 geopressureviz(tag,
                path = pressurepath_most_likely,
                marginal = marginal

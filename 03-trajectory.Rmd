@@ -137,7 +137,7 @@ You might want to save some of the key objects such as `tag` or `marginal` in an
 
 Note that `graph` can be quite large if the number of stationary periods and grid resolution is high.
 
-```{r 03-save, warning=F}
+```{r 03-save, warning = FALSE}
 save(tag,
   graph, # format(object.size(graph), units = "MB")
   path_most_likely,

@@ -121,7 +121,7 @@ path[, nsta] <- which(as.matrix(static_prob[[nsta]]) == 1)
 ```
 
 Visualize the initial path
-```{r, asis=T}
+```{r, asis = TRUE}
 path_ll <- arrayInd(path[1, ], nll)
 leaflet(width = "100%") |>
   addProviderTiles(providers$Stamen.TerrainBackground) |>
@@ -179,7 +179,7 @@ m
 
 Compare the simulated position of each stationary period with the corresponding static probability.
 
-```{r, warning=F}
+```{r, warning = FALSE}
 li_s <- list()
 l <- leaflet(width = "100%") |>
   addProviderTiles(providers$Stamen.TerrainBackground) |>

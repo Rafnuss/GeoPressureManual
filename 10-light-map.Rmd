@@ -1,7 +1,7 @@
 
 # (PART) Advanced tutorial {-} 
 
-```{r 10-rm, echo=FALSE}
+```{r 10-rm, echo = FALSE}
 rm(list = ls())
 ```
 
@@ -123,7 +123,7 @@ lines(tag$param$twl_calib, col = "red")
 
 Finally, we can visualize the probability map for each stationary period:
 
-```{r, warning=F}
+```{r, warning = FALSE}
 plot(tag, type = "map_light")
 ```
 
@@ -135,7 +135,7 @@ It is worth checking how the likelihood map of light and pressure compare before
 
 This task is  best performed with GeoPressureViz, presented in [its dedicated chapter](geopressureviz.html). For now, we can simply visualize the resulting likelihood map of pressure and light combine.
 
-```{r, warning=F}
+```{r, warning = FALSE}
 plot(tag, type = "map")
 ```
 ::: 

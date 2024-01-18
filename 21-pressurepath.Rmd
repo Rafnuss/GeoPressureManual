@@ -1,6 +1,6 @@
 # (PART) Labelling tools {-} 
 
-```{r, echo=FALSE}
+```{r, echo = FALSE}
 rm(list = ls())
 ```
 
@@ -23,20 +23,21 @@ Before creating a full `pressurepath`, we start with the basic building block of
 
 Let's start by retrieving the pressure at the known site of equipment, querying the same date as the first stationary period.
 
-```{r 21-geopressure-timeseries, cache=TRUE, message=FALSE}
+```{r 21-geopressure-timeseries, cache = TRUE}
 ts <- geopressure_timeseries(
   lat = tag$stap$known_lat[1],
   lon = tag$stap$known_lon[1],
   start_time = tag$stap$start[1],
-  end_time = tag$stap$end[1]
+  end_time = tag$stap$end[1],
+  quiet = TRUE
 )
 ```
 
 We can compare the retrieved ERA5 pressure to the pressure measured on the Great Reed Warbler:
 
-```{r, echo=FALSE}
+```{r, echo = FALSE}
 p <- ggplot() +
-  geom_line(data = ts, aes(x = date, y = pressure_era5, colour = "ERA5")) +
+  geom_line(data = ts, aes(x = date, y = surface_pressure, colour = "ERA5")) +
   geom_line(data = tag$pressure[tag$pressure$stap_id == 1, ], aes(x = date, y = value, colour = "tag")) +
   theme_bw() +
   ylab("Pressure (hPa)") +
@@ -60,10 +61,11 @@ You can think of a pressurepath as the timeseries of pressure that a tag would r
 The `pressurepath` data.frame returned also contains the original pressure `pressure_tag` which can [be very helpful for labelling](labelling-tracks.html) and the altitude of the bird corrected for the natural variation of pressure.
 :::
 
-```{r 21-pressurepath-create, cache=TRUE, warning = F, message=FALSE}
-pressurepath <- pressurepath_create(tag,
+```{r 21-pressurepath-create, cache = TRUE}
+pressurepath <- pressurepath_create(
+  tag,
   path = path_most_likely,
-  include_flight = TRUE
+  quiet = TRUE
 )
 ```
 
@@ -75,7 +77,8 @@ plot_pressurepath(pressurepath)
 
 ## Altitude
 
-`pressurepath` is the best way to compute the altitude of the bird throughout its trajectory, including flights. 
+The main benefit of creating pressurepath is the ability to retrieve ERA5 variable along the the trajectory of the bird. One of them is altitude which can be directly plot with
+
 ```{r}
 plot_pressurepath(pressurepath, type = "altitude")
 ```
@@ -123,20 +126,65 @@ plotly::layout(plotly::ggplotly(p), legend = list(orientation = "h"))
 The uncorrected altitude estimate incorrectly produces a 200m amplitude error in the altitude due to the natural variation of pressure. In contrast, the corrected altitude shows that the Great Reed Warbler mostly stayed at the same location/altitude during the entire period.
 :::
 
-::: {.alert .alert-warning role="alert"}
-<h4 class="alert-heading mt-2"><strong>How to estimate altitude during flight?</strong></h4>
-The correction for altitude requires knowing the actual position of the bird to retrieve the correct pressure and temperature at ground level. However, when the bird is flying, its position changes constantly, making the estimation of altitude more complicated.
+You can also retrieve the ground elevation with `path2elevation()` which allows us to compare the altitude of flight compare the elevation.
 
-The `include_flight` argument in `pressurepath_create()` is particularly useful here as it allows to compute altitude during the flight using the reference position of the previous/next stationary periods `stap_ref`.
+```{r}
+elevation <- path2elevation(path_most_likely,
+  scale = tag$param$scale,
+  sampling_scale = tag$param$scale * 2,
+  percentile = c(10, 50, 90)
+)
+```
 
-To extract a single altitude estimate during a flight, I suggest using `pressurepath2altitude()` which conveniently combines the altitude estimates from the the previous and next `stap_ref`.
-:::
+Note that because of the imprecision of the position, particularly during flight, it's important to analyse with caution the relationship between flight altitude and ground elevation. `path2elevation()` aggregate the elevation accross a larger area defined by `scale` and return different `percentile`.
+
+```{r, collapse = TRUE, warning = FALSE}
+# Compute distance along the path for pressurepath (to be able to plot it with elevation)
+lonlat <- data.frame(
+  lon = pressurepath$lon,
+  lat = pressurepath$lat
+)
+distance <- geosphere::distHaversine(tail(lonlat, -1), head(lonlat, -1))
+pressurepath$distance <- c(0, cumsum(distance))
+
+# Get also a point per stap_id
+# exclude flight
+pp <- pressurepath[pressurepath$stap_id == round(pressurepath$stap_id), ]
+# compute average flight and distance
+pp_stap <- merge(
+  tag$stap,
+  data.frame(
+    stap_id = sapply(split(pp$stap_id, pp$stap_id), median),
+    altitude = sapply(split(pp$altitude, pp$stap_id), \(x) round(mean(x), 1)),
+    distance = sapply(split(pp$distance, pp$stap_id), \(x) round(mean(x), 1))
+  )
+)
+pp_stap$duration <- stap2duration(pp_stap)
+
+# Plot
+p <- ggplot() +
+  geom_line(data = elevation, aes(x = distance / 1000, y = X50, color = "ground")) +
+  geom_line(data = pressurepath, aes(x = distance / 1000, y = altitude, color = "flight")) +
+  geom_point(data = pp_stap, aes(x = distance / 1000, y = altitude, name = stap_id, color = "stap", size = duration^(0.25) * 6)) +
+  theme_bw() +
+  ylab("altitude/elevation (m a.s.l.)") +
+  xlab("Distance along trajectory (km)") +
+  scale_color_manual(
+    values = c(ground = "brown", flight = "black", stap = "blue"),
+    labels = c(ground = "Ground elevation (median over 0.25°)", flight = "Bird flight altitude", stap = "Stationary period")
+  ) +
+  guides(size = FALSE)
+
+# Interactive plot
+plotly::layout(plotly::ggplotly(p), legend = list(orientation = "h"))
+```
+
 
 ## Save
 
 The `graph` object can become extremely big for such models, and it might not be recommended to save it. Check its size with `format(object.size(graph), units = "MB")`.
 
-```{r 21-save, warning=F}
+```{r 21-save, warning = FALSE}
 save(
   tag,
   # graph,

@@ -1,39 +1,31 @@
 # Trajectory with wind
 
-In this second chapter of the advanced tutorial, we will see how to model the trajectory of the Great Reed Warbler using wind data. 
+In this second chapter of the advanced tutorial, we will see how to model the trajectory of the Great Reed Warbler using wind data.
 
 Wind can significantly influence a bird's movement, explaining up to 50% of the displacement! Accounting for wind allows to estimate the airspeed of each transition rather than groundspeed. As such, the movement model can be defined as the probability of a bird's airspeed, which is much more constrained and precise. This approach is presented in detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0008-title)" target="_blank">section 2.2.4 of Nussbaumer et al. (2023b)</a>.
 
 ## Download wind data
 
-Wind data is available at high resolution (1hr, 0.25°, 37 pressure level) on <a href="https://doi.org/10.24381/cds.bd0915c6" target="_blank">ERA5 hourly data on pressure levels</a>. This data is easily accessible through the <a href="https://bluegreen-labs.github.io/ecmwfr" target="_blank">`ecmwfr`</a> package. 
+Wind data is available at high resolution (1hr, 0.25°, 37 pressure level) on <a href="https://doi.org/10.24381/cds.bd0915c6" target="_blank">ERA5 hourly data on pressure levels</a>. This data is easily accessible through the <a href="https://bluegreen-labs.github.io/ecmwfr" target="_blank">`ecmwfr`</a> package.
 
-The first step is to set up your CDS access. You will need to create an account on <a href="https://cds.climate.copernicus.eu/user/register" target="_blank">cds.climate.copernicus.eu</a> to generate your API key and uid number. You can store them as environment variables in your `.Rprofile` using `Sys.setenv()`.
+The first step is to set up your CDS access. You will need to create an account on <a href="https://cds.climate.copernicus.eu/user/register" target="_blank">cds.climate.copernicus.eu</a> to generate your API key and uid number. You can store them as environment variables in your `.Renviron` using `usethis::edit_r_environ()`.
 
-```{r, eval=F}
-Sys.setenv(cds_key = "Insert_your_CDS_API_KEY_here")
-Sys.setenv(cds_user = "Insert_your_CDS_UID_here")
-# usethis::edit_r_environ() # opens .Rprofile
+```
+cds_key = "Insert_your_CDS_API_KEY_here"
+cds_user = "Insert_your_CDS_UID_here"
 ```
 
-You can then retrieve them whenever you want with:
+As the flights tend to be of short duration, we suggest downloading a file for each flight. This can be done automatically with `tag_download_wind()`, which uses <a href="https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests" target="_blank">`wf_request_batch()`</a> to make all the requests in parallel.
 
-```{r, eval=F}
-Sys.getenv("cds_key")
-Sys.getenv("cds_user")
-```
-
-As the flights tend to be of short duration, we suggest downloading a file for each flight. This can be done automatically with `tag_download_wind()`, which uses <a href="https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests" target="_blank">`wf_request_batch()`</a> to make all the requests in parallel. 
-
-```{r, eval=F}
-tag_download_flight(tag)
+```{r, eval = FALSE}
+tag_download_wind(tag)
 ```
 
 You can monitor the requests at <a href="https://cds.climate.copernicus.eu/cdsapp#!/yourrequests" target="_blank">https://cds.climate.copernicus.eu/cdsapp#!/yourrequests</a>. The files will be downloaded in `data/wind/`
 
 In case you have a lot of tracks for which you need to download wind data and don't want to block your console, you might consider using an <a href="https://solutions.rstudio.com/r/jobs/" target="_blank">RStudio background job</a>, which can be easily called with the <a href="https://lindeloev.github.io/job/" target="_blank">job package</a>:
 
-```{r, eval=F}
+```{r, eval = FALSE}
 job::job({
   tag_download_wind(tag)
 })
@@ -43,17 +35,17 @@ job::job({
 
 Similar to the example of the Swainson's Warbler in the basic tutorial, we first need to create the trellis graph:
 
-```{r 11-graph-create, cache=TRUE}
+```{r 11-graph-create, cache = TRUE}
 graph <- graph_create(tag, quiet = TRUE)
 ```
 
 ## Add wind to graph
 
-We then compute the average windspeed experienced by the bird for each edge of the graph. This process can be quite long as we need to interpolate the position of the bird along its flight on a 4D grid (latitude-longitude-pressure level-time). 
+We then compute the average windspeed experienced by the bird for each edge of the graph. This process can be quite long as we need to interpolate the position of the bird along its flight on a 4D grid (latitude-longitude-pressure level-time).
 
 We then compute the airspeed based on this windspeed and the known groundspeed. All of these are stored as <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/complex.html" target="_blank">complex values</a> with the real part representing the E-W component and the imaginary part corresponding to the N-S component.
 
-```{r 11-add-wind, cache=TRUE, cache.lazy = FALSE}
+```{r 11-add-wind, cache = TRUE, cache.lazy = FALSE}
 graph <- graph_add_wind(graph, pressure = tag$pressure, quiet = TRUE)
 ```
 
@@ -65,10 +57,9 @@ First, we search for morphological information on the Great Reed Warbler using t
 
 ```{r}
 bird <- bird_create("Acrocephalus arundinaceus")
-print(bird)
 ```
 
-Using the bird created, we can set the movement model by converting the airspeed to power, and power to a probability. This second step is still a parametric equation, which can be manually defined with `power2prob`. 
+Using the bird created, we can set the movement model by converting the airspeed to power, and power to a probability. This second step is still a parametric equation, which can be manually defined with `power2prob`.
 
 ```{r}
 graph <- graph_set_movement(graph,
@@ -90,16 +81,13 @@ marginal <- graph_marginal(graph, quiet = TRUE)
 path_simulation <- graph_simulation(graph, nj = 10, quiet = TRUE)
 ```
 
-
 ```{r}
 plot(marginal, path = path_most_likely)
 ```
 
-
 ```{r}
 plot_path(path_simulation, plot_leaflet = FALSE)
 ```
-
 
 ### Extract flight information
 
@@ -110,7 +98,6 @@ edge_simulation <- path2edge(path_simulation, graph)
 edge_most_likely <- path2edge(path_most_likely, graph)
 knitr::kable(head(edge_most_likely, 3), digits = 1)
 ```
-
 
 ```{r}
 edge_simulation$name <- glue::glue("{edge_simulation$stap_s}->{edge_simulation$stap_t}")
@@ -140,7 +127,7 @@ plotly::subplot(
 )
 ```
 
-It's a good idea to check the distribution of ground speed (gs), winspeed (ws) and airspeed (as) and check for any outliers which might come from error in the labeling. Here you can see the high groundspeed (>100km/h between stap `24` and `25`) which is nicely explained by wind, as the corresponding airspeed is perfectly normal (~50km/h)
+It's a good idea to check the distribution of ground speed (gs), winspeed (ws) and airspeed (as) and check for any outliers which might come from error in the labeling. Here you can see the high groundspeed (\>100km/h between stap `24` and `25`) which is nicely explained by wind, as the corresponding airspeed is perfectly normal (\~50km/h)
 
 We can (and should) also check that our movement model is coherent with the distribution of flight speed assumed in the movement model:
 
@@ -153,13 +140,13 @@ plot_graph_movement(graph) +
   )
 ```
 
-If you find anomalous flight speed, it might be worth checking if this/these flight(s) have been correctly labelled. 
+If you find anomalous flight speed, it might be worth checking if this/these flight(s) have been correctly labelled.
 
 ## Save
 
 `graph` can become extremely big for such models and it might not be recommended to save it. Check its size with `format(object.size(graph), units = "MB")`.
 
-```{r 11-save, warning=F}
+```{r 11-save, warning = FALSE}
 save(
   tag,
   # graph,

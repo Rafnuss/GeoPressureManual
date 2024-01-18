@@ -25,7 +25,6 @@ tag <- tag_create(id = "CB619")
 You can use the generic `print()` and `plot()` function to visualize the tag data. 
 
 ```{r, warning = FALSE}
-print(tag)
 plot(tag, type = "pressure")
 ```
 
@@ -75,14 +74,14 @@ kable(head(tag$pressure))
 
 `tag_label_stap()` then creates the stationary periods based on these labels:
 
-```{r, collapse=TRUE}
+```{r, collapse = TRUE}
 tag <- tag_label_stap(tag, quiet = TRUE)
 kable(head(tag$stap))
 ```
 
 Plotting the pressure timeseries of tag provides additional information:
 
-```{r, warning = FALSE, collapse=TRUE}
+```{r, warning = FALSE, collapse = TRUE}
 plot(tag, type = "pressure", quiet = TRUE)
 ```
 

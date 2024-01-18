@@ -12,7 +12,7 @@ GeoPressureR includes the <a href="https://shiny.rstudio.com/" target="_blank">s
 
     1.  **Map**: this displays the trajectory of the bird. The size of the circles indicates the duration of the stopover (hover over them to get more info).
 
-    2.  **Bottom panel**: this shows the `pressurepath` of the trajectory which must be computed beforehand. The grey line is the raw data (`pressurepath$pressure_tag`), the black dots are pressure points labelled as outliers, and colored lines are the normalized pressure at the best match location (i.e., `pressurepath$pressure_era5_norm`). The color matches the circles on the map.
+    2.  **Bottom panel**: this shows the `pressurepath` of the trajectory which must be computed beforehand. The grey line is the raw data (`pressurepath$pressure_tag`), the black dots are pressure points labelled as outliers, and colored lines are the normalized pressure at the best match location (i.e., `pressurepath$surface_pressure_norm`). The color matches the circles on the map.
 
     3.  **Side panel**: this provides key information and tools to navigate the app.
 
@@ -35,7 +35,7 @@ GeoPressureR includes the <a href="https://shiny.rstudio.com/" target="_blank">s
 
 The visualization can be started with your track using `geopressureviz()`. 
 
-```{r, eval = F}
+```{r, eval = FALSE}
 load("./data/interim/18LX.RData")
 geopressureviz(
   tag = tag, # required
@@ -46,7 +46,7 @@ geopressureviz(
 
 If your data is stored in `"./data/interim/18LX.RData"`, you can use directly
 
-```{r, eval = F}
+```{r, eval = FALSE}
 geopressureviz("18LX")
 ```
 
