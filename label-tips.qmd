@@ -1,0 +1,83 @@
+# Labelling tracks
+
+## Common challenges and tips to address them
+
+In the following section, we use examples to illustrate common challenges that may be encountered during manual editing, and offer suggestions on how to address them.
+
+### Low acceleration during flight
+
+During a flight, single acceleration measurements can be low due to e.g. to gliding, typical of the end of night. Yet, the bird was still flying and this should be included as flight duration and excluded from a stationary period.
+
+The automatic labelling of activity with the KNN classifier `tag_label_auto()` may mislabel these points as stationary periods, as illustrated in the example below for the night of the 31st of August.
+
+If this occurs during the night, this error should be highlighted with check #1, otherwise, you need to correct that manually.
+
+![*Mis-labeled `flight` on acceleration data during low-activity flight typical to end of night.*](assets/labelling-tracks-1.png){width="100%"}
+
+### Importance of zooming in before editing outliers
+
+Anomalies in a pressure timeseries might not be obvious at first sight as illustrated below by the default view
+
+![](assets/labelling-tracks-3.png){width="100%"}
+
+Zooming in on the y-axis to narrower pressure range helps to understand what is happening. In this example, we have a Tawny Pipit breeding near a mine site with a rough topography. While breeding, it looks like it is staying at a relatively constant elevation, but the sudden drop in pressure towards the end indicates that the bird has changed altitude.
+
+![](assets/labelling-tracks-4.png){width="100%"}
+
+In such cases, the aim is to discard all pressure datapoints recorded while the bird was at a different altitude. It may not always be obvious to distinguish temporal variation of pressure from when the bird actually changes altitude. We suggest keeping only the datapoints that you are confident with (here, the first part of the timeseries only) and running Test #3.
+
+![](assets/labelling-tracks-5.png){width="100%"}
+
+With a long timeseries such as this one, Test #3 will easily pick up the right location and the timeseries that you want to match. You can simply de-select the datapoints at the end of your timeseries that fit the ERA5 green line. For shorter timeseries, you might need several iterations to pick up the correct match.
+
+### Short stationary halts between flights
+
+Interpreting bird behaviour and defining stationary periods can be difficult, for example when birds extend their migration into the day but with lower intensity, such that the end of flight is not clear.
+
+![](assets/labelling-tracks-6.png){width="100%"}
+
+In other cases, the bird stops for a couple of hours and then seems to be active again. This could be low-intensity migratory movement, a short break followed by more migratory flight, or landing at the stopover location, but relocating early morning with the light.
+
+![](assets/labelling-tracks-7.png){width="100%"}
+
+The question is whether to label these halts as stationary periods or not.
+
+Referring to the pressure timeseries can help assess whether the bird changes location. For example, if the low activity is followed by high activity accompanied by pressure change, we can consider that the bird then changed location, and label the low activity as a stationary period.
+
+However, the bird may also land and then complete local flights within its stopover location (with very little pressure variation), in which case we want to avoid creating two different stationary periods.
+
+Test #3 helps ensure that no local vertical movements took place.
+
+![](assets/labelling-tracks-8.png){width="100%"}
+
+### Mountainous species
+
+Mountainous species display very specific behaviour with regular altitudinal changes.
+
+This is very clear with the Ring Ouzel’s timeseries, which displays daily occurring movements, though not regular enough to make the process automatic, and sometimes changing in altitude. At this scale, it is difficult to assess the temporal variation of pressure, both the 790hPa and 900hPa pressure level might work, such that it is difficult to know which points to discard.
+
+![](assets/labelling-tracks-9.png){width="100%"} At this point it can help to zoom out on the time axis to see whether a certain elevation seems most common. Then proceed iteratively to keep only the datapoints at the same elevation. Test #4 is useful to ensure you did not forget any points.
+
+![](assets/labelling-tracks-10.png){width="100%"}
+
+![](assets/labelling-tracks-11.png){width="100%"}
+
+The Eurasian Hoopoe presents more of a challenge as it moves continuously throughout the day, showing a more sinosoidal pattern.
+
+![](assets/labelling-tracks-12.png){width="100%"} This is the most challenging case as distinguishing temporal variation from altitudinal change is difficult.
+
+![](assets/labelling-tracks-13.png){width="100%"} Several iterations should lead to a relatively smooth pressure timeseries. Note that in order to estimate the uncertainty correctly for such cases, the standard deviation `s` should be increased. Thankfully, this behaviour is restricted to its breeding ground.
+
+![](assets/labelling-tracks-14.png){width="100%"}
+
+In some cases, finding a single timeseries is impossible, such as for the wintering site of this Ring Ouzel, never returning to the same elevation. In such cases, we discard the entire timeseries and use only the mask of absolute pressure values.
+
+![](assets/labelling-tracks-15.png){width="100%"}
+
+Luckily, by definition mountainous species live in specific areas, which restricts possible locations. In this case, based on previous stationary periods we can establish that the bird was in Morocco, and with such low pressure (i.e. high elevation), only the Atlas mountains fit the pressure mask.
+
+![](assets/labelling-tracks-16.png){width="50%"}
+
+## Examples
+
+???

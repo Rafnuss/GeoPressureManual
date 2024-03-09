@@ -1,7 +1,7 @@
 Package: GeoPressureManual
 Title: User Manual for GeoPressureR
-Description: Learn how to use GeoPressureR with examples.
-Version: 2.1.0
+Description: Learn how to use GeoPressureR with a Swainson's Warbler and a Great Reed Warbler.
+Version: 3.0.0
 Authors@R: c(
     person("Raphaël", "Nussbaumer", , "rafnuss@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8185-1020")),
@@ -15,7 +15,6 @@ BugReports: https://github.com/Rafnuss/GeoPressureManual/issues
 Depends: 
     R (>= 3.5.0)
 Imports: 
-    bookdown,
     GeoPressureR,
     job,
     knitr,
@@ -25,7 +24,6 @@ Imports:
     terra,
     moveVis
 Remotes: 
-    rstudio/bookdown,
     rafnuss/GeoPressureR
 Suggests:
     spelling

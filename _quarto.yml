@@ -1,0 +1,65 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "A User Manual for GeoPressureR"
+  author: "Raphaël & Améline Nussbaumer"
+  description: "Learn how to use GeoPressureR with a Swainson's Warbler and a Great Reed Warbler."
+  cover-image: "assets/cover.png"
+  sharing: [twitter, facebook]
+  # downloads: [pdf, epub]
+  doi: "10.5281/zenodo.10799355"
+  url: "https://raphaelnussbaumer.com/GeoPressureManual/"
+  favicon: "assets/geopressuremanual.ico"
+  site-url: https://raphaelnussbaumer.com/GeoPressureManual/
+  repo-url: https://github.com/Rafnuss/GeoPressureManual
+  google-analytics: "G-NJ17NCTPB5"
+  # navbar:
+  sidebar:
+    footer: "<a href='https://github.com/Rafnuss/GeoPressureTemplate' target='_blank' class='btn btn-sm btn-outline-primary' role='button'>Start your own study</a>"
+  # body-header: ""
+  # body-footer
+  open-graph: true
+  twitter-card: true
+  image: "assets/cover.png"
+  chapters:
+    - index.qmd
+
+    - part: "Basic tutorial"
+      chapters:
+      - tag-object.qmd
+      - pressure-map.qmd
+      - trajectory.qmd
+
+    - part: "Advanced tutorial"
+      chapters:
+      - light-map.qmd
+      - trajectory-with-wind.qmd
+
+    - part: "Labelling tools"
+      chapters:
+      - pressurepath.qmd
+      - geopressureviz.qmd
+      - labelling-tracks.qmd
+
+    - resources.qmd
+
+  appendices:
+    - export-visual.qmd
+    - probability-aggregation.qmd
+toc: true
+number-sections: true
+
+format:
+  html:
+    theme:
+      - cosmo
+      - style.scss
+    code-link: true
+    asciidoc: default
+
+editor: source
+
+bibliography: book.bib
+link-citations: true

@@ -1,0 +1,44 @@
+# Resources
+
+## Publications
+
+> Nussbaumer, R., Gravey, M., Briedis, M., & Liechti, F. (2023). Global positioning with animal-borne pressure sensors. *Methods in Ecology and Evolution*, 14, 1104–1117. <https://doi.org/10.1111/2041-210X.14043>
+
+> Nussbaumer, R., Gravey, M., Briedis, M., Liechti, F. & Sheldon, D. (2023) Reconstructing bird trajectories from pressure and wind data using a highly optimised hidden Markov model. *Methods in Ecology and Evolution*, 14, 1118–1129. <https://doi.org/10.1111/2041-210X.14082>
+
+## Presentations
+
+> Raphaël Nussbaumer. GeoPressureR: Introduction and case studies. August 2023. *14th European Ornithologicals' Union Congress*. PRESENTATION available as [PDF](http://dx.doi.org/10.13140/RG.2.2.36144.53767).
+
+> Raphaël Nussbaumer, Colin Jackson, Lennox Kirao, Felix Liechti. The potential of multi-sensor geolocators to study short-distance Afrotropical migrants. November 2022. *15th Pan-African Ornithological Congress*. PRESENTATION available as [PDF](http://dx.doi.org/10.13140/RG.2.2.28757.50408).
+
+> Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Leveraging light, pressure, activity, and wind data to improve geolocator positioning. August 2022. *28th International Ornithological Congress*. PRESENTATION available at [Youtube](https://youtu.be/U7jAK9nZNQU) and as [PDF](http://dx.doi.org/10.13140/RG.2.2.19199.28322).
+
+> Raphaël Nussbaumer, Mathieu Gravey, Felix Liechti. Improving the spatial accuracy of multi-sensor geolocators' position using atmospheric surface pressure. October 2021. *7th International Bio-logging Science Symposium*. PRESENTATION available at [Youtube](https://www.youtube.com/watch?v=0JsYU_xfKN8) and as [PDF](http://dx.doi.org/10.13140/RG.2.2.13199.71843).
+
+## Projects using GeoPressureR
+
+You can find below the list of all research projects using GeoPressureR with links to the code used to analyse and create figures. This might be helpful to get an idea of how to analyse your data and borrow some code sections for your own project. Feel free to [contact me](mailto:rafnuss@gmail.com) if you'd like to add your project to this list.
+
+### Data & code {.unnumbered}
+- Mongolian Nightjar  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6720386.svg)](https://doi.org/10.5281/zenodo.6720386) [<i class="bi bi-github"></i>](https://github.com/Rafnuss/MongolianNightjar) [<i class="bi bi-file-text"></i>](https://doi.org/10.1007/s10336-022-02000-4)
+- Northern Wheatear [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7471405.svg)](https://doi.org/10.5281/zenodo.7471405) [<i class="bi bi-github"></i>](https://github.com/Rafnuss/Val-Piora-Wheatear)  [<i class="bi bi-file-text"></i>](https://doi.org/10.1186/s40462-023-00381-6)
+- Woodland Kingfisher [<i class="bi bi-github"></i>](https://github.com/Rafnuss/WoodlandKingfisher)
+- Swainson's Warbler [<i class="bi bi-github"></i>](https://github.com/grhyne/SWWA_Pressure) [<i class="bi bi-github"></i>](https://github.com/grhyne/Limnothlypis_Pressure_V3) [<i class="bi bi-file-text"></i>](https://doi.org/10.1093/ornithology/ukae010)
+- Siberian Rubythroat  [<i class="bi bi-github"></i>](https://github.com/ksakuras/Siberian-rubythroat-China) [<i class="bi bi-file-text"></i>](https://doi.org/10.21203/rs.3.rs-3848680/v1) 
+- Red-capped Robin-chat and Mangrove Kingfisher [<i class="bi bi-github"></i>](https://github.com/Rafnuss/MK-RCRC/) 
+
+### Data only {.unnumbered}
+- Lesser Grey Shrike [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7556866.svg)](https://doi.org/10.5281/zenodo.7556866) [<i class="bi bi-file-text"></i>](https://doi.org/10.1007/s10336-023-02102-7)
+- Barred Warbler [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10209430.svg)](https://doi.org/10.5281/zenodo.10209430) [<i class="bi bi-file-text"></i>](https://doi.org/10.25225/jvb.23085)
+
+### Data (not using GeoPressureR) {.unnumbered}
+- European Starling [<i class="bi bi-file-text"></i>](https://doi.org/10.1111/jav.03080)
+- Tawny Pipit [![DOI](https://zenodo.org/badge/DOI/10.5061/dryad.fbg79cnsd.svg)](https://doi.org/10.5061/dryad.fbg79cnsd)
+- Great Reed Warbler [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4017739.svg)](https://doi.org/10.5281/zenodo.4017739)
+
+
+## References
+
+::: {#refs}
+:::
