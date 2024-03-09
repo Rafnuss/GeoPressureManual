@@ -1,20 +1,8 @@
 # Resources
 
-## Publications
+## Mailing list
 
-> Nussbaumer, R., Gravey, M., Briedis, M., & Liechti, F. (2023). Global positioning with animal-borne pressure sensors. *Methods in Ecology and Evolution*, 14, 1104–1117. <https://doi.org/10.1111/2041-210X.14043>
-
-> Nussbaumer, R., Gravey, M., Briedis, M., Liechti, F. & Sheldon, D. (2023) Reconstructing bird trajectories from pressure and wind data using a highly optimised hidden Markov model. *Methods in Ecology and Evolution*, 14, 1118–1129. <https://doi.org/10.1111/2041-210X.14082>
-
-## Presentations
-
-> Raphaël Nussbaumer. GeoPressureR: Introduction and case studies. August 2023. *14th European Ornithologicals' Union Congress*. PRESENTATION available as [PDF](http://dx.doi.org/10.13140/RG.2.2.36144.53767).
-
-> Raphaël Nussbaumer, Colin Jackson, Lennox Kirao, Felix Liechti. The potential of multi-sensor geolocators to study short-distance Afrotropical migrants. November 2022. *15th Pan-African Ornithological Congress*. PRESENTATION available as [PDF](http://dx.doi.org/10.13140/RG.2.2.28757.50408).
-
-> Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Leveraging light, pressure, activity, and wind data to improve geolocator positioning. August 2022. *28th International Ornithological Congress*. PRESENTATION available at [Youtube](https://youtu.be/U7jAK9nZNQU) and as [PDF](http://dx.doi.org/10.13140/RG.2.2.19199.28322).
-
-> Raphaël Nussbaumer, Mathieu Gravey, Felix Liechti. Improving the spatial accuracy of multi-sensor geolocators' position using atmospheric surface pressure. October 2021. *7th International Bio-logging Science Symposium*. PRESENTATION available at [Youtube](https://www.youtube.com/watch?v=0JsYU_xfKN8) and as [PDF](http://dx.doi.org/10.13140/RG.2.2.13199.71843).
+If you are actively using the package, we recommand subscribing to the [mailing list](https://groups.google.com/g/geopressurer/) to be aware of bugs, issue and improvements. 
 
 ## Projects using GeoPressureR
 
@@ -36,6 +24,25 @@ You can find below the list of all research projects using GeoPressureR with lin
 - European Starling [<i class="bi bi-file-text"></i>](https://doi.org/10.1111/jav.03080)
 - Tawny Pipit [![DOI](https://zenodo.org/badge/DOI/10.5061/dryad.fbg79cnsd.svg)](https://doi.org/10.5061/dryad.fbg79cnsd)
 - Great Reed Warbler [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4017739.svg)](https://doi.org/10.5281/zenodo.4017739)
+
+
+## Main Publications
+
+> Nussbaumer, R., Gravey, M., Briedis, M., & Liechti, F. (2023). Global positioning with animal-borne pressure sensors. *Methods in Ecology and Evolution*, 14, 1104–1117. <https://doi.org/10.1111/2041-210X.14043>
+
+> Nussbaumer, R., Gravey, M., Briedis, M., Liechti, F. & Sheldon, D. (2023) Reconstructing bird trajectories from pressure and wind data using a highly optimised hidden Markov model. *Methods in Ecology and Evolution*, 14, 1118–1129. <https://doi.org/10.1111/2041-210X.14082>
+
+> Rhyne, G. S., Stouffer P. C., Briedis, M., Nussbaumer, R. (2024). Barometric geolocators can reveal unprecedented details about the migratory ecology of small birds. *Ornithology*. <https://doi.org/10.1093/ornithology/ukae010>
+
+## Presentations
+
+> Raphaël Nussbaumer. GeoPressureR: Introduction and case studies. August 2023. *14th European Ornithologicals' Union Congress*. PRESENTATION available as [PDF](http://dx.doi.org/10.13140/RG.2.2.36144.53767).
+
+> Raphaël Nussbaumer, Colin Jackson, Lennox Kirao, Felix Liechti. The potential of multi-sensor geolocators to study short-distance Afrotropical migrants. November 2022. *15th Pan-African Ornithological Congress*. PRESENTATION available as [PDF](http://dx.doi.org/10.13140/RG.2.2.28757.50408).
+
+> Raphaël Nussbaumer, Mathieu Gravey, Martins Briedis, Felix Liechti. Leveraging light, pressure, activity, and wind data to improve geolocator positioning. August 2022. *28th International Ornithological Congress*. PRESENTATION available at [Youtube](https://youtu.be/U7jAK9nZNQU) and as [PDF](http://dx.doi.org/10.13140/RG.2.2.19199.28322).
+
+> Raphaël Nussbaumer, Mathieu Gravey, Felix Liechti. Improving the spatial accuracy of multi-sensor geolocators' position using atmospheric surface pressure. October 2021. *7th International Bio-logging Science Symposium*. PRESENTATION available at [Youtube](https://www.youtube.com/watch?v=0JsYU_xfKN8) and as [PDF](http://dx.doi.org/10.13140/RG.2.2.13199.71843).
 
 
 ## References

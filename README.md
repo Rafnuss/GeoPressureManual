@@ -4,9 +4,9 @@ The [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual/) is a g
 
 Using the examples of a Swainson's Warbler and a Great Reed Warbler, this user guide takes you through each step of the analysis in detail.
 
-::: {align="center"}
+<div align="center">
 <a href="https://raphaelnussbaumer.com/GeoPressureManual"><img src="https://img.shields.io/badge/📖%20open%20the%20manual%20📖-37a779?style=for-the-badge&amp;color=%238D5903" style="height:40px;"/></a>
-:::
+</div>
 
 ## Table of content
 
