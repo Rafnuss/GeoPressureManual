@@ -265,8 +265,9 @@ The shiny app GeoPressureViz is another important tool to be used instead of or 
 More details on this app and how to use it can be found in the \[GeopressureViz\] chapter.
 
 ```{r, eval = FALSE}
-geopressureviz(tag, # required
-               # path = pressurepath,
+geopressureviz(
+  tag, # required
+  # path = pressurepath,
 )
 ```
 
@@ -316,7 +317,7 @@ A last check with geopressureviz is highly recommended to see the difference bet
 
 ```{r, eval = FALSE}
 geopressureviz(tag,
-               path = pressurepath_most_likely,
-               marginal = marginal
+  path = pressurepath_most_likely,
+  marginal = marginal
 )
 ```

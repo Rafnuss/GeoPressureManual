@@ -21,7 +21,7 @@ You can find below the list of all research projects using GeoPressureR with lin
 - Barred Warbler [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10209430.svg)](https://doi.org/10.5281/zenodo.10209430) [<i class="bi bi-file-text"></i>](https://doi.org/10.25225/jvb.23085)
 
 ### Data (not using GeoPressureR) {.unnumbered}
-- European Starling [<i class="bi bi-file-text"></i>](https://doi.org/10.1111/jav.03080)
+- European Starling [![DOI](https://zenodo.org/badge/DOI/10.5061/dryad.9s4mw6mmk.svg)](https://doi.org/10.5061/dryad.9s4mw6mmk) [<i class="bi bi-file-text"></i>](https://doi.org/10.1111/jav.03080)
 - Tawny Pipit [![DOI](https://zenodo.org/badge/DOI/10.5061/dryad.fbg79cnsd.svg)](https://doi.org/10.5061/dryad.fbg79cnsd)
 - Great Reed Warbler [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4017739.svg)](https://doi.org/10.5281/zenodo.4017739)
 

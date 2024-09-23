@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
-<title>A User Manual for GeoPressureR - 3&nbsp; Trajectory</title>
+<title>3&nbsp; Trajectory – A User Manual for GeoPressureR</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -31,7 +31,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -56,6 +56,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -97,7 +98,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -106,6 +113,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -119,53 +127,78 @@ gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
 </script><script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="site_libs/leaflet-1.3.1/leaflet.js"></script><link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="site_libs/proj4-2.6.2/proj4.min.js"></script><script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="site_libs/leaflet-binding-2.2.1/leaflet.js"></script><script src="site_libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script><script src="site_libs/leaflet-providers-plugin-2.2.1/leaflet-providers-plugin.js"></script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-<meta property="og:title" content="A User Manual for GeoPressureR - 3&nbsp; Trajectory">
+<script src="site_libs/leaflet-binding-2.2.2/leaflet.js"></script><script src="site_libs/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script><script src="site_libs/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+<meta property="og:title" content="3&nbsp; Trajectory – A User Manual for GeoPressureR">
 <meta property="og:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
-<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/trajectory_files/figure-html/unnamed-chunk-2-1.png">
-<meta property="og:site-name" content="A User Manual for GeoPressureR">
-<meta property="og:image:height" content="960">
-<meta property="og:image:width" content="1344">
-<meta name="twitter:title" content="A User Manual for GeoPressureR - 3&nbsp; Trajectory">
+<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<meta property="og:site_name" content="A User Manual for GeoPressureR">
+<meta property="og:image:height" content="3875">
+<meta property="og:image:width" content="2953">
+<meta name="twitter:title" content="3&nbsp; Trajectory – A User Manual for GeoPressureR">
 <meta name="twitter:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
-<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/trajectory_files/figure-html/unnamed-chunk-2-1.png">
-<meta name="twitter:image-height" content="960">
-<meta name="twitter:image-width" content="1344">
+<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<meta name="twitter:image-height" content="3875">
+<meta name="twitter:image-width" content="2953">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tag-object.html">Basic tutorial</a></li><li class="breadcrumb-item"><a href="./trajectory.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Trajectory</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tag-object.html">Basic tutorial</a></li><li class="breadcrumb-item"><a href="./trajectory.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Trajectory</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User Manual for GeoPressureR</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/Rafnuss/GeoPressureManual" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/Rafnuss/GeoPressureManual" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
 <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
-              <i class="bi bi-bi-twitter pe-1"></i>
+              <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
-              <i class="bi bi-bi-facebook pe-1"></i>
+              <i class="bi bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
@@ -189,9 +222,9 @@ gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Basic tutorial</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -218,9 +251,9 @@ gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Advanced tutorial</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -241,9 +274,9 @@ gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Labelling tools</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -268,21 +301,62 @@ gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
 </li>
       </ul>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./resources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Resources</span></span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">GeoPressureTemplate</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressuretemplate-project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Project folder</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressuretemplate-label.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tag Label</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressuretemplate-twilight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Twilight Label</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressuretemplate-wind.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Download wind</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressuretemplate-workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Workflow</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Resources</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./export-visual.html" class="sidebar-item-text sidebar-link">
@@ -301,7 +375,7 @@ gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
 </div>
 <div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
 <p><a href="https://github.com/Rafnuss/GeoPressureTemplate" target="_blank" class="btn btn-sm btn-outline-primary" role="button">Start your own study</a></p>
-</div></div></nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</div></div></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
@@ -322,7 +396,7 @@ gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./tag-object.html">Basic tutorial</a></li><li class="breadcrumb-item"><a href="./trajectory.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Trajectory</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
 <span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Trajectory</span>
 </h1>
@@ -337,6 +411,7 @@ gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
     
   </div>
   
+
 
 </header><p>In this last chapter of the basic tutorial, we model the full trajectory of the Swainson’s Warbler by combining the observation model of pressure with a movement model of flight accounting for likely speed to constrain possible distances between stationary periods. To do so, we use a highly optimized <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model" target="_blank">Hidden Markov model</a> presented in <span class="citation" data-cites="Nussbaumer2023b">Nussbaumer et al. (<a href="resources.html#ref-Nussbaumer2023b" role="doc-biblioref">2023</a>)</span>.</p>
 <p>This involves three main steps:</p>
@@ -386,7 +461,7 @@ Note
 <li>Prune the graph based on the flow graph constraint, that is, that all nodes must be connected to the equipment node(s) and retrieval node(s), to avoid dead branches (where some nodes are connected in a single direction).</li>
 </ol>
 <p>These steps are explained and illustrated in more detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0004-title">section 2.2</a> of <span class="citation" data-cites="Nussbaumer2023b">Nussbaumer et al. (<a href="resources.html#ref-Nussbaumer2023b" role="doc-biblioref">2023</a>)</span></p>
-<div class="cell" data-hash="trajectory_cache/html/03-graph-create_8ca3a73efa1a025e5d5613fef4ac30ae">
+<div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu">graph_create</span><span class="op">(</span><span class="va">tag</span>,</span>
 <span>  thr_likelihood <span class="op">=</span> <span class="fl">0.90</span>,</span>
 <span>  thr_gs <span class="op">=</span> <span class="fl">100</span>, <span class="co"># km/h</span></span>
@@ -410,7 +485,10 @@ Note
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">plot_graph_movement</span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="trajectory_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="trajectory_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section><section id="products" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="products">
@@ -426,7 +504,7 @@ Note
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">path_most_likely</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <colgroup>
 <col style="width: 8%">
 <col style="width: 3%">
@@ -493,8 +571,8 @@ Note
 </div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">plot_path</span><span class="op">(</span><span class="va">path_most_likely</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="htmlwidget-92566d22c90faba63bbb" style="width:100%;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-92566d22c90faba63bbb">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addPolylines","args":[[[[{"lng":[-82.30497200000001,-80.75,-80.25,-84.25,-82.75,-82.75,-82.25,-81.75,-81.75],"lat":[37.286812,32.25,26.75,21.75,22.75,27.75,30.75,36.75,37.25]}]]],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"black","weight":5,"opacity":0.7,"fill":false,"fillColor":"black","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[37.286812,32.25,26.75,21.75,22.75,27.75,30.75,36.75,37.25],[-82.30497200000001,-80.75,-80.25,-84.25,-82.75,-82.75,-82.25,-81.75,-81.75],[18.21375476728228,5.097132734541368,5.14735685560886,5.378750066974563,22.29624904030032,5.243610795028083,9.700841347437279,5.289814473047844,16.53865060807308],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"grey","fillOpacity":0.8},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[21.75,37.286812],"lng":[-84.25,-80.25]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1da286a2b305dc21f67c" style="width:100%;height:580px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1da286a2b305dc21f67c">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addPolylines","args":[[[[{"lng":[-82.30497200000001,-80.75,-80.25,-84.25,-82.75,-82.75,-82.25,-81.75,-81.75],"lat":[37.286812,32.25,26.75,21.75,22.75,27.75,30.75,36.75,37.25]}]]],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"black","weight":5,"opacity":0.7,"fill":false,"fillColor":"black","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[37.286812,32.25,26.75,21.75,22.75,27.75,30.75,36.75,37.25],[-82.30497200000001,-80.75,-80.25,-84.25,-82.75,-82.75,-82.25,-81.75,-81.75],[18.21375476728228,5.097132734541368,5.14735685560886,5.378750066974563,22.29624904030032,5.243610795028083,9.700841347437279,5.289814473047844,16.53865060807308],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"grey","fillOpacity":0.8},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[21.75,37.286812],"lng":[-84.25,-80.25]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="product-2-marginal-probability-map" class="level3" data-number="3.4.2"><h3 data-number="3.4.2" class="anchored" data-anchor-id="product-2-marginal-probability-map">
@@ -507,8 +585,8 @@ Note
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">marginal</span>, path <span class="op">=</span> <span class="va">path_most_likely</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="htmlwidget-6f40951e4b9ed6e5c339" style="width:100%;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6f40951e4b9ed6e5c339">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAEpElEQVR4nO3dTW7bVhiG0eOgg0yCrqDb6x68guyh2+sKCk88SycmwBqyREr8VZ8XMBInFikcfPczL3+uXn58//nLE+Xt/fVl7mu+rfFGzpYQhIAQEAJCQAgIASGA3/Z+A0vlniPFIVWCEBACQkAICAEhIAQ8CcIjB0o8CcKjCUEICAEHQ/j7n7922e+hEPZKCEJACDgYwh+//7nLfg+FsFdCEAJCQAgIASEgBISAEBACQkAICAEhIASEgJPfuPXoNcghVYIQEAJCwEkb41INcUiVIASEgBAQAkJACAgBJzpYWvoAaZwqQQgIASdBWLMfcBKEtROCEBACDn6wtHZDHFIlCAEh4MAIW/UDDoywZUIQAkLAQRG2bIocFGHrhCAEhIAQEAJCQAgIASEgBIQAXtZYy/3WBGjKPjuztHFCEALu6AnDWL31ujlj+tK26gkbJwQhIARMbIxbNKk9m2OVIASEgBu362x9JWivVAlCQAi4gvB/6QdUCQgBIeALhKP0g60+0LNKEAJCQAg40PMOb++vV0/wfP6/JZt3lSAEhIAvEPb61PFr4/zt/fVl+Fp6v1WCEBACQkAICAEh4IAnVabs+9Y8Y26qBCEgBHxxk8ZRTrR+zvBeW5lzhYQgBISAEBACQkAIOBnCWgdxp0JYKyEIASdEuNQXHj3BcjqENRKCELDzTRpTx/L4xOqlnjD+tx/ff/6aezxRJQgBIeBACNfG8bh33Lq5a+pjzOMcBmHPhCAE7HTxZbzPa8cAX43rucsS3Pr5KkEICAEr9YS527x1oXVub5g7f6gShIAQcGUljXv6wpLLDm25/SpBCAgBN1bXeXTpsHu39ci+bp2PvJQqQQgIARtdd9iiH0y9Rnnp56oEISAE3OgJ91zXWztLzT/G26kShIAQMGPJ4qnXBKa89pFc61P33Lv09v76UiVoOCAEzJg77LWwxKX38Pla5pxtjO9fGP5eJQgBIWCljzsZZ+m5x9xFp6acb6wShIAQcMKesEaqBCEgBPDtDGN27VQJQkAI4D/PDi298bP0mypBCAgBo54wzrU5+9K94wh9o0oQAkLAFz3hVp6tL1QJQsCdw2HIUsOi4XCAhCAEPIiw91heKlWCEBACFkB4hr5QJQgBIeDBucOl3Htr7dLvY06qBCEgBKzQEy5ly0eIp7yXz/urEoSAEPDkCD++//w1fA3fX/rzqRGmJgQhYCOEPeYG1x4RGr7v8Z9RQrDRYfOQJVf3mrv9a6tqVAlCQAjYuCcwf9XOe7c5NT01/5EQhICDIOz9RP4hEPZOCELADgh7X3K7lCpBCAgBO8wdhkw9t7D2UzjNHT4SghCwY08YZ8ql+68+MejR1BM+EoITIAylv+YDqodH2CIhCAE7f5DukDmHymukShACQsABEfY4/X44hD0SghBwkKn03CzZN5pKfyQEISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBISAEhICD3L02JWvewVIlCAEhIASEgBBwEoS1b/A8BcLaCUEICAEhIASEgAUR1vpdvsVDIFWCEBACFkbYew21e1MlCAEhlCH/AqSElmFfICwSAAAAAElFTkSuQmCC",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],0.8,null,null,"#1 | 01 Jul 02:15 - 24 Sep 00:15"]},{"method":"addRasterImage","args":["data:image/png;base64,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",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],0.8,null,null,"#2 | 24 Sep 11:15 - 24 Sep 23:45"]},{"method":"addRasterImage","args":["data:image/png;base64,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",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],0.8,null,null,"#3 | 25 Sep 10:45 - 25 Sep 23:45"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAFTklEQVR4nO3dv4ok1xnG4adntd5BMMggcCIHDuzI1+F7UCCnRigWtucKxhcghCNHjn0FDhzqFoQDgQIZG2QQg9Hs4tl2oG1ojXpm+k9VV/X498KwO9BbVTx89e2pqlOnFxfnV0tPKNc3l4td/83ZGAdyaglBCAgBISAEhIAQEAJ4a+oDGCr7jBRXqRKEgBAQAkJACAgBIeCJIBwyUOKJIByaEISAEBACQkAICAEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIASEgBISAE5+4degzyFWqBCEgBISAE22MQzXEVaoEISAEhIAQEAJCQAg4ocHS0AOk9VQJQkAIOBGEMfsBJ4IwdkIQAkLAzAdLYzfEVaoEISAEzBjhWP2AGSMcMyEIASFgpgjHbIrMFOHYCUEICAEhIASEgBAQAkJACAgBLMZYy/2xC6Bt9tmdpSMnBCFgj56wOlcf+3e7nNObtlVPOHJCEAJCwJaN8RhNasrmWCUIASHgkek6x34SNFWqBCEgBDyA8P/SD6gSEAJCwD0Ic+kHx/pCzypBCAgBIWBG7ztc31wu3nnxh+XrxeZeeLdJDtm8qwQhIATcgzDVt45/8/L3957n1zeXi9XP0PutEoSAEBACQkAICAEzvKmyzb6vby4HnXVXJQgBIeCeSRpzudF6N6tjbWXOERKCEBACQkAICAEh4MQQxhrEnRTCWAlBCDhBhE194dAbLCeHMEZCEAImnqRxcX61/PQn7/rTV89869arxa33bt/2tx999b3PXd9cLn75/JPlvxc3/vHq4x/0hPU+cXF+tdx1PFElCAEhYAYIH/3ra8+XZz77728W775+4Z3l8x985uL8avnls2svF7cPjgnW+8EuY4fJEeaQEISAiR6+/P2DD5c/u/yr//z81o9ffLG4OL9a/urVT/3l9a+/t9/7zutdlyV47PNVghAQAkbqCXe3+fbymX++/O292/z8/Y+WZ2+99os//3HjZ3btDbteP1QJQkAIeGAljX36wn3bWuD58szXL383aK+5m317WZUgBISAR1bXOXTpsH23dci+1id6brvPKkEICAFHeu5wjH6w7TPKTZ+rEoSAEPBIT9jnud7YGepex/p2qgQhIATssGTx3XNxl2d9Q48THrq3uOv2rm8uF1WCTgeEgB2uHaZaWGLTMawfy679Zn3+wurvVYIQEAJG+rqT9Qx97bHrolPb3G+sEoSAEHCCPWGMVAlCQAjg7BTO2bFTJQgBIeC76UQY537BqfSbKkEICAFrPWE9D12zD9075tA3qgQhIATc0xMey1PrC1WCELDn6bDKUKdFp8MMEoIQcCDC1OfyUKkShIAQMADCU+gLVYIQEAIOvHbYlH2n1g59HLukShACQsAIPWFTjvkK8TbHcnd/VYIQEAKeOMLF+dVy9bP6fdOfTxph24QgBBwJYYprg4deEVr93us/awnBkYbNqwy5uteu239oVY0qQQgIAUfuCWy/4s2h29w2vTX/JiEIATNBmPqN/FkgTJ0QhIAJEKZ+5LYpVYIQEAImuHZYZdt7C2O/hdO1w5uEIARM2BPWs82j+7u30Id8zaBK0OmAE0BYlf6YL6jOHuEYCUEImPiLdFfZZag8RqoEISAEzBBhitvvs0OYIiEIATO5lN41Q/aNLqXfJAQhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgJnMXtsmY85gqRKEgBAQAkJACDgRhLEneJ4EwtgJQQgIASEgBISAARHG+r/8GC+BVAlCQAgYGGHqNdT2TZUgBIRQVvkfBPqwZqTVLKwAAAAASUVORK5CYII=",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],0.8,null,null,"#4 | 26 Sep 12:45 - 27 Sep 04:15"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAEwUlEQVR4nO3dS24jVRiG4SctJDJpiYWwAWasA+YsgFkmwCysgyErYDewBcgks2aSktzBsV12XcP7SVEnabuq9OivP3Xqcnz38f7xk3eUp+eHu7Hv+TDHhuwtIQgBISAEhIAQEAJCAF+svQFT5ZojxSFVghAQAkJACAgBISAEvBOEWw6UeCcItyYEISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBIWDnN27deg1ySJUgBISAELDTxjhVQxxSJQgBISAEhIAQEAJCwI4OlqY+QDpMlSAEhICdIMzZD9gJwtwJQQgIARs/WJq7IQ6pEoSAELBhhKX6ARtGWDIhCAEhYKMISzZFNoqwdEIQAkJACAgBISAEhIAQEAJCAHdzzOV+bgB0yTo7s7RwQhACrugJw7567n1j9uljy6onLJwQhIAQcGFjXKJJrdkcqwQhIAScuV1n6StBa6VKEAJCwAmE/0s/oEpACAgBbyBspR8s9YGeVYIQEAJCwIaed3h6fjh5guf1/03ZvKsEISAEvIGw1qeOn9rPn54f7oavqddbJQgBISAEhIAQEAI2eFLlknWfG2eMTZUgBISAN27S2MqJ1tcZtrWZOWdICEJACAgBISAEhICdIcx1ELcrhLkSghCwQ4RjfeHWEyy7Q5gjIQgBK9+kMezLf//xm3++eXb369d+/Pk7v9//9dnrDk+sHusJh7/7eP/4aezxRJUgBISAjSD88O1Pvvryz7vHX77/Tz/g8+OAczd3XfoY82E2gbB2QhACVrr4crjOU8cAb+3XY6clOPf6KkEICAEz9YSxyzx3oXVsbxg7fqgShIAQcGImjWv6wpTTDi25/CpBCAgBZ2bXuXXqsGuXdcu6zp2PPJYqQQgIAQtdd1iiH1x6jfLY66oEISAEnOkJ11zXmztTjT8Ol1MlCAEhYMSUxZdeE7jkvbfkVJ+65t6lp+eHuypBuwNCwIixw1oTSxzbhtfXMscs4/D+heH7KkEICAEzfdzJYaYee4yddOqS841VghAQAnbYE+ZIlSAEhAA+7GGfnTtVghAQAvjs2aGpF76XflMlCAEh4KAnHObUmH3q3rGFvlElCAEh4I2ecC7vrS9UCULAlbvDkKl2i3aHDSQEIeBGhLX35alSJQgBIWAChPfQF6oEISAE3Dh2OJZrb62dejvGpEoQAkLADD3hWJZ8hPiSbXm9vipBCAgB7xzh4/3jp+Fr+PnYv+8a4dKEIAQshLDG2ODUI0LDzz3+c5AQLHTYPGTK2b3GLv/UrBpVghAQAhbuCYyftfPaZV6anpp/SQhCwEYQ1n4ifxMIaycEIWAFhLUvuR1LlSAEhIAVxg5DLj23MPdTOI0dXhKCELBiTzjMJZfu3/rEoFtTT3hJCHaAMJT+nA+obh5hiYQgBKz8QbpDxhwqz5EqQQgIARtEWOP0++YQ1kgIQsBGhtJjM2XfaCj9khCEgBAQAkJACAgBISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAjZy99olmfMOlipBCAgBISAEhICdIMx9g+cuEOZOCEJACAgBISAETIgw19/yJR4CqRKEgBAwMcLac6hdmypBCAihDPkX5t+eC2H6jbcAAAAASUVORK5CYII=",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],0.8,null,null,"#5 | 27 Sep 08:15 - 06 Apr 00:45"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAE30lEQVR4nO3dvW4cVRjH4cdRUIJQOiruCmpuAonGNUWg4AKoKCjgPqi5BmoEojGFkZBM40GbsN7d2Z2vtX5/KUpsZ2dHj97z+pz52ps3r98+eEa5u7+9GfuaF3PsyLUlBCEgBISAEBACQkAI4OXaOzBVzpkpDqkShIAQEAJCQAgIASHgmSBcMlHimSBcmhCEgBAQAkJACAgBISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgCu/cOvSc5BDqgQhIASEgCttjFM1xCFVghAQAkJACAgBISAEXNFkaeoJ0m6qBCEgBFwJwpz9gCtBmDshCAEhYOOTpbkb4pAqQQgIARtGWKofsGGEJROCEBACNoqwZFNkowhLJwQhIASEgBAQAkJACAgBISAEcDPHs9yPLYBOec+OLC2cEISAM3rCMFaPvW7MmP7sxQ8Pf7742y8vfz/r9ZemShACQkAIOLExLtGkvrz56eG7V78u/r5UCQgBIeAIwt397c1S4/LrH7/1zUefLPFW/0uVIASEgAMIS58Z/uvTP7z64J8l3/K/VAlCQAh4AmHpfgDff/yVn3/78J3vLfWBnlWCEBACQsCG7nf44u7zgwd43v/ZlM27ShACQsATCGt96vihcT4c4JljIlclCAEhIASEgBAQAjZ0UGXMe9/d30561V2VIASEgCcu0lizJxzKsK89mXOGhCAEhIAQEAJCQAi4MoS5JnFXhTBXQhACrhBhX1+49ADL1SHMkRCEgJUv0jh1LO8eWN3XE3a/9+b124ex84kqQQgIARtCODSOd3vHsYu7Tr2NeTebQVgzIQgBK5182X3PQ3OAp8b1mP07Zd5QJQgBIWCmnjB2m8dOtI7tDWPXD1WCEBACDjxJ45y+MOVjh5bcfpUgBISAI0/XGTtHP/TzKdcjx/Z57AVeVYIQEAIWOu+wRD849Rzlvv9XJQgBIeBITzjnvN7cmWr9sbudKkEICAEjHll86jmBU157SQ71qXOuXbq7v72pEjQcEAJGrB3WerDEvn14/1zmmG3sXr8w/LtKEAJCwEwfd7KbqdceYx86dcrxxipBCAgBV9gT5kiVIASEAF5cw5idO1WCEBACeOfeoak3fi39pkoQAkLATk/YzaE1+9S9Ywt9o0oQAkLAEz3hWJ5bX6gShIAzh8OQqYZFw2EDCUEIuBBh7bE8VaoEISAETIDwHPpClSAEhIAL1w77cu6ltVPvx5hUCUJACJihJ+zLkrcQn7Iv779flSAEhIBnjvDm9duH4c/w9b6/nzXCqQlBCFgIYY21waFbhIavu/1nJyFYaNo8ZMqne43d/qGnalQJQkAIWLgnMP6pnedu89R01/xjQhACNoKw9h35m0BYOyEIASsgrH3KbV+qBCEgBKywdhhy6rGFue/Cae3wmBCEgBV7wm5OOXX/1CcGXZp6wmNCcAUIQ+nPeYPq5hGWSAhCwMofpDtkzFR5jlQJQkAI2CDCGoffN4ewRkIQAjaylB6bKftGS+nHhCAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBISAEhIAQsJGr107JnFewVAlCQAgIASEgBFwJwtwXeF4FwtwJQQgIASEgBISACRHm+l2+xE0gVYIQEAImRlj7GWrnpkoQAkIoQ/4Fu1qjrsJ4TQgAAAAASUVORK5CYII=",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],0.8,null,null,"#6 | 06 Apr 10:15 - 07 Apr 00:15"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAEt0lEQVR4nO3dTW4jVRiG0ZMWiJ5kzpR1sCG2ELGA7IH9sBImTFEmQQyaSUoykWNX2fUbnleKutMdV1lH3/1St36uHx6/Pn/zifLy+vQw9TVflngjR0sIQkAICAEhIASEgBDAd1u/gblyy5HikCpBCAgBISAEhIAQEAI+CcI9B0p8EoR7E4IQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBISAEhIAQcPAbt+69BjmkShACQkAIOGhjnKshDqkShIAQEAJCQAgIASHgQAdLcx8gnaZKEAJCwEEQluwHHARh6YQgBISAnR8sLd0Qh1QJQkAI2DHCWv2AHSOsmRCEgBCwU4Q1myI7RVg7IQgBO0L4+Z8f/fHXb5vsezcIWyYEISAE7Ajh9+//9OsPz375+6fV970bhC0TghDAwxJruV+bAI3ZZ2eWVk4IQsANPWEYq9deN2VMn9tWPWHlhCAEhICRjXGNJrVlc6wShIAQcOV2nbWvBG2VKkEICAEXEP4v/YAqASEgBHyAsJd+sNYHelYJQkAICAE7et7h5fXp4gme9/83Z/OuEoSAEPABwlafOn5pnL+8Pj0MX3Pvt0oQAkJACAgBISAE7PCkyph9X5tnTE2VIASEgA9u0tjLidb3Gd5rK3MukBCEgBAQAkJACAgBB0NY6iDuUAhLJQQh4IAI5/rCvSdYDoewREIQAja+SWPsWD49sXquJ5z+2+PX529TjyeqBCEgBOwI4dI4Pu0d127uGvsY82l2g7BlQhACNrr4crrPS8cAH43rqcsSXPv5KkEICAEL9YSp27x2oXVqb5g6f6gShIAQcGEljVv6wpzLDq25/SpBCAgBV1bXuXfpsFu3dc++rp2PPJcqQQgIAStdd1ijH4y9Rnnu56oEISAEXOkJt1zXWzpzzT9Ot1MlCAEhYMKSxWOvCYx57T251KduuXfp5fXpoUrQcEAImDB32GphiXPv4f21zCnbOL1/Yfh7lSAEhICFPu7kNHPPPaYuOjXmfGOVIASEgAP2hCVSJQgBIYAvRxizS6dKEAJCAP95dmjujR+l31QJQkAIOOkJp7k0Z5+7d+yhb1QJQkAI+KAnXMtn6wtVghBw43AYMtewaDjsICEIAXcibD2W50qVIASEgBkQPkNfqBKEgBBw59zhXG69tXbu9zElVYIQEAIW6AnnsuYjxGPey/v9VQlCQAj45AiPX5+/DV/D9+f+/NQIYxOCELASwhZzg0uPCA3f9/jPSUKw0mHzkDlX95q6/UuralQJQkAIWLknMH3Vzlu3OTY9Nf+WEISAnSBs/UT+LhC2TghCwAYIW19yO5cqQQgIARvMHYaMPbew9FM4zR3eEoIQsGFPOM2YS/cffWLQvaknvCUEB0AYSn/JB1R3j7BGQhACNv4g3SFTDpWXSJUgBISAHSJscfp9dwhbJAQhYCdT6amZs280lX5LCEJACAgBISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBO7l7bUyWvIOlShACQkAICAEh4CAIS9/geQiEpROCEBACQkAICAEzIiz1u3yNh0CqBCEgBMyMsPUaaremShACQihD/gU6/5ta0hO6PQAAAABJRU5ErkJggg==",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],0.8,null,null,"#7 | 07 Apr 04:45 - 14 Apr 00:45"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAE9UlEQVR4nO3dzY3cZBzH8c9GIHKJKAAhhGgAiQ44c6MHDlDBVpAK4EAdtIFEA4gDFaBcEjiEy1oaVrMz9sz4bfn+pCjZZMa2Pvr7Hz9+eXz36uXr955R3ry9v5v6nRdzbMjeEoIQEAJCQAgIASEgBOwA4ft3n4/63Ju393eXHC2yA4QlEoIQsHGEX776x08f/TH7ejaNsFRCEAJCwIYRvv77E9/8+uGoz156kDRkswhLJgQhIARsFOHbd5+5qtNNzCYRlk4IQkAI4IO1N+Bx/vzrZ59+/N2i66wShIAQsDGE33/4bfF+wMYQ1koIQkAI2BjCFz9+ucp6N4WwVkIQAkJACAgBISAEbPDM0pRcew1ySJUgBISAELDTxnirhjikShACQkAICAEhIASEgB0dLN36AOkwVYIQEAJ2gjBnP2AnCHMnBCEgBGz8YGnuhjikShACQsCGEZbqB2wYYcmEIASEgI0iLNkU2SjC0glBCAgBISAEhIAQEAJCQAgIAdzNMZf7uQHQmHV2ZmnhhCAEXNAThn313Pem7NPHllVPWDghCAEhYGRjXKJJrdkcqwQhIAScuV1n6StBa6VKEAJCwAmE/0s/oEpACAgBTyBspR8s9ULPKkEICAEhYEPPO7x5e3/yBM/jf7tl864ShIAQ8ATCWm8dP7WfD++DnONArkoQAkJACAgBISAEbPCkyph1nxtnTE2VIASEgCdu0tjKidbHGba1mTlnSAhCQAgIASEgBISAnSHMdRC3K4S5EoIQsEOEY33h2hMsu0OYIyEIASvfpDF2Xz48sXqsJxz+3auXr99PPZ6oEoSAELAhhFP78WHvOHdz19jHmA+zGYQ1E4IQsNLFl8N1njoGeGq/njotwbnPVwlCQAiYqSdMXea5C61Te8PU8UOVIASEgBMzaVzSF2457dCSy68ShIAQcGZ2nWunDrt0Wdes69z5yGOpEoSAELDQdYcl+sHYa5THPlclCAEh4ExPuOS63ty51fjjcDlVghAQAiZMWTz2msCY716TU33qknuX3ry9v6sStDsgBEwYO6w1scSxbXh8LXPKMg7vXxj+XCUIASFgptedHObWY4+pk06NOd9YJQgBIWCHPWGOVAlCQAjgxR722blTJQgBIYD/PDt064Xvpd9UCUJACDjoCYc5NWa/de/YQt+oEoSAEPBETziX59YXqgQh4MLdYcitdot2hw0kBCHgSoS19+VbpUoQAkLADRCeQ1+oEoSAEHDl2OFYLr219tbbMSVVghAQAmboCcey5CPEY7bl8fqqBCEgBDxzhFcvX78ffg0/H/v9WSOMTQhCwEIIa4wNTj0iNPzc4z8HCcFCh81Dbjm719Tln5pVo0oQAkLAwj2B6bN2XrrMsemp+YeEIARsBGHtJ/I3gbB2QhACVkBY+5LbsVQJQkAIWGHsMGTsuYW5n8Jp7PCQEISAFXvCYcZcun/qjUHXpp7wkBDsAGEo/TkfUN08whIJQQhY+UW6Q6YcKs+RKkEICAEbRFjj9PvmENZICELARobSU3PLvtFQ+iEhCAEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIARs5O61MZnzDpYqQQgIASEgBISAnSDMfYPnLhDmTghCQAgIASEgBNwQYa7/y5d4CKRKEAJCwI0R1p5D7dJUCUJACGXIv2/BpRtwGOMAAAAAAElFTkSuQmCC",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],0.8,null,null,"#8 | 14 Apr 10:45 - 15 Apr 01:15"]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAEpElEQVR4nO3dTW7bVhiG0eOgg0yCrqDb6x68guyh2+sKCk88SycmwBqyREr8VZ8XMBInFikcfPczL3+uXn58//nLE+Xt/fVl7mu+rfFGzpYQhIAQEAJCQAgIASGA3/Z+A0vlniPFIVWCEBACQkAICAEhIAQ8CcIjB0o8CcKjCUEICAEHRPj7n7823+fhEPZICEJACDggwh+//7n5Pg+HsEdCEAJCQAgIASEgBISAEBACQkAICAEhIASEgJPfuPXoNcghVYIQEAJCwEkb41INcUiVIASEgBAQAkJACAgBJzpYWvoAaZwqQQgIASdBWLMfcBKEtROCEBACDn6wtHZDHFIlCAEh4MAIW/UDDoywZUIQAkLAQRG2bIocFGHrhCAEhIAQEAJCQAgIASEgBIQAXtZYy/3WBGjKPjuztHFCEALu6AnDWL31ujlj+tK26gkbJwQhIARMbIxbNKk9m2OVIASEgBu362x9JWivVAlCQAi4gvB/6QdUCQgBIeALhKP0g60+0LNKEAJCQAg40PMOb++vV0/wfP6/JZt3lSAEhIAvEPb61PFr4/zt/fVl+Fp6v1WCEBACQkAICAEh4IAnVabs+9Y8Y26qBCEgBHxxk8ZRTrR+zvBeW5lzhYQgBISAEBACQkAIOBnCWgdxp0JYKyEIASdEuNQXHj3BcjqENRKCELDzTRpTx/L4xOqlnjD+tx/ff/6aezxRJQgBIeBACNfG8bh33Lq5a+pjzOMcBmHPhCAE7HTxZbzPa8cAX43rucsS3Pr5KkEICAEr9YS527x1oXVub5g7f6gShIAQcGUljXv6wpLLDm25/SpBCAgBN1bXeXTpsHu39ci+bp2PvJQqQQgIARtdd9iiH0y9Rnnp56oEISAE3OgJ91zXWztLzT/G26kShIAQMGPJ4qnXBKa89pFc61P33Lv09v76UiVoOCAEzJg77LWwxKX38Pla5pxtjO9fGP5eJQgBIWCljzsZZ+m5x9xFp6acb6wShIAQcMKesEaqBCEgBPDtDGN27VQJQkAI4D/PDi298bP0mypBCAgBo54wzrU5+9K94wh9o0oQAkLAFz3hVp6tL1QJQsCdw2HIUsOi4XCAhCAEPIiw91heKlWCEBACFkB4hr5QJQgBIeDBucOl3Htr7dLvY06qBCEgBKzQEy5ly0eIp7yXz/urEoSAEPDkCD++//w1fA3fX/rzqRGmJgQhYCOEPeYG1x4RGr7v8Z9RQrDRYfOQJVf3mrv9a6tqVAlCQAjYuCcwf9XOe7c5NT01/5EQhICDIOz9RP4hEPZOCELADgh7X3K7lCpBCAgBO8wdhkw9t7D2UzjNHT4SghCwY08YZ8ql+68+MejR1BM+EoITIAylv+YDqodH2CIhCAE7f5DukDmHymukShACQsABEfY4/X44hD0SghBwkKn03CzZN5pKfyQEISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBISAEhICD3L02JWvewVIlCAEhIASEgBBwEoS1b/A8BcLaCUEICAEhIASEgAUR1vpdvsVDIFWCEBACFkbYew21e1MlCAEhlCH/ApiElmFM5y9AAAAAAElFTkSuQmCC",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],0.8,null,null,"#9 | 15 Apr 05:15 - 11 Jun 22:45"]},{"method":"addCircleMarkers","args":[37.286812,-82.30497200000001,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":1},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[-82.30497200000001,-80.75,-80.25,-84.25,-82.75,-82.75,-82.25,-81.75,-81.75],"lat":[37.286812,32.25,26.75,21.75,22.75,27.75,30.75,36.75,37.25]}]]],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"black","weight":5,"opacity":0.7,"fill":false,"fillColor":"black","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[37.286812,32.25,26.75,21.75,22.75,27.75,30.75,36.75,37.25],[-82.30497200000001,-80.75,-80.25,-84.25,-82.75,-82.75,-82.25,-81.75,-81.75],[18.21375476728228,5.097132734541368,5.14735685560886,5.378750066974563,22.29624904030032,5.243610795028083,9.700841347437279,5.289814473047844,16.53865060807308],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"grey","fillOpacity":0.8},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[37.286812,-82.30497200000001,18.21375476728228,null,"#1 | 01 Jul 02:15 - 24 Sep 00:15",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#1, 84.9 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[32.25,-80.75,5.097132734541368,null,"#2 | 24 Sep 11:15 - 24 Sep 23:45",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#2, 0.5 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[26.75,-80.25,5.14735685560886,null,"#3 | 25 Sep 10:45 - 25 Sep 23:45",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#3, 0.5 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[21.75,-84.25,5.378750066974563,null,"#4 | 26 Sep 12:45 - 27 Sep 04:15",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#4, 0.6 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[22.75,-82.75,22.29624904030032,null,"#5 | 27 Sep 08:15 - 06 Apr 00:45",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#5, 190.7 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[27.75,-82.75,5.243610795028083,null,"#6 | 06 Apr 10:15 - 07 Apr 00:15",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#6, 0.6 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[30.75,-82.25,9.700841347437279,null,"#7 | 07 Apr 04:45 - 14 Apr 00:45",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#7, 6.8 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[36.75,-81.75,5.289814473047844,null,"#8 | 14 Apr 10:45 - 15 Apr 01:15",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#8, 0.6 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[37.25,-81.75,16.53865060807308,null,"#9 | 15 Apr 05:15 - 11 Jun 22:45",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#9, 57.7 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLayersControl","args":[["#1 | 01 Jul 02:15 - 24 Sep 00:15","#2 | 24 Sep 11:15 - 24 Sep 23:45","#3 | 25 Sep 10:45 - 25 Sep 23:45","#4 | 26 Sep 12:45 - 27 Sep 04:15","#5 | 27 Sep 08:15 - 06 Apr 00:45","#6 | 06 Apr 10:15 - 07 Apr 00:15","#7 | 07 Apr 04:45 - 14 Apr 00:45","#8 | 14 Apr 10:45 - 15 Apr 01:15","#9 | 15 Apr 05:15 - 11 Jun 22:45"],[],{"collapsed":false,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[-0.1993312115523441,39.98979129511279],"lng":[-99.99999998608011,-67.49999999060368]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1a7c249cbe09e35a9d94" style="width:100%;height:580px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1a7c249cbe09e35a9d94">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldTopoMap",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAEpElEQVR4nO3dTW7bVhiG0eOgg0yCrqDb6x68guyh2+sKCk88SycmwBqyREr8VZ8XMBInFikcfPczL3+uXn58//nLE+Xt/fVl7mu+rfFGzpYQhIAQEAJCQAgIASGA3/Z+A0vlniPFIVWCEBACQkAICAEhIAQ8CcIjB0o8CcKjCUEICAEHQ/j7n7922e+hEPZKCEJACDgYwh+//7nLfg+FsFdCEAJCQAgIASEgBISAEBACQkAICAEhIASEgJPfuPXoNcghVYIQEAJCwEkb41INcUiVIASEgBAQAkJACAgBJzpYWvoAaZwqQQgIASdBWLMfcBKEtROCEBACDn6wtHZDHFIlCAEh4MAIW/UDDoywZUIQAkLAQRG2bIocFGHrhCAEhIAQEAJCQAgIASEgBIQAXtZYy/3WBGjKPjuztHFCEALu6AnDWL31ujlj+tK26gkbJwQhIARMbIxbNKk9m2OVIASEgBu362x9JWivVAlCQAi4gvB/6QdUCQgBIeALhKP0g60+0LNKEAJCQAg40PMOb++vV0/wfP6/JZt3lSAEhIAvEPb61PFr4/zt/fVl+Fp6v1WCEBACQkAICAEh4IAnVabs+9Y8Y26qBCEgBHxxk8ZRTrR+zvBeW5lzhYQgBISAEBACQkAIOBnCWgdxp0JYKyEIASdEuNQXHj3BcjqENRKCELDzTRpTx/L4xOqlnjD+tx/ff/6aezxRJQgBIeBACNfG8bh33Lq5a+pjzOMcBmHPhCAE7HTxZbzPa8cAX43rucsS3Pr5KkEICAEr9YS527x1oXVub5g7f6gShIAQcGUljXv6wpLLDm25/SpBCAgBN1bXeXTpsHu39ci+bp2PvJQqQQgIARtdd9iiH0y9Rnnp56oEISAE3OgJ91zXWztLzT/G26kShIAQMGPJ4qnXBKa89pFc61P33Lv09v76UiVoOCAEzJg77LWwxKX38Pla5pxtjO9fGP5eJQgBIWCljzsZZ+m5x9xFp6acb6wShIAQcMKesEaqBCEgBPDtDGN27VQJQkAI4D/PDi298bP0mypBCAgBo54wzrU5+9K94wh9o0oQAkLAFz3hVp6tL1QJQsCdw2HIUsOi4XCAhCAEPIiw91heKlWCEBACFkB4hr5QJQgBIeDBucOl3Htr7dLvY06qBCEgBKzQEy5ly0eIp7yXz/urEoSAEPDkCD++//w1fA3fX/rzqRGmJgQhYCOEPeYG1x4RGr7v8Z9RQrDRYfOQJVf3mrv9a6tqVAlCQAjYuCcwf9XOe7c5NT01/5EQhICDIOz9RP4hEPZOCELADgh7X3K7lCpBCAgBO8wdhkw9t7D2UzjNHT4SghCwY08YZ8ql+68+MejR1BM+EoITIAylv+YDqodH2CIhCAE7f5DukDmHymukShACQsABEfY4/X44hD0SghBwkKn03CzZN5pKfyQEISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBISAEhICD3L02JWvewVIlCAEhIASEgBBwEoS1b/A8BcLaCUEICAEhIASEgAUR1vpdvsVDIFWCEBACFkbYew21e1MlCAEhlCH/AqSElmFfICwSAAAAAElFTkSuQmCC",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],null,"#1 | 01 Jul 02:15 - 24 Sep 00:15",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"addRasterImage","args":["data:image/png;base64,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",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],null,"#2 | 24 Sep 11:15 - 24 Sep 23:45",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"addRasterImage","args":["data:image/png;base64,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",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],null,"#3 | 25 Sep 10:45 - 25 Sep 23:45",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAFTklEQVR4nO3dv4ok1xnG4adntd5BMMggcCIHDuzI1+F7UCCnRigWtucKxhcghCNHjn0FDhzqFoQDgQIZG2QQg9Hs4tl2oG1ojXpm+k9VV/X498KwO9BbVTx89e2pqlOnFxfnV0tPKNc3l4td/83ZGAdyaglBCAgBISAEhIAQEAJ4a+oDGCr7jBRXqRKEgBAQAkJACAgBIeCJIBwyUOKJIByaEISAEBACQkAICAEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIASEgBISAE5+4degzyFWqBCEgBISAE22MQzXEVaoEISAEhIAQEAJCQAg4ocHS0AOk9VQJQkAIOBGEMfsBJ4IwdkIQAkLAzAdLYzfEVaoEISAEzBjhWP2AGSMcMyEIASFgpgjHbIrMFOHYCUEICAEhIASEgBAQAkJACAgBLMZYy/2xC6Bt9tmdpSMnBCFgj56wOlcf+3e7nNObtlVPOHJCEAJCwJaN8RhNasrmWCUIASHgkek6x34SNFWqBCEgBDyA8P/SD6gSEAJCwD0Ic+kHx/pCzypBCAgBIWBG7ztc31wu3nnxh+XrxeZeeLdJDtm8qwQhIATcgzDVt45/8/L3957n1zeXi9XP0PutEoSAEBACQkAICAEzvKmyzb6vby4HnXVXJQgBIeCeSRpzudF6N6tjbWXOERKCEBACQkAICAEh4MQQxhrEnRTCWAlBCDhBhE194dAbLCeHMEZCEAImnqRxcX61/PQn7/rTV89869arxa33bt/2tx999b3PXd9cLn75/JPlvxc3/vHq4x/0hPU+cXF+tdx1PFElCAEhYAYIH/3ra8+XZz77728W775+4Z3l8x985uL8avnls2svF7cPjgnW+8EuY4fJEeaQEISAiR6+/P2DD5c/u/yr//z81o9ffLG4OL9a/urVT/3l9a+/t9/7zutdlyV47PNVghAQAkbqCXe3+fbymX++/O292/z8/Y+WZ2+99os//3HjZ3btDbteP1QJQkAIeGAljX36wn3bWuD58szXL383aK+5m317WZUgBISAR1bXOXTpsH23dci+1id6brvPKkEICAFHeu5wjH6w7TPKTZ+rEoSAEPBIT9jnud7YGepex/p2qgQhIATssGTx3XNxl2d9Q48THrq3uOv2rm8uF1WCTgeEgB2uHaZaWGLTMawfy679Zn3+wurvVYIQEAJG+rqT9Qx97bHrolPb3G+sEoSAEHCCPWGMVAlCQAjg7BTO2bFTJQgBIeC76UQY537BqfSbKkEICAFrPWE9D12zD9075tA3qgQhIATc0xMey1PrC1WCELDn6bDKUKdFp8MMEoIQcCDC1OfyUKkShIAQMADCU+gLVYIQEAIOvHbYlH2n1g59HLukShACQsAIPWFTjvkK8TbHcnd/VYIQEAKeOMLF+dVy9bP6fdOfTxph24QgBBwJYYprg4deEVr93us/awnBkYbNqwy5uteu239oVY0qQQgIAUfuCWy/4s2h29w2vTX/JiEIATNBmPqN/FkgTJ0QhIAJEKZ+5LYpVYIQEAImuHZYZdt7C2O/hdO1w5uEIARM2BPWs82j+7u30Id8zaBK0OmAE0BYlf6YL6jOHuEYCUEImPiLdFfZZag8RqoEISAEzBBhitvvs0OYIiEIATO5lN41Q/aNLqXfJAQhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgJnMXtsmY85gqRKEgBAQAkJACDgRhLEneJ4EwtgJQQgIASEgBISAARHG+r/8GC+BVAlCQAgYGGHqNdT2TZUgBIRQVvkfBPqwZqTVLKwAAAAASUVORK5CYII=",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],null,"#4 | 26 Sep 12:45 - 27 Sep 04:15",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAEwUlEQVR4nO3dS24jVRiG4SctJDJpiYWwAWasA+YsgFkmwCysgyErYDewBcgks2aSktzBsV12XcP7SVEnabuq9OivP3Xqcnz38f7xk3eUp+eHu7Hv+TDHhuwtIQgBISAEhIAQEAJCAF+svQFT5ZojxSFVghAQAkJACAgBISAEvBOEWw6UeCcItyYEISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBIWDnN27deg1ySJUgBISAELDTxjhVQxxSJQgBISAEhIAQEAJCwI4OlqY+QDpMlSAEhICdIMzZD9gJwtwJQQgIARs/WJq7IQ6pEoSAELBhhKX6ARtGWDIhCAEhYKMISzZFNoqwdEIQAkJACAgBISAEhIAQEAJCAHdzzOV+bgB0yTo7s7RwQhACrugJw7567n1j9uljy6onLJwQhIAQcGFjXKJJrdkcqwQhIAScuV1n6StBa6VKEAJCwAmE/0s/oEpACAgBbyBspR8s9YGeVYIQEAJCwIaed3h6fjh5guf1/03ZvKsEISAEvIGw1qeOn9rPn54f7oavqddbJQgBISAEhIAQEAI2eFLlknWfG2eMTZUgBISAN27S2MqJ1tcZtrWZOWdICEJACAgBISAEhICdIcx1ELcrhLkSghCwQ4RjfeHWEyy7Q5gjIQgBK9+kMezLf//xm3++eXb369d+/Pk7v9//9dnrDk+sHusJh7/7eP/4aezxRJUgBISAjSD88O1Pvvryz7vHX77/Tz/g8+OAczd3XfoY82E2gbB2QhACVrr4crjOU8cAb+3XY6clOPf6KkEICAEz9YSxyzx3oXVsbxg7fqgShIAQcGImjWv6wpTTDi25/CpBCAgBZ2bXuXXqsGuXdcu6zp2PPJYqQQgIAQtdd1iiH1x6jfLY66oEISAEnOkJ11zXmztTjT8Ol1MlCAEhYMSUxZdeE7jkvbfkVJ+65t6lp+eHuypBuwNCwIixw1oTSxzbhtfXMscs4/D+heH7KkEICAEzfdzJYaYee4yddOqS841VghAQAnbYE+ZIlSAEhAA+7GGfnTtVghAQAvjs2aGpF76XflMlCAEh4KAnHObUmH3q3rGFvlElCAEh4I2ecC7vrS9UCULAlbvDkKl2i3aHDSQEIeBGhLX35alSJQgBIWAChPfQF6oEISAE3Dh2OJZrb62dejvGpEoQAkLADD3hWJZ8hPiSbXm9vipBCAgB7xzh4/3jp+Fr+PnYv+8a4dKEIAQshLDG2ODUI0LDzz3+c5AQLHTYPGTK2b3GLv/UrBpVghAQAhbuCYyftfPaZV6anpp/SQhCwEYQ1n4ifxMIaycEIWAFhLUvuR1LlSAEhIAVxg5DLj23MPdTOI0dXhKCELBiTzjMJZfu3/rEoFtTT3hJCHaAMJT+nA+obh5hiYQgBKz8QbpDxhwqz5EqQQgIARtEWOP0++YQ1kgIQsBGhtJjM2XfaCj9khCEgBAQAkJACAgBISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAjZy99olmfMOlipBCAgBISAEhICdIMx9g+cuEOZOCEJACAgBISAETIgw19/yJR4CqRKEgBAwMcLac6hdmypBCAihDPkX5t+eC2H6jbcAAAAASUVORK5CYII=",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],null,"#5 | 27 Sep 08:15 - 06 Apr 00:45",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAE30lEQVR4nO3dvW4cVRjH4cdRUIJQOiruCmpuAonGNUWg4AKoKCjgPqi5BmoEojGFkZBM40GbsN7d2Z2vtX5/KUpsZ2dHj97z+pz52ps3r98+eEa5u7+9GfuaF3PsyLUlBCEgBISAEBACQkAI4OXaOzBVzpkpDqkShIAQEAJCQAgIASHgmSBcMlHimSBcmhCEgBAQAkJACAgBISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgCu/cOvSc5BDqgQhIASEgCttjFM1xCFVghAQAkJACAgBISAEXNFkaeoJ0m6qBCEgBFwJwpz9gCtBmDshCAEhYOOTpbkb4pAqQQgIARtGWKofsGGEJROCEBACNoqwZFNkowhLJwQhIASEgBAQAkJACAgBISAEcDPHs9yPLYBOec+OLC2cEISAM3rCMFaPvW7MmP7sxQ8Pf7742y8vfz/r9ZemShACQkAIOLExLtGkvrz56eG7V78u/r5UCQgBIeAIwt397c1S4/LrH7/1zUefLPFW/0uVIASEgAMIS58Z/uvTP7z64J8l3/K/VAlCQAh4AmHpfgDff/yVn3/78J3vLfWBnlWCEBACQsCG7nf44u7zgwd43v/ZlM27ShACQsATCGt96vihcT4c4JljIlclCAEhIASEgBAQAjZ0UGXMe9/d30561V2VIASEgCcu0lizJxzKsK89mXOGhCAEhIAQEAJCQAi4MoS5JnFXhTBXQhACrhBhX1+49ADL1SHMkRCEgJUv0jh1LO8eWN3XE3a/9+b124ex84kqQQgIARtCODSOd3vHsYu7Tr2NeTebQVgzIQgBK5182X3PQ3OAp8b1mP07Zd5QJQgBIWCmnjB2m8dOtI7tDWPXD1WCEBACDjxJ45y+MOVjh5bcfpUgBISAI0/XGTtHP/TzKdcjx/Z57AVeVYIQEAIWOu+wRD849Rzlvv9XJQgBIeBITzjnvN7cmWr9sbudKkEICAEjHll86jmBU157SQ71qXOuXbq7v72pEjQcEAJGrB3WerDEvn14/1zmmG3sXr8w/LtKEAJCwEwfd7KbqdceYx86dcrxxipBCAgBV9gT5kiVIASEAF5cw5idO1WCEBACeOfeoak3fi39pkoQAkLATk/YzaE1+9S9Ywt9o0oQAkLAEz3hWJ5bX6gShIAzh8OQqYZFw2EDCUEIuBBh7bE8VaoEISAETIDwHPpClSAEhIAL1w77cu6ltVPvx5hUCUJACJihJ+zLkrcQn7Iv779flSAEhIBnjvDm9duH4c/w9b6/nzXCqQlBCFgIYY21waFbhIavu/1nJyFYaNo8ZMqne43d/qGnalQJQkAIWLgnMP6pnedu89R01/xjQhACNoKw9h35m0BYOyEIASsgrH3KbV+qBCEgBKywdhhy6rGFue/Cae3wmBCEgBV7wm5OOXX/1CcGXZp6wmNCcAUIQ+nPeYPq5hGWSAhCwMofpDtkzFR5jlQJQkAI2CDCGoffN4ewRkIQAjaylB6bKftGS+nHhCAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBISAEhIAQsJGr107JnFewVAlCQAgIASEgBFwJwtwXeF4FwtwJQQgIASEgBISACRHm+l2+xE0gVYIQEAImRlj7GWrnpkoQAkIoQ/4Fu1qjrsJ4TQgAAAAASUVORK5CYII=",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],null,"#6 | 06 Apr 10:15 - 07 Apr 00:15",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAEt0lEQVR4nO3dTW4jVRiG0ZMWiJ5kzpR1sCG2ELGA7IH9sBImTFEmQQyaSUoykWNX2fUbnleKutMdV1lH3/1St36uHx6/Pn/zifLy+vQw9TVflngjR0sIQkAICAEhIASEgBDAd1u/gblyy5HikCpBCAgBISAEhIAQEAI+CcI9B0p8EoR7E4IQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBISAEhIAQcPAbt+69BjmkShACQkAIOGhjnKshDqkShIAQEAJCQAgIASHgQAdLcx8gnaZKEAJCwEEQluwHHARh6YQgBISAnR8sLd0Qh1QJQkAI2DHCWv2AHSOsmRCEgBCwU4Q1myI7RVg7IQgBO0L4+Z8f/fHXb5vsezcIWyYEISAE7Ajh9+//9OsPz375+6fV970bhC0TghDAwxJruV+bAI3ZZ2eWVk4IQsANPWEYq9deN2VMn9tWPWHlhCAEhICRjXGNJrVlc6wShIAQcOV2nbWvBG2VKkEICAEXEP4v/YAqASEgBHyAsJd+sNYHelYJQkAICAE7et7h5fXp4gme9/83Z/OuEoSAEPABwlafOn5pnL+8Pj0MX3Pvt0oQAkJACAgBISAE7PCkyph9X5tnTE2VIASEgA9u0tjLidb3Gd5rK3MukBCEgBAQAkJACAgBB0NY6iDuUAhLJQQh4IAI5/rCvSdYDoewREIQAja+SWPsWD49sXquJ5z+2+PX529TjyeqBCEgBOwI4dI4Pu0d127uGvsY82l2g7BlQhACNrr4crrPS8cAH43rqcsSXPv5KkEICAEL9YSp27x2oXVqb5g6f6gShIAQcGEljVv6wpzLDq25/SpBCAgBV1bXuXfpsFu3dc++rp2PPJcqQQgIAStdd1ijH4y9Rnnu56oEISAEXOkJt1zXWzpzzT9Ot1MlCAEhYMKSxWOvCYx57T251KduuXfp5fXpoUrQcEAImDB32GphiXPv4f21zCnbOL1/Yfh7lSAEhICFPu7kNHPPPaYuOjXmfGOVIASEgAP2hCVSJQgBIYAvRxizS6dKEAJCAP95dmjujR+l31QJQkAIOOkJp7k0Z5+7d+yhb1QJQkAI+KAnXMtn6wtVghBw43AYMtewaDjsICEIAXcibD2W50qVIASEgBkQPkNfqBKEgBBw59zhXG69tXbu9zElVYIQEAIW6AnnsuYjxGPey/v9VQlCQAj45AiPX5+/DV/D9+f+/NQIYxOCELASwhZzg0uPCA3f9/jPSUKw0mHzkDlX95q6/UuralQJQkAIWLknMH3Vzlu3OTY9Nf+WEISAnSBs/UT+LhC2TghCwAYIW19yO5cqQQgIARvMHYaMPbew9FM4zR3eEoIQsGFPOM2YS/cffWLQvaknvCUEB0AYSn/JB1R3j7BGQhACNv4g3SFTDpWXSJUgBISAHSJscfp9dwhbJAQhYCdT6amZs280lX5LCEJACAgBISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBO7l7bUyWvIOlShACQkAICAEh4CAIS9/geQiEpROCEBACQkAICAEzIiz1u3yNh0CqBCEgBMyMsPUaaremShACQihD/gU6/5ta0hO6PQAAAABJRU5ErkJggg==",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],null,"#7 | 07 Apr 04:45 - 14 Apr 00:45",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAE9UlEQVR4nO3dzY3cZBzH8c9GIHKJKAAhhGgAiQ44c6MHDlDBVpAK4EAdtIFEA4gDFaBcEjiEy1oaVrMz9sz4bfn+pCjZZMa2Pvr7Hz9+eXz36uXr955R3ry9v5v6nRdzbMjeEoIQEAJCQAgIASEgBOwA4ft3n4/63Ju393eXHC2yA4QlEoIQsHGEX776x08f/TH7ejaNsFRCEAJCwIYRvv77E9/8+uGoz156kDRkswhLJgQhIARsFOHbd5+5qtNNzCYRlk4IQkAI4IO1N+Bx/vzrZ59+/N2i66wShIAQsDGE33/4bfF+wMYQ1koIQkAI2BjCFz9+ucp6N4WwVkIQAkJACAgBISAEbPDM0pRcew1ySJUgBISAELDTxnirhjikShACQkAICAEhIASEgB0dLN36AOkwVYIQEAJ2gjBnP2AnCHMnBCEgBGz8YGnuhjikShACQsCGEZbqB2wYYcmEIASEgI0iLNkU2SjC0glBCAgBISAEhIAQEAJCQAgIAdzNMZf7uQHQmHV2ZmnhhCAEXNAThn313Pem7NPHllVPWDghCAEhYGRjXKJJrdkcqwQhIAScuV1n6StBa6VKEAJCwAmE/0s/oEpACAgBTyBspR8s9ULPKkEICAEhYEPPO7x5e3/yBM/jf7tl864ShIAQ8ATCWm8dP7WfD++DnONArkoQAkJACAgBISAEbPCkyph1nxtnTE2VIASEgCdu0tjKidbHGba1mTlnSAhCQAgIASEgBISAnSHMdRC3K4S5EoIQsEOEY33h2hMsu0OYIyEIASvfpDF2Xz48sXqsJxz+3auXr99PPZ6oEoSAELAhhFP78WHvOHdz19jHmA+zGYQ1E4IQsNLFl8N1njoGeGq/njotwbnPVwlCQAiYqSdMXea5C61Te8PU8UOVIASEgBMzaVzSF2457dCSy68ShIAQcGZ2nWunDrt0Wdes69z5yGOpEoSAELDQdYcl+sHYa5THPlclCAEh4ExPuOS63ty51fjjcDlVghAQAiZMWTz2msCY716TU33qknuX3ry9v6sStDsgBEwYO6w1scSxbXh8LXPKMg7vXxj+XCUIASFgptedHObWY4+pk06NOd9YJQgBIWCHPWGOVAlCQAjgxR722blTJQgBIYD/PDt064Xvpd9UCUJACDjoCYc5NWa/de/YQt+oEoSAEPBETziX59YXqgQh4MLdYcitdot2hw0kBCHgSoS19+VbpUoQAkLADRCeQ1+oEoSAEHDl2OFYLr219tbbMSVVghAQAmboCcey5CPEY7bl8fqqBCEgBDxzhFcvX78ffg0/H/v9WSOMTQhCwEIIa4wNTj0iNPzc4z8HCcFCh81Dbjm719Tln5pVo0oQAkLAwj2B6bN2XrrMsemp+YeEIARsBGHtJ/I3gbB2QhACVkBY+5LbsVQJQkAIWGHsMGTsuYW5n8Jp7PCQEISAFXvCYcZcun/qjUHXpp7wkBDsAGEo/TkfUN08whIJQQhY+UW6Q6YcKs+RKkEICAEbRFjj9PvmENZICELARobSU3PLvtFQ+iEhCAEhIASEgBAQAkJACAgBISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIARs5O61MZnzDpYqQQgIASEgBISAnSDMfYPnLhDmTghCQAgIASEgBNwQYa7/y5d4CKRKEAJCwI0R1p5D7dJUCUJACGXIv2/BpRtwGOMAAAAAAElFTkSuQmCC",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],null,"#8 | 14 Apr 10:45 - 15 Apr 01:15",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"addRasterImage","args":["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAFKCAYAAABCRzIyAAAEpElEQVR4nO3dTW7bVhiG0eOgg0yCrqDb6x68guyh2+sKCk88SycmwBqyREr8VZ8XMBInFikcfPczL3+uXn58//nLE+Xt/fVl7mu+rfFGzpYQhIAQEAJCQAgIASGA3/Z+A0vlniPFIVWCEBACQkAICAEhIAQ8CcIjB0o8CcKjCUEICAEHRPj7n7823+fhEPZICEJACDggwh+//7n5Pg+HsEdCEAJCQAgIASEgBISAEBACQkAICAEhIASEgJPfuPXoNcghVYIQEAJCwEkb41INcUiVIASEgBAQAkJACAgBJzpYWvoAaZwqQQgIASdBWLMfcBKEtROCEBACDn6wtHZDHFIlCAEh4MAIW/UDDoywZUIQAkLAQRG2bIocFGHrhCAEhIAQEAJCQAgIASEgBIQAXtZYy/3WBGjKPjuztHFCEALu6AnDWL31ujlj+tK26gkbJwQhIARMbIxbNKk9m2OVIASEgBu362x9JWivVAlCQAi4gvB/6QdUCQgBIeALhKP0g60+0LNKEAJCQAg40PMOb++vV0/wfP6/JZt3lSAEhIAvEPb61PFr4/zt/fVl+Fp6v1WCEBACQkAICAEh4IAnVabs+9Y8Y26qBCEgBHxxk8ZRTrR+zvBeW5lzhYQgBISAEBACQkAIOBnCWgdxp0JYKyEIASdEuNQXHj3BcjqENRKCELDzTRpTx/L4xOqlnjD+tx/ff/6aezxRJQgBIeBACNfG8bh33Lq5a+pjzOMcBmHPhCAE7HTxZbzPa8cAX43rucsS3Pr5KkEICAEr9YS527x1oXVub5g7f6gShIAQcGUljXv6wpLLDm25/SpBCAgBN1bXeXTpsHu39ci+bp2PvJQqQQgIARtdd9iiH0y9Rnnp56oEISAE3OgJ91zXWztLzT/G26kShIAQMGPJ4qnXBKa89pFc61P33Lv09v76UiVoOCAEzJg77LWwxKX38Pla5pxtjO9fGP5eJQgBIWCljzsZZ+m5x9xFp6acb6wShIAQcMKesEaqBCEgBPDtDGN27VQJQkAI4D/PDi298bP0mypBCAgBo54wzrU5+9K94wh9o0oQAkLAFz3hVp6tL1QJQsCdw2HIUsOi4XCAhCAEPIiw91heKlWCEBACFkB4hr5QJQgBIeDBucOl3Htr7dLvY06qBCEgBKzQEy5ly0eIp7yXz/urEoSAEPDkCD++//w1fA3fX/rzqRGmJgQhYCOEPeYG1x4RGr7v8Z9RQrDRYfOQJVf3mrv9a6tqVAlCQAjYuCcwf9XOe7c5NT01/5EQhICDIOz9RP4hEPZOCELADgh7X3K7lCpBCAgBO8wdhkw9t7D2UzjNHT4SghCwY08YZ8ql+68+MejR1BM+EoITIAylv+YDqodH2CIhCAE7f5DukDmHymukShACQsABEfY4/X44hD0SghBwkKn03CzZN5pKfyQEISAEhIAQEAJCQAgIASEgBISAEBACQkAICAEhIASEgBAQAkJACAgBISAEhICD3L02JWvewVIlCAEhIASEgBBwEoS1b/A8BcLaCUEICAEhIASEgAUR1vpdvsVDIFWCEBACFkbYew21e1MlCAEhlCH/ApiElmFM5y9AAAAAAElFTkSuQmCC",[[39.98979129511279,-99.99999998608011],[-0.1993312115523441,-67.49999999060368]],null,"#9 | 15 Apr 05:15 - 11 Jun 22:45",{"tileSize":256,"zIndex":1,"minZoom":0,"opacity":0.8}]},{"method":"addCircleMarkers","args":[37.286812,-82.30497200000001,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":0.5,"fill":true,"fillColor":"red","fillOpacity":1},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[-82.30497200000001,-80.75,-80.25,-84.25,-82.75,-82.75,-82.25,-81.75,-81.75],"lat":[37.286812,32.25,26.75,21.75,22.75,27.75,30.75,36.75,37.25]}]]],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"black","weight":5,"opacity":0.7,"fill":false,"fillColor":"black","fillOpacity":0.2,"smoothFactor":1,"noClip":false},null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[37.286812,32.25,26.75,21.75,22.75,27.75,30.75,36.75,37.25],[-82.30497200000001,-80.75,-80.25,-84.25,-82.75,-82.75,-82.25,-81.75,-81.75],[18.21375476728228,5.097132734541368,5.14735685560886,5.378750066974563,22.29624904030032,5.243610795028083,9.700841347437279,5.289814473047844,16.53865060807308],null,[1,1,1,1,1,1,1,1,1],{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"grey","fillOpacity":0.8},null,null,null,null,["#1, 84.9 days","#2, 0.5 days","#3, 0.5 days","#4, 0.6 days","#5, 190.7 days","#6, 0.6 days","#7, 6.8 days","#8, 0.6 days","#9, 57.7 days"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[37.286812,-82.30497200000001,18.21375476728228,null,"#1 | 01 Jul 02:15 - 24 Sep 00:15",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#1, 84.9 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[32.25,-80.75,5.097132734541368,null,"#2 | 24 Sep 11:15 - 24 Sep 23:45",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#2, 0.5 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[26.75,-80.25,5.14735685560886,null,"#3 | 25 Sep 10:45 - 25 Sep 23:45",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#3, 0.5 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[21.75,-84.25,5.378750066974563,null,"#4 | 26 Sep 12:45 - 27 Sep 04:15",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#4, 0.6 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[22.75,-82.75,22.29624904030032,null,"#5 | 27 Sep 08:15 - 06 Apr 00:45",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#5, 190.7 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[27.75,-82.75,5.243610795028083,null,"#6 | 06 Apr 10:15 - 07 Apr 00:15",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#6, 0.6 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[30.75,-82.25,9.700841347437279,null,"#7 | 07 Apr 04:45 - 14 Apr 00:45",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#7, 6.8 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[36.75,-81.75,5.289814473047844,null,"#8 | 14 Apr 10:45 - 15 Apr 01:15",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#8, 0.6 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[37.25,-81.75,16.53865060807308,null,"#9 | 15 Apr 05:15 - 11 Jun 22:45",{"interactive":true,"className":"","stroke":true,"color":"white","weight":2,"opacity":1,"fill":true,"fillColor":"black","fillOpacity":1},null,null,null,null,"#9, 57.7 days",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLayersControl","args":[["#1 | 01 Jul 02:15 - 24 Sep 00:15","#2 | 24 Sep 11:15 - 24 Sep 23:45","#3 | 25 Sep 10:45 - 25 Sep 23:45","#4 | 26 Sep 12:45 - 27 Sep 04:15","#5 | 27 Sep 08:15 - 06 Apr 00:45","#6 | 06 Apr 10:15 - 07 Apr 00:15","#7 | 07 Apr 04:45 - 14 Apr 00:45","#8 | 14 Apr 10:45 - 15 Apr 01:15","#9 | 15 Apr 05:15 - 11 Jun 22:45"],[],{"collapsed":false,"autoZIndex":true,"position":"topright"}]}],"limits":{"lat":[-0.1993312115523441,39.98979129511279],"lng":[-99.99999998608011,-67.49999999060368]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="product-3-simulated-paths" class="level3" data-number="3.4.3"><h3 data-number="3.4.3" class="anchored" data-anchor-id="product-3-simulated-paths">
@@ -524,7 +602,10 @@ Note
 <div class="cell">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">plot_path</span><span class="op">(</span><span class="va">path_simulation</span>, plot_leaflet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="trajectory_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="trajectory_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section></section><section id="save" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="save">
@@ -543,7 +624,7 @@ Note
 <p>When saving <code>tag</code> and <code>graph</code>, you also archive the functions parameters used, which can be retrieved with <code>tag$param</code> and <code>graph$param</code>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Nussbaumer2023b" class="csl-entry" role="listitem">
 Nussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, Felix Liechti, and Daniel Sheldon. 2023. <span>“<span class="nocase">Reconstructing bird trajectories from pressure and wind data using a highly optimized hidden Markov model</span>.”</span> <em>Methods in Ecology and Evolution</em> 2023 (February): 1–12. <a href="https://doi.org/10.1111/2041-210X.14082">https://doi.org/10.1111/2041-210X.14082</a>.
 </div>
@@ -586,18 +667,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -629,11 +699,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/raphaelnussbaumer\.com\/GeoPressureManual\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -643,8 +752,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -656,7 +774,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -700,6 +941,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -725,6 +967,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -784,12 +1052,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./pressure-map.html" class="pagination-link">
+      <a href="./pressure-map.html" class="pagination-link" aria-label="Pressure map">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Pressure map</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./light-map.html" class="pagination-link">
+      <a href="./light-map.html" class="pagination-link" aria-label="Light map">
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light map</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

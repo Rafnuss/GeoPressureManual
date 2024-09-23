@@ -109,14 +109,10 @@ The `twl_calib_adjust` parameter adjusts the smoothness of the fit (see `stats::
 It is recommended to always check the calibration fit `tag$param$twl_calib` with
 
 ```{r}
-plot(tag$param$twl_calib, xlim = c(85, 100))
-barw <- median(diff(tag$param$twl_calib$x)) / 2
-rect(
-  xleft = tag$param$twl_calib$x - barw, ybottom = 0,
-  xright = tag$param$twl_calib$x + barw,
-  ytop = tag$param$twl_calib$y, col = gray(0.5)
-)
-lines(tag$param$twl_calib, col = "red")
+barW <- median(diff(tag$param$geolight_map$twl_calib$x)) / 2
+plot(tag$param$geolight_map$twl_calib, xlim = c(85, 100))
+rect(xleft = tag$param$geolight_map$twl_calib$x - barW, ybottom = 0, xright = tag$param$geolight_map$twl_calib$x + barW, ytop = tag$param$geolight_map$twl_calib$y, col = gray(0.5))
+lines(tag$param$geolight_map$twl_calib, col = "red")
 ```
 
 Finally, we can visualize the probability map for each stationary period:
@@ -136,3 +132,24 @@ This task is best performed with GeoPressureViz, presented in [its dedicated cha
 plot(tag, type = "map")
 ```
 :::
+
+## Check light label
+
+In the same way that pressure label needs to be check, light label can also be checked. The idea is to compute the estimated trajectory, compute the twilights along this trajectory and compared the the empirical twilight measured/computed above. We use here `tag2path()` which compute the the most likely position for each stationary periods (i.e. regardless of flight duration/movement model). We interpolate each position below 2 days to avoid unrealistic position estimate.
+
+```{r, warning = FALSE}
+path <- tag2path(tag, interp = 2)
+```
+This path can be visualized with `plot_path(path)`
+
+We can compute the theoretical twilights which should be observed by a bird on this path using `path2twilight()`
+
+```{r, warning = FALSE}
+twilight_line <- path2twilight(path)
+```
+
+This theoretical twilight can be compared to the empirical one using the `plot_tag_twilight()`
+
+```{r, warning = FALSE}
+plot_tag_twilight(tag, twilight_line = twilight_line, plot_plotly = T)
+```

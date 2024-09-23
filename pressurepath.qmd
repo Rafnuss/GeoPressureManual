@@ -128,8 +128,8 @@ You can also retrieve the ground elevation with `path2elevation()` which allows 
 
 ```{r}
 elevation <- path2elevation(path_most_likely,
-  scale = tag$param$scale,
-  sampling_scale = tag$param$scale * 2,
+  scale = tag$param$tag_set_map$scale,
+  sampling_scale = tag$param$tag_set_map$scale * 2,
   percentile = c(10, 50, 90)
 )
 ```

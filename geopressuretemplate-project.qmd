@@ -1,0 +1,180 @@
+# Project folder
+
+Analyzing geolocator data with [GeoPressureR](https://raphaelnussbaumer.com/GeoPressureR/) is full of potential, but the the path is long and the journey can be challenging. [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) provides a start-up R project to make that journey easier.
+
+::: callout-info
+[GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) is a [Github repository template](https://docs.github.com/articles/creating-a-repository-from-a-template/) which contains a standard project folder structure and R script to store your data, analyse it, and produce trajectory outputs.
+:::
+
+## 📁 Project structure
+
+GeoPressureTemplate defines a standardized project folder structure based on a mix of [rrrpkg](https://github.com/ropensci/rrrpkg#getting-started-with-a-research-compendium), [rrtools](https://github.com/benmarwick/rrtools#4-rrtoolsuse_analysis) and [cookiecutter data science](http://drivendata.github.io/cookiecutter-data-science/#directory-structure).
+
+```         
+GeoPressureTemplate/
+├── DESCRIPTION                             # Project metadata and dependencies
+├── README.md                               # Top-level description of content and guide to users
+├── GeoPressureTemplate.Rproj               # R project file
+├── LICENCES.md                             # Conditions of re/use the data and code
+├── config.yml                              # YML file used to defined the parameters used in the analysis
+├── data/                                 
+│   ├── raw_tag/                            # Raw geolocator data (do not modify!)
+│   │   ├── 18LX/
+│   │   │   ├── 18LX_20180725.acceleration
+│   │   │   ├── 18LX_20180725.glf
+│   │   │   └── 18LX_20180725.pressure 
+│   │   └── CB619/ 
+│   │       └── CB619.deg
+│   ├── tag_label/                          # Trainset csv file generated with analyis/1-label.qmd
+│   │   ├── 18LX-labeled.csv
+│   │   ├── 18LX.csv 
+│   │   ├── CB619-labeled.csv
+│   │   └── CB619.csv            
+│   ├── twilight_label/                     # Trainset csv file generated with analyis/2-twilight.qmd
+│   │   ├── 18LX-labeled.csv
+│   │   └── 18LX.csv
+│   ├── wind/                               # ERA-5 wind data generated with analyis/3-wind.qmd
+│   │   └── 18LX/
+│   │       ├── 18LX_1.nc
+│   │       └── ...
+│   └── interim/                            # Intermediate data created with analyis/4-geopressuretemplate.R
+│       └── 18LX.RData                      
+├── analysis/                               # R script used to analyse your data.
+│   ├── 1-label.qmd
+│   ├── 2-twilight.qmd
+│   ├── 3-wind.qmd
+│   └── 4-geopressuretemplate.R
+├── R/                                      # Custom R functions used in your analysis.
+└── output/   
+    ├── create_figures.R
+    └── figures/
+```
+
+## 💡 Get started
+
+### 🛠️ Create your project
+
+**Option 1: with a Github repository (recommended)**
+
+-   Open [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate/) and click on the green button "Use this template" or [click here](https://github.com/Rafnuss/GeoPressureTemplate/generate) to create your repository directly.
+-   Choose a project name (e.g., `my_tracking_study_name`) specific to your research. Note that this will become the name of your folder on your computer too.
+-   Clone the repository on your computer.
+-   Done! 🎉
+
+**Option 2: without a Github repository**
+
+-   Click [here](https://github.com/Rafnuss/GeoPressureTemplate/archive/refs/heads/main.zip) to download the repo directly 
+-   Unzip and rename the folder with your project name.
+-   Done! 🎉
+
+::: callout-important
+Do not clone (nor fork) the repository! [Read more about creating repositories from a template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+:::
+
+### 🏠 Make yourself at home
+
+1.  Rename `GeoPressureTemplate.Rproj` to your project name (e.g., `my_tracking_study_name.Rproj`). You can now open the project on RStudio.
+2.  Edit the `DESCRIPTION` file following the [R package book](https://r-pkgs.org/description.html).
+3.  Add your research description in the `README.md`, including your research objectives, basic data, and method.
+4.  Replace the content of `data/` with your tag data.
+5.  Install the dependencies needed with
+
+``` r
+devtools::install()
+```
+
+6.  Optionally, modify the `LICENCES` file (see the [R package book](https://r-pkgs.org/description.html) for details).
+
+## 💫 How to master `config.yml` ?
+
+Before jumping into the analysis, we need to introduce `config.yml`. It's a [YAML file](https://en.wikipedia.org/wiki/YAML) which defines the parameters used in the analysis. Separating these parameters from the main code follows [best practices](https://en.wikipedia.org/wiki/Separation_of_concerns) in terms of reproducibility, readability, and sharability. We use the [config](https://rstudio.github.io/config/) R package to retrieve all the parameter values used in the code.
+
+::: callout-note
+An important benefit of `config` is its ability to manage hierarchical configurations: you can organize settings into different groups and override them as needed. This is particularly useful in our context, where we can configure parameters for all tags and/or specific tags.
+:::
+
+``` yml
+default:
+  tag_create:
+    extent: [-16, 23, 0, 50] # [W, E, S, N]
+    scale: 1
+
+18LX:
+  tag_set_map:
+    scale: 5
+```
+
+``` r
+config::get("tag_create", "18LX")$extent
+# [-16, 23, 0, 50] # Returns the default value if not set in 18LX
+config::get("tag_set_map", "18LX")$scale
+# 5 # Return the value in 18LX if presents in both
+```
+
+## 📈 Analyse the data
+
+Now that you're set up, it's time to get serious 😬
+
+### Step 1: Preparation
+
+Here we make sure everything is ready to run the model. This mainly involves defining the parameters in `config.yml` by running the following three scripts:
+
+1.  Run [`analysis/1-label.qmd`](/geopressuretemplate-label.html)
+2.  Run [`analysis/2-twilight.qmd`](/geopressuretemplate-twilight.html) if you have light data
+3.  Run [`analysis/3-wind.qmd`](/geopressuretemplate-wind.html) if you want to account for wind
+
+You can visualize each of scripts in a nice-to-read HTML format, using the example of 16LX, in the next sections of this manual.
+
+::: callout-note
+When running the scripts, please keep in mind:
+
+-   Nothing is saved at the end of these scripts (and that's how it's supposed to be!). Only label files and `config.yml` should be edited.
+-   The scripts should be run successively for each tag separately.
+-   We use [Quarto](https://quarto.org/) to make it easy to run chunks based on your needs (e.g., re-run a small chunk after making a change). The scripts are not meant to be run with `Run all`.
+-   These scripts can be edited based on your preferences.
+:::
+
+::: callout-tip
+For regular users, we provide a shorter version of the preparation steps in `analysis/12-label-advanced.qmd`.
+:::
+
+### Step 2: Run GeoPressureR workflow
+
+::: callout-caution
+The core benefit of using GeoPressureTemplate is coming now! You can finally gain back all the time you've invested in setting up this project folder! Keep reading carefully!
+:::
+
+The `geopressuretemplate()` function allows you to run the entire GeoPressureR workflow with a single function. By using this workflow, you make sure that your work is reproducible.
+
+```{r, eval = F}
+geopressuretemplate("18LX")
+```
+
+This will create `data/interim/18LX.RData` with all the trajectory outputs. 
+
+More details on this in the [Workflow chapter](/geopressuretemplate-workflow.html). In GeoPressureTemplate, you can run this step using `4-geopressuretemplate.R`
+
+### Step 3: Your own analysis
+
+You've reached the final steps of GeoPressureTemplate, but this is only the beginning of your research journey. You now have the bird trajectories, but the real magic of good research happens when you apply your creativity and insights to analyse these!
+
+> “Your task is not to foresee the future, but to enable it.” — Antoine de Saint-Exupéry
+
+## 🗞️ Publication
+
+::: callout-important
+For peer-review publication, it is essential that the data and code are accessible to reviewers. Because inaccurate labeling can lead to wrong trajectory, we highly encourage you to publish your data and code.
+:::
+
+**Option 1 (recommended)**
+
+The easiest option is to simply publish your Github repository on Zenodo following [this guide](https://docs.github.com/en/repositories/archiving-a-github-repository/referencing-and-citing-content). This process will generate a DOI for your data and code which can be used in your repository (e.g., <https://zenodo.org/record/7471405>).
+
+**Option 2**
+
+[GeoLocator Data Package](https://raphaelnussbaumer.com/GeoLocator-DP/) is a frictionless data package standard to create a dataset of geolocator.
+
+## 🔗 Advanced options
+
+-   Generate a citation file with [`usethis::use_citation()`](https://usethis.r-lib.org/reference/use_citation.html) and [`cffr`](https://github.com/ropensci/cffr).
+-   Use [`renv`](https://rstudio.github.io/renv/index.html) to make your work reproducible.

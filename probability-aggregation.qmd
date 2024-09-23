@@ -66,7 +66,7 @@ Using this equation, we can compute the probability for each stationary periods.
 
 ```{r}
 tag_tmp <- geopressure_map_likelihood(tag, sd = sd, log_linear_pooling_weight = \(n) 1)
-plot(tag_tmp, type="map_pressure")
+plot(tag_tmp, type = "map_pressure")
 ```
 
 Assuming independence, the Gaussian likelihood transforms the MSE into probability with narrow ranges of uncertainties. So narrow that for long stationary period (#7 and #9), the entire map is 0.
@@ -113,8 +113,8 @@ An interesting case is if $w=1/n$, so that $\sum_t w_t=1$. This would simplify t
 We can try this and see the influence on the probability map.
 
 ```{r}
-tag_tmp <- geopressure_map_likelihood(tag, sd = sd, log_linear_pooling_weight = \(n) 1/n)
-plot(tag_tmp, type="map_pressure")
+tag_tmp <- geopressure_map_likelihood(tag, sd = sd, log_linear_pooling_weight = \(n) 1 / n)
+plot(tag_tmp, type = "map_pressure")
 ```
 
 As expected from the disappearance of n, the uncertainty is now completely independent from the duration of the stationary period.
@@ -130,8 +130,8 @@ $$F(\boldsymbol{\varepsilon}) \propto \left({\frac {1}{2\pi \sigma ^{2}}}\right)
 This scheme was designed to minimize the strength of $1/n$
 
 ```{r}
-tag_tmp <- geopressure_map_likelihood(tag, sd = sd, log_linear_pooling_weight = \(n) log(n)/n)
-plot(tag_tmp, type="map_pressure")
+tag_tmp <- geopressure_map_likelihood(tag, sd = sd, log_linear_pooling_weight = \(n) log(n) / n)
+plot(tag_tmp, type = "map_pressure")
 ```
 
 ### Validation

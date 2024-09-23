@@ -43,6 +43,13 @@ book:
       - geopressureviz.qmd
       - labelling-tracks.qmd
 
+    - part: "GeoPressureTemplate"
+      chapters:
+      - geopressuretemplate-project.qmd
+      - geopressuretemplate-label.qmd
+      - geopressuretemplate-twilight.qmd
+      - geopressuretemplate-wind.qmd
+      - geopressuretemplate-workflow.qmd
     - resources.qmd
 
   appendices:

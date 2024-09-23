@@ -121,7 +121,7 @@ m <- subset_move(m,
 )
 
 # Create frames
-frames <- frames_spatial(m, equidistant = TRUE, ext = raster::extent(tag$param$extent)) |>
+frames <- frames_spatial(m, equidistant = TRUE, ext = raster::extent(tag$param$tag_set_map$extent)) |>
   add_labels(x = NULL, y = NULL) |> # add some customizations, such as axis labels
   add_timestamps(type = "label", size = 6) |>
   add_progress()

@@ -1,0 +1,107 @@
+# Workflow
+
+```{r setup}
+id <- "18LX"
+library(GeoPressureR)
+```
+
+The GeoPressureR workflow follows a series of functions taking as input the raw data, the labels, and the configuration, to produce trajectory outputs.
+
+![](assets/cheatsheet_workflow.png){fig-align="center"} *Extract of the [GeoPressureR cheatsheet](https://github.com/Rafnuss/GeoPressureR?tab=readme-ov-file#cheatsheet) illustrating the workflow*
+
+## Presentation of `geopressuretemplate()`
+
+After performing all preparations steps, you will be able to run the entire workflow in a single line:
+
+``` r
+geopressuretemplate("18LX")
+```
+
+The `geopressuretemplate()` function calls on three child functions outlined below. `data/interim/{id}.Rdata` is created in Step 1, and then updated in steps 2 and 3 with the main variables (see below).  
+
+**1. `geopressuretemplate_tag()`**
+
+1.  [`tag_create()`](https://raphaelnussbaumer.com/GeoPressureR/reference/tag_create): Initializes the tag object.
+2.  [`tag_label()`](https://raphaelnussbaumer.com/GeoPressureR/reference/tag_label): Adds labels.
+3.  [`tag_set_map()`](https://raphaelnussbaumer.com/GeoPressureR/reference/tag_set_map): Sets the spatial and temporal parameters.
+4.  \*[`geopressure_map()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_map) Computes the pressure likelihood.
+5.  \*[`twilight_create()`](https://raphaelnussbaumer.com/GeoPressureR/reference/twilight_create) `|>` [`twilight_read()`](https://raphaelnussbaumer.com/GeoPressureR/reference/twilight_read) `|>` [`geolight_map()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geolight_map): Computes the light likelihood.
+
+**2.`geopressuretemplate_graph()`**
+
+1.  [`graph_create()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_create): Creates the graph based on tag.
+2.  \*[`graph_add_wind()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_add_wind): Adds wind data to the graph.
+3.  [`graph_set_movement()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_set_movement): Sets the movement model
+4.  \*[`graph_marginal()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_marginal): Computes the marginal distribution map.
+5.  \*[`graph_most_likely()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_most_likely): Computes the most likely path based on the movement model.
+6.  \*[`graph_simulation()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_simulation): Runs simulations to model multiple possible paths.
+
+**3.`geopressuretemplate_pressurepath()`**
+
+Compute pressurepath [`pressurepath_create()`](https://raphaelnussbaumer.com/GeoPressureR/reference/pressurepath_create) of the `path_most_likely` and/or the `path_geopressureviz`.
+
+## Configuration the workflow
+
+All parameters of the workflow's function are provided in the [`config.yml`](https://github.com/Rafnuss/GeoPressureTemplate/blob/main/config.yml) file following the structure:
+
+``` yml
+tag_id:
+  function_name:
+    argument: value
+```
+
+On top of all GeoPressureR function, you will also need to provide general workflow parameters in `geopressuretemplate`:
+
+``` yaml
+default:
+  geopressuretemplate:
+    likelihood: ["map_pressure", "map_light"]
+    outputs: ["marginal", "most_likely", "simulation"]
+    pressurepath: ["most_likely"]
+```
+
+`likelihood` define which likelihood map to compute and use in the graph model while `outputs` define which outputs to use. In `pressurepath`, you need to set which path to use.
+
+
+You can check the configuration used with:
+
+```{r, eval = F}
+geopressuretemplate_config(id)
+```
+This is constructed by combining the default parameters used in GeoPressureR overwritten by the parameters you've written in `config.yml` in the config `default` and overwritten by the config `18LX`.
+
+## Tag
+
+The tag workflow simply consists of preparing the tag data and computing the likelihood map.
+
+```{r, cache = TRUE, eval = F}
+tag <- geopressuretemplate_tag(id)
+```
+
+With `saveit = TRUE`, this will create `data/interim/18LX.Rdata` which can later be used for your own analysis. 
+
+## Graph
+
+The graph workflow uses the `tag` computed before to create the graph and produce the outputs according to what you defined in `geopressuretemplate` in `config.yml`
+
+```{r, cache = TRUE, eval = F}
+graph <- geopressuretemplate_graph(id)
+```
+
+Because the construction of the graph can be a bit more complicated and takes a lot of time, we've implemented a `tryCatch` approach which returns the `graph` in case the code fails during the processing so that you can troubleshoot the problem more easily.
+
+## Pressurepath
+
+```{r, cache = TRUE, eval = F}
+geopressuretemplate_pressurepath(id, quiet = FALSE)
+```
+
+
+## Outputs
+
+All the information needed for your analysis should now be contained in `./data/interim/18LX.RData`
+
+```{r}
+save_list <- load(glue::glue("./data/interim/{id}.RData"))
+print(save_list)
+```

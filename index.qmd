@@ -57,8 +57,8 @@ Feel free to read through the manual, or to [fork the repository](https://github
 The best way to install the GeoPressureR package is through Github:
 
 ```{r, eval = FALSE}
-install.packages("devtools")
-devtools::install_github("Rafnuss/GeoPressureR")
+# 
+pak::pkg_install("Rafnuss/GeoPressureR")
 ```
 
 We can then load the package:
