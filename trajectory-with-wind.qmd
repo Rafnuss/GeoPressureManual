@@ -35,11 +35,10 @@ Wind can significantly influence a bird's movement, explaining up to 50% of the 
 
 Wind data is available at high resolution (1hr, 0.25°, 37 pressure level) on ERA5 hourly data on pressure levels [@copernicusclimatechangeservice2018]. This data is easily accessible through the <a href="https://bluegreen-labs.github.io/ecmwfr" target="_blank">`ecmwfr`</a> package.
 
-The first step is to set up your CDS access. You will need to create an account on <a href="https://cds.climate.copernicus.eu/user/register" target="_blank">cds.climate.copernicus.eu</a> to generate your API key and uid number. You can store them as environment variables in your `.Renviron` using `usethis::edit_r_environ()`.
+The first step is to create a ECMWF account on <a href="https://www.ecmwf.int/" target="_blank">www.ecmwf.int</a>. Once you have an account, you can log in on [cds.climate.copernicus.eu](https://cds.climate.copernicus.eu) and [retrieve your personal access token](https://cds.climate.copernicus.eu/profile) which should be saved as environment variables in your `.Renviron` using `usethis::edit_r_environ()`.
 
 ```         
-cds_key = "Insert_your_CDS_API_KEY_here"
-cds_user = "Insert_your_CDS_UID_here"
+cds_token =  "{Personal Access Token}"
 ```
 
 As the flights tend to be of short duration, we suggest downloading a file for each flight. This can be done automatically with `tag_download_wind()`, which uses <a href="https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests" target="_blank">`wf_request_batch()`</a> to make all the requests in parallel.
@@ -48,7 +47,7 @@ As the flights tend to be of short duration, we suggest downloading a file for e
 tag_download_wind(tag)
 ```
 
-You can monitor the requests at <a href="https://cds.climate.copernicus.eu/cdsapp#!/yourrequests" target="_blank">https://cds.climate.copernicus.eu/cdsapp#!/yourrequests</a>. The files will be downloaded in `data/wind/`
+You can monitor the requests at [https://cds.climate.copernicus.eu/requests]. The files will be downloaded in `data/wind/`
 
 In case you have a lot of tracks for which you need to download wind data and don't want to block your console, you might consider using an <a href="https://solutions.rstudio.com/r/jobs/" target="_blank">RStudio background job</a>, which can be easily called with the <a href="https://lindeloev.github.io/job/" target="_blank">job package</a>:
 

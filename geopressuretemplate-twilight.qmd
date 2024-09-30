@@ -1,9 +1,8 @@
 ---
 title: Twilight Label
 editor: source
+description: https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-twilight.html
 ---
-
-This script walk you through the labeling of twilight and creation of the light map.
 
 ::: callout-tip
 *Delete this block when you have read!*

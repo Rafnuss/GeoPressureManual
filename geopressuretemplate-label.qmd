@@ -1,6 +1,7 @@
 ---
 title: Tag Label
 editor: source
+description: https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-label.html
 ---
 
 This script will guide you through the tag labelling of pressure and/or acceleration data and creation of the pressure map.
