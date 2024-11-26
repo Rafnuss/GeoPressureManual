@@ -43,11 +43,23 @@ cds_token =  "{Personal Access Token}"
 
 As the flights tend to be of short duration, we suggest downloading a file for each flight. This can be done automatically with `tag_download_wind()`, which uses <a href="https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests" target="_blank">`wf_request_batch()`</a> to make all the requests in parallel.
 
-```{r, eval = FALSE}
-tag_download_wind(tag)
+```{r} 
+#| eval: false
+tag_download_wind(
+  tag,
+  variable = c("u_component_of_wind", "v_component_of_wind", "temperature")
+  )
 ```
 
 You can monitor the requests at [https://cds.climate.copernicus.eu/requests]. The files will be downloaded in `data/wind/`
+
+::: callout-info
+
+In addition to the two required wind variable, we also downloaded the temperature data during the flights. This will later allows us to retrieve temperature data at the exact location of the bird during the flight. See `tag_download_wind()` documentation for more informations on the available variables. 
+
+:::
+
+::: callout-tip
 
 In case you have a lot of tracks for which you need to download wind data and don't want to block your console, you might consider using an <a href="https://solutions.rstudio.com/r/jobs/" target="_blank">RStudio background job</a>, which can be easily called with the <a href="https://lindeloev.github.io/job/" target="_blank">job package</a>:
 
