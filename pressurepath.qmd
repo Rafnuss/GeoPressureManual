@@ -187,9 +187,32 @@ p <- ggplot() +
 plotly::layout(plotly::ggplotly(p), legend = list(orientation = "h"))
 ```
 
-## Save
+## Retrieve ERA5 variables and sunrise along path
 
-The `graph` object can become extremely big for such models, and it might not be recommended to save it. Check its size with `format(object.size(graph), units = "MB")`.
+`pressurepath_create()` can also be used to retrieve other ERA5 variables along a path, such as temperature, cloud cover, and precipitation. This retrieve data from both [ERA5-single-levels](https://doi.org/10.24381/cds.adbb2d47) and [ERA5-LAND](https://doi.org/10.24381/cds.e2161bac) dataset. Use `GeoPressureR:::pressurepath_variable` to list all the variables available. In addition, `pressurepath_create()` also computes the local sunrise and sunset time along the path using `path2twilight()`.  
+
+
+```{r pressurepath-advence}
+#| cache: true
+pressurepath_2_to_5 <- pressurepath_create(
+  tag,
+  # in this example we only retrieve these variable between stationary period 2 and 5
+  path = path_most_likely[path_most_likely$stap_id >= 2 & path_most_likely$stap_id <= 5, ],
+  variable = c("altitude", "surface_pressure", "temperature_2m", "total_cloud_cover", "total_precipitation", "land_sea_mask"),
+  solar_dep = -6,
+  quiet = TRUE
+)
+```
+
+```{r}
+#| echo: false
+pressurepath_2_to_5 %>%
+  mutate(day = date > sunrise & date < sunset) %>%
+  ggplot(aes(x = date, y = temperature_2m, colour = day)) +
+  geom_point()
+```
+
+## Save
 
 ```{r 21-save}
 #| warning: false
