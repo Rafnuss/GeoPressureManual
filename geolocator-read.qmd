@@ -1,0 +1,106 @@
+# Read and use
+
+```{r setup}
+#| message: false
+library(frictionless)
+library(GeoLocatoR)
+library(tidyverse)
+library(ggplot2)
+library(leaflet)
+```
+
+## Read Geolocator Data Package
+
+A cool feature of Zenodo is that you can load the data directly without 
+downloading the files! 
+
+```{r}
+pkg <- read_gldp("https://zenodo.org/records/14099115/files/datapackage.json")
+```
+
+Alternatively, it's possible to load the file from a local directory:
+
+```{r}
+#| eval: false
+pkg <- read_gldp(file.path("~/", "woodlandkingfisher", "datapackage.json"))
+```
+
+## Analyse data with GeoPressureTemplate
+
+If this data package has not yet been analysed with GeoPressureR, you can create a [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) folder from 
+the data package using the following code. Note that this code will open a new RStudio session. 
+
+```{r}
+dest_dir <- tempfile() #
+project_dir <- write_geopressuretemplate(pkg, destdir = dest_dir, overwrite = TRUE)
+```               
+
+::: callout-note
+Make sure [all the steps to make yourself at home](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-project.html#make-yourself-at-home) have been performed.
+
+You're now ready to [analyse your data according to the GeoPressureTemplate instructions!](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-project.html#analyse-the-data)
+:::
+
+## Use analysed data
+
+If the datapackage you want to use has already been analysed, you can retrieve all the resources of the datapackage:
+
+```{r}
+# List available resources
+print(pkg)
+# For instance, display the edges
+edges(pkg) %>%
+  head() %>%
+  knitr::kable(digits = 1)
+```
+
+Here is an example showing all the tracks
+
+```{r}
+#| code-fold: true
+bird_data <- paths(pkg) %>%
+  filter(type == "most_likely")
+
+# Generate a color palette for unique tag IDs
+tag_ids <- unique(bird_data$tag_id)
+color_palette <- colorFactor(palette = "Set1", domain = tag_ids)
+
+leaflet_map <- leaflet(height = 600) %>% addTiles()
+
+# Add polylines and markers for each tag_id
+for (tag in tag_ids) {
+  bird_subset <- bird_data %>% filter(tag_id == tag)
+  leaflet_map <- leaflet_map %>%
+    addPolylines(
+      lng = ~lon,
+      lat = ~lat,
+      data = bird_subset,
+      color = color_palette(tag),
+      weight = 2,
+      popup = ~ paste0("Tag ID: ", tag_id, "<br>Step: ", stap_id)
+    ) %>%
+    addCircleMarkers(
+      lng = ~lon,
+      lat = ~lat,
+      data = bird_subset,
+      color = color_palette(tag),
+      radius = 4,
+      fillOpacity = 0.8,
+      popup = ~ paste0("Tag ID: ", tag_id, "<br>Step: ", stap_id)
+    )
+}
+
+# Add a legend
+leaflet_map <- leaflet_map %>%
+  addLegend(
+    position = "topright",
+    pal = color_palette,
+    values = tag_ids,
+    title = "Bird Trajectories",
+    opacity = 1
+  )
+
+# Display the map
+leaflet_map
+```
+

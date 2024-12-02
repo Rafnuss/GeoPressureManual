@@ -45,15 +45,21 @@ book:
 
     - part: "GeoPressureTemplate"
       chapters:
-      - geopressuretemplate-project.qmd
+      - geopressuretemplate-intro.qmd
       - geopressuretemplate-label.qmd
       - geopressuretemplate-twilight.qmd
       - geopressuretemplate-wind.qmd
       - geopressuretemplate-workflow.qmd
-    - resources.qmd
+
+    - part: "GeoLocator DP"
+      chapters:
+      - geolocator-intro.qmd
+      - geolocator-create.qmd
+      - geolocator-read.qmd
 
   appendices:
-    - export-visual.qmd
+    - resources.qmd
+    #- visuals.qmd
     - probability-aggregation.qmd
 toc: true
 number-sections: true

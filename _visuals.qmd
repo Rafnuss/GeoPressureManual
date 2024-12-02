@@ -1,10 +1,12 @@
 # Export and Visual
 
-```{r, B-setup, message = FALSE, include = FALSE}
+```{r B-setup}
+#| message: false
+#| include: false
 library(GeoPressureR)
 ```
 
-In this chapter, we will see how to create additional figures and export the data.
+In this chapter, we will see how to create additional figures with external package.
 
 ```{r}
 load("./data/interim/18LX.Rdata")
@@ -20,7 +22,8 @@ For all data.frame formats (e.g., `stap`, `pressurepath`, `path_most_likely` etc
 
 We can add additional information on stationary periods such as altitude or duration:
 
-```{r, warning = FALSE}
+```{r}
+#| warning: false
 # Compute summary stats of altitude, grouped by stap_id
 stap <- merge(
   tag$stap,
@@ -45,7 +48,8 @@ Note that the most likely path contains all the information from `stap` and coul
 
 Similarly, flights can also be exported:
 
-```{r, warning = FALSE}
+```{r}
+#| warning: false
 pp_f <- pressurepath[pressurepath$stap_id != round(pressurepath$stap_id), ]
 pp_f$stap_s <- floor(pp_f$stap_id)
 pp_f$stap_t <- ceiling(pp_f$stap_id)
@@ -69,7 +73,8 @@ write.csv(flight, glue::glue("./data/processed/{tag$param$id}/flight.csv"), row.
 
 GeoPressureR `maps` can be exported in a `.geotiff` file using `terra::writeRaster` after you convert them to a `terra::rast` using `rast.map()`.
 
-```{r, warning = FALSE}
+```{r}
+#| warning: false
 terra::writeRaster(rast.map(tag$map_pressure),
   glue::glue("./data/processed/{tag$param$id}/map_pressure.tif"),
   filetype = "GTiff", overwrite = TRUE
@@ -102,7 +107,8 @@ Let's try to create some beautiful visual trajectories using <a href="https://mo
 
 Because the path encodes the position during the entire stationary period, we need to produce a data.frame with the position at the start and end of each stationary period. We can do this with the following function:
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 library(moveVis)
 path_most_likely$duration <- stap2duration(path_most_likely)
 
@@ -129,13 +135,15 @@ frames <- frames_spatial(m, equidistant = TRUE, ext = raster::extent(tag$param$t
 
 It is worth checking what a frame looks like before generating the entire gif (which takes around 10 min to compute), using:
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 plot(frames[[100]])
 ```
 
 If you're satisfied, then go for it!
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 animate_frames(frames, out_file = glue::glue("./assets/movevis_{tag$param$id}.gif"), height = 1000, width = 1000, overwrite = T)
 ```
 
@@ -147,13 +155,15 @@ And here is the map! Check out <a href="https://movevis.org/index.html#examples"
 
 Enter your google map API (see documentation of `?register_google()`)
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 library(ggmap)
 library(cowplot)
 register_google("googlemap_key")
 ```
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 istap_winter <- which(stap2duration(tag$stap) > 50)[2]
 
 p0 <- get_googlemap(
@@ -163,7 +173,10 @@ p0 <- get_googlemap(
   ggmap() + theme_map()
 ```
 
-```{r, eval = FALSE, warning = FALSE}
+```{r}
+#| eval: false
+#| warning: false
+
 # Convert to data.frame
 df <- rast.map(marginal)[[istap_winter]] |>
   terra::disagg(5, method = "bilinear") |>
@@ -186,7 +199,8 @@ p <- p0 +
   )
 ```
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 plot_inset <- ggplot() +
   borders("world", colour = "gray90", fill = "gray50", linewidth = 0.1) +
   coord_quickmap(
@@ -214,7 +228,8 @@ pf <- ggdraw() +
   draw_plot(plot_inset, x = .15, y = .06, width = 0.35, height = 0.35)
 ```
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 ggsave(plot = pf, "assets/wintering_location.png")
 ```
 

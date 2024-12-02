@@ -1,0 +1,183 @@
+# Create
+
+In this guide, we will see how to generate a GeoLocator Data Package from a GeoPressureTemplate folder where you've already performed the analysis of the tracks following the [GeoPressureTemplate workflow](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html).
+
+::: callout-important
+To be able to follow this guide, you will need to have a GeoPressureTemplate project containing:
+
+- An updated the `DESCRIPTION` file with all relevant information, including `version`, `contributors`, `licences` as described in [the R packages book](https://r-pkgs.org/description.html). 
+- One interim `RData` file per tag, with all outputs you would like to publish, generated with the [workflow analysis](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html).
+- the `tag.csv` and `observations.csv` files in the `data/` folder.
+
+If you've not yet performed the GeoPressureR analysis, it is still possible to create a geolocator data package with only the core ressources. 
+:::
+
+
+```{r setup}
+#| message: false
+library(frictionless)
+library(GeoLocatoR)
+library(tidyverse)
+```
+
+For this example, we won't be using the Swainson's Warbler nor Great Reed Warbler as we want a full project with multiple tags. Instead, we download [the GeoPressureTemplate of the Woodland Kingfisher geolocator project](https://github.com/Rafnuss/WoodlandKingfisher). Our goal will essentially be to reproduce the [associated GeoLocator Data Package uploaded on Zenodo already](https://zenodo.org/records/14099115).
+
+We can download this GeoPressureTemplate from Github in a temporary folder using the following code:
+
+```{r}
+#| message: false
+repo <- "Rafnuss/WoodlandKingfisher"
+
+# Create temporary file for the ZIP
+temp_zip <- tempfile(fileext = ".zip")
+
+# Download the ZIP file and unzip the repository
+download.file(
+  glue::glue("https://github.com/{repo}/archive/refs/heads/main.zip"),
+  temp_zip,
+  mode = "wb"
+)
+temp_dir <- tempfile()
+unzip(temp_zip, exdir = temp_dir)
+
+# return the extraction directory
+directory <- file.path(temp_dir, list.files(temp_dir))
+```
+
+We can generate a GeoLocator Data Package `pkg` from a GeoPressureTemplate folder with `create_gldp_geopressuretemplate()`. This function will read the `DESCRIPTION` file and create a frictionless package with the metadata. At this stage, no data is included in the package.
+
+```{r}
+pkg <- create_gldp_geopressuretemplate(directory = directory)
+```
+
+Additional metadata can be added or edited. 
+
+```{r}
+# There are no embargo by default (1970-01-01)
+pkg$embargo <- "2030-01-01"
+
+# If you have a website link, it's quite a nice way to link them up
+# pkg$homepage <- ""
+
+# And the url to an image describing your datapackage
+# pkg$image <- NULL
+
+# Add keywords
+pkg$keywords <- c("Woodland Kingfisher", "intra-african", "multi-sensor geolocator")
+
+# Add DOI of the datapackage if already available or reserve it https://help.zenodo.org/docs/deposit/describe-records/reserve-doi/#reserve-doi
+pkg$id <- "https://doi.org/10.5281/zenodo.13829929"
+
+# Provide the recommended citation for the package
+pkg$citation <- "Nussbaumer, R., & Rime, Y. (2024). Woodland Kingfisher: Migration route and timing of South African Woodland Kingfisher (v1.1). Zenodo. https://doi.org/10.5281/zenodo.11207141"
+
+# Funding sources
+pkg$grants <- c("Swiss Ornithological Intitute")
+
+# Identifiers of resources related to the package (e.g. papers, project pages, derived datasets, APIs, etc.).
+pkg$relatedIdentifiers <- list(
+  list(
+    relationType = "IsPartOf",
+    relatedIdentifier = "10.5281/zenodo.11207081",
+    relatedIdentifierType = "DOI"
+  ),
+  list(
+    relationType = "IsSupplementTo",
+    relatedIdentifier = "",
+    relatedIdentifierType = "DOI"
+  )
+)
+
+# List of references related to the package
+# pkg$references <- NULL
+```
+
+Once you're done, you can visual them
+
+```{r}
+#| eval: true
+str(pkg[!names(pkg) %in% "resources"])
+```
+
+You can also export these metadata as `datapackage.json` with:
+
+```{r}
+#| eval: false
+package_json <- jsonlite::toJSON(pkg, pretty = TRUE, null = "null", na = "null", auto_unbox = TRUE)
+write(package_json, "datapackage.json")
+```
+
+## Add the tag data
+
+Once we have created the package, we can add the data to the package from the interim `.RData` files. 
+
+```{r}
+pkg <- pkg %>%
+  add_gldp_geopressuretemplate(directory = directory, from = "interim")
+print(pkg)
+```
+
+::: callout-info
+If you haven't performed the GeoPressureR analysis yet, but still want to create a GeoLocator Data Package, you can use the `add_gldp_geopressuretempate()` with `from="raw-tag"`, which will read the data from directly "./data/raw-tag/".
+
+```{r}
+#| eval: false
+pkg <- pkg %>%
+  add_gldp_geopressuretemplate(directory = directory, from = "raw-tag")
+```
+:::
+
+## Update `tags` and `observations` tables
+
+In the ideal case, `tags.csv` and `observations.csv` have been returned by the ringer. In this case, you can simply replace them with:
+
+```{r}
+#| eval: false
+tags(pkg) <- read_csv("data/tags.csv") # or read_xlsx()
+observations(pkg) <- read_csv("data/observations.csv")
+```
+
+Alternatively, you might want to start from the table created from the information available in the GeoPressureTemplate folder and edit the tables manually. I suggest creating a temporary `.xlsx` spreadsheet (and not `.csv` to preserve the column class), modify it in Excel, and read it back into R. You can also edit the table directly with `dplyr` functions.
+
+```{r}
+#| eval: false
+temp_file <- tempfile(fileext = ".xlsx")
+write_xlsx(tags(pkg), temp_file)
+system(paste("open", temp_file))
+# Edit it on the external program and once you're done, save you file and update the table
+tags(pkg) <- read_xlsx(temp_file)
+```
+
+::: callout-warning
+Don't forget to update the metadata of your Data Package when you have updated a table.
+
+```{r}
+pkg <- update_gldp(pkg)
+```
+:::
+
+## Check the validity of the data package
+
+You can visualize the coverage of the package by ploting the Data Package. Check for the correct number of tags, as well as equipment and retrieval dates.
+
+```{r}
+plot(pkg)
+```
+
+Finally, we check that the package is compliant with GeoLocator Data Package standards.
+
+```{r}
+#| eval: false
+check_gldp(pkg)
+```
+
+## Write the package and upload to Zenodo
+
+Now that the package is ready, we can write it to disk.
+
+```{r}
+#| eval: false
+write_package(pkg, file.path("~/", pkg$name))
+```
+
+The folder created contains all the resources needed for your GeoLocator-DP. Simply [upload them to your Zenodo](https://zenodo.org/uploads/new)! Use the information in datapackage.json to fill the Zenodo form.
