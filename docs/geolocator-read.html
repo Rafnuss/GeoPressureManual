@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
+<title>16&nbsp; Read and use – A User Manual for GeoPressureR</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./resources.html" rel="next">
+<link href="./geolocator-create.html" rel="prev">
+<link href="./assets/geopressuremanual.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9b53bbf6bc1eaa73b7af1d4afddc3bf9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-NJ17NCTPB5"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
+</script><script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-1.3.1/leaflet.js"></script><link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="site_libs/proj4-2.6.2/proj4.min.js"></script><script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="site_libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<meta property="og:title" content="16&nbsp; Read and use – A User Manual for GeoPressureR">
+<meta property="og:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
+<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<meta property="og:site_name" content="A User Manual for GeoPressureR">
+<meta property="og:image:height" content="3875">
+<meta property="og:image:width" content="2953">
+<meta name="twitter:title" content="16&nbsp; Read and use – A User Manual for GeoPressureR">
+<meta name="twitter:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
+<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<meta name="twitter:image-height" content="3875">
+<meta name="twitter:image-width" content="2953">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./geolocator-intro.html">GeoLocator DP</a></li><li class="breadcrumb-item"><a href="./geolocator-read.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Read and use</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A User Manual for GeoPressureR</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/Rafnuss/GeoPressureManual" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+<li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+      </ul>
+</div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Basic tutorial</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tag-object.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Tag object</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pressure-map.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Pressure map</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trajectory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Trajectory</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced tutorial</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./light-map.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light map</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./trajectory-with-wind.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Trajectory with wind</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Labelling tools</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pressurepath.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pressurepath</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressureviz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">GeoPressureViz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./labelling-tracks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Labelling tracks</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">GeoPressureTemplate</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressuretemplate-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressuretemplate-label.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tag label</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressuretemplate-twilight.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Twilight label</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressuretemplate-wind.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Download wind</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geopressuretemplate-workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Workflow</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">GeoLocator DP</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geolocator-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geolocator-create.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Create</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geolocator-read.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Read and use</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Resources</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./probability-aggregation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Probability aggregation</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p><a href="https://github.com/Rafnuss/GeoPressureTemplate" target="_blank" class="btn btn-sm btn-outline-primary" role="button">Start your own study</a></p>
+</div></div></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#read-geolocator-data-package" id="toc-read-geolocator-data-package" class="nav-link active" data-scroll-target="#read-geolocator-data-package"><span class="header-section-number">16.1</span> Read Geolocator Data Package</a></li>
+  <li><a href="#analyse-data-with-geopressuretemplate" id="toc-analyse-data-with-geopressuretemplate" class="nav-link" data-scroll-target="#analyse-data-with-geopressuretemplate"><span class="header-section-number">16.2</span> Analyse data with GeoPressureTemplate</a></li>
+  <li><a href="#use-analysed-data" id="toc-use-analysed-data" class="nav-link" data-scroll-target="#use-analysed-data"><span class="header-section-number">16.3</span> Use analysed data</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./geolocator-intro.html">GeoLocator DP</a></li><li class="breadcrumb-item"><a href="./geolocator-read.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Read and use</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Read and use</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/frictionlessdata/frictionless-r">frictionless</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rafnuss/geolocator">GeoLocatoR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/">leaflet</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="read-geolocator-data-package" class="level2" data-number="16.1"><h2 data-number="16.1" class="anchored" data-anchor-id="read-geolocator-data-package">
+<span class="header-section-number">16.1</span> Read Geolocator Data Package</h2>
+<p>A cool feature of Zenodo is that you can load the data directly without downloading the files!</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/read_gldp.html">read_gldp</a></span><span class="op">(</span><span class="st">"https://zenodo.org/records/14099115/files/datapackage.json"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Alternatively, it’s possible to load the file from a local directory:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/read_gldp.html">read_gldp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="st">"~/"</span>, <span class="st">"woodlandkingfisher"</span>, <span class="st">"datapackage.json"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="analyse-data-with-geopressuretemplate" class="level2" data-number="16.2"><h2 data-number="16.2" class="anchored" data-anchor-id="analyse-data-with-geopressuretemplate">
+<span class="header-section-number">16.2</span> Analyse data with GeoPressureTemplate</h2>
+<p>If this data package has not yet been analysed with GeoPressureR, you can create a <a href="https://github.com/Rafnuss/GeoPressureTemplate">GeoPressureTemplate</a> folder from the data package using the following code. Note that this code will open a new RStudio session.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dest_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#</span></span>
+<span><span class="va">project_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/write_geopressuretemplate.html">write_geopressuretemplate</a></span><span class="op">(</span><span class="va">pkg</span>, destdir <span class="op">=</span> <span class="va">dest_dir</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>! Created directory: /var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T//RtmpRy0SHX/filefd9150b0fd0d</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Setting active project to
+  "/private/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T/RtmpRy0SHX/filefd9150b0fd0d/woodlandkingfisher".</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Writing 'LICENSE.md'.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>⠙ 4/5 ETA:  1s |   </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure <a href="https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-project.html#make-yourself-at-home">all the steps to make yourself at home</a> have been performed.</p>
+<p>You’re now ready to <a href="https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-project.html#analyse-the-data">analyse your data according to the GeoPressureTemplate instructions!</a></p>
+</div>
+</div>
+</section><section id="use-analysed-data" class="level2" data-number="16.3"><h2 data-number="16.3" class="anchored" data-anchor-id="use-analysed-data">
+<span class="header-section-number">16.3</span> Use analysed data</h2>
+<p>If the datapackage you want to use has already been analysed, you can retrieve all the resources of the datapackage:</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># List available resources</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A GeoLocator Data Package with 8 resourcess:
+• tags
+• observations
+• measurements
+• twilights
+• staps
+• paths
+• edges
+• pressurepaths
+Use `unclass()` to print the Data Package as a list.</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># For instance, display the edges</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/edges.html">edges</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 2%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 2%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 4%">
+<col style="width: 3%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">tag_id</th>
+<th style="text-align: right;">stap_s</th>
+<th style="text-align: right;">stap_t</th>
+<th style="text-align: right;">lat_s</th>
+<th style="text-align: right;">lon_s</th>
+<th style="text-align: right;">lat_t</th>
+<th style="text-align: right;">lon_t</th>
+<th style="text-align: right;">s</th>
+<th style="text-align: right;">t</th>
+<th style="text-align: right;">j</th>
+<th style="text-align: left;">start</th>
+<th style="text-align: left;">end</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">distance</th>
+<th style="text-align: right;">bearing</th>
+<th style="text-align: right;">gs_u</th>
+<th style="text-align: right;">gs_v</th>
+<th style="text-align: right;">ws_u</th>
+<th style="text-align: right;">ws_v</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">16LN</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-22.7</td>
+<td style="text-align: right;">28.8</td>
+<td style="text-align: right;">-20.1</td>
+<td style="text-align: right;">26.6</td>
+<td style="text-align: right;">8503</td>
+<td style="text-align: right;">21109</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2017-04-04 19:42:30</td>
+<td style="text-align: left;">2017-04-05 03:52:30</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">363.6</td>
+<td style="text-align: right;">-38.1</td>
+<td style="text-align: right;">-26.9</td>
+<td style="text-align: right;">31.4</td>
+<td style="text-align: right;">-28.0</td>
+<td style="text-align: right;">-3.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">16LN</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-20.1</td>
+<td style="text-align: right;">26.6</td>
+<td style="text-align: right;">-18.9</td>
+<td style="text-align: right;">26.4</td>
+<td style="text-align: right;">21109</td>
+<td style="text-align: right;">34936</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2017-04-05 17:37:30</td>
+<td style="text-align: left;">2017-04-05 21:12:30</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">140.8</td>
+<td style="text-align: right;">-10.8</td>
+<td style="text-align: right;">-6.0</td>
+<td style="text-align: right;">31.7</td>
+<td style="text-align: right;">-13.8</td>
+<td style="text-align: right;">-1.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">16LN</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-18.9</td>
+<td style="text-align: right;">26.4</td>
+<td style="text-align: right;">-18.1</td>
+<td style="text-align: right;">27.1</td>
+<td style="text-align: right;">34936</td>
+<td style="text-align: right;">49373</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2017-04-06 01:02:30</td>
+<td style="text-align: left;">2017-04-06 03:42:30</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">114.7</td>
+<td style="text-align: right;">43.8</td>
+<td style="text-align: right;">23.0</td>
+<td style="text-align: right;">24.0</td>
+<td style="text-align: right;">-2.3</td>
+<td style="text-align: right;">-0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">16LN</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">-18.1</td>
+<td style="text-align: right;">27.1</td>
+<td style="text-align: right;">-17.1</td>
+<td style="text-align: right;">26.6</td>
+<td style="text-align: right;">49373</td>
+<td style="text-align: right;">63049</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2017-04-06 23:52:30</td>
+<td style="text-align: left;">2017-04-07 03:07:30</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">122.7</td>
+<td style="text-align: right;">-25.7</td>
+<td style="text-align: right;">-12.9</td>
+<td style="text-align: right;">26.9</td>
+<td style="text-align: right;">-16.9</td>
+<td style="text-align: right;">-9.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">16LN</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">-17.1</td>
+<td style="text-align: right;">26.6</td>
+<td style="text-align: right;">-17.1</td>
+<td style="text-align: right;">27.4</td>
+<td style="text-align: right;">63049</td>
+<td style="text-align: right;">77489</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2017-04-07 18:17:30</td>
+<td style="text-align: left;">2017-04-07 21:12:30</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">79.8</td>
+<td style="text-align: right;">90.1</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">-9.5</td>
+<td style="text-align: right;">-3.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">16LN</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">-17.1</td>
+<td style="text-align: right;">27.4</td>
+<td style="text-align: right;">-15.6</td>
+<td style="text-align: right;">25.6</td>
+<td style="text-align: right;">77489</td>
+<td style="text-align: right;">90403</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2017-04-08 17:37:30</td>
+<td style="text-align: left;">2017-04-08 22:17:30</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">250.0</td>
+<td style="text-align: right;">-48.6</td>
+<td style="text-align: right;">-36.0</td>
+<td style="text-align: right;">31.7</td>
+<td style="text-align: right;">-23.2</td>
+<td style="text-align: right;">3.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Here is an example showing all the tracks</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bird_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/paths.html">paths</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">type</span> <span class="op">==</span> <span class="st">"most_likely"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Generate a color palette for unique tag IDs</span></span>
+<span><span class="va">tag_ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">bird_data</span><span class="op">$</span><span class="va">tag_id</span><span class="op">)</span></span>
+<span><span class="va">color_palette</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/colorNumeric.html">colorFactor</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span>, domain <span class="op">=</span> <span class="va">tag_ids</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">leaflet_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html">leaflet</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addTiles</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Add polylines and markers for each tag_id</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">tag</span> <span class="kw">in</span> <span class="va">tag_ids</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">bird_subset</span> <span class="op">&lt;-</span> <span class="va">bird_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">tag_id</span> <span class="op">==</span> <span class="va">tag</span><span class="op">)</span></span>
+<span>  <span class="va">leaflet_map</span> <span class="op">&lt;-</span> <span class="va">leaflet_map</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addPolylines</a></span><span class="op">(</span></span>
+<span>      lng <span class="op">=</span> <span class="op">~</span><span class="va">lon</span>,</span>
+<span>      lat <span class="op">=</span> <span class="op">~</span><span class="va">lat</span>,</span>
+<span>      data <span class="op">=</span> <span class="va">bird_subset</span>,</span>
+<span>      color <span class="op">=</span> <span class="fu">color_palette</span><span class="op">(</span><span class="va">tag</span><span class="op">)</span>,</span>
+<span>      weight <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      popup <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Tag ID: "</span>, <span class="va">tag_id</span>, <span class="st">"&lt;br&gt;Step: "</span>, <span class="va">stap_id</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html">addCircleMarkers</a></span><span class="op">(</span></span>
+<span>      lng <span class="op">=</span> <span class="op">~</span><span class="va">lon</span>,</span>
+<span>      lat <span class="op">=</span> <span class="op">~</span><span class="va">lat</span>,</span>
+<span>      data <span class="op">=</span> <span class="va">bird_subset</span>,</span>
+<span>      color <span class="op">=</span> <span class="fu">color_palette</span><span class="op">(</span><span class="va">tag</span><span class="op">)</span>,</span>
+<span>      radius <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>      fillOpacity <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>      popup <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Tag ID: "</span>, <span class="va">tag_id</span>, <span class="st">"&lt;br&gt;Step: "</span>, <span class="va">stap_id</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Add a legend</span></span>
+<span><span class="va">leaflet_map</span> <span class="op">&lt;-</span> <span class="va">leaflet_map</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/addLegend.html">addLegend</a></span><span class="op">(</span></span>
+<span>    position <span class="op">=</span> <span class="st">"topright"</span>,</span>
+<span>    pal <span class="op">=</span> <span class="va">color_palette</span>,</span>
+<span>    values <span class="op">=</span> <span class="va">tag_ids</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">"Bird Trajectories"</span>,</span>
+<span>    opacity <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Display the map</span></span>
+<span><span class="va">leaflet_map</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="htmlwidget-f535d386dbe6f991096e" style="width:100%;height:580px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f535d386dbe6f991096e">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,26.625,26.375,27.125,26.625,27.375,25.625,24.125,24.125,24.625,24.625,25.625,25.375,24.625,24.125,23.625,24.375,24.875,25.375,25.375,25.625,26.125,26.375,26.375,26.375,26.125,27.375,23.875,23.375,23.125,26.125,26.125,26.375,25.875,25.125,25.875,25.125,25.125,25.125,26.125,27.375,28.125,28.875,28.76857325],"lat":[-22.72463163,-20.125,-18.875,-18.125,-17.125,-17.125,-15.625,-12.375,-11.875,-11.625,-10.375,-8.875,-3.875,-2.125,-0.375,1.125,1.875,1.875,2.625,4.625,5.375,5.875,7.125,7.875,8.125,8.375,8.875,4.375,1.625,-0.625,-3.375,-4.375,-4.125,-7.625,-8.125,-8.625,-9.125,-9.875,-12.125,-13.375,-15.125,-18.125,-21.375,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#E41A1C","weight":2,"opacity":0.5,"fill":false,"fillColor":"#E41A1C","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 16LN<br>Step: 1","Tag ID: 16LN<br>Step: 2","Tag ID: 16LN<br>Step: 3","Tag ID: 16LN<br>Step: 4","Tag ID: 16LN<br>Step: 5","Tag ID: 16LN<br>Step: 6","Tag ID: 16LN<br>Step: 7","Tag ID: 16LN<br>Step: 8","Tag ID: 16LN<br>Step: 9","Tag ID: 16LN<br>Step: 10","Tag ID: 16LN<br>Step: 11","Tag ID: 16LN<br>Step: 12","Tag ID: 16LN<br>Step: 13","Tag ID: 16LN<br>Step: 14","Tag ID: 16LN<br>Step: 15","Tag ID: 16LN<br>Step: 16","Tag ID: 16LN<br>Step: 17","Tag ID: 16LN<br>Step: 18","Tag ID: 16LN<br>Step: 19","Tag ID: 16LN<br>Step: 20","Tag ID: 16LN<br>Step: 21","Tag ID: 16LN<br>Step: 22","Tag ID: 16LN<br>Step: 23","Tag ID: 16LN<br>Step: 24","Tag ID: 16LN<br>Step: 25","Tag ID: 16LN<br>Step: 26","Tag ID: 16LN<br>Step: 27","Tag ID: 16LN<br>Step: 28","Tag ID: 16LN<br>Step: 29","Tag ID: 16LN<br>Step: 30","Tag ID: 16LN<br>Step: 31","Tag ID: 16LN<br>Step: 32","Tag ID: 16LN<br>Step: 33","Tag ID: 16LN<br>Step: 34","Tag ID: 16LN<br>Step: 35","Tag ID: 16LN<br>Step: 36","Tag ID: 16LN<br>Step: 37","Tag ID: 16LN<br>Step: 38","Tag ID: 16LN<br>Step: 39","Tag ID: 16LN<br>Step: 40","Tag ID: 16LN<br>Step: 41","Tag ID: 16LN<br>Step: 42","Tag ID: 16LN<br>Step: 43","Tag ID: 16LN<br>Step: 44"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-20.125,-18.875,-18.125,-17.125,-17.125,-15.625,-12.375,-11.875,-11.625,-10.375,-8.875,-3.875,-2.125,-0.375,1.125,1.875,1.875,2.625,4.625,5.375,5.875,7.125,7.875,8.125,8.375,8.875,4.375,1.625,-0.625,-3.375,-4.375,-4.125,-7.625,-8.125,-8.625,-9.125,-9.875,-12.125,-13.375,-15.125,-18.125,-21.375,-22.72463163],[28.76857325,26.625,26.375,27.125,26.625,27.375,25.625,24.125,24.125,24.625,24.625,25.625,25.375,24.625,24.125,23.625,24.375,24.875,25.375,25.375,25.625,26.125,26.375,26.375,26.375,26.125,27.375,23.875,23.375,23.125,26.125,26.125,26.375,25.875,25.125,25.875,25.125,25.125,25.125,26.125,27.375,28.125,28.875,28.76857325],4,null,null,{"interactive":true,"className":"","stroke":true,"color":"#E41A1C","weight":5,"opacity":0.5,"fill":true,"fillColor":"#E41A1C","fillOpacity":0.8},null,null,["Tag ID: 16LN<br>Step: 1","Tag ID: 16LN<br>Step: 2","Tag ID: 16LN<br>Step: 3","Tag ID: 16LN<br>Step: 4","Tag ID: 16LN<br>Step: 5","Tag ID: 16LN<br>Step: 6","Tag ID: 16LN<br>Step: 7","Tag ID: 16LN<br>Step: 8","Tag ID: 16LN<br>Step: 9","Tag ID: 16LN<br>Step: 10","Tag ID: 16LN<br>Step: 11","Tag ID: 16LN<br>Step: 12","Tag ID: 16LN<br>Step: 13","Tag ID: 16LN<br>Step: 14","Tag ID: 16LN<br>Step: 15","Tag ID: 16LN<br>Step: 16","Tag ID: 16LN<br>Step: 17","Tag ID: 16LN<br>Step: 18","Tag ID: 16LN<br>Step: 19","Tag ID: 16LN<br>Step: 20","Tag ID: 16LN<br>Step: 21","Tag ID: 16LN<br>Step: 22","Tag ID: 16LN<br>Step: 23","Tag ID: 16LN<br>Step: 24","Tag ID: 16LN<br>Step: 25","Tag ID: 16LN<br>Step: 26","Tag ID: 16LN<br>Step: 27","Tag ID: 16LN<br>Step: 28","Tag ID: 16LN<br>Step: 29","Tag ID: 16LN<br>Step: 30","Tag ID: 16LN<br>Step: 31","Tag ID: 16LN<br>Step: 32","Tag ID: 16LN<br>Step: 33","Tag ID: 16LN<br>Step: 34","Tag ID: 16LN<br>Step: 35","Tag ID: 16LN<br>Step: 36","Tag ID: 16LN<br>Step: 37","Tag ID: 16LN<br>Step: 38","Tag ID: 16LN<br>Step: 39","Tag ID: 16LN<br>Step: 40","Tag ID: 16LN<br>Step: 41","Tag ID: 16LN<br>Step: 42","Tag ID: 16LN<br>Step: 43","Tag ID: 16LN<br>Step: 44"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,26.875,26.625,27.625,27.875,28.125,28.375,27.375,27.125,26.625,26.375,26.125,26.375,26.375,26.625,26.625,26.875,25.625,26.375,26.375,25.875,25.625,26.625,27.375,28.375,27.625,27.375,24.375,25.875,28.125,29.625,29.375,26.625,26.125,27.125,27.875,27.625,27.375,26.375,25.625,24.125,24.625,24.625,24.625,24.375,24.875,24.875,25.625,26.625,26.125,28.76857325],"lat":[-22.72463163,-18.375,-17.625,-16.375,-16.125,-15.375,-14.625,-13.125,-12.625,-11.625,-10.875,-10.375,-9.625,-10.125,-10.375,-7.875,-3.875,-2.875,1.375,1.875,3.125,4.625,6.125,6.875,7.875,8.625,8.375,5.125,0.125,-3.875,-4.875,-4.625,-4.875,-5.375,-5.875,-5.875,-6.875,-8.125,-8.375,-10.125,-12.875,-14.125,-15.125,-15.625,-15.875,-16.375,-16.875,-17.625,-17.875,-21.125,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#377EB8","weight":2,"opacity":0.5,"fill":false,"fillColor":"#377EB8","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 16LO<br>Step: 1","Tag ID: 16LO<br>Step: 2","Tag ID: 16LO<br>Step: 3","Tag ID: 16LO<br>Step: 4","Tag ID: 16LO<br>Step: 5","Tag ID: 16LO<br>Step: 6","Tag ID: 16LO<br>Step: 7","Tag ID: 16LO<br>Step: 8","Tag ID: 16LO<br>Step: 9","Tag ID: 16LO<br>Step: 10","Tag ID: 16LO<br>Step: 11","Tag ID: 16LO<br>Step: 12","Tag ID: 16LO<br>Step: 13","Tag ID: 16LO<br>Step: 14","Tag ID: 16LO<br>Step: 15","Tag ID: 16LO<br>Step: 16","Tag ID: 16LO<br>Step: 17","Tag ID: 16LO<br>Step: 18","Tag ID: 16LO<br>Step: 19","Tag ID: 16LO<br>Step: 20","Tag ID: 16LO<br>Step: 21","Tag ID: 16LO<br>Step: 22","Tag ID: 16LO<br>Step: 23","Tag ID: 16LO<br>Step: 24","Tag ID: 16LO<br>Step: 25","Tag ID: 16LO<br>Step: 26","Tag ID: 16LO<br>Step: 27","Tag ID: 16LO<br>Step: 28","Tag ID: 16LO<br>Step: 29","Tag ID: 16LO<br>Step: 30","Tag ID: 16LO<br>Step: 31","Tag ID: 16LO<br>Step: 32","Tag ID: 16LO<br>Step: 33","Tag ID: 16LO<br>Step: 34","Tag ID: 16LO<br>Step: 35","Tag ID: 16LO<br>Step: 36","Tag ID: 16LO<br>Step: 37","Tag ID: 16LO<br>Step: 38","Tag ID: 16LO<br>Step: 39","Tag ID: 16LO<br>Step: 40","Tag ID: 16LO<br>Step: 41","Tag ID: 16LO<br>Step: 42","Tag ID: 16LO<br>Step: 43","Tag ID: 16LO<br>Step: 44","Tag ID: 16LO<br>Step: 45","Tag ID: 16LO<br>Step: 46","Tag ID: 16LO<br>Step: 47","Tag ID: 16LO<br>Step: 48","Tag ID: 16LO<br>Step: 49","Tag ID: 16LO<br>Step: 50","Tag ID: 16LO<br>Step: 51"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-18.375,-17.625,-16.375,-16.125,-15.375,-14.625,-13.125,-12.625,-11.625,-10.875,-10.375,-9.625,-10.125,-10.375,-7.875,-3.875,-2.875,1.375,1.875,3.125,4.625,6.125,6.875,7.875,8.625,8.375,5.125,0.125,-3.875,-4.875,-4.625,-4.875,-5.375,-5.875,-5.875,-6.875,-8.125,-8.375,-10.125,-12.875,-14.125,-15.125,-15.625,-15.875,-16.375,-16.875,-17.625,-17.875,-21.125,-22.72463163],[28.76857325,26.875,26.625,27.625,27.875,28.125,28.375,27.375,27.125,26.625,26.375,26.125,26.375,26.375,26.625,26.625,26.875,25.625,26.375,26.375,25.875,25.625,26.625,27.375,28.375,27.625,27.375,24.375,25.875,28.125,29.625,29.375,26.625,26.125,27.125,27.875,27.625,27.375,26.375,25.625,24.125,24.625,24.625,24.625,24.375,24.875,24.875,25.625,26.625,26.125,28.76857325],4,null,null,{"interactive":true,"className":"","stroke":true,"color":"#377EB8","weight":5,"opacity":0.5,"fill":true,"fillColor":"#377EB8","fillOpacity":0.8},null,null,["Tag ID: 16LO<br>Step: 1","Tag ID: 16LO<br>Step: 2","Tag ID: 16LO<br>Step: 3","Tag ID: 16LO<br>Step: 4","Tag ID: 16LO<br>Step: 5","Tag ID: 16LO<br>Step: 6","Tag ID: 16LO<br>Step: 7","Tag ID: 16LO<br>Step: 8","Tag ID: 16LO<br>Step: 9","Tag ID: 16LO<br>Step: 10","Tag ID: 16LO<br>Step: 11","Tag ID: 16LO<br>Step: 12","Tag ID: 16LO<br>Step: 13","Tag ID: 16LO<br>Step: 14","Tag ID: 16LO<br>Step: 15","Tag ID: 16LO<br>Step: 16","Tag ID: 16LO<br>Step: 17","Tag ID: 16LO<br>Step: 18","Tag ID: 16LO<br>Step: 19","Tag ID: 16LO<br>Step: 20","Tag ID: 16LO<br>Step: 21","Tag ID: 16LO<br>Step: 22","Tag ID: 16LO<br>Step: 23","Tag ID: 16LO<br>Step: 24","Tag ID: 16LO<br>Step: 25","Tag ID: 16LO<br>Step: 26","Tag ID: 16LO<br>Step: 27","Tag ID: 16LO<br>Step: 28","Tag ID: 16LO<br>Step: 29","Tag ID: 16LO<br>Step: 30","Tag ID: 16LO<br>Step: 31","Tag ID: 16LO<br>Step: 32","Tag ID: 16LO<br>Step: 33","Tag ID: 16LO<br>Step: 34","Tag ID: 16LO<br>Step: 35","Tag ID: 16LO<br>Step: 36","Tag ID: 16LO<br>Step: 37","Tag ID: 16LO<br>Step: 38","Tag ID: 16LO<br>Step: 39","Tag ID: 16LO<br>Step: 40","Tag ID: 16LO<br>Step: 41","Tag ID: 16LO<br>Step: 42","Tag ID: 16LO<br>Step: 43","Tag ID: 16LO<br>Step: 44","Tag ID: 16LO<br>Step: 45","Tag ID: 16LO<br>Step: 46","Tag ID: 16LO<br>Step: 47","Tag ID: 16LO<br>Step: 48","Tag ID: 16LO<br>Step: 49","Tag ID: 16LO<br>Step: 50","Tag ID: 16LO<br>Step: 51"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,27.875,26.875,27.125,26.125,25.875,25.625,24.625,26.125,26.875,27.125,27.375,28.125,27.625,27.875,27.625,27.625,27.375,27.375,27.625,28.625,28.125,28.625,28.875,29.875,27.625,28.875,28.875,28.875,27.875,27.875,26.875,26.875,26.875,27.375,29.125,28.76857325],"lat":[-22.72463163,-19.125,-16.125,-14.875,-13.375,-9.875,-8.875,-2.125,2.375,4.125,4.875,5.125,5.375,5.875,5.375,6.375,6.625,6.875,7.375,7.875,8.125,8.875,8.875,4.625,0.375,-2.875,-4.625,-5.375,-5.375,-8.375,-10.375,-13.375,-14.125,-15.875,-16.375,-17.625,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#4DAF4A","weight":2,"opacity":0.5,"fill":false,"fillColor":"#4DAF4A","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 16LP<br>Step: 1","Tag ID: 16LP<br>Step: 2","Tag ID: 16LP<br>Step: 3","Tag ID: 16LP<br>Step: 4","Tag ID: 16LP<br>Step: 5","Tag ID: 16LP<br>Step: 6","Tag ID: 16LP<br>Step: 7","Tag ID: 16LP<br>Step: 8","Tag ID: 16LP<br>Step: 9","Tag ID: 16LP<br>Step: 10","Tag ID: 16LP<br>Step: 11","Tag ID: 16LP<br>Step: 12","Tag ID: 16LP<br>Step: 13","Tag ID: 16LP<br>Step: 14","Tag ID: 16LP<br>Step: 15","Tag ID: 16LP<br>Step: 16","Tag ID: 16LP<br>Step: 17","Tag ID: 16LP<br>Step: 18","Tag ID: 16LP<br>Step: 19","Tag ID: 16LP<br>Step: 20","Tag ID: 16LP<br>Step: 21","Tag ID: 16LP<br>Step: 22","Tag ID: 16LP<br>Step: 23","Tag ID: 16LP<br>Step: 24","Tag ID: 16LP<br>Step: 25","Tag ID: 16LP<br>Step: 26","Tag ID: 16LP<br>Step: 27","Tag ID: 16LP<br>Step: 28","Tag ID: 16LP<br>Step: 29","Tag ID: 16LP<br>Step: 30","Tag ID: 16LP<br>Step: 31","Tag ID: 16LP<br>Step: 32","Tag ID: 16LP<br>Step: 33","Tag ID: 16LP<br>Step: 34","Tag ID: 16LP<br>Step: 35","Tag ID: 16LP<br>Step: 36","Tag ID: 16LP<br>Step: 37"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-19.125,-16.125,-14.875,-13.375,-9.875,-8.875,-2.125,2.375,4.125,4.875,5.125,5.375,5.875,5.375,6.375,6.625,6.875,7.375,7.875,8.125,8.875,8.875,4.625,0.375,-2.875,-4.625,-5.375,-5.375,-8.375,-10.375,-13.375,-14.125,-15.875,-16.375,-17.625,-22.72463163],[28.76857325,27.875,26.875,27.125,26.125,25.875,25.625,24.625,26.125,26.875,27.125,27.375,28.125,27.625,27.875,27.625,27.625,27.375,27.375,27.625,28.625,28.125,28.625,28.875,29.875,27.625,28.875,28.875,28.875,27.875,27.875,26.875,26.875,26.875,27.375,29.125,28.76857325],4,null,null,{"interactive":true,"className":"","stroke":true,"color":"#4DAF4A","weight":5,"opacity":0.5,"fill":true,"fillColor":"#4DAF4A","fillOpacity":0.8},null,null,["Tag ID: 16LP<br>Step: 1","Tag ID: 16LP<br>Step: 2","Tag ID: 16LP<br>Step: 3","Tag ID: 16LP<br>Step: 4","Tag ID: 16LP<br>Step: 5","Tag ID: 16LP<br>Step: 6","Tag ID: 16LP<br>Step: 7","Tag ID: 16LP<br>Step: 8","Tag ID: 16LP<br>Step: 9","Tag ID: 16LP<br>Step: 10","Tag ID: 16LP<br>Step: 11","Tag ID: 16LP<br>Step: 12","Tag ID: 16LP<br>Step: 13","Tag ID: 16LP<br>Step: 14","Tag ID: 16LP<br>Step: 15","Tag ID: 16LP<br>Step: 16","Tag ID: 16LP<br>Step: 17","Tag ID: 16LP<br>Step: 18","Tag ID: 16LP<br>Step: 19","Tag ID: 16LP<br>Step: 20","Tag ID: 16LP<br>Step: 21","Tag ID: 16LP<br>Step: 22","Tag ID: 16LP<br>Step: 23","Tag ID: 16LP<br>Step: 24","Tag ID: 16LP<br>Step: 25","Tag ID: 16LP<br>Step: 26","Tag ID: 16LP<br>Step: 27","Tag ID: 16LP<br>Step: 28","Tag ID: 16LP<br>Step: 29","Tag ID: 16LP<br>Step: 30","Tag ID: 16LP<br>Step: 31","Tag ID: 16LP<br>Step: 32","Tag ID: 16LP<br>Step: 33","Tag ID: 16LP<br>Step: 34","Tag ID: 16LP<br>Step: 35","Tag ID: 16LP<br>Step: 36","Tag ID: 16LP<br>Step: 37"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,28.125,27.625,28.375,28.125,27.875,27.375,26.625,27.125,26.625,26.125,25.875,25.125,25.125,25.625,25.625,24.875,26.375,25.875,26.375,27.625,27.875,26.625,26.625,25.625,25.375,25.125,24.125,23.875,23.375,22.875,22.875,22.625,23.875,23.375,24.125,24.875,25.375,25.375,25.125,23.875,24.125,24.375,24.625,24.875,24.625,27.625,29.125,28.375,28.375,28.375,28.76857325],"lat":[-22.72463163,-21.875,-20.875,-20.125,-20.125,-20.375,-20.125,-17.125,-16.875,-16.125,-12.375,-8.125,-5.625,-4.375,-4.125,-3.625,-1.625,2.375,4.625,5.125,6.125,7.125,8.125,9.125,9.625,9.875,8.625,4.625,3.125,0.625,-0.625,-1.875,-3.625,-3.875,-5.125,-5.625,-7.125,-9.625,-9.875,-10.125,-12.875,-13.125,-13.625,-13.875,-15.375,-15.125,-18.875,-21.125,-22.625,-22.875,-22.375,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#984EA3","weight":2,"opacity":0.5,"fill":false,"fillColor":"#984EA3","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 20IK<br>Step: 1","Tag ID: 20IK<br>Step: 2","Tag ID: 20IK<br>Step: 3","Tag ID: 20IK<br>Step: 4","Tag ID: 20IK<br>Step: 5","Tag ID: 20IK<br>Step: 6","Tag ID: 20IK<br>Step: 7","Tag ID: 20IK<br>Step: 8","Tag ID: 20IK<br>Step: 9","Tag ID: 20IK<br>Step: 10","Tag ID: 20IK<br>Step: 11","Tag ID: 20IK<br>Step: 12","Tag ID: 20IK<br>Step: 13","Tag ID: 20IK<br>Step: 14","Tag ID: 20IK<br>Step: 15","Tag ID: 20IK<br>Step: 16","Tag ID: 20IK<br>Step: 17","Tag ID: 20IK<br>Step: 18","Tag ID: 20IK<br>Step: 19","Tag ID: 20IK<br>Step: 20","Tag ID: 20IK<br>Step: 21","Tag ID: 20IK<br>Step: 22","Tag ID: 20IK<br>Step: 23","Tag ID: 20IK<br>Step: 24","Tag ID: 20IK<br>Step: 25","Tag ID: 20IK<br>Step: 26","Tag ID: 20IK<br>Step: 27","Tag ID: 20IK<br>Step: 28","Tag ID: 20IK<br>Step: 29","Tag ID: 20IK<br>Step: 30","Tag ID: 20IK<br>Step: 31","Tag ID: 20IK<br>Step: 32","Tag ID: 20IK<br>Step: 33","Tag ID: 20IK<br>Step: 34","Tag ID: 20IK<br>Step: 35","Tag ID: 20IK<br>Step: 36","Tag ID: 20IK<br>Step: 37","Tag ID: 20IK<br>Step: 38","Tag ID: 20IK<br>Step: 39","Tag ID: 20IK<br>Step: 40","Tag ID: 20IK<br>Step: 41","Tag ID: 20IK<br>Step: 42","Tag ID: 20IK<br>Step: 43","Tag ID: 20IK<br>Step: 44","Tag ID: 20IK<br>Step: 45","Tag ID: 20IK<br>Step: 46","Tag ID: 20IK<br>Step: 47","Tag ID: 20IK<br>Step: 48","Tag ID: 20IK<br>Step: 49","Tag ID: 20IK<br>Step: 50","Tag ID: 20IK<br>Step: 51","Tag ID: 20IK<br>Step: 52"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-21.875,-20.875,-20.125,-20.125,-20.375,-20.125,-17.125,-16.875,-16.125,-12.375,-8.125,-5.625,-4.375,-4.125,-3.625,-1.625,2.375,4.625,5.125,6.125,7.125,8.125,9.125,9.625,9.875,8.625,4.625,3.125,0.625,-0.625,-1.875,-3.625,-3.875,-5.125,-5.625,-7.125,-9.625,-9.875,-10.125,-12.875,-13.125,-13.625,-13.875,-15.375,-15.125,-18.875,-21.125,-22.625,-22.875,-22.375,-22.72463163],[28.76857325,28.125,27.625,28.375,28.125,27.875,27.375,26.625,27.125,26.625,26.125,25.875,25.125,25.125,25.625,25.625,24.875,26.375,25.875,26.375,27.625,27.875,26.625,26.625,25.625,25.375,25.125,24.125,23.875,23.375,22.875,22.875,22.625,23.875,23.375,24.125,24.875,25.375,25.375,25.125,23.875,24.125,24.375,24.625,24.875,24.625,27.625,29.125,28.375,28.375,28.375,28.76857325],4,null,null,{"interactive":true,"className":"","stroke":true,"color":"#984EA3","weight":5,"opacity":0.5,"fill":true,"fillColor":"#984EA3","fillOpacity":0.8},null,null,["Tag ID: 20IK<br>Step: 1","Tag ID: 20IK<br>Step: 2","Tag ID: 20IK<br>Step: 3","Tag ID: 20IK<br>Step: 4","Tag ID: 20IK<br>Step: 5","Tag ID: 20IK<br>Step: 6","Tag ID: 20IK<br>Step: 7","Tag ID: 20IK<br>Step: 8","Tag ID: 20IK<br>Step: 9","Tag ID: 20IK<br>Step: 10","Tag ID: 20IK<br>Step: 11","Tag ID: 20IK<br>Step: 12","Tag ID: 20IK<br>Step: 13","Tag ID: 20IK<br>Step: 14","Tag ID: 20IK<br>Step: 15","Tag ID: 20IK<br>Step: 16","Tag ID: 20IK<br>Step: 17","Tag ID: 20IK<br>Step: 18","Tag ID: 20IK<br>Step: 19","Tag ID: 20IK<br>Step: 20","Tag ID: 20IK<br>Step: 21","Tag ID: 20IK<br>Step: 22","Tag ID: 20IK<br>Step: 23","Tag ID: 20IK<br>Step: 24","Tag ID: 20IK<br>Step: 25","Tag ID: 20IK<br>Step: 26","Tag ID: 20IK<br>Step: 27","Tag ID: 20IK<br>Step: 28","Tag ID: 20IK<br>Step: 29","Tag ID: 20IK<br>Step: 30","Tag ID: 20IK<br>Step: 31","Tag ID: 20IK<br>Step: 32","Tag ID: 20IK<br>Step: 33","Tag ID: 20IK<br>Step: 34","Tag ID: 20IK<br>Step: 35","Tag ID: 20IK<br>Step: 36","Tag ID: 20IK<br>Step: 37","Tag ID: 20IK<br>Step: 38","Tag ID: 20IK<br>Step: 39","Tag ID: 20IK<br>Step: 40","Tag ID: 20IK<br>Step: 41","Tag ID: 20IK<br>Step: 42","Tag ID: 20IK<br>Step: 43","Tag ID: 20IK<br>Step: 44","Tag ID: 20IK<br>Step: 45","Tag ID: 20IK<br>Step: 46","Tag ID: 20IK<br>Step: 47","Tag ID: 20IK<br>Step: 48","Tag ID: 20IK<br>Step: 49","Tag ID: 20IK<br>Step: 50","Tag ID: 20IK<br>Step: 51","Tag ID: 20IK<br>Step: 52"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,26.875,25.875,26.875,27.125,26.875,26.625,26.375,26.125,26.375,26.375,26.125,26.125,26.125,25.125,24.875,24.875,24.625,23.125,23.625,23.625,23.875,23.125,23.125,24.125,24.125,23.875,24.875,25.125,25.375,25.875,26.125,27.125,27.375,27.625,27.875,28.125,28.625,28.625],"lat":[-22.72463163,-17.875,-15.625,-14.625,-14.375,-14.125,-12.125,-11.125,-9.875,-9.375,-8.625,-7.375,-7.125,-6.875,-6.125,-5.875,-5.125,-4.625,0.875,1.625,2.375,3.125,3.875,4.875,5.125,5.625,5.875,7.875,8.625,9.125,9.125,9.375,9.375,9.625,9.875,10.125,10.625,10.875,10.875]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#FF7F00","weight":2,"opacity":0.5,"fill":false,"fillColor":"#FF7F00","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 22NO<br>Step: 1","Tag ID: 22NO<br>Step: 2","Tag ID: 22NO<br>Step: 3","Tag ID: 22NO<br>Step: 4","Tag ID: 22NO<br>Step: 5","Tag ID: 22NO<br>Step: 6","Tag ID: 22NO<br>Step: 7","Tag ID: 22NO<br>Step: 8","Tag ID: 22NO<br>Step: 9","Tag ID: 22NO<br>Step: 10","Tag ID: 22NO<br>Step: 11","Tag ID: 22NO<br>Step: 12","Tag ID: 22NO<br>Step: 13","Tag ID: 22NO<br>Step: 14","Tag ID: 22NO<br>Step: 15","Tag ID: 22NO<br>Step: 16","Tag ID: 22NO<br>Step: 17","Tag ID: 22NO<br>Step: 18","Tag ID: 22NO<br>Step: 19","Tag ID: 22NO<br>Step: 20","Tag ID: 22NO<br>Step: 21","Tag ID: 22NO<br>Step: 22","Tag ID: 22NO<br>Step: 23","Tag ID: 22NO<br>Step: 24","Tag ID: 22NO<br>Step: 25","Tag ID: 22NO<br>Step: 26","Tag ID: 22NO<br>Step: 27","Tag ID: 22NO<br>Step: 28","Tag ID: 22NO<br>Step: 29","Tag ID: 22NO<br>Step: 30","Tag ID: 22NO<br>Step: 31","Tag ID: 22NO<br>Step: 32","Tag ID: 22NO<br>Step: 33","Tag ID: 22NO<br>Step: 34","Tag ID: 22NO<br>Step: 35","Tag ID: 22NO<br>Step: 36","Tag ID: 22NO<br>Step: 37","Tag ID: 22NO<br>Step: 38","Tag ID: 22NO<br>Step: 39"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-17.875,-15.625,-14.625,-14.375,-14.125,-12.125,-11.125,-9.875,-9.375,-8.625,-7.375,-7.125,-6.875,-6.125,-5.875,-5.125,-4.625,0.875,1.625,2.375,3.125,3.875,4.875,5.125,5.625,5.875,7.875,8.625,9.125,9.125,9.375,9.375,9.625,9.875,10.125,10.625,10.875,10.875],[28.76857325,26.875,25.875,26.875,27.125,26.875,26.625,26.375,26.125,26.375,26.375,26.125,26.125,26.125,25.125,24.875,24.875,24.625,23.125,23.625,23.625,23.875,23.125,23.125,24.125,24.125,23.875,24.875,25.125,25.375,25.875,26.125,27.125,27.375,27.625,27.875,28.125,28.625,28.625],4,null,null,{"interactive":true,"className":"","stroke":true,"color":"#FF7F00","weight":5,"opacity":0.5,"fill":true,"fillColor":"#FF7F00","fillOpacity":0.8},null,null,["Tag ID: 22NO<br>Step: 1","Tag ID: 22NO<br>Step: 2","Tag ID: 22NO<br>Step: 3","Tag ID: 22NO<br>Step: 4","Tag ID: 22NO<br>Step: 5","Tag ID: 22NO<br>Step: 6","Tag ID: 22NO<br>Step: 7","Tag ID: 22NO<br>Step: 8","Tag ID: 22NO<br>Step: 9","Tag ID: 22NO<br>Step: 10","Tag ID: 22NO<br>Step: 11","Tag ID: 22NO<br>Step: 12","Tag ID: 22NO<br>Step: 13","Tag ID: 22NO<br>Step: 14","Tag ID: 22NO<br>Step: 15","Tag ID: 22NO<br>Step: 16","Tag ID: 22NO<br>Step: 17","Tag ID: 22NO<br>Step: 18","Tag ID: 22NO<br>Step: 19","Tag ID: 22NO<br>Step: 20","Tag ID: 22NO<br>Step: 21","Tag ID: 22NO<br>Step: 22","Tag ID: 22NO<br>Step: 23","Tag ID: 22NO<br>Step: 24","Tag ID: 22NO<br>Step: 25","Tag ID: 22NO<br>Step: 26","Tag ID: 22NO<br>Step: 27","Tag ID: 22NO<br>Step: 28","Tag ID: 22NO<br>Step: 29","Tag ID: 22NO<br>Step: 30","Tag ID: 22NO<br>Step: 31","Tag ID: 22NO<br>Step: 32","Tag ID: 22NO<br>Step: 33","Tag ID: 22NO<br>Step: 34","Tag ID: 22NO<br>Step: 35","Tag ID: 22NO<br>Step: 36","Tag ID: 22NO<br>Step: 37","Tag ID: 22NO<br>Step: 38","Tag ID: 22NO<br>Step: 39"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLegend","args":[{"colors":["#E41A1C","#377EB8","#4DAF4A","#984EA3","#FF7F00"],"labels":["16LN","16LO","16LP","20IK","22NO"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"Bird Trajectories","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[-22.875,10.875],"lng":[22.625,29.875]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/raphaelnussbaumer\.com\/GeoPressureManual\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./geolocator-create.html" class="pagination-link" aria-label="Create">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Create</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./resources.html" class="pagination-link" aria-label="Resources">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Resources</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

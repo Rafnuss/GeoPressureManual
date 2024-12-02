@@ -2,70 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/index.html</loc>
-    <lastmod>2024-09-10T12:47:50.575Z</lastmod>
+    <lastmod>2024-11-30T21:29:22.457Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/tag-object.html</loc>
-    <lastmod>2024-03-09T05:57:22.678Z</lastmod>
+    <lastmod>2024-11-26T17:04:54.987Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/pressure-map.html</loc>
-    <lastmod>2024-03-09T06:02:38.295Z</lastmod>
+    <lastmod>2024-12-02T07:46:19.131Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/trajectory.html</loc>
-    <lastmod>2024-03-09T05:39:04.437Z</lastmod>
+    <lastmod>2024-11-26T17:06:44.402Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/light-map.html</loc>
-    <lastmod>2024-09-10T11:55:05.320Z</lastmod>
+    <lastmod>2024-11-26T17:06:44.375Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/trajectory-with-wind.html</loc>
-    <lastmod>2024-09-30T11:05:12.404Z</lastmod>
+    <lastmod>2024-12-02T07:46:29.317Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/pressurepath.html</loc>
-    <lastmod>2024-09-10T12:27:15.572Z</lastmod>
+    <lastmod>2024-11-26T17:12:41.173Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/geopressureviz.html</loc>
-    <lastmod>2024-03-08T22:25:27.578Z</lastmod>
+    <lastmod>2024-11-26T17:06:10.885Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html</loc>
-    <lastmod>2024-09-10T10:48:38.477Z</lastmod>
+    <lastmod>2024-11-26T17:06:44.363Z</lastmod>
   </url>
   <url>
-    <loc>https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-project.html</loc>
-    <lastmod>2024-09-10T14:06:44.867Z</lastmod>
+    <loc>https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-intro.html</loc>
+    <lastmod>2024-12-01T19:29:14.034Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-label.html</loc>
-    <lastmod>2024-09-30T11:11:27.255Z</lastmod>
+    <lastmod>2024-12-02T07:44:36.568Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-twilight.html</loc>
-    <lastmod>2024-09-30T11:11:28.998Z</lastmod>
+    <lastmod>2024-12-02T07:44:37.016Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-wind.html</loc>
-    <lastmod>2024-09-30T17:41:40.698Z</lastmod>
+    <lastmod>2024-12-02T07:44:37.369Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html</loc>
-    <lastmod>2024-09-13T09:46:07.343Z</lastmod>
+    <lastmod>2024-12-01T18:31:18.826Z</lastmod>
+  </url>
+  <url>
+    <loc>https://raphaelnussbaumer.com/GeoPressureManual/geolocator-intro.html</loc>
+    <lastmod>2024-12-01T19:36:10.055Z</lastmod>
+  </url>
+  <url>
+    <loc>https://raphaelnussbaumer.com/GeoPressureManual/geolocator-create.html</loc>
+    <lastmod>2024-12-02T07:30:44.012Z</lastmod>
+  </url>
+  <url>
+    <loc>https://raphaelnussbaumer.com/GeoPressureManual/geolocator-read.html</loc>
+    <lastmod>2024-12-02T07:30:44.596Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/resources.html</loc>
-    <lastmod>2024-03-11T06:58:43.581Z</lastmod>
-  </url>
-  <url>
-    <loc>https://raphaelnussbaumer.com/GeoPressureManual/export-visual.html</loc>
-    <lastmod>2024-09-10T12:27:37.392Z</lastmod>
+    <lastmod>2024-12-02T05:28:07.135Z</lastmod>
   </url>
   <url>
     <loc>https://raphaelnussbaumer.com/GeoPressureManual/probability-aggregation.html</loc>
-    <lastmod>2024-09-10T10:48:39.909Z</lastmod>
+    <lastmod>2024-11-26T17:04:54.979Z</lastmod>
   </url>
 </urlset>
