@@ -1,16 +1,12 @@
-# Project folder
+# Introduction
 
-Analyzing geolocator data with [GeoPressureR](https://raphaelnussbaumer.com/GeoPressureR/) is full of potential, but the the path is long and the journey can be challenging. [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) provides a start-up R project to make that journey easier.
-
-::: callout-info
-[GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) is a [Github repository template](https://docs.github.com/articles/creating-a-repository-from-a-template/) which contains a standard project folder structure and R script to store your data, analyse it, and produce trajectory outputs.
-:::
+[GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) is a [Github repository template](https://docs.github.com/articles/creating-a-repository-from-a-template/) which contains a standard folder structure and R scripts to store your data, analyse it, and produce trajectory outputs. Download it as a starting point to organise your data and start your analysis. It's an initial flexible structure that should be adapted to each individual project.
 
 ## 📁 Project structure
 
 GeoPressureTemplate defines a standardized project folder structure based on a mix of [rrrpkg](https://github.com/ropensci/rrrpkg#getting-started-with-a-research-compendium), [rrtools](https://github.com/benmarwick/rrtools#4-rrtoolsuse_analysis) and [cookiecutter data science](http://drivendata.github.io/cookiecutter-data-science/#directory-structure).
 
-```         
+```
 GeoPressureTemplate/
 ├── DESCRIPTION                             # Project metadata and dependencies
 ├── README.md                               # Top-level description of content and guide to users
@@ -43,7 +39,9 @@ GeoPressureTemplate/
 │   ├── 1-label.qmd
 │   ├── 2-twilight.qmd
 │   ├── 3-wind.qmd
-│   └── 4-geopressuretemplate.R
+│   ├── 4-geopressuretemplate.R
+│   ├── 5-datapackage.R
+│   └── 12-label-advanced.qmd
 ├── R/                                      # Custom R functions used in your analysis.
 └── output/   
     ├── create_figures.R
@@ -68,7 +66,7 @@ GeoPressureTemplate/
 -   Done! 🎉
 
 ::: callout-important
-Do not clone (nor fork) the repository! [Read more about creating repositories from a template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+Do not clone (or fork) the repository! [Read more about creating repositories from a template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
 :::
 
 ### 🏠 Make yourself at home
@@ -113,15 +111,15 @@ config::get("tag_set_map", "18LX")$scale
 
 ## 📈 Analyse the data
 
-Now that you're set up, it's time to get serious 😬
+Now that you're set up, it's time to get serious 😬.
 
 ### Step 1: Preparation
 
 Here we make sure everything is ready to run the model. This mainly involves defining the parameters in `config.yml` by running the following three scripts:
 
-1.  Run [`analysis/1-label.qmd`](/geopressuretemplate-label.html)
-2.  Run [`analysis/2-twilight.qmd`](/geopressuretemplate-twilight.html) if you have light data
-3.  Run [`analysis/3-wind.qmd`](/geopressuretemplate-wind.html) if you want to account for wind
+1.  Run [`analysis/1-label.qmd`](/geopressuretemplate-label.html).
+2.  Run [`analysis/2-twilight.qmd`](/geopressuretemplate-twilight.html), if you have light data.
+3.  Run [`analysis/3-wind.qmd`](/geopressuretemplate-wind.html), if you want to account for wind.
 
 You can visualize each of scripts in a nice-to-read HTML format, using the example of 16LX, in the next sections of this manual.
 
@@ -129,13 +127,13 @@ You can visualize each of scripts in a nice-to-read HTML format, using the examp
 When running the scripts, please keep in mind:
 
 -   Nothing is saved at the end of these scripts (and that's how it's supposed to be!). Only label files and `config.yml` should be edited.
--   The scripts should be run successively for each tag separately.
--   We use [Quarto](https://quarto.org/) to make it easy to run chunks based on your needs (e.g., re-run a small chunk after making a change). The scripts are not meant to be run with `Run all`.
--   These scripts can be edited based on your preferences.
+-   The scripts should be run for each tag separately.
+-   We use [Quarto](https://quarto.org/) to make it easy to run chunks based on your needs (e.g., re-run a small chunk after making a change). The scripts are *not* meant to be run with `Run all`.
+-   These scripts can (and should) be edited based on your prefered workflow.
 :::
 
 ::: callout-tip
-For regular users, we provide a shorter version of the preparation steps in `analysis/12-label-advanced.qmd`.
+For regular users, we provide a shorter version of these preparation steps in `analysis/12-label-advanced.qmd`.
 :::
 
 ### Step 2: Run GeoPressureR workflow
@@ -146,35 +144,34 @@ The core benefit of using GeoPressureTemplate is coming now! You can finally gai
 
 The `geopressuretemplate()` function allows you to run the entire GeoPressureR workflow with a single function. By using this workflow, you make sure that your work is reproducible.
 
-```{r, eval = F}
+```{r}
+#| eval: false
 geopressuretemplate("18LX")
 ```
 
-This will create `data/interim/18LX.RData` with all the trajectory outputs. 
-
-More details on this in the [Workflow chapter](/geopressuretemplate-workflow.html). In GeoPressureTemplate, you can run this step using `4-geopressuretemplate.R`
+This will create `data/interim/18LX.RData` with all the trajectory outputs. You'll learn more in the [Workflow chapter](/geopressuretemplate-workflow.html). In GeoPressureTemplate, this is performed in the file `analysis/4-geopressuretemplate.R`.
 
 ### Step 3: Your own analysis
 
-You've reached the final steps of GeoPressureTemplate, but this is only the beginning of your research journey. You now have the bird trajectories, but the real magic of good research happens when you apply your creativity and insights to analyse these!
+You've reached the final steps of GeoPressureTemplate, but this is only the beginning of your research journey. You now have the bird trajectories, but the real magic happens when you apply your creativity and insights to analyse these! You can continue using GeoPressureTemplate, adding other sources of data and analysis to answer your research question.  
 
-> “Your task is not to foresee the future, but to enable it.” — Antoine de Saint-Exupéry
 
 ## 🗞️ Publication
 
-::: callout-important
-For peer-review publication, it is essential that the data and code are accessible to reviewers. Because inaccurate labeling can lead to wrong trajectory, we highly encourage you to publish your data and code.
-:::
+For peer-review publication, it is essential that the data and code are accessible to reviewers. Because inaccurate labelling can lead to wrong trajectory, we highly encourage you to publish your data and code.
 
-**Option 1 (recommended)**
+### GeoPressureTemplate Code
 
-The easiest option is to simply publish your Github repository on Zenodo following [this guide](https://docs.github.com/en/repositories/archiving-a-github-repository/referencing-and-citing-content). This process will generate a DOI for your data and code which can be used in your repository (e.g., <https://zenodo.org/record/7471405>).
+Simply publish your GeoPressureTemplate Github repository on Zenodo following [this guide](https://docs.github.com/en/repositories/archiving-a-github-repository/referencing-and-citing-content). Publishing on Zenodo will generate a DOI for your code.
 
-**Option 2**
+### Geolocator Data Package
 
-[GeoLocator Data Package](https://raphaelnussbaumer.com/GeoLocator-DP/) is a frictionless data package standard to create a dataset of geolocator.
+While publishing your GeoPressureTemplate on Zenodo is a great step to allow others to see (and, if needed, reproduce) your work, it can be challenge to re-use your track data for other purposes. To facilitate this, we created [GeoLocator Data Package](https://raphaelnussbaumer.com/GeoLocator-DP/), a data exchange format for geolocator data, providing all GeoPressureR outputs in csv files. The aim of GeoLocator DP is re-usability rather than reproduction. 
+
+This step is performed with the script `analysis/5-datapackage.R`. To learn more about publishing a GeoLocator Data Package, go to [GeoLocatoR DP]().
+
 
 ## 🔗 Advanced options
 
--   Generate a citation file with [`usethis::use_citation()`](https://usethis.r-lib.org/reference/use_citation.html) and [`cffr`](https://github.com/ropensci/cffr).
--   Use [`renv`](https://rstudio.github.io/renv/index.html) to make your work reproducible.
+-   Generate a citation file with [`usethis::use_citation()`](https://usethis.r-lib.org/reference/use_citation.html) or [`cffr`](https://github.com/ropensci/cffr).
+-   Use [`renv`](https://rstudio.github.io/renv) to make your work reproducible.

@@ -1,6 +1,8 @@
 # Pressure map
 
-```{r, 02-setup, message = FALSE, include = FALSE}
+```{r 02-setup}
+#| message: false
+#| include: false
 library(GeoPressureR)
 tag <- tag_create(id = "CB619") |>
   tag_label()
@@ -34,9 +36,9 @@ tag <- tag_set_map(tag,
 
 Read more about the meaning of these parameters on the documentation of the function `tag_set_map()`. Here are a few additional indications to select optimal parameters:
 
--   A smaller map (small `scale` and tight `extent`) results in faster computation. However, if the extent is too small and excludes the true position of the bird, the process will still produce a trajectory, but a wrong trajectory. We recommend starting with a coarse `scale = 1 or 2` and a large `extent` and refining these when you have a better idea of the trajectory and have completed the labeling.
+-   A smaller map (small `scale` and tight `extent`) results in faster computation. However, if the extent is too small and excludes the true position of the bird, the process will still produce a trajectory, but a wrong trajectory. We recommend starting with a coarse `scale = 1 or 2` and a large `extent` and refining these when you have a better idea of the trajectory and have completed the labelling.
 -   Using the `known` position can significantly speeds up the computation as it excludes these stationary periods with long timeseries from the computation.
--   Depending on the precision of the trajectory that you need for your study, `include_min_duration` can be of great help to reduce the complexity of the labeling and computation.
+-   Depending on the precision of the trajectory that you need for your study, `include_min_duration` can be of great help to reduce the complexity of the labelling and computation.
 
 ## Compute pressure maps
 
@@ -56,7 +58,8 @@ The function `geopressure_map()` conveniently performs all the necessary steps, 
 
 ### Compute mismatch maps
 
-```{r 02-geopressure_map_mismatch, cache = TRUE}
+```{r 02-geopressure_map_mismatch}
+#| cache: true
 tag <- geopressure_map_mismatch(tag,
   max_sample = 100,
   margin = 20,
@@ -84,13 +87,14 @@ A progress bar will update you on the completion status, but the timing can be t
 
 This function returns the `tag` with two maps: - `tag$map_pressure_mask` $\textbf{z}_{thr}$ is a GeoPressureR `map` of the proportion of data-points in the pressure timeseries which correspond to an altitude that falls between the min and max altitude of each grid cell (accounting for the `margin` parameter). - `tag$map_pressure_mse` $\textbf{MSE}$ is a GeoPressureR `map` of the normalized mean square error between the tag pressure timeseries and ERA5 map. The mean error is removed because we assume no specific altitude of the tag, thus allowing an altitudinal shift of the pressure timeseries. For computational efficiency, $\textbf{MSE}$ is only computed on the pixels for which $\textbf{z}_{thr}>thr_{mask}$.
 
-```{r, warning = F}
+```{r}
 plot(tag, type = "map_pressure_mse")
 ```
 
 This is an alternative and identical way to plot a `map` from a `tag`.
 
-```{r, warning = F}
+```{r}
+#| warning: false
 plot(tag$map_pressure_mask)
 ```
 
@@ -118,7 +122,8 @@ This value should ideally be calibrated, but it is usually safe to start with a 
 
 The resulting pressure likelihood map can be visualized with:
 
-```{r, warning = F}
+```{r}
+#| warning: false
 plot(tag$map_pressure)
 ```
 

@@ -72,6 +72,7 @@ You can check the configuration used with:
 #| eval: false
 geopressuretemplate_config(id)
 ```
+
 This is constructed by combining the default parameters used in GeoPressureR overwritten by the parameters you've written in `config.yml` in the config `default` and overwritten by the config `18LX`.
 
 ## Tag
@@ -84,7 +85,7 @@ The tag workflow simply consists of preparing the tag data and computing the lik
 tag <- geopressuretemplate_tag(id)
 ```
 
-With `saveit = TRUE`, this will create `data/interim/18LX.Rdata` which can later be used for your own analysis. 
+At the end of each geopressuretemplate function the interim file (e.g. `data/interim/18LX.Rdata`) is create or updated. Next geopressuretemplate functions will re-use this file to load variables.
 
 ## Graph
 

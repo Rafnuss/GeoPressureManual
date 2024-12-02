@@ -130,7 +130,9 @@ plotly::layout(plotly::ggplotly(p), legend = list(orientation = "h"))
 The uncorrected altitude estimate incorrectly produces a 200m amplitude error in the altitude due to the natural variation of pressure. In contrast, the corrected altitude shows that the Great Reed Warbler mostly stayed at the same location/altitude during the entire period.
 :::
 
-You can also retrieve the ground elevation with `path2elevation()` which allows us to compare the altitude of flight compare the elevation.
+## Altitude above ground level
+
+In order to estimate the flight altitude above ground level, we need to retrieve the ground level elevation along the path. This can be done with `path2elevation()`.
 
 ```{r}
 elevation <- path2elevation(path_most_likely,
@@ -140,7 +142,7 @@ elevation <- path2elevation(path_most_likely,
 )
 ```
 
-Note that because of the imprecision of the position, particularly during flight, it's important to analyse with caution the relationship between flight altitude and ground elevation. `path2elevation()` aggregate the elevation accross a larger area defined by `scale` and return different `percentile`.
+Note that because of the imprecision of the position, particularly during flight, it's important to analyse with caution the relationship between flight altitude and ground elevation. `path2elevation()` aggregate the elevation across a larger area defined by `scale` and return different `percentile`.
 
 ```{r}
 #| echo: false
@@ -189,7 +191,8 @@ plotly::layout(plotly::ggplotly(p), legend = list(orientation = "h"))
 
 The `graph` object can become extremely big for such models, and it might not be recommended to save it. Check its size with `format(object.size(graph), units = "MB")`.
 
-```{r 21-save, warning = FALSE}
+```{r 21-save}
+#| warning: false
 save(
   tag,
   graph,

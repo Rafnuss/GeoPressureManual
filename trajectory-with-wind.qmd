@@ -52,7 +52,7 @@ As the flights tend to be of short duration, we suggest downloading a file for e
 tag_download_wind(
   tag,
   variable = c("u_component_of_wind", "v_component_of_wind", "temperature")
-  )
+)
 ```
 
 You can monitor the requests at [https://cds.climate.copernicus.eu/requests]. The files will be downloaded in `data/wind/`
@@ -73,6 +73,8 @@ job::job({
   tag_download_wind(tag)
 })
 ```
+
+:::
 
 ## Create graph
 
@@ -174,7 +176,7 @@ plotly::subplot(
 )
 ```
 
-It's a good idea to check the distribution of ground speed (gs), winspeed (ws) and airspeed (as) and check for any outliers which might come from error in the labeling. Here you can see the high groundspeed (\>100km/h between stap `24` and `25`) which is nicely explained by wind, as the corresponding airspeed is perfectly normal (\~50km/h)
+It's a good idea to check the distribution of ground speed (gs), winspeed (ws) and airspeed (as) and check for any outliers which might come from error in the labelling. Here you can see the high groundspeed (\>100km/h between stap `24` and `25`) which is nicely explained by wind, as the corresponding airspeed is perfectly normal (\~50km/h)
 
 We can (and should) also check that our movement model is coherent with the distribution of flight speed assumed in the movement model:
 
