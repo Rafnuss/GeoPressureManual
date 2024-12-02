@@ -1,6 +1,8 @@
 # Light map
 
-```{r, 10-setup, message = FALSE, include = FALSE}
+```{r 10-setup}
+#| message: false
+#| include: false
 library(GeoPressureR)
 ```
 
@@ -18,7 +20,8 @@ A more thorough introduction to geolocation with light data can be found in <a h
 
 Before getting into light data, we first need to create, label, and set the map for the `tag` object. We essentially perform the same steps than in \[tag object\] and \[pressure map\] in just a few lines using the native pipe operator `|>`. Note that this assumes the labelling has already been done.
 
-```{r 10-geopressure, cache = TRUE}
+```{r 10-geopressure}
+#| cache: true
 tag <- tag_create("18LX",
   crop_start = "2017-06-20",
   crop_end = "2018-05-02",
@@ -117,7 +120,8 @@ lines(tag$param$geolight_map$twl_calib, col = "red")
 
 Finally, we can visualize the probability map for each stationary period:
 
-```{r, warning = FALSE}
+```{r}
+#| warning: false
 plot(tag, type = "map_light")
 ```
 
@@ -128,7 +132,8 @@ It is worth checking how the likelihood map of light and pressure compare before
 
 This task is best performed with GeoPressureViz, presented in [its dedicated chapter](geopressureviz.html). For now, we can simply visualize the resulting likelihood map of pressure and light combine.
 
-```{r, warning = FALSE}
+```{r}
+#| warning: false
 plot(tag, type = "map")
 ```
 :::
@@ -137,19 +142,20 @@ plot(tag, type = "map")
 
 In the same way that pressure label needs to be check, light label can also be checked. The idea is to compute the estimated trajectory, compute the twilights along this trajectory and compared the the empirical twilight measured/computed above. We use here `tag2path()` which compute the the most likely position for each stationary periods (i.e. regardless of flight duration/movement model). We interpolate each position below 2 days to avoid unrealistic position estimate.
 
-```{r, warning = FALSE}
+```{r}
+#| warning: false
 path <- tag2path(tag, interp = 2)
 ```
 This path can be visualized with `plot_path(path)`
 
 We can compute the theoretical twilights which should be observed by a bird on this path using `path2twilight()`
 
-```{r, warning = FALSE}
+```{r}
 twilight_line <- path2twilight(path)
 ```
 
 This theoretical twilight can be compared to the empirical one using the `plot_tag_twilight()`
 
-```{r, warning = FALSE}
+```{r}
 plot_tag_twilight(tag, twilight_line = twilight_line, plot_plotly = T)
 ```

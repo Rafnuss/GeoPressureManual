@@ -173,7 +173,8 @@ m
 
 Compare the simulated position of each stationary period with the corresponding static probability.
 
-```{r, warning = FALSE}
+```{r}
+#| warning: false
 li_s <- list()
 l <- leaflet(width = "100%") |>
   addProviderTiles(providers$Stamen.TerrainBackground) |>

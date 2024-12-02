@@ -1,6 +1,8 @@
 # Workflow
 
 ```{r setup}
+#| message: false
+#| include: false
 id <- "18LX"
 library(GeoPressureR)
 ```
@@ -13,7 +15,8 @@ The GeoPressureR workflow follows a series of functions taking as input the raw 
 
 After performing all preparations steps, you will be able to run the entire workflow in a single line:
 
-``` r
+```{r}
+#| eval: false
 geopressuretemplate("18LX")
 ```
 
@@ -65,7 +68,8 @@ default:
 
 You can check the configuration used with:
 
-```{r, eval = F}
+```{r}
+#| eval: false
 geopressuretemplate_config(id)
 ```
 This is constructed by combining the default parameters used in GeoPressureR overwritten by the parameters you've written in `config.yml` in the config `default` and overwritten by the config `18LX`.
@@ -74,7 +78,9 @@ This is constructed by combining the default parameters used in GeoPressureR ove
 
 The tag workflow simply consists of preparing the tag data and computing the likelihood map.
 
-```{r, cache = TRUE, eval = F}
+```{r}
+#| eval: false
+#| cache: true
 tag <- geopressuretemplate_tag(id)
 ```
 
@@ -84,7 +90,9 @@ With `saveit = TRUE`, this will create `data/interim/18LX.Rdata` which can later
 
 The graph workflow uses the `tag` computed before to create the graph and produce the outputs according to what you defined in `geopressuretemplate` in `config.yml`
 
-```{r, cache = TRUE, eval = F}
+```{r}
+#| eval: false
+#| cache: true
 graph <- geopressuretemplate_graph(id)
 ```
 
@@ -92,7 +100,8 @@ Because the construction of the graph can be a bit more complicated and takes a 
 
 ## Pressurepath
 
-```{r, cache = TRUE, eval = F}
+```{r, eval = F}
+#| cache: true
 geopressuretemplate_pressurepath(id, quiet = FALSE)
 ```
 

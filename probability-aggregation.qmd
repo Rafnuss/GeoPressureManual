@@ -1,6 +1,8 @@
 # Probability aggregation
 
-```{r, C-setup, message = FALSE, include = FALSE}
+```{r C-setup}
+#| message: false
+#| include: false
 library(GeoPressureR)
 library(knitr)
 ```

@@ -1,6 +1,8 @@
 # Labelling tracks {#sec-labelling-tracks}
 
-```{r, 23-setup, message = FALSE, include = FALSE}
+```{r 23-setup}
+#| message: false
+#| include: false
 library(GeoPressureR)
 ```
 
@@ -36,7 +38,7 @@ In the absence of acceleration data, both labels are applied to the pressure tim
 
 Let's see an example using acceleration data with 18LX.
 
-```{r, collapse = TRUE}
+```{r}
 tag <- tag_create("18LX",
   crop_start = "2017-06-20",
   crop_end = "2018-05-02"
@@ -58,7 +60,8 @@ Labelling is an **iterative process** where you will need to check the validity 
 
 The `tag_label()` function can be used to guide you through the entire labelling process, but we also outline each step below:
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 # 1. Create the csv label file `"./data/tag-label/18LX.csv"`
 tag_label_write(tag)
 
@@ -122,13 +125,13 @@ Use the checks outlined below to evaluate and improve the quality of your labell
 
 The first test consists in checking the duration of flights and stationary periods. This is systematically checked when computing stationary periods and a message will give you feedback on where to find potential errors:
 
-```{r, collapse = TRUE}
+```{r}
 tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v1.csv")
 ```
 
 Here, I used the label produced by `tag_label_auto()` without making any edits on TRAINSET. In such cases, the most common error is that a flight is cut because the bird was inactive during a few data-points. You can correct this by cleaning up flights on TRAINSET.
 
-```{r, collapse = TRUE}
+```{r}
 tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v2.csv")
 ```
 
@@ -136,7 +139,7 @@ tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v2.csv")
 
 Here we visually inspect that the pressure timeseries of each stationary period (1) is correctly grouped and (2) does not include pressure outliers (e.g., altitudinal movements). It is worth zooming-in and panning on each individual stationary period manually inspect the timeseries.
 
-```{r, collapse = TRUE}
+```{r}
 plot(tag, type = "pressure")
 ```
 
@@ -163,7 +166,8 @@ The general idea is to perform the following steps iteratively:
 
 First, let's compute the light and pressure likelihood maps on a coarse map (e.g. `scale = 1`) and low precision of mismatch (e.g. `max_sample = 50`) to minimize the computational cost.
 
-```{r 23-full-workflow, cache = TRUE, collapse = TRUE}
+```{r 23-full-workflow}
+#| cache: true
 tag <- tag_create("18LX", crop_start = "2017-06-20", crop_end = "2018-05-02", quiet = TRUE) |>
   tag_label("./data/tag-label/18LX-labeled-v3.csv", quiet = TRUE) |>
   tag_set_map(
@@ -188,13 +192,16 @@ tag <- tag |>
 
 From these maps, we can compute the path that goes through the stationary periods with the highest probability.
 
-```{r, warning = FALSE}
+```{r}
+#| warning: false
 path <- tag2path(tag)
 ```
 
 Note that this path is likely not realistic as no movement model has been included (i.e., no limitation on bird flight duration). This is fine at this stage: we don't really want to assume a realistic path, just to see what pressure can tell us without assuming anything. Using this path, we can retrieve the ERA5 pressure along this path,
 
-```{r 23-pressurepath-create, cache = TRUE, message = FALSE}
+```{r 23-pressurepath-create, message = FALSE}
+#| message: false
+#| cache: true
 pressurepath <- pressurepath_create(tag, path = path, quiet = TRUE)
 ```
 
@@ -224,7 +231,8 @@ As a general guideline, it is better to remove a bit more for long stationary pe
 
 Once you're happy with your new labels, you have to update the tag object. To avoid running `geopressure_map()` and `pressurepath_create()` for the full timeseries, use `tag_upate()` and `pressurepath_upate()` to update only the stationary periods that have changed.
 
-```{r, cache = TRUE}
+```{r}
+#| cache: true
 tag2 <- tag_update(tag, file = "./data/tag-label/18LX-labeled-v4.csv", quiet = TRUE)
 pressurepath <- pressurepath_update(pressurepath, tag, quiet = TRUE)
 ```
@@ -264,7 +272,8 @@ The shiny app GeoPressureViz is another important tool to be used instead of or 
 
 More details on this app and how to use it can be found in the \[GeopressureViz\] chapter.
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 geopressureviz(
   tag, # required
   # path = pressurepath,
@@ -287,7 +296,9 @@ Remember that birds can have a much higher groundspeed when the wind is blowing 
 
 Labelling should finally be checked at the end of the workflow using the marginal and most-likely path.
 
-```{r, cache = TRUE, warning = FALSE}
+```{r}
+#| cache: true
+#| warning: false
 # Update tag and pressurepath
 tag <- tag_update(tag, file = "./data/tag-label/18LX-labeled.csv", quiet = TRUE)
 
@@ -315,7 +326,8 @@ plot_pressurepath(pressurepath_most_likely, type = "hist", plot_plotly = FALSE)
 
 A last check with geopressureviz is highly recommended to see the difference between the likelihood maps and the marginal map. Remember that [models are only as good as the data provided](https://en.wikipedia.org/wiki/Garbage_in,_garbage_out)!
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 geopressureviz(tag,
   path = pressurepath_most_likely,
   marginal = marginal

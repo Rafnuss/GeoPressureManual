@@ -4,7 +4,9 @@ In this basic tutorial, we go through the main steps of GeoPressureR using only 
 
 ![<small>Swainson's Warbler. 16 May 2022. Edisto Nature Trail, South Carolina, US. <a href="https://macaulaylibrary.org/asset/450511161" target="_blank">ML 450511161</a></small>](assets/450511651.png){width="100%"}
 
-```{r, setup, message = FALSE, include = FALSE}
+```{r setup}
+#| message: false
+#| include: false
 library(GeoPressureR)
 library(knitr)
 ```
@@ -27,7 +29,8 @@ tag <- tag_create(id = "CB619")
 
 You can use the generic `print()` and `plot()` function to visualize the tag data.
 
-```{r, warning = FALSE}
+```{r}
+#| warning: false
 plot(tag, type = "pressure")
 ```
 
@@ -75,14 +78,15 @@ kable(head(tag$pressure))
 
 `tag_label_stap()` then creates the stationary periods based on these labels:
 
-```{r, collapse = TRUE}
+```{r}
 tag <- tag_label_stap(tag, quiet = TRUE)
 kable(head(tag$stap))
 ```
 
 Plotting the pressure timeseries of tag provides additional information:
 
-```{r, warning = FALSE, collapse = TRUE}
+```{r}
+#| warning: false
 plot(tag, type = "pressure", quiet = TRUE)
 ```
 

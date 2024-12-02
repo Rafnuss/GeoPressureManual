@@ -1,11 +1,11 @@
 # Trajectory
 
-```{r, 03-setup-1, message = FALSE, include = FALSE}
+```{r 03-setup}
+#| message: false
+#| include: false
 library(GeoPressureR)
 library(knitr)
-```
 
-```{r 03-setup-2, setup, message = FALSE, include = FALSE, cache = TRUE}
 tag <- tag_create(id = "CB619") |>
   tag_label() |>
   tag_set_map(
@@ -77,7 +77,8 @@ We create the trellis graph with the function `graph_create()`, which performs t
 
 These steps are explained and illustrated in more detail in [section 2.2](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0004-title) of @Nussbaumer2023b
 
-```{r 03-graph-create, cache = TRUE}
+```{r 03-graph-create}
+#| cache: true
 graph <- graph_create(tag,
   thr_likelihood = 0.90,
   thr_gs = 100, # km/h
@@ -164,7 +165,8 @@ You might want to save some of the key objects such as `tag` or `marginal` in an
 
 Note that `graph` can be quite large if the number of stationary periods and grid resolution is high.
 
-```{r 03-save, warning = FALSE}
+```{r 03-save}
+#| warning: false
 save(tag,
   graph, # format(object.size(graph), units = "MB")
   path_most_likely,

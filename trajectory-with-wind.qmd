@@ -1,11 +1,15 @@
 # Trajectory with wind
 
-```{r, 11-setup-1, message = FALSE, include = FALSE}
+```{r, 11-setup-1}
+#| message: false
+#| include: false
 library(GeoPressureR)
 library(ggplot2)
 ```
 
-```{r 11-setup-2, cache = TRUE, include = FALSE}
+```{r 11-setup-2}
+#| cache: true
+#| include: false
 tag <- tag_create("18LX",
   crop_start = "2017-06-20",
   crop_end = "2018-05-02",
@@ -63,7 +67,8 @@ In addition to the two required wind variable, we also downloaded the temperatur
 
 In case you have a lot of tracks for which you need to download wind data and don't want to block your console, you might consider using an <a href="https://solutions.rstudio.com/r/jobs/" target="_blank">RStudio background job</a>, which can be easily called with the <a href="https://lindeloev.github.io/job/" target="_blank">job package</a>:
 
-```{r, eval = FALSE}
+```{r} 
+#| eval: false
 job::job({
   tag_download_wind(tag)
 })
@@ -73,7 +78,8 @@ job::job({
 
 Similar to the example of the Swainson's Warbler in the basic tutorial, we first need to create the trellis graph:
 
-```{r 11-graph-create, cache = TRUE}
+```{r 11-graph-create}
+#| cache: true
 graph <- graph_create(tag, quiet = TRUE)
 ```
 
@@ -83,7 +89,8 @@ We then compute the average windspeed experienced by the bird for each edge of t
 
 We then compute the airspeed based on this windspeed and the known groundspeed. All of these are stored as <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/complex.html" target="_blank">complex values</a> with the real part representing the E-W component and the imaginary part corresponding to the N-S component.
 
-```{r 11-add-wind, cache = TRUE, cache.lazy = FALSE}
+```{r 11-add-wind}
+#| cache: true
 graph <- graph_add_wind(graph, pressure = tag$pressure, quiet = TRUE)
 ```
 
@@ -113,7 +120,8 @@ plot_graph_movement(graph)
 
 We can then compute the same three products as for the Swainson's Warbler:
 
-```{r 11-products, cache = TRUE}
+```{r 11-products}
+#| cache: true
 path_most_likely <- graph_most_likely(graph, quiet = TRUE)
 marginal <- graph_marginal(graph, quiet = TRUE)
 path_simulation <- graph_simulation(graph, nj = 10, quiet = TRUE)
@@ -138,6 +146,7 @@ knitr::kable(head(edge_most_likely, 3), digits = 1)
 ```
 
 ```{r}
+#| echo: false
 edge_simulation$name <- glue::glue("{edge_simulation$stap_s}->{edge_simulation$stap_t}")
 plot1 <- ggplot(edge_simulation, aes(reorder(name, stap_s), abs(gs))) +
   theme_bw() +
@@ -184,7 +193,8 @@ If you find anomalous flight speed, it might be worth checking if this/these fli
 
 `graph` can become extremely big for such models and it might not be recommended to save it. Check its size with `format(object.size(graph), units = "MB")`.
 
-```{r 11-save, warning = FALSE}
+```{r 11-save}
+#| warning: false
 save(
   tag,
   graph,
