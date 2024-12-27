@@ -16,8 +16,12 @@ authors:
   given-names: Raphaël
   email: rafnuss@gmail.com
   orcid: https://orcid.org/0000-0002-8185-1020
+- family-names: Nussbaumer
+  given-names: Améline
+  email: ameline.nussbaumer@gmail.com
+  orcid: https://orcid.org/0000-0003-1308-4154
 repository-code: https://github.com/Rafnuss/GeoPressureManual
-url: https://github.com/Rafnuss/GeoPressureManual
+url: https://doi.org/10.5281/zenodo.10799355
 contact:
 - family-names: Nussbaumer
   given-names: Raphaël
