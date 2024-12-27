@@ -1,0 +1,315 @@
+# --------------------------------------------
+# CITATION file created with {cffr} R package
+# See also: https://docs.ropensci.org/cffr/
+# --------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "GeoPressureManual" in publications use:'
+type: software
+license: GPL-3.0-or-later
+title: 'GeoPressureManual: User Manual for GeoPressureR'
+version: 3.1.0
+abstract: Learn how to use GeoPressureR with a Swainson's Warbler and a Great Reed
+  Warbler.
+authors:
+- family-names: Nussbaumer
+  given-names: Raphaël
+  email: rafnuss@gmail.com
+  orcid: https://orcid.org/0000-0002-8185-1020
+repository-code: https://github.com/Rafnuss/GeoPressureManual
+url: https://github.com/Rafnuss/GeoPressureManual
+contact:
+- family-names: Nussbaumer
+  given-names: Raphaël
+  email: rafnuss@gmail.com
+  orcid: https://orcid.org/0000-0002-8185-1020
+references:
+- type: software
+  title: 'R: A Language and Environment for Statistical Computing'
+  notes: Depends
+  url: https://www.R-project.org/
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2024'
+  version: '>= 3.5.0'
+- type: software
+  title: frictionless
+  abstract: 'frictionless: Read and Write Frictionless Data Packages'
+  notes: Imports
+  url: https://docs.ropensci.org/frictionless/
+  repository: https://CRAN.R-project.org/package=frictionless
+  authors:
+  - family-names: Desmet
+    given-names: Peter
+    email: peter.desmet@inbo.be
+    orcid: https://orcid.org/0000-0002-8442-8025
+    affiliation: Research Institute for Nature and Forest (INBO)
+  - family-names: Oldoni
+    given-names: Damiano
+    email: damiano.oldoni@inbo.be
+    orcid: https://orcid.org/0000-0003-3445-7562
+    affiliation: Research Institute for Nature and Forest (INBO)
+  - family-names: Huybrechts
+    given-names: Pieter
+    email: pieter.huybrechts@inbo.be
+    orcid: https://orcid.org/0000-0002-6658-6062
+    affiliation: Research Institute for Nature and Forest (INBO)
+  - family-names: Govaert
+    given-names: Sanne
+    email: sanne.govaert@inbo.be
+    orcid: https://orcid.org/0000-0002-8939-1305
+    affiliation: Research Institute for Nature and Forest (INBO)
+  year: '2024'
+  doi: 10.32614/CRAN.package.frictionless
+- type: software
+  title: GeoPressureR
+  abstract: 'GeoPressureR: Global Positioning by Atmospheric Pressure'
+  notes: Imports
+  url: https://raphaelnussbaumer.com/GeoPressureR/
+  authors:
+  - family-names: Nussbaumer
+    given-names: Raphaël
+    email: rafnuss@gmail.com
+    orcid: https://orcid.org/0000-0002-8185-1020
+  - family-names: Gravey
+    given-names: Mathieu
+    email: mathieu@mgravey.com
+    orcid: https://orcid.org/0000-0002-0871-1507
+  year: '2024'
+- type: software
+  title: GeoLocatoR
+  abstract: 'GeoLocatoR: R package for GeoLocator Data Package'
+  notes: Imports
+  url: https://github.com/rafnuss/geolocator
+  authors:
+  - family-names: Nussbaumer
+    given-names: Raphaël
+    email: rafnuss@gmail.com
+    orcid: https://orcid.org/0000-0002-8185-1020
+  year: '2024'
+- type: software
+  title: job
+  abstract: 'job: Run Code as an RStudio Job - Free Your Console'
+  notes: Imports
+  url: https://lindeloev.github.io/job/
+  repository: https://CRAN.R-project.org/package=job
+  authors:
+  - family-names: Lindeløv
+    given-names: Jonas Kristoffer
+    email: jonas@lindeloev.dk
+    orcid: https://orcid.org/0000-0003-4565-0595
+  year: '2024'
+  doi: 10.32614/CRAN.package.job
+- type: software
+  title: knitr
+  abstract: 'knitr: A General-Purpose Package for Dynamic Report Generation in R'
+  notes: Imports
+  url: https://yihui.org/knitr/
+  repository: https://CRAN.R-project.org/package=knitr
+  authors:
+  - family-names: Xie
+    given-names: Yihui
+    email: xie@yihui.name
+    orcid: https://orcid.org/0000-0003-0645-5666
+  year: '2024'
+  doi: 10.32614/CRAN.package.knitr
+- type: software
+  title: leaflet
+  abstract: 'leaflet: Create Interactive Web Maps with the JavaScript ''Leaflet''
+    Library'
+  notes: Imports
+  url: https://rstudio.github.io/leaflet/
+  repository: https://CRAN.R-project.org/package=leaflet
+  authors:
+  - family-names: Cheng
+    given-names: Joe
+    email: joe@posit.co
+  - family-names: Schloerke
+    given-names: Barret
+    email: barret@posit.co
+    orcid: https://orcid.org/0000-0001-9986-114X
+  - family-names: Karambelkar
+    given-names: Bhaskar
+  - family-names: Xie
+    given-names: Yihui
+  year: '2024'
+  doi: 10.32614/CRAN.package.leaflet
+- type: software
+  title: ggplot2
+  abstract: 'ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics'
+  notes: Imports
+  url: https://ggplot2.tidyverse.org
+  repository: https://CRAN.R-project.org/package=ggplot2
+  authors:
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@posit.co
+    orcid: https://orcid.org/0000-0003-4757-117X
+  - family-names: Chang
+    given-names: Winston
+    orcid: https://orcid.org/0000-0002-1576-2126
+  - family-names: Henry
+    given-names: Lionel
+  - family-names: Pedersen
+    given-names: Thomas Lin
+    email: thomas.pedersen@posit.co
+    orcid: https://orcid.org/0000-0002-5147-4711
+  - family-names: Takahashi
+    given-names: Kohske
+  - family-names: Wilke
+    given-names: Claus
+    orcid: https://orcid.org/0000-0002-7470-9261
+  - family-names: Woo
+    given-names: Kara
+    orcid: https://orcid.org/0000-0002-5125-4188
+  - family-names: Yutani
+    given-names: Hiroaki
+    orcid: https://orcid.org/0000-0002-3385-7233
+  - family-names: Dunnington
+    given-names: Dewey
+    orcid: https://orcid.org/0000-0002-9415-4582
+  - family-names: Brand
+    given-names: Teun
+    name-particle: van den
+    orcid: https://orcid.org/0000-0002-9335-7468
+  year: '2024'
+  doi: 10.32614/CRAN.package.ggplot2
+- type: software
+  title: plotly
+  abstract: 'plotly: Create Interactive Web Graphics via ''plotly.js'''
+  notes: Imports
+  url: https://plotly-r.com
+  repository: https://CRAN.R-project.org/package=plotly
+  authors:
+  - family-names: Sievert
+    given-names: Carson
+    email: cpsievert1@gmail.com
+    orcid: https://orcid.org/0000-0002-4958-2844
+  - family-names: Parmer
+    given-names: Chris
+    email: chris@plot.ly
+  - family-names: Hocking
+    given-names: Toby
+    email: tdhock5@gmail.com
+  - family-names: Chamberlain
+    given-names: Scott
+    email: myrmecocystus@gmail.com
+  - family-names: Ram
+    given-names: Karthik
+    email: karthik.ram@gmail.com
+  - family-names: Corvellec
+    given-names: Marianne
+    email: marianne.corvellec@igdore.org
+    orcid: https://orcid.org/0000-0002-1994-3581
+  - family-names: Despouy
+    given-names: Pedro
+    email: pedro@plot.ly
+  year: '2024'
+  doi: 10.32614/CRAN.package.plotly
+- type: software
+  title: glue
+  abstract: 'glue: Interpreted String Literals'
+  notes: Imports
+  url: https://glue.tidyverse.org/
+  repository: https://CRAN.R-project.org/package=glue
+  authors:
+  - family-names: Hester
+    given-names: Jim
+    orcid: https://orcid.org/0000-0002-2739-7082
+  - family-names: Bryan
+    given-names: Jennifer
+    email: jenny@posit.co
+    orcid: https://orcid.org/0000-0002-6983-2759
+  year: '2024'
+  doi: 10.32614/CRAN.package.glue
+- type: software
+  title: tidyverse
+  abstract: 'tidyverse: Easily Install and Load the ''Tidyverse'''
+  notes: Imports
+  url: https://tidyverse.tidyverse.org
+  repository: https://CRAN.R-project.org/package=tidyverse
+  authors:
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@rstudio.com
+  year: '2024'
+  doi: 10.32614/CRAN.package.tidyverse
+- type: software
+  title: spelling
+  abstract: 'spelling: Tools for Spell Checking in R'
+  notes: Suggests
+  url: https://ropensci.r-universe.dev/spelling
+  repository: https://CRAN.R-project.org/package=spelling
+  authors:
+  - family-names: Ooms
+    given-names: Jeroen
+    email: jeroenooms@gmail.com
+    orcid: https://orcid.org/0000-0002-4035-0289
+  - family-names: Hester
+    given-names: Jim
+    email: james.hester@rstudio.com
+  year: '2024'
+  doi: 10.32614/CRAN.package.spelling
+- type: software
+  title: moveVis
+  abstract: 'moveVis: Movement Data Visualization'
+  notes: Suggests
+  url: https://movevis.org
+  authors:
+  - family-names: Schwalb-Willmann
+    given-names: Jakob
+    email: movevis@schwalb-willmann.de
+    orcid: https://orcid.org/0000-0003-2665-1509
+  - family-names: Ludwig
+    given-names: Annika
+  year: '2024'
+- type: software
+  title: ggmap
+  abstract: 'ggmap: Spatial Visualization with ggplot2'
+  notes: Suggests
+  url: https://github.com/dkahle/ggmap
+  repository: https://CRAN.R-project.org/package=ggmap
+  authors:
+  - family-names: Kahle
+    given-names: David
+    email: david@kahle.io
+    orcid: https://orcid.org/0000-0002-9999-1558
+  - family-names: Wickham
+    given-names: Hadley
+    email: h.wickham@gmail.com
+    orcid: https://orcid.org/0000-0003-4757-117X
+  - family-names: Jackson
+    given-names: Scott
+    email: scottmmjackson@gmail.com
+  year: '2024'
+  doi: 10.32614/CRAN.package.ggmap
+- type: software
+  title: cowplot
+  abstract: 'cowplot: Streamlined Plot Theme and Plot Annotations for ''ggplot2'''
+  notes: Suggests
+  url: https://wilkelab.org/cowplot/
+  repository: https://CRAN.R-project.org/package=cowplot
+  authors:
+  - family-names: Wilke
+    given-names: Claus O.
+    email: wilke@austin.utexas.edu
+    orcid: https://orcid.org/0000-0002-7470-9261
+  year: '2024'
+  doi: 10.32614/CRAN.package.cowplot
+- type: software
+  title: terra
+  abstract: 'terra: Spatial Data Analysis'
+  notes: Suggests
+  url: https://rspatial.org/
+  repository: https://CRAN.R-project.org/package=terra
+  authors:
+  - family-names: Hijmans
+    given-names: Robert J.
+    email: r.hijmans@gmail.com
+    orcid: https://orcid.org/0000-0001-5872-2872
+  year: '2024'
+  doi: 10.32614/CRAN.package.terra
+
