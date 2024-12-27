@@ -46,7 +46,7 @@ Once you are familiar with the overall workflow of geolocation by pressure and a
 
 ## How to cite?
 
-> Raphaël & Améline Nussbaumer. (2024). GeoPressureManual: Learn how to use GeoPressureR with examples. Zenodo. [https://doi.org/10.5281/zenodo.10799355](https://doi.org/10.5281/zenodo.10799355)
+> Nussbaumer, R. (2024). GeoPressureManual: User Manual for GeoPressureR. Zenodo. [https://doi.org/10.5281/zenodo.10799355](https://doi.org/10.5281/zenodo.10799355)
 
 ## Contributing to GeoPressureManual
 
