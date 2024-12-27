@@ -1,7 +1,7 @@
 # GeoPressureManual <img src="assets/cover.png" align="right" height="400"/>
 
 <!-- badges: start -->
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10799671.svg)](https://doi.org/10.5281/zenodo.10799671)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10799355.svg)](https://doi.org/10.5281/zenodo.10799355)
 <!-- badges: end -->
 
 The [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual/) is a great place to start learning about how to use [`GeoPressureR`](https://raphaelnussbaumer.com/GeoPressureR/), the R package which help researchers construct the trajectory of a bird equiped with an atmospheric pressure sensor.
