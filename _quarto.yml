@@ -13,7 +13,7 @@ book:
   sharing: [twitter, facebook]
   # downloads: [pdf, epub]
   doi: "10.5281/zenodo.10799355"
-  favicon: "assets/favicon.ico"
+  favicon: /assets/favicon.svg
   site-url: https://raphaelnussbaumer.com/GeoPressureManual/
   repo-url: https://github.com/Rafnuss/GeoPressureManual
   issue-url: https://github.com/Rafnuss/GeoPressureManual/issues
