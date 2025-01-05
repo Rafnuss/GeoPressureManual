@@ -63,7 +63,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./geopressuretemplate-workflow.html" rel="next">
 <link href="./geopressuretemplate-twilight.html" rel="prev">
-<link href="./assets/geopressuremanual.ico" rel="icon">
+<link href=".//assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -98,12 +100,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-NJ17NCTPB5"></script><script type="text/javascript">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-NJ17NCTPB5"></script><script type="text/plain" cookie-consent="tracking">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
+</script><script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"implied",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary","functionality","tracking","targeting"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
 </script>
 <meta property="og:title" content="12&nbsp; Download wind – A User Manual for GeoPressureR">
 <meta property="og:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
@@ -366,7 +383,7 @@ gtag('config', 'G-NJ17NCTPB5', { 'anonymize_ip': true});
   <li><a href="#set-movement-model" id="toc-set-movement-model" class="nav-link" data-scroll-target="#set-movement-model"><span class="header-section-number">12.4.2</span> Set movement model</a></li>
   </ul>
 </li>
-  </ul></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/Rafnuss/GeoPressureManual/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./geopressuretemplate-intro.html">GeoPressureTemplate</a></li><li class="breadcrumb-item"><a href="./geopressuretemplate-wind.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Download wind</span></a></li></ol></nav><div class="quarto-title">
@@ -414,20 +431,25 @@ Tip
 </div>
 <section id="set-copernicus-credentials" class="level2" data-number="12.1"><h2 data-number="12.1" class="anchored" data-anchor-id="set-copernicus-credentials">
 <span class="header-section-number">12.1</span> Set Copernicus credentials</h2>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tip
+Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p><em>Delete this block when you have read!</em></p>
-<p>If you don’t yet have one, create a ECMWF account at <a href="https://www.ecmwf.int/" class="uri">https://www.ecmwf.int/</a> and retrieve your personal access token.</p>
-<p>Once created, you can retrieve your Personal Access Token on <a href="https://cds.climate.copernicus.eu/profile" class="uri">https://cds.climate.copernicus.eu/profile</a> and save them in your environment file (i.e., <code>.Renviron</code>). You can open this file with <code><a href="https://usethis.r-lib.org/reference/edit.html">usethis::edit_r_environ()</a></code> and add:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cds_token</span> =  <span class="st">"{Personal Access Token}"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol type="1">
+<li><p>If you don’t yet have one, create a ECMWF account at <a href="https://www.ecmwf.int/" class="uri">https://www.ecmwf.int/</a>.</p></li>
+<li><p>Accept the licence agreement on <a href="https://cds.climate.copernicus.eu/profile">cds.climate.copernicus.eu/profile</a> going on the “Licences” tab and select the “Licence to use Copernicus Products”.</p></li>
+<li><p>Retrieve your API Token on <a href="https://cds.climate.copernicus.eu/profile" class="uri">https://cds.climate.copernicus.eu/profile</a>.</p></li>
+<li><p>Saves the token to your local keychain with <code>ecmwfr</code> (which calls the API Token <code>key</code>) :</p></li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ecmwfr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ecmwfr/man/wf_set_key.html">wf_set_key</a></span><span class="op">(</span><span class="st">"abcd1234-foo-bar-98765431-XXXXXXXXXX"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For more information visit <a href="https://bluegreen-labs.github.io/ecmwfr/">the ecmwfr documentation</a>.</p>
 </div>
 </div>
 </section><section id="create-tag" class="level2" data-number="12.2"><h2 data-number="12.2" class="anchored" data-anchor-id="create-tag">
@@ -459,7 +481,7 @@ Tip
 <pre><code>ℹ Check data input</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Check data input [158ms]</code></pre>
+<pre><code>✔ Check data input [280ms]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -468,7 +490,7 @@ Tip
 <pre><code>ℹ Create graph from maps</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Create graph from maps [477ms]</code></pre>
+<pre><code>✔ Create graph from maps [377ms]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -480,22 +502,19 @@ Tip
 <pre><code>ℹ Compute the groundspeed for stationary period 1/28 (15% of nodes)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Compute the groundspeed for stationary period 3/28 (40% of nodes)</code></pre>
+<pre><code>ℹ Compute the groundspeed for stationary period 2/28 (27% of nodes)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute the groundspeed for stationary period 4/28 (52% of nodes)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Compute the groundspeed for stationary period 6/28 (65% of nodes)</code></pre>
+<pre><code>ℹ Compute the groundspeed for stationary period 9/28 (80% of nodes)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Compute the groundspeed for stationary period 10/28 (84% of nodes)</code></pre>
+<pre><code>ℹ Compute the groundspeed for stationary period 22/28 (99% of nodes)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Compute the groundspeed for stationary period 16/28 (97% of nodes)</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Compute the groundspeed [19.4s]</code></pre>
+<pre><code>✔ Compute the groundspeed [12.8s]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -504,10 +523,7 @@ Tip
 <pre><code>ℹ Prune the graph 0/54 </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Prune the graph 49/54 </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Prune the graph [1.9s]</code></pre>
+<pre><code>✔ Prune the graph [1.2s]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -516,14 +532,14 @@ Tip
 <pre><code>ℹ Format graph output</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Format graph output [21.3s]</code></pre>
+<pre><code>✔ Format graph output [10.9s]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_add_wind.html">graph_add_wind</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_add_wind.html">graph_add_wind</a></span><span class="op">(</span></span>
 <span>  <span class="va">graph</span>,</span>
 <span>  pressure <span class="op">=</span> <span class="va">tag</span><span class="op">$</span><span class="va">pressure</span>,</span>
 <span>  thr_as <span class="op">=</span> <span class="fu">config</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/config/reference/get.html">get</a></span><span class="op">(</span><span class="st">"graph_add_wind"</span>, <span class="va">id</span><span class="op">)</span><span class="op">$</span><span class="va">thr_as</span></span>
@@ -610,7 +626,7 @@ Tip
 <pre><code>ℹ Compute wind speed for edges of stationary period:  27/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Compute wind speed for edges of stationary periods [25.3s]</code></pre>
+<pre><code>✔ Compute wind speed for edges of stationary periods [15.4s]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -620,13 +636,13 @@ Tip
 <span class="header-section-number">12.4.2</span> Set movement model</h3>
 <p>Check that the movement model defined in <code>config.yml</code> is adequate.</p>
 <div class="cell">
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_set_movement.html">graph_set_movement</a></span><span class="op">(</span><span class="va">graph</span>,</span>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_set_movement.html">graph_set_movement</a></span><span class="op">(</span><span class="va">graph</span>,</span>
 <span>  bird <span class="op">=</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/bird_create.html">bird_create</a></span><span class="op">(</span><span class="fu">config</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/config/reference/get.html">get</a></span><span class="op">(</span><span class="st">"bird_create"</span>, <span class="va">id</span><span class="op">)</span><span class="op">$</span><span class="va">scientific_name</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Check the movement model</p>
 <div class="cell">
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/plot_graph_movement.html">plot_graph_movement</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/plot_graph_movement.html">plot_graph_movement</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="geopressuretemplate-wind_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1064,7 +1080,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
 
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Rafnuss/GeoPressureManual/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 </body></html>
