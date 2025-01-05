@@ -57,11 +57,12 @@ tag_download_wind(
 
 You can monitor the requests at [https://cds.climate.copernicus.eu/requests]. The files will be downloaded in `data/wind/`
 
-::: callout-info
+::: callout-note
 
 In addition to the two required wind variable, we also downloaded the temperature data during the flights. This will later allows us to retrieve temperature data at the exact location of the bird during the flight. See `tag_download_wind()` documentation for more informations on the available variables. 
 
 :::
+
 
 ::: callout-tip
 

@@ -24,7 +24,7 @@ library(job)
 
 ## Set Copernicus credentials
 
-::: callout-tip
+::: callout-caution
 *Delete this block when you have read!* 
 
 If you don't yet have one, create a ECMWF account at <https://www.ecmwf.int/> and retrieve your personal access token.

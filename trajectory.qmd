@@ -44,7 +44,7 @@ If you haven't heard of <a href="https://en.wikipedia.org/wiki/Hidden_Markov_mod
 
 <summary>Click here to read a short summary of movement model</summary>
 
-::: {.callout-note}
+::: callout-note
 We start by making the fundamental assumption that the overall trajectory can be separated into **discrete** positions which, together, create a trajectory.
 
 This discretization allows us to use a <a href="https://en.wikipedia.org/wiki/Hidden_Markov_model" target="_blank">Hidden Markov model</a>, which conveniently distinguishes the **unknown positions** of a bird $X_t$ from some **known observations** $Y_t$ which can be related to these positions (e.g., pressure or light measurement). Defining an HMM requires that we set:

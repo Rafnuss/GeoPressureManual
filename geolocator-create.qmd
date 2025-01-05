@@ -117,7 +117,7 @@ pkg <- pkg %>%
 print(pkg)
 ```
 
-::: callout-info
+::: callout-note
 If you haven't performed the GeoPressureR analysis yet, but still want to create a GeoLocator Data Package, you can use the `add_gldp_geopressuretempate()` with `from="raw-tag"`, which will read the data from directly "./data/raw-tag/".
 
 ```{r}

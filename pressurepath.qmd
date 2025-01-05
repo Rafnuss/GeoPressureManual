@@ -48,7 +48,7 @@ p <- ggplot() +
 layout(ggplotly(p), legend = list(orientation = "h"))
 ```
 
-::: {.callout-tip}
+::: callout-tip
 ## Eureka!
 
 This was the figure that made me realize the potential of pressure measurement to determine birds' position! The accuracy of the reanalysis data and the precision of the sensor were such that a timeseries of pressure had only a few possible options on the map.
@@ -56,7 +56,7 @@ This was the figure that made me realize the potential of pressure measurement t
 
 ## Pressurepath
 
-::: {.callout-note}
+::: callout-note
 ## What is a `pressurepath`?
 
 You can think of a pressurepath as the timeseries of pressure that a tag would record on a bird traveling along a specified path. To do that, `pressurepath_create()` calls `geopressure_timeseries()` for each stationary period and combines the resulting timeseries of ERA5 pressure.
@@ -87,7 +87,7 @@ The main benefit of creating pressurepath is the ability to retrieve ERA5 variab
 plot_pressurepath(pressurepath, type = "altitude")
 ```
 
-::: {.callout-note}
+::: callout-note
 ## Why use GeoPressureAPI for altitude?
 
 Computing the bird altitude $z_{gl}$ from its pressure measurement $P_{gl}$ is best performed with the <a href="https://en.wikipedia.org/wiki/Barometric_formula" target="_blank">barometric equation</a>

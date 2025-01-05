@@ -34,7 +34,7 @@ The GeoPressureR extensions consist of optional trajectrory data generated throu
 - [`twilights.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/twilights): Table of the twilights estimated from light data for all tags.                       
 - [`pressurepaths.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/pressurepaths): Table of the pressurepaths                                                           
 
-::: callout-info
+::: callout-note
 The GeoPressureR Resources is optional, and even if you have not (yet!) analysed your data, it's worth publishing the data (maybe with an embargo?). The data package can always be updated once the analysis is done.
 :::
 
