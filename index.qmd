@@ -69,3 +69,8 @@ We can then load the package:
 #| message: false
 library(GeoPressureR)
 ```
+
+
+## How to cite?
+
+> Nussbaumer, R., & Nussbaumer, A. (2024). GeoPressureManual: User Manual for GeoPressureR. Zenodo. [10.5281/zenodo.10799355](https://doi.org/10.5281/zenodo.10799355)
