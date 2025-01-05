@@ -39,11 +39,11 @@ Wind can significantly influence a bird's movement, explaining up to 50% of the 
 
 Wind data is available at high resolution (1hr, 0.25°, 37 pressure level) on ERA5 hourly data on pressure levels [@copernicusclimatechangeservice2018]. This data is easily accessible through the <a href="https://bluegreen-labs.github.io/ecmwfr" target="_blank">`ecmwfr`</a> package.
 
-The first step is to create a ECMWF account on <a href="https://www.ecmwf.int/" target="_blank">www.ecmwf.int</a>. Once you have an account, you can log in on [cds.climate.copernicus.eu](https://cds.climate.copernicus.eu) and [retrieve your personal access token](https://cds.climate.copernicus.eu/profile) which should be saved as environment variables in your `.Renviron` using `usethis::edit_r_environ()`.
+::: callout-caution
 
-```         
-cds_token =  "{Personal Access Token}"
-```
+Learn how to set-up your ECMWF account to be able to download ERA5 data on the [GeoPressureTemplate/Download Wind page](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-wind.html#set-copernicus-credentials).
+
+:::
 
 As the flights tend to be of short duration, we suggest downloading a file for each flight. This can be done automatically with `tag_download_wind()`, which uses <a href="https://bluegreen-labs.github.io/ecmwfr/articles/advanced_vignette.html#batch-parallel-requests" target="_blank">`wf_request_batch()`</a> to make all the requests in parallel.
 
