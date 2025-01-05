@@ -5,24 +5,33 @@ project:
 book:
   title: "A User Manual for GeoPressureR"
   author: "Raphaël & Améline Nussbaumer"
+  # subtitle
   description: "Learn how to use GeoPressureR with a Swainson's Warbler and a Great Reed Warbler."
+  # references: CITATION.cff
+  # output-file
   cover-image: "assets/cover.png"
   sharing: [twitter, facebook]
   # downloads: [pdf, epub]
   doi: "10.5281/zenodo.10799355"
-  url: "https://raphaelnussbaumer.com/GeoPressureManual/"
-  favicon: "assets/geopressuremanual.ico"
+  favicon: "assets/favicon.ico"
   site-url: https://raphaelnussbaumer.com/GeoPressureManual/
   repo-url: https://github.com/Rafnuss/GeoPressureManual
+  issue-url: https://github.com/Rafnuss/GeoPressureManual/issues
   google-analytics: "G-NJ17NCTPB5"
+  cookie-consent: true
+  search: true
   # navbar:
   sidebar:
     footer: "<a href='https://github.com/Rafnuss/GeoPressureTemplate' target='_blank' class='btn btn-sm btn-outline-primary' role='button'>Start your own study</a>"
   # body-header: ""
   # body-footer
+  # page-footer
+  page-navigation: true
+  back-to-top-navigation: true
+  bread-crumbs: true
+  image: "assets/cover.png"
   open-graph: true
   twitter-card: true
-  image: "assets/cover.png"
   chapters:
     - index.qmd
 
