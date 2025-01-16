@@ -420,7 +420,7 @@ Note
 </div>
 <section id="structure" class="level2" data-number="14.1"><h2 data-number="14.1" class="anchored" data-anchor-id="structure">
 <span class="header-section-number">14.1</span> Structure</h2>
-<p>A geolocator data package consists of three sets of data: (1) project metadata, (2) core resources containing the main dataset and (3) optional trajectory data generated with the <a href="https://raphaelnussbaumer.com/GeoPressureManual/#the-geopressure-suite">GeoPressure suite</a>.</p>
+<p>A geolocator data package consists of three sets of data: (1) project metadata, (2) core resources containing the main data and (3) optional trajectory data generated with the <a href="index.html#the-geopressure-suite">GeoPressure suite</a>.</p>
 <section id="metadata" class="level3" data-number="14.1.1"><h3 data-number="14.1.1" class="anchored" data-anchor-id="metadata">
 <span class="header-section-number">14.1.1</span> Metadata</h3>
 <ul>
@@ -440,7 +440,7 @@ Note
 <a href="https://raphaelnussbaumer.com/GeoLocator-DP/core/observations/"><code>observations.csv</code></a>: Table with the field observations associated with tags such as equipment, retrieval, or others events.</li>
 </ul></section><section id="geopressurer-resources" class="level3" data-number="14.1.3"><h3 data-number="14.1.3" class="anchored" data-anchor-id="geopressurer-resources">
 <span class="header-section-number">14.1.3</span> GeoPressureR Resources</h3>
-<p>The GeoPressureR extensions consist of optional trajectrory data generated through the <a href="https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html">GeoPressureR workflow anaylsis</a>.</p>
+<p>The GeoPressureR extensions consist of optional trajectrory data generated through the <a href="geopressuretemplate-workflow.html">GeoPressureR workflow anaylsis</a>.</p>
 <ul>
 <li>
 <a href="https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/staps"><code>staps.csv</code></a>: Table of the stationary periods of all tags.</li>
@@ -470,33 +470,18 @@ Note
 </div>
 </section></section><section id="examples" class="level2" data-number="14.2"><h2 data-number="14.2" class="anchored" data-anchor-id="examples">
 <span class="header-section-number">14.2</span> Examples</h2>
-<blockquote class="blockquote">
-<p>Nussbaumer, R., Rime, Y., &amp; Osinubi, S. T. (2024). GeoLocator Data Package: South African Woodland Kingfisher [Data set]. <em>Zenodo</em>. <a href="https://doi.org/10.5281/zenodo.13829929" class="uri">https://doi.org/10.5281/zenodo.13829929</a></p>
-</blockquote>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The <a href="https://zenodo.org/communities/geolocator-dp/">GeoLocator Data Package Zenodo Community</a> is the best place to see all GeoLocator Data Package.</p>
+<p>The <a href="https://zenodo.org/communities/geolocator-dp/">GeoLocator Data Package Zenodo Community</a> is the best place to see all GeoLocator Data Packages.</p>
 <p><a href="https://zenodo.org/communities/geolocator-dp/"> <img src="https://blog.zenodo.org/static/img/logos/zenodo-gradient-1000.png" alt="Zenodo" style="width: 200px;"></a></p>
 <p>Once you’ve published you data package, make sure to <a href="https://help.zenodo.org/docs/share/submit-to-community/">sumbit it to the cummunity</a>.</p>
-</div>
-</div>
 </section><section id="geolocator" class="level2" data-number="14.3"><h2 data-number="14.3" class="anchored" data-anchor-id="geolocator">
 <span class="header-section-number">14.3</span> GeoLocatoR</h2>
 <p><a href="https://github.com/rafnuss/geolocator"><img src="https://raphaelnussbaumer.com/GeoLocatoR/logo.png" align="right" height="139" alt="GeoLocatoR website" style="padding-left:5px;"></a></p>
 <p><a href="https://raphaelnussbaumer.com/GeoLocatoR">GeoLocatoR</a> is a R package designed to help you create and work with the GeoLocator Data Package.</p>
 <p><strong>Main Features</strong>:</p>
 <ul>
-<li>Create a Geolocator Data Package: Easily create a geolocator datapackage object, add resources (data), and write the data package to your preferred directory. Or, read an existing data package from a directory or from Zenodo like a pro.</li>
-<li>Works Seamlessly with GeoPressureTemplate: GeoLocatoR is perfectly tailored to work with GeoPressureTemplate—a template repository for analyzing geolocator data using GeoPressureR. Use this dynamic duo to streamline your analysis, maintain a standardized project structure, and keep your geolocator data in perfect formation. (See vignette: Create from GeoPressureTemplate)</li>
-<li>Built on frictionless-r: This package is built on top of the frictionless-r package, adhering to the Frictionless Data standards for open data. Think of it as the wind beneath GeoLocatoR’s wings !</li>
+<li>Create a Geolocator Data Package: Easily create a geolocator datapackage object, add resources (data), and write the data package to your preferred directory. Or, read an existing data package from a directory or from Zenodo.</li>
+<li>Works with GeoPressureTemplate: GeoLocatoR is perfectly tailored to work with <a href="geopressuretemplate-intro.html">GeoPressureTemplate</a>. Use this dynamic duo to streamline your analysis, maintain a standardized project structure, and keep your geolocator data in perfect formation.</li>
+<li>Built on <a href="https://docs.ropensci.org/frictionless/"><code>frictionless</code></a>: This package is built on top of the frictionless R package, adhering to the Frictionless Data standards for open data.</li>
 </ul>
 <p>You can install GeoLocatoR from GitHub:</p>
 <div class="cell">

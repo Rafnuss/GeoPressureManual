@@ -10,7 +10,7 @@ A Data Package is a lightweight format to package data using the [Data Package s
 
 ## Structure
 
-A geolocator data package consists of three sets of data: (1) project metadata, (2) core resources containing the main dataset and (3) optional trajectory data generated with the [GeoPressure suite](https://raphaelnussbaumer.com/GeoPressureManual/#the-geopressure-suite).
+A geolocator data package consists of three sets of data: (1) project metadata, (2) core resources containing the main data and (3) optional trajectory data generated with the [GeoPressure suite](#the-geopressure-suite).
 
 ### Metadata
 
@@ -26,7 +26,7 @@ The core GeoLocator DP resources contain all the raw geolocator data. These `res
 
 ### GeoPressureR Resources
 
-The GeoPressureR extensions consist of optional trajectrory data generated through the [GeoPressureR workflow anaylsis](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html). 
+The GeoPressureR extensions consist of optional trajectrory data generated through the [GeoPressureR workflow anaylsis](geopressuretemplate-workflow.html). 
 
 - [`staps.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/staps): Table of the stationary periods of all tags.
 - [`paths.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/paths): Table of the trajectory of all tags, typically most likely path or simulation paths. 
@@ -40,18 +40,14 @@ The GeoPressureR Resources is optional, and even if you have not (yet!) analysed
 
 ## Examples
 
-> Nussbaumer, R., Rime, Y., & Osinubi, S. T. (2024). GeoLocator Data Package: South African Woodland Kingfisher [Data set]. _Zenodo_. <https://doi.org/10.5281/zenodo.13829929>
-
-
-::: callout-important
-The [GeoLocator Data Package Zenodo Community](https://zenodo.org/communities/geolocator-dp/) is the best place to see all GeoLocator Data Package. 
+The [GeoLocator Data Package Zenodo Community](https://zenodo.org/communities/geolocator-dp/) is the best place to see all GeoLocator Data Packages. 
 
 <a href="https://zenodo.org/communities/geolocator-dp/">
     <img src="https://blog.zenodo.org/static/img/logos/zenodo-gradient-1000.png" alt="Zenodo" style="width: 200px;">
 </a>
 
 Once you've published you data package, make sure to [sumbit it to the cummunity](https://help.zenodo.org/docs/share/submit-to-community/).
-::: 
+
 
 ## GeoLocatoR 
 <a href="https://github.com/rafnuss/geolocator"><img src="https://raphaelnussbaumer.com/GeoLocatoR/logo.png" align="right" height="139" alt="GeoLocatoR website" style="padding-left:5px;" /></a>
@@ -60,9 +56,9 @@ Once you've published you data package, make sure to [sumbit it to the cummunity
 
 **Main Features**:
 
--   Create a Geolocator Data Package: Easily create a geolocator datapackage object, add resources (data), and write the data package to your preferred directory. Or, read an existing data package from a directory or from Zenodo like a pro.
--   Works Seamlessly with GeoPressureTemplate: GeoLocatoR is perfectly tailored to work with GeoPressureTemplate—a template repository for analyzing geolocator data using GeoPressureR. Use this dynamic duo to streamline your analysis, maintain a standardized project structure, and keep your geolocator data in perfect formation. (See vignette: Create from GeoPressureTemplate)
--   Built on frictionless-r: This package is built on top of the frictionless-r package, adhering to the Frictionless Data standards for open data. Think of it as the wind beneath GeoLocatoR’s wings !
+- Create a Geolocator Data Package: Easily create a geolocator datapackage object, add resources (data), and write the data package to your preferred directory. Or, read an existing data package from a directory or from Zenodo.
+- Works with GeoPressureTemplate: GeoLocatoR is perfectly tailored to work with [GeoPressureTemplate](geopressuretemplate-intro.html). Use this dynamic duo to streamline your analysis, maintain a standardized project structure, and keep your geolocator data in perfect formation.
+- Built on [`frictionless`](https://docs.ropensci.org/frictionless/): This package is built on top of the frictionless R package, adhering to the Frictionless Data standards for open data.
 
 You can install GeoLocatoR from GitHub:
 

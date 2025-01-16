@@ -1,3 +1,8 @@
+---
+aliases: 
+  - likelihood-aggregation.html
+---
+
 # Probability aggregation
 
 ```{r C-setup}

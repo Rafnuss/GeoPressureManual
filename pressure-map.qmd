@@ -117,7 +117,7 @@ tag <- geopressure_map_likelihood(
 
 The standard deviation `sd` ($\sigma$) plays an important role in the spread of the uncertainty of your map. It accounts for (1) error in reanalysis data (may vary spatially, but generally assumed small), (2) sensor error (also assumed low), and (3) bird vertical movement (most significant contribution). A bird moving up and down a tall tree (1 hPa = 10 m) is likely to affect the match.
 
-This value should ideally be calibrated, but it is usually safe to start with a value of `1`. We see how to adjust this value in [check #4 of the labelling procedure](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html#pressurepath-checks). Swainson's Warbler tend to stay low with small pressure variation such that a value of `0.5` is more adequate. In addition, following several trial and error test, we found that scaling the log linear pooling function to `4 * log(n) / n` provides more satifying result.
+This value should ideally be calibrated, but it is usually safe to start with a value of `1`. We see how to adjust this value in [check #4 of the labelling procedure](labelling-tracks.html#pressurepath-checks). Swainson's Warbler tend to stay low with small pressure variation such that a value of `0.5` is more adequate. In addition, following several trial and error test, we found that scaling the log linear pooling function to `4 * log(n) / n` provides more satifying result.
 :::
 
 The resulting pressure likelihood map can be visualized with:

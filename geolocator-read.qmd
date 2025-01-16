@@ -15,14 +15,7 @@ A cool feature of Zenodo is that you can load the data directly without
 downloading the files! 
 
 ```{r}
-pkg <- read_gldp("https://zenodo.org/records/14099115/files/datapackage.json")
-```
-
-Alternatively, it's possible to load the file from a local directory:
-
-```{r}
-#| eval: false
-pkg <- read_gldp(file.path("~/", "woodlandkingfisher", "datapackage.json"))
+pkg <- read_gldp("https://zenodo.org/records/14641765/files/datapackage.json")
 ```
 
 ## Analyse data with GeoPressureTemplate
@@ -31,14 +24,13 @@ If this data package has not yet been analysed with GeoPressureR, you can create
 the data package using the following code. Note that this code will open a new RStudio session. 
 
 ```{r}
-dest_dir <- tempfile() #
-project_dir <- write_geopressuretemplate(pkg, destdir = dest_dir, overwrite = TRUE)
+project_dir <- create_geopressuretemplate(path = tempfile(), pkg = pkg)
 ```               
 
 ::: callout-note
-Make sure [all the steps to make yourself at home](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-project.html#make-yourself-at-home) have been performed.
+At this stage, you'll need to go through [all the steps to make yourself at home](geopressuretemplate-intro.html#make-yourself-at-homee).
 
-You're now ready to [analyse your data according to the GeoPressureTemplate instructions!](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-project.html#analyse-the-data)
+You're now ready to [analyse your data according to the GeoPressureTemplate instructions!](geopressuretemplate-intro.html#analyse-the-data)
 :::
 
 ## Use analysed data

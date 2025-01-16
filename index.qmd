@@ -47,7 +47,7 @@ This manual includes five parts:
 - [Basic tutorial](tag-object.html) runs through the entire workflow using a simple track of pressure only, with the example of a Swainson's Warbler.
 - [Advanced tutorial](light-map.html) explores additional functionalities of the package using light, acceleration, and wind data, through the example of a Great Reed Warbler.
 - [Labelling tools](pressurepath.html) introduces labelling, a critical step in the workflow. This is a complex procedure requiring a comprehensive understanding of the method and tools of the package, which is why it is described in more depth after the basic and advanced tutorials. We strongly recommended reading this section attentively for optimal results.
-- [GeoPressureTemplate](geopressuretemplate-project.html) defines a standard folder structure to improve readability, sharability, and reproducibility. You'll learn more about this structure and how to start your own project.
+- [GeoPressureTemplate](geopressuretemplate-intro.html) defines a standard folder structure to improve readability, sharability, and reproducibility. You'll learn more about this structure and how to start your own project.
 - [Geolocator Data Package](geolocator-intro) is a data exchange format for geolocator data. In this part, you'll learn about how to use the GeoLocatoR package to create a geolocator datapackage.
 
 Feel free to read through the manual, or to [fork the repository](https://github.com/Rafnuss/GeoPressureManual/fork) to run the examples at your own pace.

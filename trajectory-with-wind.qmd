@@ -41,7 +41,7 @@ Wind data is available at high resolution (1hr, 0.25°, 37 pressure level) on ER
 
 ::: callout-caution
 
-Learn how to set-up your ECMWF account to be able to download ERA5 data on the [GeoPressureTemplate/Download Wind page](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-wind.html#set-copernicus-credentials).
+Learn how to set-up your ECMWF account to be able to download ERA5 data on the [GeoPressureTemplate/Download Wind page](geopressuretemplate-wind.html#set-copernicus-credentials).
 
 :::
 
