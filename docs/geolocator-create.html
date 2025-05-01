@@ -124,13 +124,13 @@ cookieconsent.run({
 </script>
 <meta property="og:title" content="15&nbsp; Create – A User Manual for GeoPressureR">
 <meta property="og:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
-<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/geolocator-create_files/figure-html/unnamed-chunk-10-1.png">
+<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/geolocator-create_files/figure-html/unnamed-chunk-9-1.png">
 <meta property="og:site_name" content="A User Manual for GeoPressureR">
 <meta property="og:image:height" content="960">
 <meta property="og:image:width" content="1344">
 <meta name="twitter:title" content="15&nbsp; Create – A User Manual for GeoPressureR">
 <meta name="twitter:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
-<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/geolocator-create_files/figure-html/unnamed-chunk-10-1.png">
+<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/geolocator-create_files/figure-html/unnamed-chunk-9-1.png">
 <meta name="twitter:image-height" content="960">
 <meta name="twitter:image-width" content="1344">
 <meta name="twitter:card" content="summary_large_image">
@@ -374,15 +374,14 @@ cookieconsent.run({
    
   <ul>
 <li><a href="#setup-of-the-example" id="toc-setup-of-the-example" class="nav-link active" data-scroll-target="#setup-of-the-example"><span class="header-section-number">15.1</span> Setup of the example</a></li>
-  <li><a href="#define-metadata" id="toc-define-metadata" class="nav-link" data-scroll-target="#define-metadata"><span class="header-section-number">15.2</span> Define metadata</a></li>
-  <li><a href="#add-the-tag-data" id="toc-add-the-tag-data" class="nav-link" data-scroll-target="#add-the-tag-data"><span class="header-section-number">15.3</span> Add the tag data</a></li>
-  <li><a href="#update-tags-and-observations-tables" id="toc-update-tags-and-observations-tables" class="nav-link" data-scroll-target="#update-tags-and-observations-tables"><span class="header-section-number">15.4</span> Update <code>tags</code> and <code>observations</code> tables</a></li>
-  <li><a href="#check-the-validity-of-the-data-package" id="toc-check-the-validity-of-the-data-package" class="nav-link" data-scroll-target="#check-the-validity-of-the-data-package"><span class="header-section-number">15.5</span> Check the validity of the data package</a></li>
+  <li><a href="#initiate-datapackage-with-metadata" id="toc-initiate-datapackage-with-metadata" class="nav-link" data-scroll-target="#initiate-datapackage-with-metadata"><span class="header-section-number">15.2</span> Initiate datapackage with metadata</a></li>
+  <li><a href="#add-the-geopressuretemplate-data" id="toc-add-the-geopressuretemplate-data" class="nav-link" data-scroll-target="#add-the-geopressuretemplate-data"><span class="header-section-number">15.3</span> Add the geopressuretemplate data</a></li>
+  <li><a href="#check-the-validity-of-the-data-package" id="toc-check-the-validity-of-the-data-package" class="nav-link" data-scroll-target="#check-the-validity-of-the-data-package"><span class="header-section-number">15.4</span> Check the validity of the data package</a></li>
   <li>
-<a href="#upload-to-zenodo" id="toc-upload-to-zenodo" class="nav-link" data-scroll-target="#upload-to-zenodo"><span class="header-section-number">15.6</span> Upload to Zenodo</a>
+<a href="#upload-to-zenodo" id="toc-upload-to-zenodo" class="nav-link" data-scroll-target="#upload-to-zenodo"><span class="header-section-number">15.5</span> Upload to Zenodo</a>
   <ul class="collapse">
-<li><a href="#option-1-manually" id="toc-option-1-manually" class="nav-link" data-scroll-target="#option-1-manually"><span class="header-section-number">15.6.1</span> Option 1: Manually</a></li>
-  <li><a href="#option-2-programatically" id="toc-option-2-programatically" class="nav-link" data-scroll-target="#option-2-programatically"><span class="header-section-number">15.6.2</span> Option 2: Programatically</a></li>
+<li><a href="#option-1-manually" id="toc-option-1-manually" class="nav-link" data-scroll-target="#option-1-manually"><span class="header-section-number">15.5.1</span> Option 1: Manually</a></li>
+  <li><a href="#option-2-programatically" id="toc-option-2-programatically" class="nav-link" data-scroll-target="#option-2-programatically"><span class="header-section-number">15.5.2</span> Option 2: Programatically</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/Rafnuss/GeoPressureManual/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -456,8 +455,8 @@ Important
 <span><span class="va">directory</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp_dir</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">temp_dir</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section><section id="define-metadata" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="define-metadata">
-<span class="header-section-number">15.2</span> Define metadata</h2>
+</section><section id="initiate-datapackage-with-metadata" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="initiate-datapackage-with-metadata">
+<span class="header-section-number">15.2</span> Initiate datapackage with metadata</h2>
 <p>We can generate a GeoLocator Data Package <code>pkg</code> from a GeoPressureTemplate folder with <code><a href="https://rdrr.io/pkg/GeoLocatoR/man/create_gldp_geopressuretemplate.html">create_gldp_geopressuretemplate()</a></code>. This function will read the <code>DESCRIPTION</code> file and create a frictionless package with the metadata. At this stage, no data is included in the package.</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/create_gldp_geopressuretemplate.html">create_gldp_geopressuretemplate</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="va">directory</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -538,7 +537,10 @@ Important
 <pre><code>• embargo: 2030-01-01</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>• licenses: Creative Commons Attribution 4.0 (CC-BY-4.0) -
+<pre><code>• licenses:</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  Creative Commons Attribution 4.0 (CC-BY-4.0) -
   &lt;https://creativecommons.org/licenses/by/4.0/&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
@@ -555,7 +557,11 @@ Important
   geolocator"</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>• created: 2025-01-16 14:32:25</code></pre>
+<pre><code>• created: 2025-05-01 19:25:54</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• bibliographicCitation: "Nussbaumer R, Rime Y (2025). \"Migration route and
+  timing of South African Woodland Kingfisher.\""</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>• spatial:</code></pre>
@@ -579,30 +585,19 @@ Important
 <pre><code>Use `unclass()` to print the Geolocator Data Package as a list.</code></pre>
 </div>
 </div>
-</section><section id="add-the-tag-data" class="level2" data-number="15.3"><h2 data-number="15.3" class="anchored" data-anchor-id="add-the-tag-data">
-<span class="header-section-number">15.3</span> Add the tag data</h2>
-<p>Once we have created the package, we can add the data to the package from the interim <code>.RData</code> files.</p>
+</section><section id="add-the-geopressuretemplate-data" class="level2" data-number="15.3"><h2 data-number="15.3" class="anchored" data-anchor-id="add-the-geopressuretemplate-data">
+<span class="header-section-number">15.3</span> Add the geopressuretemplate data</h2>
+<p><code><a href="https://rdrr.io/pkg/GeoLocatoR/man/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate()</a></code> is a key function that read the geopressuretemplate data available and automatically add the most up-to-date available data to the datapackage.</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="va">pkg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="va">directory</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="va">pkg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="va">directory</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="update-tags-and-observations-tables" class="level2" data-number="15.4"><h2 data-number="15.4" class="anchored" data-anchor-id="update-tags-and-observations-tables">
-<span class="header-section-number">15.4</span> Update <code>tags</code> and <code>observations</code> tables</h2>
-<p>In the ideal case, <code>tags.csv</code> and <code>observations.csv</code> have been returned by the ringers and stored in the <code>data/</code> folder of your project. In this case, you can overwrite the existing ones with:</p>
+<p>If <code>tags.csv</code> and <code>observations.csv</code> are not available (i.e., not stored in the <code>data/</code> folder of your project), a <code>tags</code> and <code>observations</code> resources would have been generated by <code><a href="https://rdrr.io/pkg/GeoLocatoR/man/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate()</a></code> based on the available information. You will certaintly need to edit them manual adding some key missing information (e.g.&nbsp;<code>ring_number</code>).</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/tags.html">tags</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">directory</span>, <span class="st">"data/tags.csv"</span><span class="op">)</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/observations.html">observations</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">directory</span>, <span class="st">"data/observations.csv"</span><span class="op">)</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>If that’s not the case, you will need to manually edit the table created automatically. I suggest creating a temporary <code>.xlsx</code> spreadsheet (and not <code>.csv</code> to preserve the column class), modify it in Excel, and read it back into R.</p>
-<div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">temp_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".xlsx"</span><span class="op">)</span></span>
-<span><span class="fu">write_xlsx</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/tags.html">tags</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>, <span class="va">temp_file</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"open"</span>, <span class="va">temp_file</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># Edit it on the external program and once you're done, save you file and update the table</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/tags.html">tags</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">read_xlsx</span><span class="op">(</span><span class="va">temp_file</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/tags.html">tags</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/tags.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/observations.html">observations</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/observations.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -623,7 +618,10 @@ Important
 <pre><code>• embargo: 2030-01-01</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>• licenses: Creative Commons Attribution 4.0 (CC-BY-4.0) -
+<pre><code>• licenses:</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  Creative Commons Attribution 4.0 (CC-BY-4.0) -
   &lt;https://creativecommons.org/licenses/by/4.0/&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
@@ -640,7 +638,11 @@ Important
   geolocator"</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>• created: 2025-01-16 14:32:25</code></pre>
+<pre><code>• created: 2025-05-01 19:25:54</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• bibliographicCitation: "Nussbaumer R, Rime Y (2025). \"Migration route and
+  timing of South African Woodland Kingfisher.\""</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>• spatial: Polygon and c(17.375, 32.875, 32.875, 17.375, 17.375, -24.375,
@@ -713,14 +715,14 @@ Tip
 <p>You can now see a lot of new metadata (e.g., number of tags, coverages) as well as the resources (table)!</p>
 </div>
 </div>
-</section><section id="check-the-validity-of-the-data-package" class="level2" data-number="15.5"><h2 data-number="15.5" class="anchored" data-anchor-id="check-the-validity-of-the-data-package">
-<span class="header-section-number">15.5</span> Check the validity of the data package</h2>
+</section><section id="check-the-validity-of-the-data-package" class="level2" data-number="15.4"><h2 data-number="15.4" class="anchored" data-anchor-id="check-the-validity-of-the-data-package">
+<span class="header-section-number">15.4</span> Check the validity of the data package</h2>
 <p>You can visualize the coverage of the package by ploting the Data Package. Check for the correct number of tags, as well as equipment and retrieval dates.</p>
 <div class="cell">
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="geolocator-create_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="geolocator-create_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -737,7 +739,7 @@ Important
 <div class="callout-body-container callout-body">
 <p>Finally, we check that the package is compliant with GeoLocator Data Package standards.</p>
 <div class="cell">
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/validate_gldp.html">validate_gldp</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/validate_gldp.html">validate_gldp</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
@@ -767,6 +769,48 @@ Important
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ created is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$tags is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$measurements is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$light is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$pressure is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$activity is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$temperature_external is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$temperature_internal is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$magnetic is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$wet_count is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$conductivity is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$paths is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ numberTags$pressurepaths is valid.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ bibliographicCitation is valid.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ $schema is valid.</code></pre>
@@ -827,45 +871,6 @@ Important
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ taxonomic[[1]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$tags is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$measurements is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$light is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$pressure is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$activity is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$temperature_external is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$temperature_internal is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$magnetic is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$wet_count is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$conductivity is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$paths is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$pressurepaths is valid.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ spatial is valid.</code></pre>
@@ -1273,15 +1278,15 @@ Important
 <p>It is quite normal that you’ll first see some error here. Try to fix them and re-create the package until the package is valid. If you can’t fix them, contact me!</p>
 </div>
 </div>
-</section><section id="upload-to-zenodo" class="level2" data-number="15.6"><h2 data-number="15.6" class="anchored" data-anchor-id="upload-to-zenodo">
-<span class="header-section-number">15.6</span> Upload to Zenodo</h2>
-<section id="option-1-manually" class="level3" data-number="15.6.1"><h3 data-number="15.6.1" class="anchored" data-anchor-id="option-1-manually">
-<span class="header-section-number">15.6.1</span> Option 1: Manually</h3>
+</section><section id="upload-to-zenodo" class="level2" data-number="15.5"><h2 data-number="15.5" class="anchored" data-anchor-id="upload-to-zenodo">
+<span class="header-section-number">15.5</span> Upload to Zenodo</h2>
+<section id="option-1-manually" class="level3" data-number="15.5.1"><h3 data-number="15.5.1" class="anchored" data-anchor-id="option-1-manually">
+<span class="header-section-number">15.5.1</span> Option 1: Manually</h3>
 <p>First, create a new deposit on <a href="https://zenodo.org/uploads/new">Zenodo</a> and <a href="https://help.zenodo.org/docs/deposit/describe-records/reserve-doi/#reserve-doi">reserve the DOI</a> to be able to define the package <code>id</code>.</p>
 <div class="callout-info">
 <p>The package <code>id</code> should be the <a href="https://support.zenodo.org/help/en-gb/1-upload-deposit/97-what-is-doi-versioning">concept DOI</a>, that is, the one that doesn’t change with new versions. The DOI displayed on Zenodo is actually the DOI of the first version, but you can retrieve the concept DOI by substracting <code>1</code> to your ID number</p>
 <div class="cell">
-<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"https://doi.org/10.5281/zenodo.{ZENODO_ID - 1}"</span></span>
+<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"https://doi.org/10.5281/zenodo.{ZENODO_ID - 1}"</span></span>
 <span><span class="co"># e.g. "10.5281/zenodo.14620590" for a DOI reserved as 10.5281/zenodo.14620591</span></span>
 <span></span>
 <span><span class="co"># Update the bibliographic citation with this new DOI</span></span>
@@ -1290,7 +1295,7 @@ Important
 </div>
 <p>Now, we can write the datapackage to file</p>
 <div class="cell">
-<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The content of the folder created can now be uploaded on your Zenodo deposit.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1306,22 +1311,22 @@ Tip
 <p>You can populate all other fields on Zenodo with the information provided in <code>datapackage.json</code>! Note that a datapackage <code>contributors</code> corresponds to <code>creators</code> on Zenodo and not the <code>contributors</code>.</p>
 </div>
 </div>
-</section><section id="option-2-programatically" class="level3" data-number="15.6.2"><h3 data-number="15.6.2" class="anchored" data-anchor-id="option-2-programatically">
-<span class="header-section-number">15.6.2</span> Option 2: Programatically</h3>
+</section><section id="option-2-programatically" class="level3" data-number="15.5.2"><h3 data-number="15.5.2" class="anchored" data-anchor-id="option-2-programatically">
+<span class="header-section-number">15.5.2</span> Option 2: Programatically</h3>
 <p>A more efficient solution is to create a deposit on Zenodo using the API. For this, you first need to <a href="https://zenodo.org/account/settings/applications/tokens/new/">create a token</a> and save it to your keyring with:</p>
 <div class="cell">
-<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_set_with_value</a></span><span class="op">(</span><span class="st">"ZENODO_PAT"</span>, password <span class="op">=</span> <span class="st">"{your_zenodo_token}"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_set_with_value</a></span><span class="op">(</span><span class="st">"ZENODO_PAT"</span>, password <span class="op">=</span> <span class="st">"{your_zenodo_token}"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will allow us to create a <code>ZenodoManager</code> object which will become useful later.</p>
 <div class="cell">
-<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">zenodo</span> <span class="op">&lt;-</span> <span class="va"><a href="https://rdrr.io/pkg/zen4R/man/ZenodoManager.html">ZenodoManager</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>token <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_get</a></span><span class="op">(</span>service <span class="op">=</span> <span class="st">"ZENODO_PAT"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">zenodo</span> <span class="op">&lt;-</span> <span class="va"><a href="https://rdrr.io/pkg/zen4R/man/ZenodoManager.html">ZenodoManager</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>token <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_get</a></span><span class="op">(</span>service <span class="op">=</span> <span class="st">"ZENODO_PAT"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Successfully connected to Zenodo with user token</code></pre>
 </div>
 </div>
 <p>You can create a <code><a href="https://rdrr.io/pkg/zen4R/man/ZenodoRecord.html">zen4R::ZenodoRecord</a></code> object from the from <code>pkg</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/gldp2zenodoRecord.html">gldp2zenodoRecord</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/gldp2zenodoRecord.html">gldp2zenodoRecord</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Successfully connected to Zenodo with user token</code></pre>
 </div>
@@ -1341,7 +1346,7 @@ Tip
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Successfully fetched list of funders!</code></pre>
 </div>
-<div class="sourceCode" id="cb249"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;ZenodoRecord&gt;
 ....|-- created: &lt;NULL&gt;
@@ -1370,7 +1375,7 @@ Tip
 ........|-- rights: 
 ........|-- related_identifiers: 
 ........|-- subjects: 
-........|-- publication_date: 2025-01-16
+........|-- publication_date: 2025-05-01
 ....|-- parent: &lt;NULL&gt;
 ....|-- pids: &lt;NULL&gt;
 ....|-- stats: &lt;NULL&gt;</code></pre>
@@ -1391,16 +1396,16 @@ Tip
 </div>
 <p>You can create the deposit on the website. For this we need to reserve the DOI, but without publishing the record yet: there is no data!</p>
 <div class="cell">
-<div class="sourceCode" id="cb251"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">depositRecord</span><span class="op">(</span><span class="va">z</span>, reserveDOI <span class="op">=</span> <span class="cn">TRUE</span>, publish <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb255"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">depositRecord</span><span class="op">(</span><span class="va">z</span>, reserveDOI <span class="op">=</span> <span class="cn">TRUE</span>, publish <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can now open this record on your browser using its link: <code>z$links$self_html</code></p>
 <p>We can retrieve the concept DOI to build the pkg <code>id</code></p>
 <div class="cell">
-<div class="sourceCode" id="cb252"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"https://doi.org/"</span>, <span class="va">z</span><span class="op">$</span><span class="fu">getConceptDOI</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb256"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"https://doi.org/"</span>, <span class="va">z</span><span class="op">$</span><span class="fu">getConceptDOI</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now upload the data to the deposit with (or do it manually from the website)</p>
 <div class="cell">
-<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb257"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">f</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">zenodo</span><span class="op">$</span><span class="fu">uploadFile</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">$</span><span class="va">version</span>, <span class="va">f</span><span class="op">)</span>, <span class="va">z</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1431,7 +1436,7 @@ Tip
 <p>A nice feature of Zenodo is that you can share the record BEFORE publication with others (e.g., co-authors) allowing them to check everything before publication.</p>
 <p>If any modification of the metadata are made on Zenodo, you overwrite <code>pkg</code>’s metadata with</p>
 <div class="cell">
-<div class="sourceCode" id="cb254"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z_updated</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">getDepositionByConceptDOI</span><span class="op">(</span><span class="va">z</span><span class="op">$</span><span class="fu">getConceptDOI</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb258"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z_updated</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">getDepositionByConceptDOI</span><span class="op">(</span><span class="va">z</span><span class="op">$</span><span class="fu">getConceptDOI</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/zenodoRecord2gldp.html">zenodoRecord2gldp</a></span><span class="op">(</span><span class="va">z_updated</span>, <span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
