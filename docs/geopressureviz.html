@@ -409,13 +409,13 @@ cookieconsent.run({
 <li><p><strong>Side panel</strong>: this provides key information and tools to navigate the app.</p></li>
 </ol>
 </li>
-<li><p>The “Minimum duration” input allows to filter out short stationary periods on the map, similarly to <code>include_min_duration</code> in <code>tag_set_map()</code>.</p></li>
+<li><p>The “Minimum duration” input allows you to filter out short stationary periods on the map, similarly to <code>include_min_duration</code> in <code>tag_set_map()</code>.</p></li>
 <li><p>Toggle the “Full Track” button to move to the stationary period view.</p></li>
-<li><p>Navigate from one stationary period to the next using the previous/next button or dropdown list. The pressure timeseries will update to zoom exactly on this stationary period. The color of the timeseries informs you on the current stationary period shown on the map, the two others begin the previous and next one.</p></li>
+<li><p>Navigate from one stationary period to the next using the previous/next button or dropdown list. The pressure timeseries will update to zoom exactly on this stationary period. The color of the timeseries informs you about the current stationary period shown on the map, the two others being the previous and next one.</p></li>
 <li><p>The circles indicates the distance to and from the previous and next stationary period location based on the speed slider on the side panel (default is 40km/h).</p></li>
 <li><p>Depending on which maps are available, you can choose to display the probability map of pressure <code>tag$map_pressure</code>, light <code>tag$map_light</code>, their product, or the marginal.</p></li>
-<li><p>Because some locations of the most likely path can be completely off, it might be helpful to temporarily change their location to check the coherence of distance with the next/previous stationary period. Click on “Start Editing” to do so Every time you click on the map, it will update the position. Once you’re happy with the position, you can click on the button again to disable the editing mode.</p></li>
-<li><p>Finally, you can also check the pressure timeseries with the new positions using the button “Query pressure”. This runs <code>geopressure_timeseries()</code> in the background, so it will be slow (especially for long stationary periods).</p></li>
+<li><p>Because some locations of the most likely path can be completely off, it might be helpful to temporarily change their location to check the coherence of distance with the next/previous stationary period. Click on “Start Editing” to do so. Every time you click on the map, it updates the position. Once you’re happy with the position, you can click on the button again to disable the editing mode.</p></li>
+<li><p>Finally, you can also check the pressure timeseries with the new positions using the button “Query pressure”. This runs <code>geopressure_timeseries()</code> in the background, so it is slow (especially for long stationary periods).</p></li>
 </ol></section><section id="run-geopressureviz" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="run-geopressureviz">
 <span class="header-section-number">7.2</span> Run GeoPressureViz</h2>
 <p>The visualization can be started with your track using <code>geopressureviz()</code>.</p>
@@ -428,7 +428,7 @@ cookieconsent.run({
 <span>  marginal <span class="op">=</span> <span class="va">marginal</span>, <span class="co"># optional</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If your data is stored in <code>"./data/interim/18LX.RData"</code>, you can use directly</p>
+<p>If your data is stored in <code>./data/interim/18LX.RData</code>, you can use directly</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressureviz</span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

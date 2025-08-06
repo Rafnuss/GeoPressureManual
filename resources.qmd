@@ -29,24 +29,6 @@ Paper reviewing the strengths, limitations, and opportunities of geolocation by 
 > Raphaël Nussbaumer, Mathieu Gravey, Felix Liechti. Improving the spatial accuracy of multi-sensor geolocators' position using atmospheric surface pressure. October 2021. *7th International Bio-logging Science Symposium*. PRESENTATION available at [Youtube](https://www.youtube.com/watch?v=0JsYU_xfKN8) and as [PDF](http://dx.doi.org/10.13140/RG.2.2.13199.71843).
 
 
-## Projects using GeoPressureR
-
-You can find below the list of all research projects using GeoPressureR with links to the code used to analyse and create figures. This might be helpful to get an idea of how to analyse your data and borrow some code sections for your own project. Feel free to [contact me](mailto:rafnuss@gmail.com) if you'd like to add your project to this list.
-
-### Data & code {.unnumbered}
-- Mongolian Nightjar  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6720386.svg)](https://doi.org/10.5281/zenodo.6720386) [<i class="bi bi-github"></i>](https://github.com/Rafnuss/MongolianNightjar) [<i class="bi bi-file-text"></i>](https://doi.org/10.1007/s10336-022-02000-4)
-- Northern Wheatear [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7471405.svg)](https://doi.org/10.5281/zenodo.7471405) [<i class="bi bi-github"></i>](https://github.com/Rafnuss/Val-Piora-Wheatear)  [<i class="bi bi-file-text"></i>](https://doi.org/10.1186/s40462-023-00381-6)
-- Swainson's Warbler [<i class="bi bi-github"></i>](https://github.com/grhyne/SWWA_Pressure) [<i class="bi bi-github"></i>](https://github.com/grhyne/Limnothlypis_Pressure_V3) [<i class="bi bi-file-text"></i>](https://doi.org/10.1093/ornithology/ukae010)
-- Siberian Rubythroat  [<i class="bi bi-github"></i>](https://github.com/ksakuras/Siberian-rubythroat-China) [<i class="bi bi-file-text"></i>](https://doi.org/10.1186/s40462-024-00495-5)
-- Myrtle Warbler [<i class="bi bi-github"></i>](https://github.com/sszarmach/myrtle_geo_pressure/) [<i class="bi bi-file-text"></i>](https://doi.org/10.1101/2024.10.09.617415) 
-- Woodland Kingfisher [<i class="bi bi-github"></i>](https://github.com/Rafnuss/WoodlandKingfisher)
-- Red-capped Robin-chat and Mangrove Kingfisher [<i class="bi bi-github"></i>](https://github.com/Rafnuss/MK-RCRC/) 
-
-### Data only {.unnumbered}
-- Lesser Grey Shrike [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7556866.svg)](https://doi.org/10.5281/zenodo.7556866) [<i class="bi bi-file-text"></i>](https://doi.org/10.1007/s10336-023-02102-7)
-- Barred Warbler [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10209430.svg)](https://doi.org/10.5281/zenodo.10209430) [<i class="bi bi-file-text"></i>](https://doi.org/10.25225/jvb.23085)
-
-
 ## References
 
 ::: {#refs}

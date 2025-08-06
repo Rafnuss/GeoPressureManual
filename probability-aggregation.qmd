@@ -9,7 +9,6 @@ aliases:
 #| message: false
 #| include: false
 library(GeoPressureR)
-library(knitr)
 ```
 
 At the core of GeoPressure, we try to estimate the position of the bird based on a pressure mismatch of the geolocator and a weather reanalysis dataset <a href="https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era5" target="_blank">ERA5</a>. A major challenge in this process is the transformation of map of errors (mismatch) into a probability.
@@ -20,7 +19,7 @@ In this chapter, we present this challenge, look at the theory behind it, and ex
 
 For each stationary period, we estimate the probability of the position $\textbf{x}$ of the bird based on a pressure timeseries measured by the geolocator $P_{gl}[t] \quad \forall t \in [1,\ldots,n]$, which, in a Bayesian framework can be written as, $$p(\textbf{x}\mid P_{gl}[1],\ldots,P_{gl}[n]) \propto p(P_{gl}[1],\ldots,P_{gl}[n] \mid \textbf{x}) p(\textbf{x}).$$
 
-We are interested here in determining the likelihood term $p(P_{gl} \mid \textbf{x})$ which represents the probability of observing the timeseries $P_{gl}$ knowing that the bird is at location $\textbf{x}$. To quantify this probability, we look at the mismatch between $P_{gl}$ and the pressure timeseries of the ERA5 database $P_{ERA5}(\textbf{x})$ extracted at location $\textbf{x}$. We can reformulate the likelihood as as a probability function $f$ of an error term $\varepsilon(\textbf{x})$ which measures a distance between $P_{gl}$ and $P_{ERA5}(\textbf{x})$ $$p(P_{gl} \mid \textbf{x}) = f(\varepsilon[1],\ldots,\varepsilon[n])$$
+We are interested here in determining the likelihood term $p(P_{gl} \mid \textbf{x})$ which represents the probability of observing the timeseries $P_{gl}$ knowing that the bird is at location $\textbf{x}$. To quantify this probability, we look at the mismatch between $P_{gl}$ and the pressure timeseries of the ERA5 database $P_{ERA5}(\textbf{x})$ extracted at location $\textbf{x}$. We can reformulate the likelihood as a probability function $f$ of an error term $\varepsilon(\textbf{x})$ which measures a distance between $P_{gl}$ and $P_{ERA5}(\textbf{x})$ $$p(P_{gl} \mid \textbf{x}) = f(\varepsilon[1],\ldots,\varepsilon[n])$$
 
 This formulation of the problem helps us to split our problem in two: first defining an error term $\varepsilon[t]$ and secondly defining the likelihood function $f$.
 
@@ -30,7 +29,7 @@ In most cases, we would expect to measure the error term with a simple differenc
 
 To solve this issue, we remove the mean pressure difference, essentially ignoring the absolute value of pressure (and altitude) such that the error term only quantify the mismatch of the temporal variation, $$\varepsilon[t] = \left( P_{ERA5}(\textbf{x})[t]-P_{gl}[t]\right) - \left( \frac{1}{n}\sum_{i=1}^{n} P_{ERA5}(\textbf{x})[i]-P_{gl}[i] \right) .$$
 
-This way of building the error term has some important consequences. A timeseries of only one datapoint will always yield zero error at all locations, resulting in an equally probable map. As the number of datapoints increases, the error term will become more and more able to distinguish between "good" and "bad" locations.
+This way of building the error term has some important consequences. A timeseries of only one datapoint always yields zero error at all locations, resulting in an equally probable map. As the number of datapoints increases, the error term becomes more and more able to distinguish between "good" and "bad" locations.
 
 ### Error term for the Great Reed Warbler
 
@@ -40,18 +39,18 @@ Let's load the data and filter
 load("./data/interim/CB619.RData")
 ```
 
-We are using <a href="https://raphaelnussbaumer.com/GeoPressureServer/#description" target="_blank">the GeoPressure API</a> with the `geopressure_map_mismatch()` function to measure the mismatch of the pressure series. Because the API can realistically return only a single map per stationary period, it aggregates the error timeseries with the Mean Squared Error (MSE), $$\mathit{MSE} = \frac{1}{n}\sum_{t=1}^{n} \varepsilon[t]^2.$$
+We are using [the GeoPressure API](https://raphaelnussbaumer.com/GeoPressureServer/#description) with the `geopressure_map_mismatch()` function to measure the mismatch of the pressure time series. Because the API can realistically return only a single map per stationary period, it aggregates the error time series with the Mean Squared Error (MSE), $$\mathit{MSE} = \frac{1}{n}\sum_{t=1}^{n} \varepsilon[t]^2.$$
 
 The MSE shows where the match of pressure is the best, excluding open water (ERA5-LAND does not support water). `tag$stap` also contains a column `nb_sample` which indicates the number of datapoints used to compute the MSE $n$. This value can only be up to the value `max_sample`.
 
 ```{r}
 plot(tag, type = "map_pressure_mse")
-kable(head(tag$stap))
+knitr::kable(head(tag$stap))
 ```
 
 ## Gaussian likelihood function
 
-In order to find an appropriate likelihood function, we first need to assume a distribution of the error. The sources of error are (1) the sensor measurement error, (2) the ERA5 reanalysis error and (3) the attitudinal movement of the bird during this time. Because we are removing the mean error, we can ignore any long-term errors (e.g., constant temporal error in ERA5 or biases in the geolocator sensor).
+In order to find an appropriate likelihood function, we first need to assume a distribution of the error. The sources of error are (1) the sensor measurement error, (2) the ERA5 reanalysis error and (3) the altitudinal movement of the bird during this time. Because we are removing the mean error, we can ignore any long-term errors (e.g., constant temporal error in ERA5 or biases in the geolocator sensor).
 
 The figure below shows the error distribution at the known location of equipment and retrieval.
 
@@ -61,11 +60,11 @@ The figure below shows the error distribution at the known location of equipment
 sd <- 0.5
 ```
 
-Therefore, assuming a Gaussian distribution of our error, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Non-independent_variables" target="_blank">Gaussian likelikhood</a> of a multivariate normal distribution is given by $$ f(\boldsymbol{\varepsilon})={\frac {1}{(2\pi)^{n/2} \sqrt{\det(\boldsymbol{\Sigma})}}}\exp \left(-\frac{1}{2} \boldsymbol{\varepsilon} \boldsymbol{\Sigma}^{-1} \boldsymbol{\varepsilon} \right).$$ with the vector notation $\boldsymbol{\varepsilon }=[\varepsilon[1],\ldots,\varepsilon[n]]$ and where the covariance matrix $\boldsymbol{\Sigma}$ contains the variance of two datapoints $\boldsymbol{\Sigma}_{t_1,t_2} = \operatorname {E}[ \varepsilon[t_1] \varepsilon[t_2] ]$.
+Therefore, assuming a Gaussian distribution of our error, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Non-independent_variables" target="_blank">Gaussian likelihood</a> of a multivariate normal distribution is given by $$ f(\boldsymbol{\varepsilon})={\frac {1}{(2\pi)^{n/2} \sqrt{\det(\boldsymbol{\Sigma})}}}\exp \left(-\frac{1}{2} \boldsymbol{\varepsilon} \boldsymbol{\Sigma}^{-1} \boldsymbol{\varepsilon} \right).$$ with the vector notation $\boldsymbol{\varepsilon }=[\varepsilon[1],\ldots,\varepsilon[n]]$ and where the covariance matrix $\boldsymbol{\Sigma}$ contains the variance of two datapoints $\boldsymbol{\Sigma}_{t_1,t_2} = \operatorname {E}[ \varepsilon[t_1] \varepsilon[t_2] ]$.
 
-### Independance of errors
+### Independence of errors
 
-As the covariance is difficult to quantify explicitly, we can first look at the very strong assumption of independence of the error, $\varepsilon_t \overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma)$. In this case, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Continuous_distribution,_continuous_parameter_space" target="_blank">Gaussian likelikhood function</a> $f_{ind}$ is simply the product of the normal probability density function of each error $\varepsilon[t]$, $$ f_{ind}(\boldsymbol{\varepsilon})=\prod _{t=1}^{n}f_\mathcal{N}(\varepsilon[t])=\left({\frac {1}{2\pi \sigma ^{2}}}\right)^{n/2}\exp \left(-{\frac {\sum _{t=1}^{n}\varepsilon[t]^2}{2\sigma ^2}}\right).$$
+As the covariance is difficult to quantify explicitly, we can first look at the very strong assumption of independence of the error, $\varepsilon_t \overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma)$. In this case, the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Continuous_distribution,_continuous_parameter_space" target="_blank">Gaussian likelihood function</a> $f_{ind}$ is simply the product of the normal probability density function of each error $\varepsilon[t]$, $$ f_{ind}(\boldsymbol{\varepsilon})=\prod _{t=1}^{n}f_\mathcal{N}(\varepsilon[t])=\left({\frac {1}{2\pi \sigma ^{2}}}\right)^{n/2}\exp \left(-{\frac {\sum _{t=1}^{n}\varepsilon[t]^2}{2\sigma ^2}}\right).$$
 
 We can re-write this equation as a function of the MSE $$ f_{ind}(\boldsymbol{\varepsilon})=\left({\frac {1}{2\pi \sigma ^{2}}}\right)^{n/2}\exp \left(-n{\frac {\mathit{MSE}}{2\sigma ^2}}\right).$$
 
@@ -80,11 +79,11 @@ Assuming independence, the Gaussian likelihood transforms the MSE into probabili
 
 This comes from the multiplication of probability assumed in the independence case (see equation above). The underlying assuming of the multiplication operator is the <a href="https://en.wikipedia.org/wiki/Logical_conjunction" target="_blank">conjunction of probabilities</a>, where aggregating two information is done with the AND operator: $P(A~\text{and}~B) = P(A)\times P(B)$. Only the information content overlapping every datapoint of information is kept.
 
-### Quantification of the errors dependance
+### Quantification of the errors dependence
 
-Ploting the auto-covariance at the calibration site for all the species allow us to see a temporal pattern in the error. For most bird, we can see a clear daily fluctuation which is certainly due to the bird daily movement for commute between feeding and roosting site. The auto-covariance approaches 0 for all birds, which is expected as we removed the mean value. However, the <a href="https://en.wikipedia.org/wiki/Variogram" target="_blank">sill</a> is reached between 6 and 12 hours depending on bird (the hoopoe doesn't reach it after 3 days!).
+Plotting the auto-covariance at the calibration site for all the species allows us to see a temporal pattern in the error. For most birds, we can see a clear daily fluctuation which is certainly due to the bird's daily movement for commute between feeding and roosting sites. The auto-covariance approaches 0 for all birds, which is expected as we removed the mean value. However, the <a href="https://en.wikipedia.org/wiki/Variogram" target="_blank">sill</a> is reached between 6 and 12 hours depending on the bird (the hoopoe doesn't reach it after 3 days!).
 
-![Auto-covariance of the error term](assets/Appendix_F_3.png){width="100%"}
+![Auto-covariance of the error term](assets/Appendix_F_3.png){width="100%" alt="Graph showing auto-covariance function of error terms over time lag for pressure data analysis"}
 
 From this observation, one option would be to construct a covariance matrix based on the auto-covariance. While this would look like the cleanest way of doing it, we have two issues.
 
@@ -93,7 +92,7 @@ From this observation, one option would be to construct a covariance matrix base
 
 ## Probability aggregation
 
-In the rest of this vignette, we will take a different angle, re-framing the problem differently and exploring other options to compute the likelihood.
+In the rest of this vignette, we take a different angle, re-framing the problem differently and exploring other options to compute the likelihood.
 
 In the field of <a href="https://link.springer.com/article/10.1007/s11004-012-9396-3" target="_blank">probability aggregation</a>, the problem of combining sources of information with overlapping/redundant content is frame as finding a pooling operator $F$ such that, $$p(\textbf{x}\mid \varepsilon[1],\ldots,\varepsilon[n]) \approx F(p(\textbf{x} \mid \varepsilon[1]) ,\ldots,p(\textbf{x} \mid \varepsilon[n])),$$ which, with our Gaussian assumption, we can written, $$ F(f(\varepsilon[1]),\ldots,f(\varepsilon[n]))=F(\boldsymbol{\varepsilon})$$
 
@@ -115,7 +114,7 @@ and even write it as a function of the MSE, $$F(\boldsymbol{\varepsilon}) \propt
 
 ### Log-linear pooling, $w=1/n$
 
-An interesting case is if $w=1/n$, so that $\sum_t w_t=1$. This would simplify the log-linear pooling aggregator to $$ F(\boldsymbol{\varepsilon})={\frac {1}{\sigma\sqrt{2\pi} }}\exp \left(-{\frac {1}{2\sigma ^2}\mathit{MSE}}\right),$$ which can be interpreted as the Gaussian probability distributions of the MSE. The length of the timeseries $n$ has disappeared from the equation, so that the aggregation dependence only on the mean square of the errors, regardless of how many datapoints.
+An interesting case is if $w=1/n$, so that $\sum_t w_t=1$. This would simplify the log-linear pooling aggregator to $$ F(\boldsymbol{\varepsilon})={\frac {1}{\sigma\sqrt{2\pi} }}\exp \left(-{\frac {1}{2\sigma ^2}\mathit{MSE}}\right),$$ which can be interpreted as the Gaussian probability distributions of the MSE. The length of the timeseries $n$ has disappeared from the equation, so that the aggregation depends only on the mean square of the errors, regardless of how many datapoints.
 
 We can try this and see the influence on the probability map.
 
@@ -151,13 +150,13 @@ Furthermore, the shape of the uncertainty can be strongly anisotropic (e.g., hoo
 
 ![Uncertainty of pressure mismatch (colorscale) for the equipment period showing the true equipment sire (red cross) within the probability map estimated and the most likely value](assets/probability-aggregation-map-uncertainty.png){width="100%"}
 
-Assessing uncertainty relies on checking that that the red cross is distributed according to each uncertainty shape. A more formal way to quantifiying the uncertainty is of the quantile of the true value $q=p(\boldsymbol{x}\leq \boldsymbol{x}_{true})$, which corresponds to the probability that the variable is less than or equal to the true value. So, if the true value belongs to the distribution, the distribution of its quantile should be uniform.
+Assessing uncertainty relies on checking that that the red cross is distributed according to each uncertainty shape. A more formal way to quantifying the uncertainty is of the quantile of the true value $q=p(\boldsymbol{x}\leq \boldsymbol{x}_{true})$, which corresponds to the probability that the variable is less than or equal to the true value. So, if the true value belongs to the distribution, the distribution of its quantile should be uniform.
 
-This can be visualize with the empirical cumulative distribution of the quantiles which should fall on the 1:1 line (like a qq-plot). The two extreme cases ($w=1$ and $w=1/n$) show overconfidence (above the line) and underconfidence (below the line) respectively. Indeed, the distribution of quantile using the $w=1/n$ method shows a lot of quantile values between 0.9-1, which indicates that the true value is within the 90% uncertainty contour (under-confident).
+This can be visualised with the empirical cumulative distribution of the quantiles which should fall on the 1:1 line (like a qq-plot). The two extreme cases ($w=1$ and $w=1/n$) show overconfidence (above the line) and underconfidence (below the line) respectively. Indeed, the distribution of quantile using the $w=1/n$ method shows a lot of quantile values between 0.9-1, which indicates that the true value is within the 90% uncertainty contour (under-confident).
 
-![](assets/probability-aggregation-qq.png){width="100%"}
+![QQ plot showing pressure model uncertainty assessment](assets/probability-aggregation-qq.png){width="100%" alt="Quantile-quantile plot comparing theoretical vs observed quantiles for pressure model uncertainty validation"}
 
-The method chosen ($w=\log(n)/n$) is doing better than both, but is still in general underconfident. Because the calibration the validation is performed with rather long temporal serie (equipment and retrieval), one can expect that the labelisation of pressure is better/easier than for other places. Thus, it seems more appropriate to be slightly underconfident while the method is being developed.
+The method chosen ($w=\log(n)/n$) is doing better than both, but is still in general underconfident. Because the calibration the validation is performed with rather long temporal series (equipment and retrieval), one can expect that the labelling of pressure is better/easier than for other places. Thus, it seems more appropriate to be slightly underconfident while the method is being developed.
 
 The covariance aggregation scheme was implemented by computing the covariance matrix of the multi-variate Gaussian distribution. The covariance function was build using the exact on the variogram of each species. This is, in theory, the more correct method, but it looks too overconfident. Thus we didn't use it for now.
 

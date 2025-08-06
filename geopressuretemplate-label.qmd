@@ -4,14 +4,14 @@ editor: source
 description: https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-label.html
 ---
 
-This script will guide you through the tag labelling of pressure and/or acceleration data and creation of the pressure map.
+This script will guide you through the tag labeling of pressure and/or acceleration data and creation of the pressure map.
 
 ::: callout-tip
 *Delete this block when you have read!*
 
 -   These scripts should be adapted based on your project, but the same script should run for all your tags. You can always check [the original version online](https://github.com/Rafnuss/GeoPressureTemplate/blob/main/analysis/1-label.qmd).
--   Make sure you've read the [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual), in particular the [labelling instructions](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html), before running this script
--   Nothing is saved at the end of the script and it is meant to be like that. The goal in this script is to (1) create the tag labels (`./data/tag-label/`) and (2) adapt `config.yml`.
+-   Make sure you've read the [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual), in particular the [labeling instructions](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html), before running this script
+-   Nothing is saved at the end of the script and it is meant to be like that. The goal of this script is to (1) create the tag labels (`./data/tag-label/`) and (2) adapt `config.yml`.
 :::
 
 ```{r setup, message=FALSE}
@@ -43,7 +43,7 @@ tag_id:
     arguments: value
 ```
 
-Note that the values are written in json format (and not `R`), so for a vector/array you need to use `[, ]` and for an array of objects (named lists), you need to use `-` and indentation. Here is an exemple:
+Note that the values are written in JSON format (and not `R`), so for a vector/array you need to use `[, ]` and for an array of objects (named lists), you need to use `-` and indentation. Here is an example:
 
 ``` yaml
 18LX:
@@ -102,7 +102,7 @@ tag_label_write(tag)
 
 Open `csv` and edit on <https://trainset.raphaelnussbaumer.com/>.
 
-## Run [simple labelling checks](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html#simple-checks)
+## Run [initial labeling checks](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html#initial-checks)
 
 **Check 1**
 
@@ -122,59 +122,26 @@ Edit and export label on Trainset and simply run the same chunk until you're hap
 plot(tag, type = "pressure")
 ```
 
-## Run [Pressurepath checks](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html#pressurepath-checks)
+## Run [GeoPressureViz checks](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html#geopressureviz-check)
 
-Compute pressure map on a coarse grid to perform checks 3-5.
+Improve the label file until you can draw a coherent trajectory on GeoPressureViz.
 
-```{r, cache = TRUE}
-tag <- tag_set_map(tag,
-  extent = config::get("tag_set_map", id)$extent,
-  scale = 1,
-  known = config::get("tag_set_map", id)$known,
-  include_min_duration = 24
+```{r}
+tag <- tag_create(id,
+  crop_start = config::get("tag_create", id)$crop_start,
+  crop_end = config::get("tag_create", id)$crop_end,
+  quiet = TRUE
 ) |>
-  geopressure_map()
-```
+  tag_label(quiet = TRUE) |>
+  tag_set_map(
+    extent = config::get("tag_set_map", id)$extent,
+    scale = 1, # Use a coarse scale at first 1° is usually enough
+    known = config::get("tag_set_map", id)$known
+  )
 
-```{r, cache = TRUE}
-pressurepath <- pressurepath_create(tag)
-```
-
-**Check 3**
-
-```{r}
-plot_pressurepath(pressurepath)
-```
-
-**Check 4**
-
-```{r}
-plot_pressurepath(pressurepath, type = "histogram")
-```
-
-## Run [GeoPressureViz checks](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html#geopressureviz-checks)
-
-```{r, eval = FALSE}
-geopressureviz(
-  tag,
-  # path = pressurepath,
-  # path = most_likely_path,
-  # marginal = marginal
-)
-```
-
-## Update of `tag` and `pressurepath`
-
-::: callout-tip
-*Delete this block when you have read!*
-
-You can use `tag_upate()` and `pressurepath_update()` every time you edit and export a new label file from Trainset. You might want to start from a new tag and pressurepath variable if you encounter any problem.
-:::
-
-```{r, eval = FALSE}
-tag <- tag_update(tag)
+tag <- geopressure_map(tag, quiet = TRUE)
 ```
 
 ```{r, eval = FALSE}
-pressurepath <- pressurepath_update(pressurepath, tag)
+geopressureviz(tag, path = tag2path(tag, interp = 1))
 ```

@@ -38,8 +38,6 @@ You're now ready to [analyse your data according to the GeoPressureTemplate inst
 If the datapackage you want to use has already been analysed, you can retrieve all the resources of the datapackage:
 
 ```{r}
-# List available resources
-print(pkg)
 # For instance, display the edges
 edges(pkg) %>%
   head() %>%

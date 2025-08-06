@@ -126,11 +126,13 @@ cookieconsent.run({
 <meta property="og:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
 <meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cheatsheet_workflow.png">
 <meta property="og:site_name" content="A User Manual for GeoPressureR">
+<meta property="og:image:alt" content="GeoPressureR workflow cheatsheet diagram showing the complete analysis pipeline from raw data to trajectory outputs">
 <meta property="og:image:height" content="827">
 <meta property="og:image:width" content="3508">
 <meta name="twitter:title" content="13&nbsp; Workflow – A User Manual for GeoPressureR">
 <meta name="twitter:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
 <meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cheatsheet_workflow.png">
+<meta name="twitter:image:alt" content="GeoPressureR workflow cheatsheet diagram showing the complete analysis pipeline from raw data to trajectory outputs">
 <meta name="twitter:image-height" content="827">
 <meta name="twitter:image-width" content="3508">
 <meta name="twitter:card" content="summary_large_image">
@@ -400,11 +402,11 @@ cookieconsent.run({
 
 
 </header><p>The GeoPressureR workflow follows a series of functions taking as input the raw data, the labels, and the configuration, to produce trajectory outputs.</p>
-<p><img src="assets/cheatsheet_workflow.png" class="img-fluid quarto-figure quarto-figure-center"><em>Extract of the <a href="https://github.com/Rafnuss/GeoPressureR?tab=readme-ov-file#cheatsheet">GeoPressureR cheatsheet</a> illustrating the workflow</em></p>
+<p><img src="assets/cheatsheet_workflow.png" class="img-fluid quarto-figure quarto-figure-center" alt="GeoPressureR workflow cheatsheet diagram showing the complete analysis pipeline from raw data to trajectory outputs"><em>Extract of the <a href="https://github.com/Rafnuss/GeoPressureR?tab=readme-ov-file#cheatsheet">GeoPressureR cheatsheet</a> illustrating the workflow</em></p>
 <section id="presentation-of-geopressuretemplate" class="level2" data-number="13.1"><h2 data-number="13.1" class="anchored" data-anchor-id="presentation-of-geopressuretemplate">
 <span class="header-section-number">13.1</span> Presentation of <code>geopressuretemplate()</code>
 </h2>
-<p>After performing all preparations steps, you will be able to run the entire workflow in a single line:</p>
+<p>After performing all preparation steps, you are able to run the entire workflow in a single line:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressuretemplate</span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -432,20 +434,20 @@ cookieconsent.run({
 <li>*<a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_simulation"><code>graph_simulation()</code></a>: Runs simulations to model multiple possible paths.</li>
 </ol>
 <p><strong>3.<code>geopressuretemplate_pressurepath()</code></strong></p>
-<p>Compute pressurepath <a href="https://raphaelnussbaumer.com/GeoPressureR/reference/pressurepath_create"><code>pressurepath_create()</code></a> of the <code>path_most_likely</code> and/or the <code>path_geopressureviz</code>.</p>
+<p>Compute pressurepath <a href="https://raphaelnussbaumer.com/GeoPressureR/reference/pressurepath_create"><code>pressurepath_create()</code></a> of the <code>path_most_likely</code> and/or the <code>path_geopressureviz</code>. Learn more about pressurepath in the <a href="pressurepath.html">Pressurepath</a> chapter.</p>
 </section><section id="configuration-the-workflow" class="level2" data-number="13.2"><h2 data-number="13.2" class="anchored" data-anchor-id="configuration-the-workflow">
 <span class="header-section-number">13.2</span> Configuration the workflow</h2>
 <p>All parameters of the workflow’s function are provided in the <a href="https://github.com/Rafnuss/GeoPressureTemplate/blob/main/config.yml"><code>config.yml</code></a> file following the structure:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tag_id</span><span class="kw">:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">function_name</span><span class="kw">:</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">argument</span><span class="kw">:</span><span class="at"> value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>On top of all GeoPressureR function, you will also need to provide general workflow parameters in <code>geopressuretemplate</code>:</p>
+<p>On top of all GeoPressureR functions, you also need to provide general workflow parameters in <code>geopressuretemplate</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">default</span><span class="kw">:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">geopressuretemplate</span><span class="kw">:</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">likelihood</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"map_pressure"</span><span class="kw">,</span><span class="at"> </span><span class="st">"map_light"</span><span class="kw">]</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">outputs</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"marginal"</span><span class="kw">,</span><span class="at"> </span><span class="st">"most_likely"</span><span class="kw">,</span><span class="at"> </span><span class="st">"simulation"</span><span class="kw">]</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">pressurepath</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"most_likely"</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>likelihood</code> define which likelihood map to compute and use in the graph model while <code>outputs</code> define which outputs to use. In <code>pressurepath</code>, you need to set which path to use.</p>
+<p><code>likelihood</code> define which likelihood map to compute and use in the graph model while <code>outputs</code> define which outputs to use. In <code>pressurepath</code>, you need to set which path to use. The path can also be visualised using <a href="geopressureviz.html">GeoPressureViz</a>.</p>
 <p>You can check the configuration used with:</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressuretemplate_config</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

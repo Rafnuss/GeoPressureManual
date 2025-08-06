@@ -26,13 +26,13 @@ The core GeoLocator DP resources contain all the raw geolocator data. These `res
 
 ### GeoPressureR Resources
 
-The GeoPressureR extensions consist of optional trajectrory data generated through the [GeoPressureR workflow anaylsis](geopressuretemplate-workflow.html). 
+The GeoPressureR extensions consist of optional trajectory data generated through the [GeoPressureR workflow analysis](geopressuretemplate-workflow.html). 
 
 - [`staps.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/staps): Table of the stationary periods of all tags.
-- [`paths.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/paths): Table of the trajectory of all tags, typically most likely path or simulation paths. 
-- [`edges.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/edges): Table containing the flight information of the edges associated with the paths.     
-- [`twilights.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/twilights): Table of the twilights estimated from light data for all tags.                       
-- [`pressurepaths.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/pressurepaths): Table of the pressurepaths                                                           
+- [`paths.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/paths): Table of the trajectory of all tags, typically most likely path or simulation paths.
+- [`edges.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/edges): Table containing the flight information of the edges associated with the paths.
+- [`twilights.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/twilights): Table of the twilights estimated from light data for all tags.
+- [`pressurepaths.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/pressurepaths): Table of the pressurepaths
 
 ::: callout-note
 The GeoPressureR Resources is optional, and even if you have not (yet!) analysed your data, it's worth publishing the data (maybe with an embargo?). The data package can always be updated once the analysis is done.
@@ -46,7 +46,9 @@ The [GeoLocator Data Package Zenodo Community](https://zenodo.org/communities/ge
     <img src="https://blog.zenodo.org/static/img/logos/zenodo-gradient-1000.png" alt="Zenodo" style="width: 200px;">
 </a>
 
-Once you've published you data package, make sure to [sumbit it to the cummunity](https://help.zenodo.org/docs/share/submit-to-community/).
+Once you've published your data package, make sure to [submit it to the community](https://help.zenodo.org/docs/share/submit-to-community/).
+
+![GeoLocatorExplorer is a user friendly interface to all the available datapackage of geolocator](assets/geolocatorexplorer.png){width="100%" alt="screenshot of geolocatorexplorer"}
 
 
 ## GeoLocatoR 

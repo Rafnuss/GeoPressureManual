@@ -4,7 +4,6 @@
 #| message: false
 #| include: false
 library(GeoPressureR)
-library(knitr)
 
 tag <- tag_create(id = "CB619") |>
   tag_label() |>
@@ -124,7 +123,7 @@ path_most_likely <- graph_most_likely(graph, quiet = TRUE)
 In GeoPressureR, a `path` is a standard data.frame created and used [in several other functions](https://raphaelnussbaumer.com/GeoPressureR/reference/index.html#path).
 
 ```{r}
-kable(head(path_most_likely, 3))
+knitr::kable(head(path_most_likely, 3))
 plot_path(path_most_likely)
 ```
 
@@ -161,7 +160,7 @@ plot_path(path_simulation, plot_leaflet = FALSE)
 
 ## Save
 
-You might want to save some of the key objects such as `tag` or `marginal` in an `R` format. Following the default structure described in [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder), you should save them in the `"./data/interim"` folder.
+You might want to save some of the key objects such as `tag` or `marginal` in an `R` format. Following the default structure described in [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder), you should save them in the `./data/interim` folder.
 
 Note that `graph` can be quite large if the number of stationary periods and grid resolution is high.
 

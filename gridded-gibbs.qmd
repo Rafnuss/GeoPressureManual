@@ -1,28 +1,48 @@
 # Gridded Gibbs sampler
 
+In this chapter, we present an alternative approach to the graph (see chapter [Trajectory](trajectory.html)) using a [Gibbs sampler](https://en.wikipedia.org/wiki/Gibbs_sampling). Compared to the graph approach, (1) it is simpler to implement, (2) can be faster in some situations and (3) can solve potential memory issues but (1) is an approximation (MCMC sampler), (2) cannot account for wind data (at least, not easily).
+
+The aim is to produce possible migration trajectories of the bird considering the information of (1) light, (2) pressure and (3) flight distance.
+
+
+## Introduction and background
+
+Gibbs sampler is a special case of the [Metropolis-Hastings](https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm) where each state of the Markov chains is re-sampled iteratively conditional to the others, thus reducing the probability to sample to conditional probability. With the full conditional probability known, it can be sampled exactly, resulting in proposals always accepted in a traditional Metropolis-Hastings framework. This approach thus requires being able to compute the probability map of the position at one stationary period conditional to the previous and next stationary period. Gibbs sampler
+
+In this chapter, we present an alternative approach to the graph (see chapter [Basic graph]) using a [Gibbs sampler](https://en.wikipedia.org/wiki/Gibbs_sampling). Compared to the graph approach, (1) it is simpler to implement, (2) can be faster in some situations and (3) can solve potential memory issues but (1) is an approximation (MCMC sampler), (2) cannot account for wind data (at least, not easily).n thiGibbs sampleThe Gibbs sampler presents several advantages compared to traditional MH. First, by accepting all propositions, it is generally faster to run. Second, it is simple to implement and easier to set up as no step size is necessary. Thirdly, it can sample discontinuous probability space easily, thus allowing to "jump" over the sea. However, Gibbs sampler remains sensitive to local minima in the case where consecutive states are correlated. This is typically the case if several short flights follow a long flight (e.g. pre-breeding stopover in Libya for 18IC in Figure 8). The next flight constrains the position so much that the Gibbs sampler cannot explore correctly the space. This could be solved by using a block Gibbs sampler, where the positions of all stationary periods separated by short flights are re-sampled together. is a special case of the [Metropolis-Hastings](https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm) where each state of the Markov chains is re-sampled iteratively conditional to the others, thus reducing the probability to sample to conditional probability. With the full conditional probability known, it can be sampled exactly, resulting in proposals always accepted in a traditional Metropolis-Hastings framework. This approach thus requires being able to compute the probability map of the position at one stationary period conditional to the previous and next stationary period. chapter, we present an alternative approach to the graph (see chapter [Basic graph]) using a [Gibbs sampler](https://en.wikipedia.org/wiki/Gibbs_sampling). Compared to the graph approach, (1) it is simpler to implement, (2) can be faster in some situations and (3) can solve potential memory issues but (1) is an approximation (MCMC sampler), (2) cannot account for wind data (at least, not easily).ridded Gibbs sampler
+
 In this chapter, we present an alternative approach to the graph (see chapter \[Basic graph\]) using a [Gibb’s sampler](https://en.wikipedia.org/wiki/Gibbs_sampling). Compared to the graph approach, (1) it is simpler to implement, (2) can be faster in some situation and (3) can solve potential memory issue but (1) is an approximation (MCMC sampler), (2) cannot account for wind data (at least, not easily).
 
-The aim is to produce possible migration trajectory of the bird considering the information of (1) light, (2) pressure and (3) flight distance.
+The aim is to produce possible migration trajectories of the bird considering the information of (1) light, (2) pressure and (3) flight distance.
 
 ## Introduction and background
 
 Gibb’s sampler is a special case of the [Metropolis hasting](https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm) where each states of the Markov chains is re-sampled iteratively conditional to the others, thus reducing the probability to sample to conditional probability. With the full conditional probability known, it can be sampled exactly, resulting in proposal always accepted in a traditional Metropolis Hasting framework. This approach thus requires to be able to compute the probability map of the position at one stationary period conditional to the previous and next stationary period.
 
-In the bird trajectory model, the conditional probability is simple to compute because (1) the static probability part (pressure and light) dependent only the destination position and can easily be pre-computed as a map (see part 1) and (2) the transitional probability (i.e., movement model) is just based on a distance between the departure and destination, which can be computed efficiently on a grid if either the departure or destination is known. We implemented the gridded gibbs approach will the following procedure: 1. Initial the chain with the following path: - Create the path with the highest probability of the static probability (light and pressure) - Use the known equipment/retrieval site for the first and/or last states of the path - For stationary period shorter than 24hours, interpolate the position based on the other position. 2. Loop through the stationary period to produce a new simulated path. For each stationary period, - Compute the probability of the position conditional to the position of the bird at the previous and next stationary period of the current path. This conditional probability is the product of (1) the static probability of pressure and light at the current stationary period, (2) the probability from the movement model based on the position of the previous stationary period and previous flight duration and (3) the probability from the movement model based on the position of the next stationary period and next flight duration (see Figure 7). - Update the current state of the path with the position sampled from to the probability map computed.
+In the bird trajectory model, the conditional probability is simple to compute because (1) the static probability part (pressure and light) depends only on the destination position and can easily be pre-computed as a map (see part 1) and (2) the transitional probability (i.e., movement model) is just based on a distance between the departure and destination, which can be computed efficiently on a grid if either the departure or destination is known. We implemented the gridded Gibbs approach with the following procedure:
 
-![*Illustration of the gridded gibbs sampler for the 6th stationary period of a specific iteration. On one hand, we can compute the static probability based on the combinaison of pressure and light. On the other hand, we can compute the conditional proability of transition based on the position of the previous and next stationary period (green dot). Based on both information, we can sample possible position (small white dots).*](assets/gridded-gibbs-1.png){width="100%"}
+1. Initialise the chain with the following path:
+   - Create the path with the highest probability of the static probability (light and pressure)
+   - Use the known equipment/retrieval site for the first and/or last states of the path
+   - For stationary periods shorter than 24 hours, interpolate the position based on the other positions.
+
+2. Loop through the stationary periods to produce a new simulated path. For each stationary period:
+   - Compute the probability of the position conditional to the position of the bird at the previous and next stationary period of the current path. This conditional probability is the product of (1) the static probability of pressure and light at the current stationary period, (2) the probability from the movement model based on the position of the previous stationary period and previous flight duration and (3) the probability from the movement model based on the position of the next stationary period and next flight duration (see Figure 7).
+   - Update the current state of the path with the position sampled from the probability map computed.
+
+![*Illustration of the gridded Gibbs sampler for the 6th stationary period of a specific iteration. On one hand, we can compute the static probability based on the combination of pressure and light. On the other hand, we can compute the conditional probability of transition based on the position of the previous and next stationary period (green dot). Based on both pieces of information, we can sample possible positions (small white dots).*](assets/gridded-gibbs-1.png){width="100%"}
 
 The gibbs samples presents several advantages compare to traditional MH. First, by accepting all propositions, it is generally faster to run. Second, it is simple to implement and easier to setup as no step size is necessary. Thirdly, it can sample discontinuous probability space easily, thus allowing to “jump” over the sea. However, Gibbs samples remains sensitive to local minimun in the case where consecutive states are correlated. This is typically the case if several short flights follows a long flight (e.g. pre-breeding stopover in Lybia for 18IC inFigure 8). The next flight constrains so much the position, that gibbs sampler cannot explore correctly the space.This could be solved by using a block gibbs sampler, where the position of all stationary periods separated by short flights are re-sampled together.
 
 ## Stationary probability
 
-We already pre-processed the light and pressure data data in the chapter \[Static map\]
+We already pre-processed the light and pressure data in the chapter [Static map](light-map.html)
 
 ```{r}
 load("./data/3_static/18LX_static_prob.Rdata")
 ```
 
-We first normalize the static probability (light and pressure combine) to ensure that the sum of all probabilities on the map is 1.
+We first normalize the static probability (light and pressure combined) to ensure that the sum of all probabilities on the map is 1.
 
 ```{r}
 static_prob_n <- lapply(static_prob, function(x) {
@@ -32,7 +52,7 @@ static_prob_n <- lapply(static_prob, function(x) {
 })
 ```
 
-Instead of considering all grids cell of the map, we pre-select only the grid cell of each stationary period which are possible according to the static probability . 'Possible' is here defined by all grid cells whose cumulative sum of probability is 99%.
+Instead of considering all grid cells of the map, we pre-select only the grid cells of each stationary period which are possible according to the static probability. 'Possible' is here defined by all grid cells whose cumulative sum of probability is 99%.
 
 ```{r}
 thr_prob_percentile <- .99
@@ -42,7 +62,7 @@ nds_id <- lapply(static_prob_n, function(probi) {
   id_prob_percentile <- sum(cumsum(probis) <= (1 - thr_prob_percentile))
   thr_prob <- probis[id_prob_percentile + 1]
 
-  # filter the pixels above the threashold
+  # filter the pixels above the threshold
   nds <- probi >= thr_prob
   # return
   which(nds)
@@ -51,7 +71,7 @@ nds_id <- lapply(static_prob_n, function(probi) {
 
 ## Movement model
 
-In the movement model, we define the function to convert a groundspeed \[km/h\] to a probability value. We here use a standard gamma distribution. Note that in the graph approach, we use windspeed sot that the movement model is defined on the **air**speed.
+In the movement model, we define the function to convert a groundspeed [km/h] to a probability value. We here use a standard gamma distribution. Note that in the graph approach, we use wind speed so that the movement model is defined on the **air**speed.
 
 ```{r}
 mvt_pdf <- function(x) {
@@ -59,7 +79,7 @@ mvt_pdf <- function(x) {
 }
 ```
 
-We pre-compute the position of the center of all grid cell.
+We pre-compute the position of the center of all grid cells.
 
 ```{r}
 lat <- seq(raster::ymax(static_prob[[1]]), raster::ymin(static_prob[[1]]), length.out = nrow(static_prob[[1]]) + 1)
@@ -92,7 +112,7 @@ prob_mvt <- function(pt, i_s, id) {
 
 As any Metropolis-hasting, we need to provide an initial path to the sampler.
 
-Before that, let's set a few constant
+Before that, let's set a few constants
 
 ```{r}
 nj <- 100 # number of iteration/samples
@@ -100,7 +120,7 @@ nsta <- length(static_prob) # number of stationary period
 nll <- dim(static_prob[[1]])[1:2] # number of grid cell
 ```
 
-Initialize the first path with the most likely position of each stationary period. Yet the position is unlikely to be reliable for short stationary period. To fix this, we will linearly interpolate the position of short stationary period. We first identify and remove the position of short stationary period (1 day).
+Initialize the first path with the most likely position of each stationary period. Yet the position is unlikely to be reliable for short stationary periods. To fix this, we linearly interpolate the position of short stationary periods. We first identify and remove the position of short stationary periods (1 day).
 
 ```{r}
 path <- matrix(ncol = nsta, nrow = nj)
@@ -133,7 +153,7 @@ ss <- which(is.na(path[2, ]))
 
 ## Run the Gibbs sampler
 
-Now that all the preparation are done, we can perform the simulation by simply iterating through `nj`
+Now that all the preparations are done, we can perform the simulation by simply iterating through `nj`
 
 ```{r}
 for (j in seq(from = 2, to = nj)) {

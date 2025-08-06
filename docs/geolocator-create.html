@@ -404,7 +404,7 @@ cookieconsent.run({
   
 
 
-</header><p>In this guide, we will see how to generate a GeoLocator Data Package from a GeoPressureTemplate folder where you’ve already performed the analysis of the tracks following the <a href="geopressuretemplate-workflow.html">GeoPressureTemplate workflow</a>.</p>
+</header><p>In this guide, we explore how to generate a GeoLocator Data Package from a GeoPressureTemplate folder where you’ve already performed the analysis of the tracks following the <a href="geopressuretemplate-workflow.html">GeoPressureTemplate workflow</a>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -415,7 +415,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To be able to follow this guide, you will need to have a GeoPressureTemplate project containing:</p>
+<p>To be able to follow this guide, you need to have a GeoPressureTemplate project containing:</p>
 <ul>
 <li>An up-to-date <code>DESCRIPTION</code> file, including <code>version</code>, <code>contributors</code>, <code>licences</code> as described in <a href="https://r-pkgs.org/description.html">the R packages book</a>.</li>
 <li>One interim <code>.RData</code> file per tag, with all outputs you would like to publish, generated with the <a href="geopressuretemplate-workflow.html">Geopressuretemplate workflow</a>.</li>
@@ -495,7 +495,7 @@ Important
 </div>
 <p>In addition, here are some more optional metadata:</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Review the description, often, you will want to be more talkative here.</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Review the description, often, you want to be more descriptive here.</span></span>
 <span><span class="co"># pkg$description</span></span>
 <span></span>
 <span><span class="co"># Add keywords</span></span>
@@ -516,191 +516,89 @@ Important
 </div>
 <p>You can display all these information at any point with</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── A GeoLocator Data Package (v0.2) </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• title: "Migration route and timing of South African Woodland Kingfisher"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• contributors:</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  Raphaël Nussbaumer ('raphael.nussbaumer@vogelwarte.ch') (ContactPerson,
-  DataCurator, ProjectLeader) - &lt;https://orcid.org/0000-0002-8185-1020&gt;</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• embargo: 2030-01-01</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• licenses:</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  Creative Commons Attribution 4.0 (CC-BY-4.0) -
-  &lt;https://creativecommons.org/licenses/by/4.0/&gt;</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• relatedIdentifiers:</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  IsPartOf &lt;10.5281/zenodo.11207081&gt;</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• grants: "Swiss Ornithological Intitute"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• keywords: "Woodland Kingfisher", "intra-african", and "multi-sensor
-  geolocator"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• created: 2025-05-01 19:25:54</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• bibliographicCitation: "Nussbaumer R, Rime Y (2025). \"Migration route and
-  timing of South African Woodland Kingfisher.\""</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• spatial:</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• temporal: to</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• taxonomic:</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• numberTags:</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── 0 resources. </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Use `unclass()` to print the Geolocator Data Package as a list.</code></pre>
-</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── A GeoLocator Data Package (main)</span></span>
+<span><span class="co">## • title: "Migration route and timing of South African Woodland Kingfisher"</span></span>
+<span><span class="co">## • contributors:</span></span>
+<span><span class="co">##   Raphaël Nussbaumer ('raphael.nussbaumer@vogelwarte.ch') (ContactPerson,</span></span>
+<span><span class="co">##   DataCurator, ProjectLeader) - &lt;https://orcid.org/0000-0002-8185-1020&gt;</span></span>
+<span><span class="co">## • embargo: 2030-01-01</span></span>
+<span><span class="co">## • licenses:</span></span>
+<span><span class="co">##   Creative Commons Attribution 4.0 (CC-BY-4.0) -</span></span>
+<span><span class="co">##   &lt;https://creativecommons.org/licenses/by/4.0/&gt;</span></span>
+<span><span class="co">## • relatedIdentifiers:</span></span>
+<span><span class="co">##   IsPartOf &lt;10.5281/zenodo.11207081&gt;</span></span>
+<span><span class="co">## • grants: "Swiss Ornithological Intitute"</span></span>
+<span><span class="co">## • keywords: "Woodland Kingfisher", "intra-african", and "multi-sensor</span></span>
+<span><span class="co">##   geolocator"</span></span>
+<span><span class="co">## • created: 2025-08-06 06:28:19</span></span>
+<span><span class="co">## • bibliographicCitation: "Nussbaumer R, Rime Y (2025). \"Migration route and</span></span>
+<span><span class="co">##   timing of South African Woodland Kingfisher.\""</span></span>
+<span><span class="co">## • spatial:</span></span>
+<span><span class="co">## • temporal: to</span></span>
+<span><span class="co">## • taxonomic:</span></span>
+<span><span class="co">## • numberTags:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── 0 resources.</span></span>
+<span><span class="co">## Use `unclass()` to print the Geolocator Data Package as a list.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="add-the-geopressuretemplate-data" class="level2" data-number="15.3"><h2 data-number="15.3" class="anchored" data-anchor-id="add-the-geopressuretemplate-data">
 <span class="header-section-number">15.3</span> Add the geopressuretemplate data</h2>
 <p><code><a href="https://rdrr.io/pkg/GeoLocatoR/man/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate()</a></code> is a key function that read the geopressuretemplate data available and automatically add the most up-to-date available data to the datapackage.</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="va">pkg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="va">directory</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="va">pkg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="va">directory</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If <code>tags.csv</code> and <code>observations.csv</code> are not available (i.e., not stored in the <code>data/</code> folder of your project), a <code>tags</code> and <code>observations</code> resources would have been generated by <code><a href="https://rdrr.io/pkg/GeoLocatoR/man/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate()</a></code> based on the available information. You will certaintly need to edit them manual adding some key missing information (e.g.&nbsp;<code>ring_number</code>).</p>
+<p>If <code>tags.csv</code> and <code>observations.csv</code> are not available (i.e., not stored in the <code>data/</code> folder of your project), <code>tags</code> and <code>observations</code> resources would have been generated by <code><a href="https://rdrr.io/pkg/GeoLocatoR/man/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate()</a></code> based on the available information. You certainly need to edit them manually, adding some key missing information (e.g.&nbsp;<code>ring_number</code>).</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/tags.html">tags</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/tags.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/tags.html">tags</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/tags.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/observations.html">observations</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/observations.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── A GeoLocator Data Package (v0.2) </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• title: "Migration route and timing of South African Woodland Kingfisher"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• contributors:</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  Raphaël Nussbaumer ('raphael.nussbaumer@vogelwarte.ch') (ContactPerson,
-  DataCurator, ProjectLeader) - &lt;https://orcid.org/0000-0002-8185-1020&gt;</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• embargo: 2030-01-01</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• licenses:</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  Creative Commons Attribution 4.0 (CC-BY-4.0) -
-  &lt;https://creativecommons.org/licenses/by/4.0/&gt;</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• relatedIdentifiers:</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  IsPartOf &lt;10.5281/zenodo.11207081&gt;</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• grants: "Swiss Ornithological Intitute"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• keywords: "Woodland Kingfisher", "intra-african", and "multi-sensor
-  geolocator"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• created: 2025-05-01 19:25:54</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• bibliographicCitation: "Nussbaumer R, Rime Y (2025). \"Migration route and
-  timing of South African Woodland Kingfisher.\""</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• spatial: Polygon and c(17.375, 32.875, 32.875, 17.375, 17.375, -24.375,
-  -24.375, 12.875, 12.875, -24.375)</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• temporal: "2017-01-10" to "2019-09-28"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• taxonomic: "Halcyon senegalensis"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>• numberTags:</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  tags: 25</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  measurements: 5</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  light: 5</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  pressure: 5</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  activity: 5</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  temperature_external: 5</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  magnetic: 5</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  paths: 5</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  pressurepaths: 5</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── 8 resources: </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>• twilights
-• staps
-• paths
-• edges
-• pressurepaths
-• tags
-• observations
-• measurements
-Use `unclass()` to print the Geolocator Data Package as a list.</code></pre>
-</div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── A GeoLocator Data Package (main)</span></span>
+<span><span class="co">## • title: "Migration route and timing of South African Woodland Kingfisher"</span></span>
+<span><span class="co">## • contributors:</span></span>
+<span><span class="co">##   Raphaël Nussbaumer ('raphael.nussbaumer@vogelwarte.ch') (ContactPerson,</span></span>
+<span><span class="co">##   DataCurator, ProjectLeader) - &lt;https://orcid.org/0000-0002-8185-1020&gt;</span></span>
+<span><span class="co">## • embargo: 2030-01-01</span></span>
+<span><span class="co">## • licenses:</span></span>
+<span><span class="co">##   Creative Commons Attribution 4.0 (CC-BY-4.0) -</span></span>
+<span><span class="co">##   &lt;https://creativecommons.org/licenses/by/4.0/&gt;</span></span>
+<span><span class="co">## • relatedIdentifiers:</span></span>
+<span><span class="co">##   IsPartOf &lt;10.5281/zenodo.11207081&gt;</span></span>
+<span><span class="co">## • grants: "Swiss Ornithological Intitute"</span></span>
+<span><span class="co">## • keywords: "Woodland Kingfisher", "intra-african", and "multi-sensor</span></span>
+<span><span class="co">##   geolocator"</span></span>
+<span><span class="co">## • created: 2025-08-06 06:28:19</span></span>
+<span><span class="co">## • bibliographicCitation: "Nussbaumer R, Rime Y (2025). \"Migration route and</span></span>
+<span><span class="co">##   timing of South African Woodland Kingfisher.\""</span></span>
+<span><span class="co">## • spatial: Polygon and c(17.375, 32.875, 32.875, 17.375, 17.375, -24.375,</span></span>
+<span><span class="co">##   -24.375, 12.875, 12.875, -24.375)</span></span>
+<span><span class="co">## • temporal: "2017-01-10" to "2019-09-28"</span></span>
+<span><span class="co">## • taxonomic: "Halcyon senegalensis"</span></span>
+<span><span class="co">## • numberTags:</span></span>
+<span><span class="co">##   tags: 25</span></span>
+<span><span class="co">##   measurements: 5</span></span>
+<span><span class="co">##   light: 5</span></span>
+<span><span class="co">##   pressure: 5</span></span>
+<span><span class="co">##   activity: 5</span></span>
+<span><span class="co">##   temperature_external: 5</span></span>
+<span><span class="co">##   magnetic: 5</span></span>
+<span><span class="co">##   paths: 5</span></span>
+<span><span class="co">##   pressurepaths: 5</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── 8 resources:</span></span>
+<span><span class="co">## • twilights</span></span>
+<span><span class="co">## • staps</span></span>
+<span><span class="co">## • paths</span></span>
+<span><span class="co">## • edges</span></span>
+<span><span class="co">## • pressurepaths</span></span>
+<span><span class="co">## • tags</span></span>
+<span><span class="co">## • observations</span></span>
+<span><span class="co">## • measurements</span></span>
+<span><span class="co">## Use `unclass()` to print the Geolocator Data Package as a list.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -719,7 +617,7 @@ Tip
 <span class="header-section-number">15.4</span> Check the validity of the data package</h2>
 <p>You can visualize the coverage of the package by ploting the Data Package. Check for the correct number of tags, as well as equipment and retrieval dates.</p>
 <div class="cell">
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="geolocator-create_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
@@ -739,541 +637,188 @@ Important
 <div class="callout-body-container callout-body">
 <p>Finally, we check that the package is compliant with GeoLocator Data Package standards.</p>
 <div class="cell">
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/validate_gldp.html">validate_gldp</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage profile ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ title is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ contributors is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ contributors[[1]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ embargo is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ licenses is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ licenses[[1]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ created is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$tags is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$measurements is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$light is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$pressure is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$activity is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$temperature_external is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$temperature_internal is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$magnetic is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$wet_count is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$conductivity is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$paths is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ numberTags$pressurepaths is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ bibliographicCitation is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ $schema is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ resources is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ resources[[1]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ resources[[2]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ resources[[3]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ resources[[4]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ resources[[5]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ resources[[6]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ resources[[7]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ resources[[8]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ keywords is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ keywords[[1]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ keywords[[2]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ keywords[[3]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ grants is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ grants[[1]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ relatedIdentifiers is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ relatedIdentifiers[[1]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ taxonomic is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ taxonomic[[1]] is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ spatial is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! spatial cannot be validated (external schema).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ temporal is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ temporal$start is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ temporal$end is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Package is consistent with the profile.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage Resources </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage Resources twilights ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ twilights$tag_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ twilights$twilight is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ twilights$rise is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ twilights$label is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Table twilights is consistent with the schema.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage Resources staps ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ staps$tag_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ staps$stap_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ staps$start is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ staps$end is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ staps$known_lat is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ staps$known_lon is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ staps$include is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Table staps is consistent with the schema.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage Resources paths ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ paths$tag_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ paths$stap_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ paths$type is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ paths$lat is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ paths$lon is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ paths$ind is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ paths$j is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ paths$interp is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ paths$known is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Table paths is consistent with the schema.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage Resources edges ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$tag_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$stap_s is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$stap_t is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$lat_s is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$lon_s is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$lat_t is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$lon_t is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$s is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$t is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$j is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$start is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$end is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$n is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$distance is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$bearing is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$gs_u is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$gs_v is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$ws_u is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ edges$ws_v is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Table edges is consistent with the schema.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage Resources pressurepaths ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$tag_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$datetime is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$stap_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$type is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$lat is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$lon is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$ind is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$j is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$pressure_tag is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$label is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$altitude is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$surface_pressure is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$surface_pressure_norm is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$sunset is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ pressurepaths$sunrise is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Table pressurepaths is consistent with the schema.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage Resources tags ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ tags$tag_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ tags$ring_number is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ tags$scientific_name is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ tags$manufacturer is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ tags$model is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ tags$firmware is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ tags$weight is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ tags$attachment_type is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ tags$readout_method is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ tags$tag_comments is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Table tags is consistent with the schema.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage Resources observations ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$ring_number is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$tag_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$observation_type is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$datetime is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$latitude is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$longitude is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$location_name is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$device_status is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$observer is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$catching_method is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$age_class is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$sex is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$condition is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$mass is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$wing_length is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$additional_metric is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations$observation_comments is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Table observations is consistent with the schema.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage Resources measurements ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ measurements$tag_id is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ measurements$sensor is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ measurements$datetime is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ measurements$value is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ measurements$label is valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Table measurements is consistent with the schema.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Package's ressources are valid.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check GeoLocator DataPackage Coherence </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Package is internally coherent.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Check Observations Coherence </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ observations table is coherent.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Package is valid.</code></pre>
-</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/validate_gldp.html">validate_gldp</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage profile ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ✔ title is valid.</span></span>
+<span><span class="co">## ✔ contributors is valid.</span></span>
+<span><span class="co">## ✔ contributors[[1]] is valid.</span></span>
+<span><span class="co">## ✔ embargo is valid.</span></span>
+<span><span class="co">## ✔ licenses is valid.</span></span>
+<span><span class="co">## ✔ licenses[[1]] is valid.</span></span>
+<span><span class="co">## ✔ created is valid.</span></span>
+<span><span class="co">## ✔ numberTags is valid.</span></span>
+<span><span class="co">## ✔ numberTags$tags is valid.</span></span>
+<span><span class="co">## ✔ numberTags$measurements is valid.</span></span>
+<span><span class="co">## ✔ numberTags$light is valid.</span></span>
+<span><span class="co">## ✔ numberTags$pressure is valid.</span></span>
+<span><span class="co">## ✔ numberTags$activity is valid.</span></span>
+<span><span class="co">## ✔ numberTags$temperature_external is valid.</span></span>
+<span><span class="co">## ✔ numberTags$temperature_internal is valid.</span></span>
+<span><span class="co">## ✔ numberTags$magnetic is valid.</span></span>
+<span><span class="co">## ✔ numberTags$wet_count is valid.</span></span>
+<span><span class="co">## ✔ numberTags$conductivity is valid.</span></span>
+<span><span class="co">## ✔ numberTags$paths is valid.</span></span>
+<span><span class="co">## ✔ numberTags$pressurepaths is valid.</span></span>
+<span><span class="co">## ✔ bibliographicCitation is valid.</span></span>
+<span><span class="co">## ✔ $schema is valid.</span></span>
+<span><span class="co">## ✔ resources is valid.</span></span>
+<span><span class="co">## ✔ resources[[1]] is valid.</span></span>
+<span><span class="co">## ✔ resources[[2]] is valid.</span></span>
+<span><span class="co">## ✔ resources[[3]] is valid.</span></span>
+<span><span class="co">## ✔ resources[[4]] is valid.</span></span>
+<span><span class="co">## ✔ resources[[5]] is valid.</span></span>
+<span><span class="co">## ✔ resources[[6]] is valid.</span></span>
+<span><span class="co">## ✔ resources[[7]] is valid.</span></span>
+<span><span class="co">## ✔ resources[[8]] is valid.</span></span>
+<span><span class="co">## ✔ keywords is valid.</span></span>
+<span><span class="co">## ✔ keywords[[1]] is valid.</span></span>
+<span><span class="co">## ✔ keywords[[2]] is valid.</span></span>
+<span><span class="co">## ✔ keywords[[3]] is valid.</span></span>
+<span><span class="co">## ✔ grants is valid.</span></span>
+<span><span class="co">## ✔ grants[[1]] is valid.</span></span>
+<span><span class="co">## ✔ relatedIdentifiers is valid.</span></span>
+<span><span class="co">## ✔ relatedIdentifiers[[1]] is valid.</span></span>
+<span><span class="co">## ✔ taxonomic is valid.</span></span>
+<span><span class="co">## ✔ taxonomic[[1]] is valid.</span></span>
+<span><span class="co">## ✔ spatial is valid.</span></span>
+<span><span class="co">## ! spatial cannot be validated (external schema).</span></span>
+<span><span class="co">## ✔ temporal is valid.</span></span>
+<span><span class="co">## ✔ temporal$start is valid.</span></span>
+<span><span class="co">## ✔ temporal$end is valid.</span></span>
+<span><span class="co">## ✔ Package is consistent with the profile.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage Resources</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage Resources twilights ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ✔ twilights$tag_id is valid.</span></span>
+<span><span class="co">## ✔ twilights$twilight is valid.</span></span>
+<span><span class="co">## ✔ twilights$rise is valid.</span></span>
+<span><span class="co">## ✔ twilights$label is valid.</span></span>
+<span><span class="co">## ✔ Table twilights is consistent with the schema.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage Resources staps ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ✔ staps$tag_id is valid.</span></span>
+<span><span class="co">## ✔ staps$stap_id is valid.</span></span>
+<span><span class="co">## ✔ staps$start is valid.</span></span>
+<span><span class="co">## ✔ staps$end is valid.</span></span>
+<span><span class="co">## ✔ staps$known_lat is valid.</span></span>
+<span><span class="co">## ✔ staps$known_lon is valid.</span></span>
+<span><span class="co">## ✔ staps$include is valid.</span></span>
+<span><span class="co">## ✔ Table staps is consistent with the schema.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage Resources paths ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ✔ paths$tag_id is valid.</span></span>
+<span><span class="co">## ✔ paths$stap_id is valid.</span></span>
+<span><span class="co">## ✔ paths$type is valid.</span></span>
+<span><span class="co">## ✔ paths$lat is valid.</span></span>
+<span><span class="co">## ✔ paths$lon is valid.</span></span>
+<span><span class="co">## ✔ paths$ind is valid.</span></span>
+<span><span class="co">## ✔ paths$j is valid.</span></span>
+<span><span class="co">## ✔ paths$interp is valid.</span></span>
+<span><span class="co">## ✔ paths$known is valid.</span></span>
+<span><span class="co">## ✔ Table paths is consistent with the schema.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage Resources edges ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ✔ edges$tag_id is valid.</span></span>
+<span><span class="co">## ✔ edges$stap_s is valid.</span></span>
+<span><span class="co">## ✔ edges$stap_t is valid.</span></span>
+<span><span class="co">## ✔ edges$lat_s is valid.</span></span>
+<span><span class="co">## ✔ edges$lon_s is valid.</span></span>
+<span><span class="co">## ✔ edges$lat_t is valid.</span></span>
+<span><span class="co">## ✔ edges$lon_t is valid.</span></span>
+<span><span class="co">## ✔ edges$s is valid.</span></span>
+<span><span class="co">## ✔ edges$t is valid.</span></span>
+<span><span class="co">## ✔ edges$j is valid.</span></span>
+<span><span class="co">## ✔ edges$start is valid.</span></span>
+<span><span class="co">## ✔ edges$end is valid.</span></span>
+<span><span class="co">## ✔ edges$n is valid.</span></span>
+<span><span class="co">## ✔ edges$distance is valid.</span></span>
+<span><span class="co">## ✔ edges$bearing is valid.</span></span>
+<span><span class="co">## ✔ edges$gs_u is valid.</span></span>
+<span><span class="co">## ✔ edges$gs_v is valid.</span></span>
+<span><span class="co">## ✔ edges$ws_u is valid.</span></span>
+<span><span class="co">## ✔ edges$ws_v is valid.</span></span>
+<span><span class="co">## ✔ Table edges is consistent with the schema.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage Resources pressurepaths ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ✔ pressurepaths$tag_id is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$datetime is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$stap_id is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$type is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$lat is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$lon is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$ind is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$j is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$pressure_tag is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$label is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$altitude is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$surface_pressure is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$surface_pressure_norm is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$sunset is valid.</span></span>
+<span><span class="co">## ✔ pressurepaths$sunrise is valid.</span></span>
+<span><span class="co">## ✔ Table pressurepaths is consistent with the schema.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage Resources tags ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ✔ tags$tag_id is valid.</span></span>
+<span><span class="co">## ✔ tags$ring_number is valid.</span></span>
+<span><span class="co">## ✔ tags$scientific_name is valid.</span></span>
+<span><span class="co">## ✔ tags$manufacturer is valid.</span></span>
+<span><span class="co">## ✔ tags$model is valid.</span></span>
+<span><span class="co">## ✔ tags$firmware is valid.</span></span>
+<span><span class="co">## ✔ tags$weight is valid.</span></span>
+<span><span class="co">## ✔ tags$attachment_type is valid.</span></span>
+<span><span class="co">## ✔ tags$readout_method is valid.</span></span>
+<span><span class="co">## ✔ tags$tag_comments is valid.</span></span>
+<span><span class="co">## ✔ Table tags is consistent with the schema.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage Resources observations ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ✔ observations$ring_number is valid.</span></span>
+<span><span class="co">## ✔ observations$tag_id is valid.</span></span>
+<span><span class="co">## ✔ observations$observation_type is valid.</span></span>
+<span><span class="co">## ✔ observations$datetime is valid.</span></span>
+<span><span class="co">## ✔ observations$latitude is valid.</span></span>
+<span><span class="co">## ✔ observations$longitude is valid.</span></span>
+<span><span class="co">## ✔ observations$location_name is valid.</span></span>
+<span><span class="co">## ✔ observations$device_status is valid.</span></span>
+<span><span class="co">## ✔ observations$observer is valid.</span></span>
+<span><span class="co">## ✔ observations$catching_method is valid.</span></span>
+<span><span class="co">## ✔ observations$age_class is valid.</span></span>
+<span><span class="co">## ✔ observations$sex is valid.</span></span>
+<span><span class="co">## ✔ observations$condition is valid.</span></span>
+<span><span class="co">## ✔ observations$mass is valid.</span></span>
+<span><span class="co">## ✔ observations$wing_length is valid.</span></span>
+<span><span class="co">## ✔ observations$additional_metric is valid.</span></span>
+<span><span class="co">## ✔ observations$observation_comments is valid.</span></span>
+<span><span class="co">## ✔ Table observations is consistent with the schema.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage Resources measurements ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ✔ measurements$tag_id is valid.</span></span>
+<span><span class="co">## ✔ measurements$sensor is valid.</span></span>
+<span><span class="co">## ✔ measurements$datetime is valid.</span></span>
+<span><span class="co">## ✔ measurements$value is valid.</span></span>
+<span><span class="co">## ✔ measurements$label is valid.</span></span>
+<span><span class="co">## ✔ Table measurements is consistent with the schema.</span></span>
+<span><span class="co">## ✔ Package's resources are valid.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check GeoLocator DataPackage Coherence</span></span>
+<span><span class="co">## ✔ Package is internally coherent.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Check Observations Coherence</span></span>
+<span><span class="co">## ✔ observations table is coherent.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ── Overall Package Validation ──</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## ✔ Package is valid.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It is quite normal that you’ll first see some error here. Try to fix them and re-create the package until the package is valid. If you can’t fix them, contact me!</p>
 </div>
@@ -1286,7 +831,7 @@ Important
 <div class="callout-info">
 <p>The package <code>id</code> should be the <a href="https://support.zenodo.org/help/en-gb/1-upload-deposit/97-what-is-doi-versioning">concept DOI</a>, that is, the one that doesn’t change with new versions. The DOI displayed on Zenodo is actually the DOI of the first version, but you can retrieve the concept DOI by substracting <code>1</code> to your ID number</p>
 <div class="cell">
-<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"https://doi.org/10.5281/zenodo.{ZENODO_ID - 1}"</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"https://doi.org/10.5281/zenodo.{ZENODO_ID - 1}"</span></span>
 <span><span class="co"># e.g. "10.5281/zenodo.14620590" for a DOI reserved as 10.5281/zenodo.14620591</span></span>
 <span></span>
 <span><span class="co"># Update the bibliographic citation with this new DOI</span></span>
@@ -1295,7 +840,7 @@ Important
 </div>
 <p>Now, we can write the datapackage to file</p>
 <div class="cell">
-<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The content of the folder created can now be uploaded on your Zenodo deposit.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1315,18 +860,18 @@ Tip
 <span class="header-section-number">15.5.2</span> Option 2: Programatically</h3>
 <p>A more efficient solution is to create a deposit on Zenodo using the API. For this, you first need to <a href="https://zenodo.org/account/settings/applications/tokens/new/">create a token</a> and save it to your keyring with:</p>
 <div class="cell">
-<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_set_with_value</a></span><span class="op">(</span><span class="st">"ZENODO_PAT"</span>, password <span class="op">=</span> <span class="st">"{your_zenodo_token}"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_set_with_value</a></span><span class="op">(</span><span class="st">"ZENODO_PAT"</span>, password <span class="op">=</span> <span class="st">"{your_zenodo_token}"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This will allow us to create a <code>ZenodoManager</code> object which will become useful later.</p>
+<p>This allows us to create a <code>ZenodoManager</code> object which becomes useful later.</p>
 <div class="cell">
-<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">zenodo</span> <span class="op">&lt;-</span> <span class="va"><a href="https://rdrr.io/pkg/zen4R/man/ZenodoManager.html">ZenodoManager</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>token <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_get</a></span><span class="op">(</span>service <span class="op">=</span> <span class="st">"ZENODO_PAT"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">zenodo</span> <span class="op">&lt;-</span> <span class="va"><a href="https://rdrr.io/pkg/zen4R/man/ZenodoManager.html">ZenodoManager</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>token <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_get</a></span><span class="op">(</span>service <span class="op">=</span> <span class="st">"ZENODO_PAT"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Successfully connected to Zenodo with user token</code></pre>
 </div>
 </div>
 <p>You can create a <code><a href="https://rdrr.io/pkg/zen4R/man/ZenodoRecord.html">zen4R::ZenodoRecord</a></code> object from the from <code>pkg</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/gldp2zenodoRecord.html">gldp2zenodoRecord</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/gldp_to_zenodo.html">gldp_to_zenodo</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Successfully connected to Zenodo with user token</code></pre>
 </div>
@@ -1346,7 +891,7 @@ Tip
 <div class="cell-output cell-output-stderr">
 <pre><code>✔ Successfully fetched list of funders!</code></pre>
 </div>
-<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;ZenodoRecord&gt;
 ....|-- created: &lt;NULL&gt;
@@ -1375,7 +920,7 @@ Tip
 ........|-- rights: 
 ........|-- related_identifiers: 
 ........|-- subjects: 
-........|-- publication_date: 2025-05-01
+........|-- publication_date: 2025-08-06
 ....|-- parent: &lt;NULL&gt;
 ....|-- pids: &lt;NULL&gt;
 ....|-- stats: &lt;NULL&gt;</code></pre>
@@ -1396,16 +941,16 @@ Tip
 </div>
 <p>You can create the deposit on the website. For this we need to reserve the DOI, but without publishing the record yet: there is no data!</p>
 <div class="cell">
-<div class="sourceCode" id="cb255"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">depositRecord</span><span class="op">(</span><span class="va">z</span>, reserveDOI <span class="op">=</span> <span class="cn">TRUE</span>, publish <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">depositRecord</span><span class="op">(</span><span class="va">z</span>, reserveDOI <span class="op">=</span> <span class="cn">TRUE</span>, publish <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can now open this record on your browser using its link: <code>z$links$self_html</code></p>
 <p>We can retrieve the concept DOI to build the pkg <code>id</code></p>
 <div class="cell">
-<div class="sourceCode" id="cb256"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"https://doi.org/"</span>, <span class="va">z</span><span class="op">$</span><span class="fu">getConceptDOI</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"https://doi.org/"</span>, <span class="va">z</span><span class="op">$</span><span class="fu">getConceptDOI</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now upload the data to the deposit with (or do it manually from the website)</p>
 <div class="cell">
-<div class="sourceCode" id="cb257"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">f</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">zenodo</span><span class="op">$</span><span class="fu">uploadFile</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">$</span><span class="va">version</span>, <span class="va">f</span><span class="op">)</span>, <span class="va">z</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1436,8 +981,8 @@ Tip
 <p>A nice feature of Zenodo is that you can share the record BEFORE publication with others (e.g., co-authors) allowing them to check everything before publication.</p>
 <p>If any modification of the metadata are made on Zenodo, you overwrite <code>pkg</code>’s metadata with</p>
 <div class="cell">
-<div class="sourceCode" id="cb258"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z_updated</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">getDepositionByConceptDOI</span><span class="op">(</span><span class="va">z</span><span class="op">$</span><span class="fu">getConceptDOI</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/GeoLocatoR/man/zenodoRecord2gldp.html">zenodoRecord2gldp</a></span><span class="op">(</span><span class="va">z_updated</span>, <span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z_updated</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">getDepositionByConceptDOI</span><span class="op">(</span><span class="va">z</span><span class="op">$</span><span class="fu">getConceptDOI</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu">zenodoRecord2gldp</span><span class="op">(</span><span class="va">z_updated</span>, <span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>

@@ -36,9 +36,9 @@ tag <- tag_set_map(tag,
 
 Read more about the meaning of these parameters on the documentation of the function `tag_set_map()`. Here are a few additional indications to select optimal parameters:
 
--   A smaller map (small `scale` and tight `extent`) results in faster computation. However, if the extent is too small and excludes the true position of the bird, the process will still produce a trajectory, but a wrong trajectory. We recommend starting with a coarse `scale = 1 or 2` and a large `extent` and refining these when you have a better idea of the trajectory and have completed the labelling.
--   Using the `known` position can significantly speeds up the computation as it excludes these stationary periods with long timeseries from the computation.
--   Depending on the precision of the trajectory that you need for your study, `include_min_duration` can be of great help to reduce the complexity of the labelling and computation.
+- A smaller map (small `scale` and tight `extent`) results in faster computation. However, if the extent is too small and excludes the true position of the bird, the process will still produce a trajectory, but a wrong trajectory. We recommend starting with a coarse `scale = 1` or `2` and a large `extent` and refining these when you have a better idea of the trajectory and have completed the labelling.
+- Using the `known` position can significantly speeds up the computation as it excludes these stationary periods with long timeseries from the computation.
+- Depending on the precision of the trajectory that you need for your study, `include_min_duration` can be of great help to reduce the complexity of the labelling and computation.
 
 ## Compute pressure maps
 
@@ -68,24 +68,26 @@ tag <- geopressure_map_mismatch(tag,
 )
 ```
 
--   `max_sample` reduces the computational time by limiting the number of data-points used in the match. This only impacts long stationary periods where the position is well defined. During labelling, or when accuracy is not critical, it can be convenient to reduce this number between `50` to `100`.
--   `margin` can be reduced to `10` or `20` if your bird does not change elevation level during its stationary period.
--   `thr_mask` filter map based on absolute pressure threashold already on the GEE server to drastically reduce computational time (see below for details). It generally has little influence and can usually be left at `0.9`.
+- `max_sample` reduces the computational time by limiting the number of data-points used in the match. This only impacts long stationary periods where the position is well defined. During labelling, or when accuracy is not critical, it can be convenient to reduce this number between `50` to `100`.
+- `margin` can be reduced to `10` or `20` if your bird does not change elevation level during its stationary period.
+- `thr_mask` filter map based on absolute pressure threshold already on the GEE server to drastically reduce computational time (see below for details). It generally has little influence and can usually be left at `0.9`.
 
 ::: callout-warning
 ## Taking a long time to compute?
 
 This function is the most computationally intensive as it needs to:
 
-1.  **Pre-process pressure**: the pressure measurements are first smoothed and downscaled to a 1-hour resolution in order to match ERA-5 resolution (see `geopressure_map_preprocess()`).
-2.  **Generate requests**: Send a single request to the GeoPressureAPI to generate the Google Earth Engine (GEE) URLs, one for each stationary period which can be used to compute the maps on the GEE server. At this stage, no computation has been performed, we just generated the actual code.
-3.  **Send the requests**: Call the URLs in parallel, which will start the computation on the GEE server.
-4.  **Compute and download the maps**: When all requests are sent, we wait for the GEE server to return a geotiff file (map) for each stationary period.
+1. **Pre-process pressure**: the pressure measurements are first smoothed and downscaled to a 1-hour resolution in order to match ERA-5 resolution (see `geopressure_map_preprocess()`).
+2. **Generate requests**: Send a single request to the GeoPressureAPI to generate the Google Earth Engine (GEE) URLs, one for each stationary period which can be used to compute the maps on the GEE server. At this stage, no computation has been performed, we just generated the actual code.
+3. **Send the requests**: Call the URLs in parallel, which will start the computation on the GEE server.
+4. **Compute and download the maps**: When all requests are sent, we wait for the GEE server to return a geotiff file (map) for each stationary period.
 
 A progress bar will update you on the completion status, but the timing can be tricky to apprehend because of the computational optimization used and variability in the GEE server availability.
 :::
 
-This function returns the `tag` with two maps: - `tag$map_pressure_mask` $\textbf{z}_{thr}$ is a GeoPressureR `map` of the proportion of data-points in the pressure timeseries which correspond to an altitude that falls between the min and max altitude of each grid cell (accounting for the `margin` parameter). - `tag$map_pressure_mse` $\textbf{MSE}$ is a GeoPressureR `map` of the normalized mean square error between the tag pressure timeseries and ERA5 map. The mean error is removed because we assume no specific altitude of the tag, thus allowing an altitudinal shift of the pressure timeseries. For computational efficiency, $\textbf{MSE}$ is only computed on the pixels for which $\textbf{z}_{thr}>thr_{mask}$.
+This function returns the `tag` with two maps: 
+- `tag$map_pressure_mask` $\textbf{z}_{thr}$ is a GeoPressureR `map` of the proportion of data-points in the pressure timeseries which correspond to an altitude that falls between the min and max altitude of each grid cell (accounting for the `margin` parameter). 
+- `tag$map_pressure_mse` $\textbf{MSE}$ is a GeoPressureR `map` of the normalised mean square error between the tag pressure timeseries and ERA5 map. The mean error is removed because we assume no specific altitude of the tag, thus allowing an altitudinal shift of the pressure timeseries. For computational efficiency, $\textbf{MSE}$ is only computed on the pixels for which $\textbf{z}_{thr}>thr_{mask}$.
 
 ```{r}
 plot(tag, type = "map_pressure_mse")
@@ -117,7 +119,7 @@ tag <- geopressure_map_likelihood(
 
 The standard deviation `sd` ($\sigma$) plays an important role in the spread of the uncertainty of your map. It accounts for (1) error in reanalysis data (may vary spatially, but generally assumed small), (2) sensor error (also assumed low), and (3) bird vertical movement (most significant contribution). A bird moving up and down a tall tree (1 hPa = 10 m) is likely to affect the match.
 
-This value should ideally be calibrated, but it is usually safe to start with a value of `1`. We see how to adjust this value in [check #4 of the labelling procedure](labelling-tracks.html#pressurepath-checks). Swainson's Warbler tend to stay low with small pressure variation such that a value of `0.5` is more adequate. In addition, following several trial and error test, we found that scaling the log linear pooling function to `4 * log(n) / n` provides more satifying result.
+This value should ideally be calibrated, but it is usually safe to start with a value of `1`. We see how to adjust this value in [check #4 of the labelling procedure](labelling-tracks.html#pressurepath-checks). Swainson's Warbler tend to stay low with small pressure variation such that a value of `0.5` is more adequate. In addition, following several trial and error test, we found that scaling the log linear pooling function to `4 * log(n) / n` provides more satisfying result.
 :::
 
 The resulting pressure likelihood map can be visualized with:
@@ -127,6 +129,6 @@ The resulting pressure likelihood map can be visualized with:
 plot(tag$map_pressure)
 ```
 
-Note that the threshold of the mask is performed directly on the GEE server, i.e., with `geopressure_map_mismatch()`. This allows to compute the MSE only for pixels which are within the threshold, thus reducing the computational cost significantly.
+Note that the threshold of the mask is performed directly on the GEE server, i.e., with `geopressure_map_mismatch()`. This allows us to compute the MSE only for pixels which are within the threshold, thus reducing the computational cost significantly.
 
-The `geopressure_map()` function is a wrapper of `geopressure_map_mismatch()` and `geopressure_map_likelihood()`. By default, it delete the mask and MSE map to save space (see the `keep_mask` and `keep_mse` parameters).
+The `geopressure_map()` function is a wrapper of `geopressure_map_mismatch()` and `geopressure_map_likelihood()`. By default, it deletes the mask and MSE map to save space (see the `keep_mask` and `keep_mse` parameters).

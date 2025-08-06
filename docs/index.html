@@ -462,7 +462,7 @@ cookieconsent.run({
 <li>Light data can accelerate building the trajectory model by allowing to quickly narrow down possible locations during short stationary periods. Generally, for species with few long stopover, light data brings limited benefit, but it can be quite helpful for species with multiple short stopovers, and particularly if migrating on a east/west trajectory.</li>
 <li>Knowing the equipment and retrieval sites can also be helpful, but it also works well without it.</li>
 </ul>
-<p>GeoPressureR can currently read Swiss Ornithological Institute (SOI) files (<code>*.pressure</code>, <code>*.lux</code>, <code>*.acceleration</code>), Migrate Technology files (<code>"*.deg"</code> and <code>"*.lux"</code>) and Lund CAnMove (<code>"*.xlsx"</code>).</p>
+<p>GeoPressureR can currently read Swiss Ornithological Institute (SOI) files (<code>*.pressure</code>, <code>*.lux</code>, <code>*.acceleration</code>), Migrate Technology files (<code>*.deg</code> and <code>*.lux</code>) and Lund CAnMove (<code>*.xlsx</code>).</p>
 <p>Feel free to <a href="mailto:rafnuss@gmail.com">contact me</a> to discuss your data and study species.</p>
 </section><section id="the-geopressure-suite" class="level2"><h2 class="anchored" data-anchor-id="the-geopressure-suite">The GeoPressure suite</h2>
 <p>The GeoPressure suite includes several tools:</p>
@@ -470,7 +470,7 @@ cookieconsent.run({
 <li>
 <a href="https://github.com/Rafnuss/GeoPressureR">GeoPressureR</a> is the main R package with functions to run the analysis.</li>
 <li>
-<a href="">GeoPressureManual</a> is the official user guide developed to help you learn to use GeoPressureR.</li>
+<a href="https://raphaelnussbaumer.com/GeoPressureManual/">GeoPressureManual</a> is the official user guide developed to help you learn to use GeoPressureR.</li>
 <li>
 <a href="https://github.com/Rafnuss/GeoPressureTemplate">GeoPressureTemplate</a> is a <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template">template Github repository</a> to help kickstart your project.</li>
 <li>
@@ -480,6 +480,8 @@ cookieconsent.run({
 <a href="https://github.com/rafnuss/geolocator-dp">GeoLocator Data Package (DP)</a> is a data exchange format for geolocator data.</li>
 <li>
 <a href="https://raphaelnussbaumer.com/GeoLocatoR/">GeoLocatoR</a> is an R package designed to handle GeoLocator Data Packages.</li>
+<li>
+<a href="https://chatgpt.com/g/g-6888c9afb4348191b6134fcfc19232d8-geopressuregpt">GeoPressureGPT</a> is a ChatGPT plugin that allows you to ask any questions in the chat interface.</li>
 </ul></section><section id="structure-of-the-manual" class="level2"><h2 class="anchored" data-anchor-id="structure-of-the-manual">Structure of the manual</h2>
 <p>This manual includes five parts:</p>
 <ul>
@@ -488,11 +490,11 @@ cookieconsent.run({
 <li>
 <a href="light-map.html">Advanced tutorial</a> explores additional functionalities of the package using light, acceleration, and wind data, through the example of a Great Reed Warbler.</li>
 <li>
-<a href="pressurepath.html">Labelling tools</a> introduces labelling, a critical step in the workflow. This is a complex procedure requiring a comprehensive understanding of the method and tools of the package, which is why it is described in more depth after the basic and advanced tutorials. We strongly recommended reading this section attentively for optimal results.</li>
+<a href="labelling-tracks.html">Labelling tools</a> introduce labelling, a critical step in the workflow. This is a complex procedure requiring a comprehensive understanding of the method and tools of the package, which is why it is described in more depth after the basic and advanced tutorials. We strongly recommend reading this section attentively for optimal results.</li>
 <li>
 <a href="geopressuretemplate-intro.html">GeoPressureTemplate</a> defines a standard folder structure to improve readability, sharability, and reproducibility. You’ll learn more about this structure and how to start your own project.</li>
 <li>
-<a href="geolocator-intro">Geolocator Data Package</a> is a data exchange format for geolocator data. In this part, you’ll learn about how to use the GeoLocatoR package to create a geolocator datapackage.</li>
+<a href="geolocator-intro.html">Geolocator Data Package</a> is a data exchange format for geolocator data. In this part, you’ll learn about how to use the GeoLocatoR package to create a geolocator datapackage.</li>
 </ul>
 <p>Feel free to read through the manual, or to <a href="https://github.com/Rafnuss/GeoPressureManual/fork">fork the repository</a> to run the examples at your own pace.</p>
 </section><section id="installation" class="level2"><h2 class="anchored" data-anchor-id="installation">Installation</h2>
@@ -513,10 +515,10 @@ cookieconsent.run({
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Nussbaumer2023a" class="csl-entry" role="listitem">
-Nussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, and Felix Liechti. 2023. <span>“<span class="nocase">Global positioning with animal‐borne pressure sensors</span>.”</span> <em>Methods in Ecology and Evolution</em>, January. <a href="https://doi.org/10.1111/2041-210X.14043">https://doi.org/10.1111/2041-210X.14043</a>.
+Nussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, and Felix Liechti. 2023. <span>“Global Positioning with Animal‐borne Pressure Sensors.”</span> <em>Methods in Ecology and Evolution</em> 14 (4): 1104–17. <a href="https://doi.org/10.1111/2041-210X.14043">https://doi.org/10.1111/2041-210X.14043</a>.
 </div>
 <div id="ref-Nussbaumer2023b" class="csl-entry" role="listitem">
-Nussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, Felix Liechti, and Daniel Sheldon. 2023. <span>“<span class="nocase">Reconstructing bird trajectories from pressure and wind data using a highly optimized hidden Markov model</span>.”</span> <em>Methods in Ecology and Evolution</em> 2023 (February): 1–12. <a href="https://doi.org/10.1111/2041-210X.14082">https://doi.org/10.1111/2041-210X.14082</a>.
+Nussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, Felix Liechti, and Daniel Sheldon. 2023. <span>“Reconstructing Bird Trajectories from Pressure and Wind Data Using a Highly Optimized Hidden Markov Model.”</span> <em>Methods in Ecology and Evolution</em> 14 (4): 1118–29. <a href="https://doi.org/10.1111/2041-210X.14082">https://doi.org/10.1111/2041-210X.14082</a>.
 </div>
 </div>
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">

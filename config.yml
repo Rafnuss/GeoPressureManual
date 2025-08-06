@@ -5,7 +5,7 @@
 # the config R package <https://rstudio.github.io/config/>.
 #
 # This file is meant to be adapted based on your needs: feel free to add parameters either in the
-# default (applied to all tags) or for each tag seperatly (overwrite default). It is recommended to
+# default (applied to all tags) or for each tag separately (overwrite default). It is recommended to
 # specify all parameters used, even if you use the default value.
 #
 # You can check the documentation of each function to learn what each of these parameters are doing
@@ -42,7 +42,7 @@ default:
   graph_add_wind:
     thr_as: 90 # km/h
   graph_set_movement: # ?graph_set_movement()
-    # type: "gs"
+    type: "gs" # modify manually to "as" when you have downloaded wind data
     # method: "gamma"
     # shape: 7 # only for gamma
     # scale: 7
@@ -71,7 +71,7 @@ default:
   bird_create:
     scientific_name: "Acrocephalus arundinaceus"
   graph_set_movement:
-    type: "as"
+    type: "as" # Needs wind to work, use "gs" otherwise
 
 CB619:
   tag_set_map:

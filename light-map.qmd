@@ -6,9 +6,9 @@
 library(GeoPressureR)
 ```
 
-In the advanced tutorial, we will construct the same three products with a Great Reed Warbler (18LX), this time including light and wind data.
+In the advanced tutorial, we construct the same three products with a Great Reed Warbler (18LX), this time including light and wind data.
 
-![<small>Great Reed Warbler. 17 May 2019. Baranđanske slatine, Serbia. <a href="https://macaulaylibrary.org/asset/159594261">ML 159594261</a></small>](assets/159594261.png){width="100%"}
+![<small>Great Reed Warbler. 17 May 2019. Baranđanske slatine, Serbia. <a href="https://macaulaylibrary.org/asset/159594261">ML 159594261</a></small>](assets/159594261.png){width="100%" alt="Photo of a Great Reed Warbler, a medium-sized brownish bird with streaked plumage, clinging to reed stems"}
 
 This first chapter focuses on constructing a likelihood map from light data. This step is optional in the workflow, but can be helpful in most case. Typically, it is quite informative for short stopovers with long flights before and after. It can also be helpful to cross-check pressure map can reduce the computational cost of the creation of the graph.
 
@@ -18,7 +18,7 @@ A more thorough introduction to geolocation with light data can be found in <a h
 
 ## Basic tutorial catch up
 
-Before getting into light data, we first need to create, label, and set the map for the `tag` object. We essentially perform the same steps than in \[tag object\] and \[pressure map\] in just a few lines using the native pipe operator `|>`. Note that this assumes the labelling has already been done.
+Before getting into light data, we first need to create, label, and set the map for the `tag` object. We essentially perform the same steps than in [Tag object](tag-object.html) and [Pressure map](pressure-map.html) in just a few lines using the native pipe operator `|>`. Note that this assumes the labelling has already been done.
 
 ```{r 10-geopressure}
 #| cache: true
@@ -42,9 +42,9 @@ tag <- tag_create("18LX",
 
 ## Estimate twilights
 
-We find the twilight (time of sunrise and sunset every day) with `twilight_create()`, which performs the same tasks as [`TwGeos::FindTwilight()`](https://rdrr.io/github/slisovski/TwGeos/man/findTwilights.html), but using a matrix representation. This approach is faster but less general (e.g., requires regularly spaced light data).
+We find the twilight (time of sunrise and sunset every day) with `twilight_create()`, which performs the same tasks as [`TwGeos::FindTwilight()`](https://rdrr.io/github/slisovski/TwGeos/man/findTwilights.html), but using a matrix representation. This approach is faster but possibly less general.
 
-By default, the threshold of light is `twl_thr = NULL` is defined as the the first and last light of the day (i.e., `tag$light$vale>0`). The `twl_offset` parameter is used to center the night/day for the matrix representation of light. A good centering is necessary to find the correct twilights.
+By default, the threshold of light `twl_thr` is automatically defined as the first and last light of the day (i.e., `tag$light$value>0`). The `twl_offset` parameter is used to centre the night/day for the matrix representation of light. A good centring is necessary to find the correct twilights.
 
 ```{r}
 tag <- twilight_create(tag, twl_thr = NULL, twl_offset = NULL)
@@ -56,7 +56,7 @@ We can visualize the twilight and check the centering of the day.
 plot(tag, type = "twilight")
 ```
 
-Re-run `twilight_create` with a different `twl_offset` until the night/day is properly centered.
+Re-run `twilight_create` with a different `twl_offset` until the night/day is properly centred.
 
 Because we have already label the stationary period before, the plot indicates which stationary period the twilight belongs to with the dot color. This can be useful to distinguish outliers from a change in the bird position.
 
@@ -140,7 +140,7 @@ plot(tag, type = "map")
 
 ## Check light label
 
-In the same way that pressure label needs to be check, light label can also be checked. The idea is to compute the estimated trajectory, compute the twilights along this trajectory and compared the the empirical twilight measured/computed above. We use here `tag2path()` which compute the the most likely position for each stationary periods (i.e. regardless of flight duration/movement model). We interpolate each position below 2 days to avoid unrealistic position estimate.
+In the same way that pressure label needs to be checked, light label can also be checked. The idea is to compute the estimated trajectory, compute the twilights along this trajectory and compare the empirical twilight measured/computed above. We use here `tag2path()` which computes the most likely position for each stationary period (i.e. regardless of flight duration/movement model). We interpolate each position below 2 days to avoid unrealistic position estimates.
 
 ```{r}
 #| warning: false

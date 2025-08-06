@@ -1,26 +1,4 @@
-getGeoPressureTemplateQmd <- function() {
-  getQmd(
-    "https://raw.githubusercontent.com/Rafnuss/GeoPressureTemplate/main/analysis/1-label.qmd",
-    "geopressuretemplate-label.qmd"
-  )
-
-  getQmd(
-    "https://raw.githubusercontent.com/Rafnuss/GeoPressureTemplate/main/analysis/2-twilight.qmd",
-    "geopressuretemplate-twilight.qmd"
-  )
-
-  getQmd(
-    "https://raw.githubusercontent.com/Rafnuss/GeoPressureTemplate/main/analysis/3-wind.qmd",
-    "geopressuretemplate-wind.qmd"
-  )
-
-  getQmd(
-    "https://raw.githubusercontent.com/Rafnuss/GeoPressureTemplate/main/config.yml",
-    "config.yml"
-  )
-}
-
-
+#' Get GeoPressure Template Qmd
 getQmd <- function(url, output_file) {
   temp_file <- tempfile()
   download.file(url, temp_file, quiet = TRUE)
@@ -58,3 +36,24 @@ getQmd <- function(url, output_file) {
 
   cat("File saved as", output_file, "\n")
 }
+
+# Execute the function when script is run
+getQmd(
+    "https://raw.githubusercontent.com/Rafnuss/GeoPressureTemplate/main/analysis/1-label.qmd",
+    "geopressuretemplate-label.qmd"
+  )
+
+  getQmd(
+    "https://raw.githubusercontent.com/Rafnuss/GeoPressureTemplate/main/analysis/2-twilight.qmd",
+    "geopressuretemplate-twilight.qmd"
+  )
+
+  getQmd(
+    "https://raw.githubusercontent.com/Rafnuss/GeoPressureTemplate/main/analysis/3-wind.qmd",
+    "geopressuretemplate-wind.qmd"
+  )
+
+  getQmd(
+    "https://raw.githubusercontent.com/Rafnuss/GeoPressureTemplate/main/config.yml",
+    "config.yml"
+  )

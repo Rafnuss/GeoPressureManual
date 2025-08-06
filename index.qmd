@@ -8,8 +8,8 @@ Indeed, as atmospheric pressure varies in space and time, a timeseries of pressu
 
 The GeoPressure suite helps users tackle the challenges of geolocation by pressure and provides a toolkit to implement two methods published in the following two papers:
 
--   @Nussbaumer2023a presents the method to estimate a map of likely positions from a pressure timeseries,
--   @Nussbaumer2023b describes a new approach to reconstruct the full trajectory of a bird quickly and accurately, using pressure and wind data.
+- @Nussbaumer2023a presents the method to estimate a map of likely positions from a pressure timeseries,
+- @Nussbaumer2023b describes a new approach to reconstruct the full trajectory of a bird quickly and accurately, using pressure and wind data.
 
 For a quick overview of the method, here is a 10 min presentation:
 
@@ -19,12 +19,12 @@ For a quick overview of the method, here is a 10 min presentation:
 
 The only strict requirement is that your geolocator provides a continuous timeseries of pressure (\<1hr resolution). Beyond this, here are a few things that can help:
 
--   GeoPressureR works best for species with a clear separation between stationary and migratory periods, as opposed to birds moving continuously over time and/or gradually over large distances (10-50km) or altitude (\>10m). As such, aerial feeders such as swifts or bee-eaters or mountainous species do not lend themselves well to this method.
--   Acceleration data can be helpful to define the periods of flight, especially if your bird flies at low altitude or if pressure data is measured on a coarse temporal resolution (\>15min).
--   Light data can accelerate building the trajectory model by allowing to quickly narrow down possible locations during short stationary periods. Generally, for species with few long stopover, light data brings limited benefit, but it can be quite helpful for species with multiple short stopovers, and particularly if migrating on a east/west trajectory.
--   Knowing the equipment and retrieval sites can also be helpful, but it also works well without it.
+- GeoPressureR works best for species with a clear separation between stationary and migratory periods, as opposed to birds moving continuously over time and/or gradually over large distances (10-50km) or altitude (\>10m). As such, aerial feeders such as swifts or bee-eaters or mountainous species do not lend themselves well to this method.
+- Acceleration data can be helpful to define the periods of flight, especially if your bird flies at low altitude or if pressure data is measured on a coarse temporal resolution (\>15min).
+- Light data can accelerate building the trajectory model by allowing to quickly narrow down possible locations during short stationary periods. Generally, for species with few long stopover, light data brings limited benefit, but it can be quite helpful for species with multiple short stopovers, and particularly if migrating on a east/west trajectory.
+- Knowing the equipment and retrieval sites can also be helpful, but it also works well without it.
 
-GeoPressureR can currently read Swiss Ornithological Institute (SOI) files (`*.pressure`, `*.lux`, `*.acceleration`), Migrate Technology files (`"*.deg"` and `"*.lux"`) and Lund CAnMove (`"*.xlsx"`).
+GeoPressureR can currently read Swiss Ornithological Institute (SOI) files (`*.pressure`, `*.lux`, `*.acceleration`), Migrate Technology files (`*.deg` and `*.lux`) and Lund CAnMove (`*.xlsx`).
 
 Feel free to [contact me](mailto:rafnuss@gmail.com) to discuss your data and study species.
 
@@ -32,13 +32,14 @@ Feel free to [contact me](mailto:rafnuss@gmail.com) to discuss your data and stu
 
 The GeoPressure suite includes several tools:
 
--   [GeoPressureR](https://github.com/Rafnuss/GeoPressureR) is the main R package with functions to run the analysis.
--   [GeoPressureManual]() is the official user guide developed to help you learn to use GeoPressureR.
--   [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) is a [template Github repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) to help kickstart your project.
--   [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is the JSON API used by GeoPressureR under the hood to query the ERA5 reanalysis data with Google Earth Engine.
--   GeoPressureViz is a [shiny app](https://shiny.posit.co/) included in GeoPressureR to visualize the trajectory of your bird. See the [GeoPressureViz](geopressureviz.html) chapter for an introduction and [the demo for 18LX](https://rafnuss.shinyapps.io/GeoPressureViz/).
+- [GeoPressureR](https://github.com/Rafnuss/GeoPressureR) is the main R package with functions to run the analysis.
+- [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual/) is the official user guide developed to help you learn to use GeoPressureR.
+- [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) is a [template Github repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) to help kickstart your project.
+- [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is the JSON API used by GeoPressureR under the hood to query the ERA5 reanalysis data with Google Earth Engine.
+- GeoPressureViz is a [shiny app](https://shiny.posit.co/) included in GeoPressureR to visualize the trajectory of your bird. See the [GeoPressureViz](geopressureviz.html) chapter for an introduction and [the demo for 18LX](https://rafnuss.shinyapps.io/GeoPressureViz/).
 - [GeoLocator Data Package (DP)](https://github.com/rafnuss/geolocator-dp) is a data exchange format for geolocator data.
 - [GeoLocatoR](https://raphaelnussbaumer.com/GeoLocatoR/) is an R package designed to handle GeoLocator Data Packages.
+- [GeoPressureGPT](https://chatgpt.com/g/g-6888c9afb4348191b6134fcfc19232d8-geopressuregpt) is a ChatGPT plugin that allows you to ask any questions in the chat interface.
 
 ## Structure of the manual
 
@@ -46,9 +47,9 @@ This manual includes five parts:
 
 - [Basic tutorial](tag-object.html) runs through the entire workflow using a simple track of pressure only, with the example of a Swainson's Warbler.
 - [Advanced tutorial](light-map.html) explores additional functionalities of the package using light, acceleration, and wind data, through the example of a Great Reed Warbler.
-- [Labelling tools](pressurepath.html) introduces labelling, a critical step in the workflow. This is a complex procedure requiring a comprehensive understanding of the method and tools of the package, which is why it is described in more depth after the basic and advanced tutorials. We strongly recommended reading this section attentively for optimal results.
+- [Labelling tools](labelling-tracks.html) introduce labelling, a critical step in the workflow. This is a complex procedure requiring a comprehensive understanding of the method and tools of the package, which is why it is described in more depth after the basic and advanced tutorials. We strongly recommend reading this section attentively for optimal results.
 - [GeoPressureTemplate](geopressuretemplate-intro.html) defines a standard folder structure to improve readability, sharability, and reproducibility. You'll learn more about this structure and how to start your own project.
-- [Geolocator Data Package](geolocator-intro) is a data exchange format for geolocator data. In this part, you'll learn about how to use the GeoLocatoR package to create a geolocator datapackage.
+- [Geolocator Data Package](geolocator-intro.html) is a data exchange format for geolocator data. In this part, you'll learn about how to use the GeoLocatoR package to create a geolocator datapackage.
 
 Feel free to read through the manual, or to [fork the repository](https://github.com/Rafnuss/GeoPressureManual/fork) to run the examples at your own pace.
 

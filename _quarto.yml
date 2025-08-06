@@ -1,6 +1,7 @@
 project:
   type: book
   output-dir: docs
+  pre-render: R/getGeoPressureTemplateQmd.R
 
 book:
   title: "A User Manual for GeoPressureR"
@@ -37,39 +38,40 @@ book:
 
     - part: "Basic tutorial"
       chapters:
-      - tag-object.qmd
-      - pressure-map.qmd
-      - trajectory.qmd
+        - tag-object.qmd
+        - pressure-map.qmd
+        - trajectory.qmd
 
     - part: "Advanced tutorial"
       chapters:
-      - light-map.qmd
-      - trajectory-with-wind.qmd
+        - light-map.qmd
+        - trajectory-with-wind.qmd
 
     - part: "Labelling tools"
       chapters:
-      - pressurepath.qmd
-      - geopressureviz.qmd
-      - labelling-tracks.qmd
+        - pressurepath.qmd
+        - geopressureviz.qmd
+        - labelling-tracks.qmd
 
     - part: "GeoPressureTemplate"
       chapters:
-      - geopressuretemplate-intro.qmd
-      - geopressuretemplate-label.qmd
-      - geopressuretemplate-twilight.qmd
-      - geopressuretemplate-wind.qmd
-      - geopressuretemplate-workflow.qmd
+        - geopressuretemplate-intro.qmd
+        - geopressuretemplate-label.qmd
+        - geopressuretemplate-twilight.qmd
+        - geopressuretemplate-wind.qmd
+        - geopressuretemplate-workflow.qmd
 
     - part: "GeoLocator DP"
       chapters:
-      - geolocator-intro.qmd
-      - geolocator-create.qmd
-      - geolocator-read.qmd
+        - geolocator-intro.qmd
+        - geolocator-create.qmd
+        - geolocator-read.qmd
 
   appendices:
     - resources.qmd
     #- visuals.qmd
     - probability-aggregation.qmd
+
 toc: true
 number-sections: true
 

@@ -31,9 +31,9 @@ tag <- tag_create("18LX",
   geolight_map()
 ```
 
-In this second chapter of the advanced tutorial, we will see how to model the trajectory of the Great Reed Warbler using wind data.
+In this second chapter of the advanced tutorial, we explore how to model the trajectory of the Great Reed Warbler using wind data.
 
-Wind can significantly influence a bird's movement, explaining up to 50% of the displacement! Accounting for wind allows to estimate the airspeed of each transition rather than groundspeed. As such, the movement model can be defined as the probability of a bird's airspeed, which is much more constrained and precise. This approach is presented in detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0008-title)" target="_blank">section 2.2.4</a> of @Nussbaumer2023b.
+Wind can significantly influence a bird's movement, explaining up to 50% of the displacement! Accounting for wind allows us to estimate the airspeed of each transition rather than groundspeed. As such, the movement model can be defined as the probability of a bird's airspeed, which is much more constrained and precise. This approach is presented in detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0008-title" target="_blank">section 2.2.4</a> of @Nussbaumer2023b.
 
 ## Download wind data
 
@@ -55,11 +55,11 @@ tag_download_wind(
 )
 ```
 
-You can monitor the requests at [https://cds.climate.copernicus.eu/requests]. The files will be downloaded in `data/wind/`
+You can monitor the requests at [https://cds.climate.copernicus.eu/requests]. The files are downloaded in `data/wind/`
 
 ::: callout-note
 
-In addition to the two required wind variable, we also downloaded the temperature data during the flights. This will later allows us to retrieve temperature data at the exact location of the bird during the flight. See `tag_download_wind()` documentation for more informations on the available variables. 
+In addition to the two required wind variables, we also downloaded the temperature data during the flights. This will later allow us to retrieve temperature data at the exact location of the bird during the flight. See `tag_download_wind()` documentation for more information on the available variables. 
 
 :::
 
