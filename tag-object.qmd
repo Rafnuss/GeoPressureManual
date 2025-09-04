@@ -6,7 +6,6 @@ In this basic tutorial, we go through the main steps of GeoPressureR using only 
 
 ```{r setup}
 #| message: false
-#| include: false
 library(GeoPressureR)
 ```
 

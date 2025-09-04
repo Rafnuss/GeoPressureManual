@@ -130,7 +130,7 @@ print(pkg)
 `add_gldp_geopressuretemplate()` is a key function that read the geopressuretemplate data available and automatically add the most up-to-date available data to the datapackage.
 
 ```{r}
-pkg <- pkg %>% add_gldp_geopressuretemplate(directory = directory)
+pkg <- add_gldp_geopressuretemplate(pkg, directory = directory)
 ```
 
 
@@ -157,7 +157,9 @@ You can now see a lot of new metadata (e.g., number of tags, coverages) as well 
 You can visualize the coverage of the package by ploting the Data Package. Check for the correct number of tags, as well as equipment and retrieval dates.
 
 ```{r}
-plot(pkg)
+plot(pkg, "ring")
+plot(pkg, "coverage")
+plot(pkg, "map")
 ```
 
 ::: callout-important
@@ -189,7 +191,7 @@ pkg$id <- "https://doi.org/10.5281/zenodo.{ZENODO_ID - 1}"
 # e.g. "10.5281/zenodo.14620590" for a DOI reserved as 10.5281/zenodo.14620591
 
 # Update the bibliographic citation with this new DOI
-pkg <- pkg %>% update_gldp_bibliographic_citation()
+pkg <- update_gldp_bibliographic_citation(pkg)
 ```
 :::
 
@@ -197,7 +199,7 @@ Now, we can write the datapackage to file
 
 ```{r}
 #| eval: false
-write_package(pkg, directory = pkg$version)
+write_package(pkg, directory = "data/datapackage")
 ```
 
 The content of the folder created can now be uploaded on your Zenodo deposit.

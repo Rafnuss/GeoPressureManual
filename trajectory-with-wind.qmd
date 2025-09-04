@@ -1,15 +1,18 @@
 # Trajectory with wind
 
-```{r, 11-setup-1}
-#| message: false
-#| include: false
+```{r, 11-setup}
+#| code-fold: true
 library(GeoPressureR)
 library(ggplot2)
 ```
 
-```{r 11-setup-2}
+
+In this second chapter of the advanced tutorial, we explore how to model the trajectory of the Great Reed Warbler using wind data.
+
+
+```{r, 12-setup-2}
 #| cache: true
-#| include: false
+#| code-fold: true
 tag <- tag_create("18LX",
   crop_start = "2017-06-20",
   crop_end = "2018-05-02",
@@ -30,8 +33,6 @@ tag <- tag_create("18LX",
   twilight_label_read() |>
   geolight_map()
 ```
-
-In this second chapter of the advanced tutorial, we explore how to model the trajectory of the Great Reed Warbler using wind data.
 
 Wind can significantly influence a bird's movement, explaining up to 50% of the displacement! Accounting for wind allows us to estimate the airspeed of each transition rather than groundspeed. As such, the movement model can be defined as the probability of a bird's airspeed, which is much more constrained and precise. This approach is presented in detail in <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.14082#mee314082-sec-0008-title" target="_blank">section 2.2.4</a> of @Nussbaumer2023b.
 

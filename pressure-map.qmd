@@ -2,7 +2,6 @@
 
 ```{r 02-setup}
 #| message: false
-#| include: false
 library(GeoPressureR)
 tag <- tag_create(id = "CB619") |>
   tag_label()

@@ -2,7 +2,7 @@
 
 ```{r 03-setup}
 #| message: false
-#| include: false
+#| code-fold: true
 library(GeoPressureR)
 
 tag <- tag_create(id = "CB619") |>

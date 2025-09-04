@@ -2,7 +2,6 @@
 
 ```{r 22-setup}
 #| message: false
-#| include: false
 library(GeoPressureR)
 ```
 

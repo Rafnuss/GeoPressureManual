@@ -81,6 +81,13 @@ format:
       - cosmo
       - style.scss
     code-link: true
+    code-links:
+      - text: "GeoPressureR reference"
+        href: "https://raphaelnussbaumer.com/GeoPressureR/reference/"
+      - text: "GeoLocatoR reference"
+        href: "https://raphaelnussbaumer.com/GeoLocatoR/reference/"
+      - text: "GeoPressureTemplate"
+        href: "https://github.com/Rafnuss/GeoPressureTemplate"
     asciidoc: default
 
 editor: source

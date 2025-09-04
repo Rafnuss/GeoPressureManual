@@ -2,7 +2,6 @@
 
 ```{r 21-setup}
 #| message: false
-#| include: false
 library(GeoPressureR)
 library(ggplot2)
 library(plotly)
