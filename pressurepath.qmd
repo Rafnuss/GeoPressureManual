@@ -40,7 +40,10 @@ We can compare the retrieved ERA5 pressure to the pressure measured on the Great
 #| cache: FALSE
 p <- ggplot() +
   geom_line(data = ts, aes(x = date, y = surface_pressure, colour = "ERA5")) +
-  geom_line(data = tag$pressure[tag$pressure$stap_id == 1, ], aes(x = date, y = value, colour = "tag")) +
+  geom_line(
+    data = tag$pressure[tag$pressure$stap_id == 1, ],
+    aes(x = date, y = value, colour = "tag")
+  ) +
   theme_bw() +
   ylab("Pressure (hPa)") +
   scale_color_manual(values = c("ERA5" = "black", "tag" = "red"))
@@ -104,7 +107,9 @@ g0 <- 9.80665
 M <- 0.0289644
 T0 <- 273.15 + 15
 P0 <- 1013.25
-pressurepath$altitude_uncorrected <- T0 / Lb * ((pressurepath$pressure_tag / P0)^(-R * Lb / g0 / M) - 1)
+pressurepath$altitude_uncorrected <- T0 /
+  Lb *
+  ((pressurepath$pressure_tag / P0)^(-R * Lb / g0 / M) - 1)
 ```
 
 However, we know that pressure and temperature vary considerably over time and space, leading to approximation in the altitude estimated.
@@ -118,11 +123,24 @@ We can compare these two altitudes for the first stationary period,
 ```{r}
 #| echo: false
 p <- ggplot(pressurepath[pressurepath$stap_id == 1, ]) +
-  geom_line(aes(x = date, y = altitude, colour = "Corrected elevation with ERA5")) +
-  geom_line(aes(x = date, y = altitude_uncorrected, colour = "Uncorrected elevation")) +
+  geom_line(aes(
+    x = date,
+    y = altitude,
+    colour = "Corrected elevation with ERA5"
+  )) +
+  geom_line(aes(
+    x = date,
+    y = altitude_uncorrected,
+    colour = "Uncorrected elevation"
+  )) +
   theme_bw() +
   ylab("Pressure (hPa)") +
-  scale_color_manual(values = c("Corrected elevation with ERA5" = "black", "Uncorrected elevation" = "red"))
+  scale_color_manual(
+    values = c(
+      "Corrected elevation with ERA5" = "black",
+      "Uncorrected elevation" = "red"
+    )
+  )
 plotly::layout(plotly::ggplotly(p), legend = list(orientation = "h"))
 ```
 
@@ -134,7 +152,8 @@ The uncorrected altitude estimate incorrectly produces a 200m amplitude error in
 In order to estimate the flight altitude above ground level, we need to retrieve the ground level elevation along the path. This can be done with `path2elevation()`.
 
 ```{r}
-elevation <- path2elevation(path_most_likely,
+elevation <- path2elevation(
+  path_most_likely,
   scale = tag$param$tag_set_map$scale,
   sampling_scale = tag$param$tag_set_map$scale * 2,
   percentile = c(10, 50, 90)
@@ -171,14 +190,30 @@ pp_stap$duration <- stap2duration(pp_stap)
 # Plot
 p <- ggplot() +
   geom_line(data = elevation, aes(x = distance, y = X50, color = "ground")) +
-  geom_line(data = pressurepath, aes(x = distance / 1000, y = altitude, color = "flight")) +
-  geom_point(data = pp_stap, aes(x = distance / 1000, y = altitude, name = stap_id, color = "stap", size = duration^(0.25) * 6)) +
+  geom_line(
+    data = pressurepath,
+    aes(x = distance / 1000, y = altitude, color = "flight")
+  ) +
+  geom_point(
+    data = pp_stap,
+    aes(
+      x = distance / 1000,
+      y = altitude,
+      name = stap_id,
+      color = "stap",
+      size = duration^(0.25) * 6
+    )
+  ) +
   theme_bw() +
   ylab("altitude/elevation (m a.s.l.)") +
   xlab("Distance along trajectory (km)") +
   scale_color_manual(
     values = c(ground = "brown", flight = "black", stap = "blue"),
-    labels = c(ground = "Ground elevation (median over 0.25°)", flight = "Bird flight altitude", stap = "Stationary period")
+    labels = c(
+      ground = "Ground elevation (median over 0.25°)",
+      flight = "Bird flight altitude",
+      stap = "Stationary period"
+    )
   ) +
   guides(size = FALSE)
 
@@ -196,8 +231,17 @@ plotly::layout(plotly::ggplotly(p), legend = list(orientation = "h"))
 pressurepath_2_to_5 <- pressurepath_create(
   tag,
   # in this example we only retrieve these variable between stationary period 2 and 5
-  path = path_most_likely[path_most_likely$stap_id >= 2 & path_most_likely$stap_id <= 5, ],
-  variable = c("altitude", "surface_pressure", "temperature_2m", "total_cloud_cover", "total_precipitation", "land_sea_mask"),
+  path = path_most_likely[
+    path_most_likely$stap_id >= 2 & path_most_likely$stap_id <= 5,
+  ],
+  variable = c(
+    "altitude",
+    "surface_pressure",
+    "temperature_2m",
+    "total_cloud_cover",
+    "total_precipitation",
+    "land_sea_mask"
+  ),
   solar_dep = -6,
   quiet = TRUE
 )

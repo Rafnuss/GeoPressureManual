@@ -13,7 +13,8 @@ In this second chapter of the advanced tutorial, we explore how to model the tra
 ```{r, 12-setup-2}
 #| cache: true
 #| code-fold: true
-tag <- tag_create("18LX",
+tag <- tag_create(
+  "18LX",
   crop_start = "2017-06-20",
   crop_end = "2018-05-02",
   quiet = TRUE
@@ -111,7 +112,8 @@ bird <- bird_create("Acrocephalus arundinaceus")
 Using the bird created, we can set the movement model by converting the airspeed to power, and power to a probability. This second step is still a parametric equation, which can be manually defined with `power2prob`.
 
 ```{r}
-graph <- graph_set_movement(graph,
+graph <- graph_set_movement(
+  graph,
   method = "power",
   bird = bird,
   power2prob = \(power) (1 / power)^3,
@@ -151,7 +153,9 @@ knitr::kable(head(edge_most_likely, 3), digits = 1)
 
 ```{r}
 #| echo: false
-edge_simulation$name <- glue::glue("{edge_simulation$stap_s}->{edge_simulation$stap_t}")
+edge_simulation$name <- glue::glue(
+  "{edge_simulation$stap_s}->{edge_simulation$stap_t}"
+)
 plot1 <- ggplot(edge_simulation, aes(reorder(name, stap_s), abs(gs))) +
   theme_bw() +
   ylab("gs") +
@@ -174,7 +178,8 @@ plotly::subplot(
   plotly::ggplotly(plot2),
   plotly::ggplotly(plot3),
   plotly::ggplotly(plot4),
-  nrows = 4, titleY = TRUE
+  nrows = 4,
+  titleY = TRUE
 )
 ```
 
@@ -187,7 +192,9 @@ plot_graph_movement(graph) +
   geom_histogram(
     data = data.frame(as = abs(edge_simulation$gs - edge_simulation$ws)),
     aes(x = as, y = after_stat(count) / sum(after_stat(count))),
-    color = "black", fill = NA, bins = 100
+    color = "black",
+    fill = NA,
+    bins = 100
   )
 ```
 

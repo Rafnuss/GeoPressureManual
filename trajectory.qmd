@@ -78,7 +78,8 @@ These steps are explained and illustrated in more detail in [section 2.2](https:
 
 ```{r 03-graph-create}
 #| cache: true
-graph <- graph_create(tag,
+graph <- graph_create(
+  tag,
   thr_likelihood = 0.90,
   thr_gs = 100, # km/h
   quiet = TRUE
@@ -92,7 +93,8 @@ We then define the movement model by setting a parametric function converting gr
 In this basic tutorial, we use the gamma distribution to model the probability of groundspeed.
 
 ```{r}
-graph <- graph_set_movement(graph,
+graph <- graph_set_movement(
+  graph,
   method = "gamma",
   shape = 7,
   scale = 7,
@@ -148,7 +150,8 @@ When you want to perform a post-hoc computation on the trajectory (e.g., mean fl
 Note that we are using the forward filtering backward sampling algorithm, allowing to sample trajectories independently and without error.
 
 ```{r 03-graph-simulation}
-path_simulation <- graph_simulation(graph,
+path_simulation <- graph_simulation(
+  graph,
   nj = 10, # Number of simulation
   quiet = TRUE
 )
@@ -166,7 +169,8 @@ Note that `graph` can be quite large if the number of stationary periods and gri
 
 ```{r 03-save}
 #| warning: false
-save(tag,
+save(
+  tag,
   graph, # format(object.size(graph), units = "MB")
   path_most_likely,
   path_simulation,

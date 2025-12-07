@@ -82,9 +82,17 @@ mvt_pdf <- function(x) {
 We pre-compute the position of the center of all grid cells.
 
 ```{r}
-lat <- seq(raster::ymax(static_prob[[1]]), raster::ymin(static_prob[[1]]), length.out = nrow(static_prob[[1]]) + 1)
+lat <- seq(
+  raster::ymax(static_prob[[1]]),
+  raster::ymin(static_prob[[1]]),
+  length.out = nrow(static_prob[[1]]) + 1
+)
 lat <- lat[seq_len(length(lat) - 1)] + diff(lat[1:2]) / 2
-lon <- seq(raster::xmin(static_prob[[1]]), raster::xmax(static_prob[[1]]), length.out = ncol(static_prob[[1]]) + 1)
+lon <- seq(
+  raster::xmin(static_prob[[1]]),
+  raster::xmax(static_prob[[1]]),
+  length.out = ncol(static_prob[[1]]) + 1
+)
 lon <- lon[seq_len(length(lon) - 1)] + diff(lon[1:2]) / 2
 
 latlon <- expand.grid(lat = lat, lon = lon)
@@ -103,7 +111,9 @@ Create a function which compute the distance from a point `pt` to all other loca
 
 ```{r}
 prob_mvt <- function(pt, i_s, id) {
-  gs <- geosphere::distGeo(latlon[pt, ], latlon[id, ]) / 1000 / flight_duration[i_s]
+  gs <- geosphere::distGeo(latlon[pt, ], latlon[id, ]) /
+    1000 /
+    flight_duration[i_s]
   mvt_pdf(gs)
 }
 ```
@@ -141,8 +151,20 @@ path_ll <- arrayInd(path[1, ], nll)
 leaflet(width = "100%") |>
   addProviderTiles(providers$Stamen.TerrainBackground) |>
   addFullscreenControl() |>
-  addPolylines(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = 1, color = "#808080", weight = 3) |>
-  addCircles(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = 1, color = "#000", weight = 10)
+  addPolylines(
+    lng = lon[path_ll[, 2]],
+    lat = lat[path_ll[, 1]],
+    opacity = 1,
+    color = "#808080",
+    weight = 3
+  ) |>
+  addCircles(
+    lng = lon[path_ll[, 2]],
+    lat = lat[path_ll[, 1]],
+    opacity = 1,
+    color = "#000",
+    weight = 10
+  )
 ```
 
 We can set/get the stationary period to simulate
@@ -168,7 +190,9 @@ for (j in seq(from = 2, to = nj)) {
     prob <- static_prob_n[[i_s]][nds_id[[i_s]]] * prob_next * prob_prev
 
     # Ransom sample a position according to the proability computed
-    path[j, i_s] <- nds_id[[i_s]][sum(stats::runif(1) > cumsum(prob) / sum(prob)) + 1]
+    path[j, i_s] <- nds_id[[i_s]][
+      sum(stats::runif(1) > cumsum(prob) / sum(prob)) + 1
+    ]
   }
 }
 ```
@@ -185,8 +209,20 @@ m <- leaflet(width = "100%") |>
 for (i in seq(from = 50, to = nj, length.out = 10)) {
   path_ll <- arrayInd(path[i, ], nll)
   m <- m |>
-    addPolylines(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = 0.7, weight = 1, color = "#808080") |>
-    addCircles(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = 1, weight = 1, color = "#000")
+    addPolylines(
+      lng = lon[path_ll[, 2]],
+      lat = lat[path_ll[, 1]],
+      opacity = 0.7,
+      weight = 1,
+      color = "#808080"
+    ) |>
+    addCircles(
+      lng = lon[path_ll[, 2]],
+      lat = lat[path_ll[, 1]],
+      opacity = 1,
+      weight = 1,
+      color = "#000"
+    )
 }
 m
 ```
@@ -207,8 +243,19 @@ for (i_r in seq_len(length(static_prob))) {
 
   path_ll <- arrayInd(path[, i_r], nll)
   l <- l |>
-    addRasterImage(static_prob[[i_r]], opacity = 0.8, colors = "OrRd", group = info_str) |>
-    addCircles(lng = lon[path_ll[, 2]], lat = lat[path_ll[, 1]], opacity = .1, color = "#000", group = info_str)
+    addRasterImage(
+      static_prob[[i_r]],
+      opacity = 0.8,
+      colors = "OrRd",
+      group = info_str
+    ) |>
+    addCircles(
+      lng = lon[path_ll[, 2]],
+      lat = lat[path_ll[, 1]],
+      opacity = .1,
+      color = "#000",
+      group = info_str
+    )
 }
 l |>
   addLayersControl(

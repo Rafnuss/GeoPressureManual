@@ -29,17 +29,29 @@ stap <- merge(
   tag$stap,
   data.frame(
     stap_id = sapply(split(pressurepath$stap_id, pressurepath$stap_id), median),
-    alt_mean = sapply(split(pressurepath$altitude, pressurepath$stap_id), \(x) round(mean(x), 1)),
-    alt_med = sapply(split(pressurepath$altitude, pressurepath$stap_id), \(x) round(median(x), 1)),
-    alt_min = sapply(split(pressurepath$altitude, pressurepath$stap_id), \(x) round(min(x), 1)),
-    alt_max = sapply(split(pressurepath$altitude, pressurepath$stap_id), \(x) round(max(x), 1))
+    alt_mean = sapply(split(pressurepath$altitude, pressurepath$stap_id), \(x) {
+      round(mean(x), 1)
+    }),
+    alt_med = sapply(split(pressurepath$altitude, pressurepath$stap_id), \(x) {
+      round(median(x), 1)
+    }),
+    alt_min = sapply(split(pressurepath$altitude, pressurepath$stap_id), \(x) {
+      round(min(x), 1)
+    }),
+    alt_max = sapply(split(pressurepath$altitude, pressurepath$stap_id), \(x) {
+      round(max(x), 1)
+    })
   )
 )
 
 # The duration can also be computed with
 stap$duration <- round(stap2duration(stap), 2)
 
-write.csv(stap, glue::glue("./data/processed/{tag$param$id}/stap.csv"), row.names = FALSE)
+write.csv(
+  stap,
+  glue::glue("./data/processed/{tag$param$id}/stap.csv"),
+  row.names = FALSE
+)
 ```
 
 Note that the most likely path contains all the information from `stap` and could be used instead if you want to have the best estimate of the coordinates of stationary periods.
@@ -59,14 +71,22 @@ flight <- merge(
   data.frame(
     stap_s = sapply(split(pp_f$stap_s, pp_f$stap_s), median),
     stap_t = sapply(split(pp_f$stap_t, pp_f$stap_s), median),
-    alt_mean = sapply(split(pp_f$altitude, pp_f$stap_s), \(x) round(mean(x), 1)),
-    alt_med = sapply(split(pp_f$altitude, pp_f$stap_s), \(x) round(median(x), 1)),
+    alt_mean = sapply(split(pp_f$altitude, pp_f$stap_s), \(x) {
+      round(mean(x), 1)
+    }),
+    alt_med = sapply(split(pp_f$altitude, pp_f$stap_s), \(x) {
+      round(median(x), 1)
+    }),
     alt_min = sapply(split(pp_f$altitude, pp_f$stap_s), \(x) round(min(x), 1)),
     alt_max = sapply(split(pp_f$altitude, pp_f$stap_s), \(x) round(max(x), 1))
   )
 )
 
-write.csv(flight, glue::glue("./data/processed/{tag$param$id}/flight.csv"), row.names = FALSE)
+write.csv(
+  flight,
+  glue::glue("./data/processed/{tag$param$id}/flight.csv"),
+  row.names = FALSE
+)
 ```
 
 ### GeoPressureR maps
@@ -75,17 +95,23 @@ GeoPressureR `maps` can be exported in a `.geotiff` file using `terra::writeRast
 
 ```{r}
 #| warning: false
-terra::writeRaster(rast.map(tag$map_pressure),
+terra::writeRaster(
+  rast.map(tag$map_pressure),
   glue::glue("./data/processed/{tag$param$id}/map_pressure.tif"),
-  filetype = "GTiff", overwrite = TRUE
+  filetype = "GTiff",
+  overwrite = TRUE
 )
-terra::writeRaster(rast.map(tag$map_light),
+terra::writeRaster(
+  rast.map(tag$map_light),
   glue::glue("./data/processed/{tag$param$id}/map_light.tif"),
-  filetype = "GTiff", overwrite = TRUE
+  filetype = "GTiff",
+  overwrite = TRUE
 )
-terra::writeRaster(rast.map(marginal),
+terra::writeRaster(
+  rast.map(marginal),
   glue::glue("./data/processed/{tag$param$id}/map_marginal.tif"),
-  filetype = "GTiff", overwrite = TRUE
+  filetype = "GTiff",
+  overwrite = TRUE
 )
 ```
 
@@ -94,7 +120,8 @@ terra::writeRaster(rast.map(marginal),
 During the entire workflow, `tag$param` and `graph$param` record all the essential parameters used to create the likelihood map and the graph. It is therefore interesting to export this structure for reproducibility.
 
 ```{r}
-write(jsonlite::toJSON(graph$param, auto_unbox = TRUE, pretty = TRUE, force = TRUE),
+write(
+  jsonlite::toJSON(graph$param, auto_unbox = TRUE, pretty = TRUE, force = TRUE),
   file = glue::glue("./data/processed/{tag$param$id}/param.json")
 )
 ```
@@ -112,22 +139,31 @@ Because the path encodes the position during the entire stationary period, we ne
 library(moveVis)
 path_most_likely$duration <- stap2duration(path_most_likely)
 
-m <- df2move(path_most_likely,
+m <- df2move(
+  path_most_likely,
   proj = "+init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0",
-  x = "lon", y = "lat", time = "start", track_id = "j"
+  x = "lon",
+  y = "lat",
+  time = "start",
+  track_id = "j"
 )
 
 # Use midday position rather than midnight (while the bird could be flying)
 m <- align_move(m, res = 24, unit = "hours", digit = 12)
 
 # remove the long equipement and retrival period duration
-m <- subset_move(m,
+m <- subset_move(
+  m,
   from = max(min(m$time), tag$stap$end[1] - 3 * 60 * 60 * 24),
   to = min(max(m$time), tail(tag$stap$start, 1) + 3 * 60 * 60 * 24)
 )
 
 # Create frames
-frames <- frames_spatial(m, equidistant = TRUE, ext = raster::extent(tag$param$tag_set_map$extent)) |>
+frames <- frames_spatial(
+  m,
+  equidistant = TRUE,
+  ext = raster::extent(tag$param$tag_set_map$extent)
+) |>
   add_labels(x = NULL, y = NULL) |> # add some customizations, such as axis labels
   add_timestamps(type = "label", size = 6) |>
   add_progress()
@@ -144,7 +180,13 @@ If you're satisfied, then go for it!
 
 ```{r} 
 #| eval: false
-animate_frames(frames, out_file = glue::glue("./assets/movevis_{tag$param$id}.gif"), height = 1000, width = 1000, overwrite = T)
+animate_frames(
+  frames,
+  out_file = glue::glue("./assets/movevis_{tag$param$id}.gif"),
+  height = 1000,
+  width = 1000,
+  overwrite = T
+)
 ```
 
 And here is the map! Check out <a href="https://movevis.org/index.html#examples" target="_blank">moveVis examples for more ideas</a>.
@@ -167,10 +209,17 @@ register_google("googlemap_key")
 istap_winter <- which(stap2duration(tag$stap) > 50)[2]
 
 p0 <- get_googlemap(
-  center = c(lon = path_most_likely$lon[istap_winter], lat = path_most_likely$lat[istap_winter]),
-  zoom = 9, maptype = "hybrid", size = c(1280, 1280), scale = 4
+  center = c(
+    lon = path_most_likely$lon[istap_winter],
+    lat = path_most_likely$lat[istap_winter]
+  ),
+  zoom = 9,
+  maptype = "hybrid",
+  size = c(1280, 1280),
+  scale = 4
 ) |>
-  ggmap() + theme_map()
+  ggmap() +
+  theme_map()
 ```
 
 ```{r}
@@ -190,7 +239,12 @@ df$layerP <- 1 - cumsum(df$layer) / sum(df$layer)
 
 # Add plot
 p <- p0 +
-  geom_contour(df, aes(x = x, y = y, z = layerP, color = after_stat(level)), linewidth = 2, breaks = c(.5, .1)) +
+  geom_contour(
+    df,
+    aes(x = x, y = y, z = layerP, color = after_stat(level)),
+    linewidth = 2,
+    breaks = c(.5, .1)
+  ) +
   scale_colour_gradient(
     high = "red",
     low = "white",
@@ -215,7 +269,9 @@ plot_inset <- ggplot() +
       ymin = layer_scales(p0)$y$range$range[1],
       ymax = layer_scales(p0)$y$range$range[2]
     ),
-    color = "red", alpha = 0.1, linewidth = 1
+    color = "red",
+    alpha = 0.1,
+    linewidth = 1
   ) +
   theme_map() +
   theme(

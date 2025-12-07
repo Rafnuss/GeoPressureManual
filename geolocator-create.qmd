@@ -70,18 +70,19 @@ Generally, the information (title, description, license, etc...) between the cod
 # title
 # pkg$title <- "GeoLocator Data Package: {Species} in {country}"
 
-# Contributors/creators: 
-# Default is to take the GeoPressureTemplate authors, but it is common that 
+# Contributors/creators:
+# Default is to take the GeoPressureTemplate authors, but it is common that
 # additional co-authors should be added for the datapackage
-pkg$contributors <- list( # required
-    list(
-      title = "Raphaël Nussbaumer",
-      roles = c("ContactPerson", "DataCurator", "ProjectLeader"),
-      email = "raphael.nussbaumer@vogelwarte.ch",
-      path = "https://orcid.org/0000-0002-8185-1020",
-      organization = "Swiss Ornithological Institute"
-    )
+pkg$contributors <- list(
+  # required
+  list(
+    title = "Raphaël Nussbaumer",
+    roles = c("ContactPerson", "DataCurator", "ProjectLeader"),
+    email = "raphael.nussbaumer@vogelwarte.ch",
+    path = "https://orcid.org/0000-0002-8185-1020",
+    organization = "Swiss Ornithological Institute"
   )
+)
 
 # There are no embargo by default (1970-01-01)
 pkg$embargo <- "2030-01-01"
@@ -89,10 +90,10 @@ pkg$embargo <- "2030-01-01"
 # Licences
 # Code licenses are often not the same as data licences.
 pkg$licenses = list(list(
-  name = "CC-BY-4.0", 
+  name = "CC-BY-4.0",
   title = "Creative Commons Attribution 4.0",
   path = "https://creativecommons.org/licenses/by/4.0/"
-  ))
+))
 ```
 
 In addition, here are some more optional metadata:
@@ -102,12 +103,16 @@ In addition, here are some more optional metadata:
 # pkg$description
 
 # Add keywords
-pkg$keywords <- c("Woodland Kingfisher", "intra-african", "multi-sensor geolocator")
+pkg$keywords <- c(
+  "Woodland Kingfisher",
+  "intra-african",
+  "multi-sensor geolocator"
+)
 
 # Funding sources
 pkg$grants <- c("Swiss Ornithological Intitute")
 
-# Related Identifiers 
+# Related Identifiers
 # e.g. papers, project pages, derived datasets, etc.
 pkg$relatedIdentifiers <- list(
   list(
@@ -192,7 +197,8 @@ pkg$id <- "https://doi.org/10.5281/zenodo.{ZENODO_ID - 1}"
 
 # Update the bibliographic citation with this new DOI
 pkg <- update_gldp_bibliographic_citation(pkg)
-```
+``
+`
 :::
 
 Now, we can write the datapackage to file
@@ -273,5 +279,6 @@ If any modification of the metadata are made on Zenodo, you overwrite `pkg`'s me
 #| eval: false
 z_updated <- zenodo$getDepositionByConceptDOI(z$getConceptDOI())
 pkg <- zenodoRecord2gldp(z_updated, pkg)
-```
+`
+``
 :::

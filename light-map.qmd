@@ -21,7 +21,8 @@ Before getting into light data, we first need to create, label, and set the map 
 
 ```{r 10-geopressure}
 #| cache: true
-tag <- tag_create("18LX",
+tag <- tag_create(
+  "18LX",
   crop_start = "2017-06-20",
   crop_end = "2018-05-02",
   quiet = TRUE
@@ -99,7 +100,8 @@ The computation of the light likelihood map for each stationary period is perfor
 3.  Aggregate all likelihood maps of the same stationary period into a single map using a log-linear pooling. See [probability aggregation](probability-aggregation.html#probability-aggregation-1) for more information on log-linear pooling.
 
 ```{r 10-geolight-map}
-tag <- geolight_map(tag,
+tag <- geolight_map(
+  tag,
   twl_calib_adjust = 1.4,
   twl_llp = function(n) log(n) / n,
   quiet = TRUE
@@ -113,7 +115,13 @@ It is recommended to always check the calibration fit `tag$param$twl_calib` with
 ```{r}
 barW <- median(diff(tag$param$geolight_map$twl_calib$x)) / 2
 plot(tag$param$geolight_map$twl_calib, xlim = c(85, 100))
-rect(xleft = tag$param$geolight_map$twl_calib$x - barW, ybottom = 0, xright = tag$param$geolight_map$twl_calib$x + barW, ytop = tag$param$geolight_map$twl_calib$y, col = gray(0.5))
+rect(
+  xleft = tag$param$geolight_map$twl_calib$x - barW,
+  ybottom = 0,
+  xright = tag$param$geolight_map$twl_calib$x + barW,
+  ytop = tag$param$geolight_map$twl_calib$y,
+  col = gray(0.5)
+)
 lines(tag$param$geolight_map$twl_calib, col = "red")
 ```
 
@@ -134,7 +142,8 @@ This task is best performed with GeoPressureViz, presented in [its dedicated cha
 ```{r}
 #| warning: false
 plot(tag, type = "map")
-```
+``
+`
 :::
 
 ## Check light label
@@ -144,7 +153,8 @@ In the same way that pressure label needs to be checked, light label can also be
 ```{r}
 #| warning: false
 path <- tag2path(tag, interp = 2)
-```
+`
+``
 This path can be visualized with `plot_path(path)`
 
 We can compute the theoretical twilights which should be observed by a bird on this path using `path2twilight()`

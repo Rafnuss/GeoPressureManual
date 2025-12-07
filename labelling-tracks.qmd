@@ -40,7 +40,8 @@ In the absence of acceleration data, both labels are applied to the pressure tim
 Let's see an example using acceleration data with 18LX.
 
 ```{r}
-tag <- tag_create("18LX",
+tag <- tag_create(
+  "18LX",
   crop_start = "2017-06-20",
   crop_end = "2018-05-02",
   quiet = TRUE
@@ -170,9 +171,11 @@ Before this, we need to compute the likelihood maps. It's generally better to st
 
 ```{r 23-full-workflow}
 #| eval: false
-tag <- tag_create("18LX",
+tag <- tag_create(
+  "18LX",
   crop_start = "2017-06-20",
-  crop_end = "2018-05-02", quiet = TRUE
+  crop_end = "2018-05-02",
+  quiet = TRUE
 ) |>
   tag_label("./data/tag-label/18LX-labeled-v3.csv", quiet = TRUE) |>
   tag_set_map(

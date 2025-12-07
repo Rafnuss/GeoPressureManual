@@ -71,7 +71,11 @@ We can re-write this equation as a function of the MSE $$ f_{ind}(\boldsymbol{\v
 Using this equation, we can compute the probability for each stationary periods. This function corresponds the one used in `geopressure_map_likelihood()` using the following parameters
 
 ```{r}
-tag_tmp <- geopressure_map_likelihood(tag, sd = sd, log_linear_pooling_weight = \(n) 1)
+tag_tmp <- geopressure_map_likelihood(
+  tag,
+  sd = sd,
+  log_linear_pooling_weight = \(n) 1
+)
 plot(tag_tmp, type = "map_pressure")
 ```
 
@@ -119,7 +123,11 @@ An interesting case is if $w=1/n$, so that $\sum_t w_t=1$. This would simplify t
 We can try this and see the influence on the probability map.
 
 ```{r}
-tag_tmp <- geopressure_map_likelihood(tag, sd = sd, log_linear_pooling_weight = \(n) 1 / n)
+tag_tmp <- geopressure_map_likelihood(
+  tag,
+  sd = sd,
+  log_linear_pooling_weight = \(n) 1 / n
+)
 plot(tag_tmp, type = "map_pressure")
 ```
 
@@ -136,7 +144,11 @@ $$F(\boldsymbol{\varepsilon}) \propto \left({\frac {1}{2\pi \sigma ^{2}}}\right)
 This scheme was designed to minimize the strength of $1/n$
 
 ```{r}
-tag_tmp <- geopressure_map_likelihood(tag, sd = sd, log_linear_pooling_weight = \(n) log(n) / n)
+tag_tmp <- geopressure_map_likelihood(
+  tag,
+  sd = sd,
+  log_linear_pooling_weight = \(n) log(n) / n
+)
 plot(tag_tmp, type = "map_pressure")
 ```
 
