@@ -69,6 +69,15 @@ GeoPressureTemplate/
 Do not clone (or fork) the repository! [Read more about creating repositories from a template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
 :::
 
+**Option 3: using the GeoLocatoR package**
+
+You can create a new GeoPressureTemplate project folder from R directly, using [`GeoLocatoR::create_geopressuretemplate()`](https://raphaelnussbaumer.com/GeoLocatoR/reference/create_gldp_geopressuretemplate.html).
+```r
+#| eval: false
+library(GeoLocatoR)
+create_geopressuretemplate("location/to/your/project/folder/my_tracking_study_name")
+```
+
 ### 🏠 Make yourself at home
 
 1. Rename `GeoPressureTemplate.Rproj` to your project name (e.g., `my_tracking_study_name.Rproj`). You can now open the project in RStudio.
