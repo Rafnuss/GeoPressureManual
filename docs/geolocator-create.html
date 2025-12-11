@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
 <title>15&nbsp; Create – A User Manual for GeoPressureR</title>
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a7790033cff2d4e3bc9b324136141315.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-ef881a153540be65ad1a752274347fb5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -126,16 +127,16 @@ cookieconsent.run({
 </script><script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="site_libs/leaflet-1.3.1/leaflet.js"></script><link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="site_libs/proj4-2.6.2/proj4.min.js"></script><script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="site_libs/leaflet-binding-2.2.2/leaflet.js"></script>
+<script src="site_libs/leaflet-binding-2.2.3/leaflet.js"></script>
 <meta property="og:title" content="15&nbsp; Create – A User Manual for GeoPressureR">
 <meta property="og:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
-<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/geolocator-create_files/figure-html/unnamed-chunk-9-1.png">
+<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/geolocator-create_files/figure-html/15-plot-pkg-coverage-1.png">
 <meta property="og:site_name" content="A User Manual for GeoPressureR">
 <meta property="og:image:height" content="960">
 <meta property="og:image:width" content="1344">
 <meta name="twitter:title" content="15&nbsp; Create – A User Manual for GeoPressureR">
 <meta name="twitter:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
-<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/geolocator-create_files/figure-html/unnamed-chunk-9-1.png">
+<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/geolocator-create_files/figure-html/15-plot-pkg-coverage-1.png">
 <meta name="twitter:image-height" content="960">
 <meta name="twitter:image-width" content="1344">
 <meta name="twitter:card" content="summary_large_image">
@@ -379,16 +380,31 @@ cookieconsent.run({
    
   <ul>
 <li><a href="#setup-of-the-example" id="toc-setup-of-the-example" class="nav-link active" data-scroll-target="#setup-of-the-example"><span class="header-section-number">15.1</span> Setup of the example</a></li>
-  <li><a href="#initiate-datapackage-with-metadata" id="toc-initiate-datapackage-with-metadata" class="nav-link" data-scroll-target="#initiate-datapackage-with-metadata"><span class="header-section-number">15.2</span> Initiate datapackage with metadata</a></li>
-  <li><a href="#add-the-geopressuretemplate-data" id="toc-add-the-geopressuretemplate-data" class="nav-link" data-scroll-target="#add-the-geopressuretemplate-data"><span class="header-section-number">15.3</span> Add the geopressuretemplate data</a></li>
-  <li><a href="#check-the-validity-of-the-data-package" id="toc-check-the-validity-of-the-data-package" class="nav-link" data-scroll-target="#check-the-validity-of-the-data-package"><span class="header-section-number">15.4</span> Check the validity of the data package</a></li>
   <li>
-<a href="#upload-to-zenodo" id="toc-upload-to-zenodo" class="nav-link" data-scroll-target="#upload-to-zenodo"><span class="header-section-number">15.5</span> Upload to Zenodo</a>
+<a href="#initiate-datapackage-with-metadata" id="toc-initiate-datapackage-with-metadata" class="nav-link" data-scroll-target="#initiate-datapackage-with-metadata"><span class="header-section-number">15.2</span> Initiate datapackage with metadata</a>
+  <ul class="collapse">
+<li><a href="#initiate-datapackage-using-the-description-file" id="toc-initiate-datapackage-using-the-description-file" class="nav-link" data-scroll-target="#initiate-datapackage-using-the-description-file"><span class="header-section-number">15.2.1</span> Initiate datapackage using the DESCRIPTION file</a></li>
+  <li><a href="#create-record-on-zenodo" id="toc-create-record-on-zenodo" class="nav-link" data-scroll-target="#create-record-on-zenodo"><span class="header-section-number">15.2.2</span> Create record on Zenodo</a></li>
+  <li><a href="#update-metadata-on-zenodo" id="toc-update-metadata-on-zenodo" class="nav-link" data-scroll-target="#update-metadata-on-zenodo"><span class="header-section-number">15.2.3</span> Update metadata on Zenodo</a></li>
+  <li><a href="#create-datapackage-from-zenodo-record" id="toc-create-datapackage-from-zenodo-record" class="nav-link" data-scroll-target="#create-datapackage-from-zenodo-record"><span class="header-section-number">15.2.4</span> Create datapackage from Zenodo record</a></li>
+  </ul>
+</li>
+  <li><a href="#add-the-data" id="toc-add-the-data" class="nav-link" data-scroll-target="#add-the-data"><span class="header-section-number">15.3</span> Add the data</a></li>
+  <li>
+<a href="#data-to-include" id="toc-data-to-include" class="nav-link" data-scroll-target="#data-to-include"><span class="header-section-number">15.4</span> Data to include</a>
+  <ul class="collapse">
+<li><a href="#tags-and-observations-resources" id="toc-tags-and-observations-resources" class="nav-link" data-scroll-target="#tags-and-observations-resources"><span class="header-section-number">15.4.1</span> <code>tags</code> and <code>observations</code> resources</a></li>
+  <li><a href="#inspect-the-created-package" id="toc-inspect-the-created-package" class="nav-link" data-scroll-target="#inspect-the-created-package"><span class="header-section-number">15.4.2</span> Inspect the created package</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#upload-data-to-zenodo" id="toc-upload-data-to-zenodo" class="nav-link" data-scroll-target="#upload-data-to-zenodo"><span class="header-section-number">15.5</span> Upload data to Zenodo</a>
   <ul class="collapse">
 <li><a href="#option-1-manually" id="toc-option-1-manually" class="nav-link" data-scroll-target="#option-1-manually"><span class="header-section-number">15.5.1</span> Option 1: Manually</a></li>
   <li><a href="#option-2-programatically" id="toc-option-2-programatically" class="nav-link" data-scroll-target="#option-2-programatically"><span class="header-section-number">15.5.2</span> Option 2: Programatically</a></li>
   </ul>
 </li>
+  <li><a href="#publish-the-record" id="toc-publish-the-record" class="nav-link" data-scroll-target="#publish-the-record"><span class="header-section-number">15.6</span> Publish the record</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/Rafnuss/GeoPressureManual/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/"><i class="bi bi-link-45deg"></i>GeoPressureR reference</a></li><li><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/"><i class="bi bi-link-45deg"></i>GeoLocatoR reference</a></li><li><a href="https://github.com/Rafnuss/GeoPressureTemplate"><i class="bi bi-link-45deg"></i>GeoPressureTemplate</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -432,17 +448,41 @@ Important
 <p>If you’ve not yet performed the GeoPressureR analysis, it is still possible to create a geolocator data package with only the core ressources.</p>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/frictionlessdata/frictionless-r">frictionless</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/frictionlessdata/frictionless-r">frictionless</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rafnuss/geolocator">GeoLocatoR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eblondel/zen4R">zen4R</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/eblondel/zen4R">zen4R</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The easiest way to create a Zendo record and ensure that the data is correctly sync is using the Zenodo API and the <a href="https://github.com/eblondel/zen4R/wiki"><code>Zen4R</code></a> package.</p>
+<p>For this, you first need to <a href="https://zenodo.org/account/settings/applications/tokens/new/">create a token</a> and save it to your keyring with:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_set_with_value</a></span><span class="op">(</span><span class="st">"ZENODO_PAT"</span>, password <span class="op">=</span> <span class="st">"{your_zenodo_token}"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This allows us to create a <code>ZenodoManager</code> object which becomes useful later.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">zenodo</span> <span class="op">&lt;-</span> <span class="va"><a href="https://rdrr.io/pkg/zen4R/man/ZenodoManager.html">ZenodoManager</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>token <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_get</a></span><span class="op">(</span>service <span class="op">=</span> <span class="st">"ZENODO_PAT"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Successfully connected to Zenodo with user token</code></pre>
+</div>
+</div>
+</div>
 </div>
 <section id="setup-of-the-example" class="level2" data-number="15.1"><h2 data-number="15.1" class="anchored" data-anchor-id="setup-of-the-example">
 <span class="header-section-number">15.1</span> Setup of the example</h2>
 <p>For this example, we won’t be using the Swainson’s Warbler nor Great Reed Warbler as we want a full project with multiple tags. Instead, we download <a href="https://github.com/Rafnuss/WoodlandKingfisher">the GeoPressureTemplate of the Woodland Kingfisher geolocator project</a>. Our goal will essentially be to reproduce the <a href="https://zenodo.org/records/13829929">associated GeoLocator Data Package uploaded on Zenodo already</a>.</p>
 <p>We can download this GeoPressureTemplate from Github in a temporary folder using the following code:</p>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="st">"Rafnuss/WoodlandKingfisher"</span></span>
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="st">"Rafnuss/WoodlandKingfisher"</span></span>
 <span></span>
 <span><span class="co"># Create temporary file for the ZIP</span></span>
 <span><span class="va">temp_zip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".zip"</span><span class="op">)</span></span>
@@ -457,163 +497,43 @@ Important
 <span><span class="fu"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span><span class="op">(</span><span class="va">temp_zip</span>, exdir <span class="op">=</span> <span class="va">temp_dir</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># return the extraction directory</span></span>
-<span><span class="va">directory</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp_dir</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">temp_dir</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">directory</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">temp_dir</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">temp_dir</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section><section id="initiate-datapackage-with-metadata" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="initiate-datapackage-with-metadata">
 <span class="header-section-number">15.2</span> Initiate datapackage with metadata</h2>
-<p>We can generate a GeoLocator Data Package <code>pkg</code> from a GeoPressureTemplate folder with <code><a href="https://github.com/rafnuss/geolocator/reference/create_gldp_geopressuretemplate.html">create_gldp_geopressuretemplate()</a></code>. This function will read the <code>DESCRIPTION</code> file and create a frictionless package with the metadata. At this stage, no data is included in the package.</p>
+<section id="initiate-datapackage-using-the-description-file" class="level3" data-number="15.2.1"><h3 data-number="15.2.1" class="anchored" data-anchor-id="initiate-datapackage-using-the-description-file">
+<span class="header-section-number">15.2.1</span> Initiate datapackage using the DESCRIPTION file</h3>
+<p>We can generate a GeoLocator Data Package <code>pkg</code> from an existing GeoPressureTemplate folder with <code><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/create_gldp_geopressuretemplate.html">create_gldp_geopressuretemplate()</a></code>. This function will read the <code>DESCRIPTION</code> file and create a frictionless package with the metadata you’ve already entered.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/rafnuss/geolocator/reference/create_gldp_geopressuretemplate.html">create_gldp_geopressuretemplate</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="va">directory</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/create_gldp_geopressuretemplate.html">create_gldp_geopressuretemplate</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="va">directory</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-info">
-<p>Read the <a href="https://raphaelnussbaumer.com/GeoLocator-DP/datapackage/">datapackage specification</a> to learn about all recommended metadata that can be added.</p>
-<p>Generally, the information (title, description, license, etc…) between the code (DESCRIPTION file) would be different than the one for the datapackage published. Make sure to update these information accordingly!</p>
-</div>
+</section><section id="create-record-on-zenodo" class="level3" data-number="15.2.2"><h3 data-number="15.2.2" class="anchored" data-anchor-id="create-record-on-zenodo">
+<span class="header-section-number">15.2.2</span> Create record on Zenodo</h3>
+<p>The easiest way to update the metadata is to create an empty Zenodo record and fill in all metadata directly on Zenodo. This way, you can benefit from the Zenodo interface to enter all metadata and share it with co-authors for review before creating the package.</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># title</span></span>
-<span><span class="co"># pkg$title &lt;- "GeoLocator Data Package: {Species} in {country}"</span></span>
-<span></span>
-<span><span class="co"># Contributors/creators: </span></span>
-<span><span class="co"># Default is to take the GeoPressureTemplate authors, but it is common that </span></span>
-<span><span class="co"># additional co-authors should be added for the datapackage</span></span>
-<span><span class="va">pkg</span><span class="op">$</span><span class="va">contributors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> <span class="co"># required</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>      title <span class="op">=</span> <span class="st">"Raphaël Nussbaumer"</span>,</span>
-<span>      roles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ContactPerson"</span>, <span class="st">"DataCurator"</span>, <span class="st">"ProjectLeader"</span><span class="op">)</span>,</span>
-<span>      email <span class="op">=</span> <span class="st">"raphael.nussbaumer@vogelwarte.ch"</span>,</span>
-<span>      path <span class="op">=</span> <span class="st">"https://orcid.org/0000-0002-8185-1020"</span>,</span>
-<span>      organization <span class="op">=</span> <span class="st">"Swiss Ornithological Institute"</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="co"># There are no embargo by default (1970-01-01)</span></span>
-<span><span class="va">pkg</span><span class="op">$</span><span class="va">embargo</span> <span class="op">&lt;-</span> <span class="st">"2030-01-01"</span></span>
-<span></span>
-<span><span class="co"># Licences</span></span>
-<span><span class="co"># Code licenses are often not the same as data licences.</span></span>
-<span><span class="va">pkg</span><span class="op">$</span><span class="va">licenses</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>  name <span class="op">=</span> <span class="st">"CC-BY-4.0"</span>, </span>
-<span>  title <span class="op">=</span> <span class="st">"Creative Commons Attribution 4.0"</span>,</span>
-<span>  path <span class="op">=</span> <span class="st">"https://creativecommons.org/licenses/by/4.0/"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">depositRecord</span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/gldp_to_zenodo.html">gldp_to_zenodo</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>,</span>
+<span>  reserveDOI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  publish <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html">browseURL</a></span><span class="op">(</span><span class="va">z</span><span class="op">$</span><span class="va">links</span><span class="op">$</span><span class="va">self_html</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>In addition, here are some more optional metadata:</p>
-<div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Review the description, often, you want to be more descriptive here.</span></span>
-<span><span class="co"># pkg$description</span></span>
-<span></span>
-<span><span class="co"># Add keywords</span></span>
-<span><span class="va">pkg</span><span class="op">$</span><span class="va">keywords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Woodland Kingfisher"</span>, <span class="st">"intra-african"</span>, <span class="st">"multi-sensor geolocator"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Funding sources</span></span>
-<span><span class="va">pkg</span><span class="op">$</span><span class="va">grants</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Swiss Ornithological Intitute"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Related Identifiers </span></span>
-<span><span class="co"># e.g. papers, project pages, derived datasets, etc.</span></span>
-<span><span class="va">pkg</span><span class="op">$</span><span class="va">relatedIdentifiers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>    relationType <span class="op">=</span> <span class="st">"IsPartOf"</span>,</span>
-<span>    relatedIdentifier <span class="op">=</span> <span class="st">"10.5281/zenodo.11207081"</span>,</span>
-<span>    relatedIdentifierType <span class="op">=</span> <span class="st">"DOI"</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="update-metadata-on-zenodo" class="level3" data-number="15.2.3"><h3 data-number="15.2.3" class="anchored" data-anchor-id="update-metadata-on-zenodo">
+<span class="header-section-number">15.2.3</span> Update metadata on Zenodo</h3>
+<p>Login to Zenodo and fill in all metadata you want to add to your GeoLocator Data Package. Read the <a href="https://raphaelnussbaumer.com/GeoLocator-DP/datapackage/">datapackage specification</a> to learn about all recommended metadata that can be added</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>You can display all these information at any point with</p>
-<div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## ── A GeoLocator Data Package (vmain)</span></span>
-<span><span class="co">## • title: "Migration route and timing of South African Woodland Kingfisher"</span></span>
-<span><span class="co">## • contributors:</span></span>
-<span><span class="co">##   Raphaël Nussbaumer ('raphael.nussbaumer@vogelwarte.ch') (ContactPerson,</span></span>
-<span><span class="co">##   DataCurator, ProjectLeader) - &lt;https://orcid.org/0000-0002-8185-1020&gt;</span></span>
-<span><span class="co">## • embargo: 2030-01-01</span></span>
-<span><span class="co">## • licenses:</span></span>
-<span><span class="co">##   Creative Commons Attribution 4.0 (CC-BY-4.0) -</span></span>
-<span><span class="co">##   &lt;https://creativecommons.org/licenses/by/4.0/&gt;</span></span>
-<span><span class="co">## • relatedIdentifiers:</span></span>
-<span><span class="co">##   IsPartOf &lt;10.5281/zenodo.11207081&gt;</span></span>
-<span><span class="co">## • grants: "Swiss Ornithological Intitute"</span></span>
-<span><span class="co">## • keywords: "Woodland Kingfisher", "intra-african", and "multi-sensor</span></span>
-<span><span class="co">##   geolocator"</span></span>
-<span><span class="co">## • created: 2025-09-04 13:00:04</span></span>
-<span><span class="co">## • bibliographicCitation: "Nussbaumer R, Rime Y (2025). \"Migration route and</span></span>
-<span><span class="co">##   timing of South African Woodland Kingfisher.\""</span></span>
-<span><span class="co">## • spatial:</span></span>
-<span><span class="co">## • temporal: to</span></span>
-<span><span class="co">## • taxonomic:</span></span>
-<span><span class="co">## • numberTags:</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## ── 0 resources</span></span>
-<span><span class="co">## Use `unclass()` to print the Geolocator Data Package as a list.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section><section id="add-the-geopressuretemplate-data" class="level2" data-number="15.3"><h2 data-number="15.3" class="anchored" data-anchor-id="add-the-geopressuretemplate-data">
-<span class="header-section-number">15.3</span> Add the geopressuretemplate data</h2>
-<p><code><a href="https://github.com/rafnuss/geolocator/reference/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate()</a></code> is a key function that read the geopressuretemplate data available and automatically add the most up-to-date available data to the datapackage.</p>
-<div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/rafnuss/geolocator/reference/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">directory</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Reading 5 interim files from
-'/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T//RtmpUPHpOI/file6edf3fbf4bb1/WoodlandKingfisher-main/data/interim'.
-Reading 0 raw tags data from
-'/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T//RtmpUPHpOI/file6edf3fbf4bb1/WoodlandKingfisher-main/data/raw-tag'.
-Reading tags from
-'/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T//RtmpUPHpOI/file6edf3fbf4bb1/WoodlandKingfisher-main/data/tags.csv'.
-Reading observations from
-'/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T//RtmpUPHpOI/file6edf3fbf4bb1/WoodlandKingfisher-main/data/observations.csv'.</code></pre>
+<div class="callout-title-container flex-fill">
+Note
 </div>
 </div>
-<p>If <code>tags.csv</code> and <code>observations.csv</code> are not available (i.e., not stored in the <code>data/</code> folder of your project), <code>tags</code> and <code>observations</code> resources would have been generated by <code><a href="https://github.com/rafnuss/geolocator/reference/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate()</a></code> based on the available information. You certainly need to edit them manually, adding some key missing information (e.g.&nbsp;<code>ring_number</code>).</p>
-<div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://github.com/rafnuss/geolocator/reference/tags.html">tags</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/tags.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://github.com/rafnuss/geolocator/reference/observations.html">observations</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/observations.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-body-container callout-body">
+<p>Note that a datapackage <code>contributors</code> corresponds to <code>creators</code> on Zenodo and not the <code>contributors</code>.</p>
 </div>
-<div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## ── A GeoLocator Data Package (vmain)</span></span>
-<span><span class="co">## • title: "Migration route and timing of South African Woodland Kingfisher"</span></span>
-<span><span class="co">## • contributors:</span></span>
-<span><span class="co">##   Raphaël Nussbaumer ('raphael.nussbaumer@vogelwarte.ch') (ContactPerson,</span></span>
-<span><span class="co">##   DataCurator, ProjectLeader) - &lt;https://orcid.org/0000-0002-8185-1020&gt;</span></span>
-<span><span class="co">## • embargo: 2030-01-01</span></span>
-<span><span class="co">## • licenses:</span></span>
-<span><span class="co">##   Creative Commons Attribution 4.0 (CC-BY-4.0) -</span></span>
-<span><span class="co">##   &lt;https://creativecommons.org/licenses/by/4.0/&gt;</span></span>
-<span><span class="co">## • relatedIdentifiers:</span></span>
-<span><span class="co">##   IsPartOf &lt;10.5281/zenodo.11207081&gt;</span></span>
-<span><span class="co">## • grants: "Swiss Ornithological Intitute"</span></span>
-<span><span class="co">## • keywords: "Woodland Kingfisher", "intra-african", and "multi-sensor</span></span>
-<span><span class="co">##   geolocator"</span></span>
-<span><span class="co">## • created: 2025-09-04 13:00:04</span></span>
-<span><span class="co">## • bibliographicCitation: "Nussbaumer R, Rime Y (2025). \"Migration route and</span></span>
-<span><span class="co">##   timing of South African Woodland Kingfisher.\""</span></span>
-<span><span class="co">## • spatial: Polygon and c(17.375, 32.875, 32.875, 17.375, 17.375, -24.375,</span></span>
-<span><span class="co">##   -24.375, 12.875, 12.875, -24.375)</span></span>
-<span><span class="co">## • temporal: "2017-01-10" to "2019-09-28"</span></span>
-<span><span class="co">## • taxonomic: "Halcyon senegalensis"</span></span>
-<span><span class="co">## • numberTags:</span></span>
-<span><span class="co">##   tags: 25</span></span>
-<span><span class="co">##   measurements: 5</span></span>
-<span><span class="co">##   light: 5</span></span>
-<span><span class="co">##   pressure: 5</span></span>
-<span><span class="co">##   activity: 5</span></span>
-<span><span class="co">##   temperature_external: 5</span></span>
-<span><span class="co">##   magnetic: 5</span></span>
-<span><span class="co">##   paths: 5</span></span>
-<span><span class="co">##   pressurepaths: 5</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## ── 8 resources</span></span>
-<span><span class="co">## • twilights (n=3,262)</span></span>
-<span><span class="co">## • staps (n=223)</span></span>
-<span><span class="co">## • paths (n=22,523)</span></span>
-<span><span class="co">## • edges (n=22,018)</span></span>
-<span><span class="co">## • pressurepaths (n=224,828)</span></span>
-<span><span class="co">## • tags (n=25)</span></span>
-<span><span class="co">## • observations (n=64)</span></span>
-<span><span class="co">## • measurements (n=1,924,975)</span></span>
-<span><span class="co">## Use `unclass()` to print the Geolocator Data Package as a list.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -625,31 +545,176 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You can now see a lot of new metadata (e.g., number of tags, coverages) as well as the resources (table)!</p>
+<p>To be able to save the draft of your record, you’ll need to upload some file, even a dummy text file will do. You can always delete it later and upload with the correct ones.</p>
+<p>Sharing the draft with co-authors is a great way to ensure that all metadata are correct before publication.</p>
 </div>
 </div>
-</section><section id="check-the-validity-of-the-data-package" class="level2" data-number="15.4"><h2 data-number="15.4" class="anchored" data-anchor-id="check-the-validity-of-the-data-package">
-<span class="header-section-number">15.4</span> Check the validity of the data package</h2>
+</section><section id="create-datapackage-from-zenodo-record" class="level3" data-number="15.2.4"><h3 data-number="15.2.4" class="anchored" data-anchor-id="create-datapackage-from-zenodo-record">
+<span class="header-section-number">15.2.4</span> Create datapackage from Zenodo record</h3>
+<p>Once you’re happy with the metadata entered on Zenodo, you create a new GeoLocator Data Package from the Zenodo record. For this, you need to retrieve the <a href="https://support.zenodo.org/help/en-gb/1-upload-deposit/97-what-is-doi-versioning">concept DOI</a> of your Zenodo record. The concept DOI is the one that doesn’t change with new versions. The DOI displayed on Zenodo is actually the DOI of the first version, but you can retrieve the concept DOI by substracting <code>1</code> to your ID number.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">getDepositionByConceptDOI</span><span class="op">(</span><span class="st">"10.5281/zenodo.{ZENODO_ID - 1}"</span><span class="op">)</span></span>
+<span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/zenodo_to_gldp.html">zenodo_to_gldp</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section></section><section id="add-the-data" class="level2" data-number="15.3"><h2 data-number="15.3" class="anchored" data-anchor-id="add-the-data">
+<span class="header-section-number">15.3</span> Add the data</h2>
+<p>Now that we have the metadata set up, we can add the data to the package. <code><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate()</a></code> is a key function that read the geopressuretemplate data available and automatically add the most up-to-date available data to the datapackage.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">directory</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Reading tags from '/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T//Rtmpl5uh1z/file575260807362/WoodlandKingfisher-main/data/tags.csv'.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Reading observations from '/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T//Rtmpl5uh1z/file575260807362/WoodlandKingfisher-main/data/observations.csv'.</code></pre>
+</div>
+</div>
+</section><section id="data-to-include" class="level2" data-number="15.4"><h2 data-number="15.4" class="anchored" data-anchor-id="data-to-include">
+<span class="header-section-number">15.4</span> Data to include</h2>
+<p>By default, <code><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate()</a></code> adds first the tag data from the <code>data/interim</code> Rdata file. For all tag_id that don’t have a interim file, it read the data directly from the <code>data/raw-data</code> folder, using <code>config.yml</code> information. Using the <code>from</code> argument, you can specify to only read from one of these two locations. It’s possible to exclude specific tag_id by adding a <code>_</code> to the interim file name or raw-data folder (e.g., <code>_TAG1234.RData</code> or <code>_TAG1234/</code>).</p>
+<section id="tags-and-observations-resources" class="level3" data-number="15.4.1"><h3 data-number="15.4.1" class="anchored" data-anchor-id="tags-and-observations-resources">
+<span class="header-section-number">15.4.1</span> <code>tags</code> and <code>observations</code> resources</h3>
+<p>If <code>tags.csv</code> and <code>observations.csv</code> are not available (i.e., not stored in the <code>data/</code> folder of your project), <code>tags</code> and <code>observations</code> resources would have been generated by <code><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/add_gldp_geopressuretemplate.html">add_gldp_geopressuretemplate()</a></code> based on the available information. You certainly need to edit them manually, adding some key missing information (e.g.&nbsp;<code>ring_number</code>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/tags.html">tags</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/tags.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/observations.html">observations</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span>, file <span class="op">=</span> <span class="st">"data/observations.csv"</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section><section id="inspect-the-created-package" class="level3" data-number="15.4.2"><h3 data-number="15.4.2" class="anchored" data-anchor-id="inspect-the-created-package">
+<span class="header-section-number">15.4.2</span> Inspect the created package</h3>
+<p>Before uploading the data, you should also inspect the created package to ensure that everything is correct.</p>
+<p>Check the summary of the package, in particular the number of tags in each resources.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── A GeoLocator Data Package (vmain) </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• title: "Migration route and timing of South African Woodland Kingfisher"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• contributors:</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  Raphaël Nussbaumer ('rafnuss@gmail.com') (Researcher, ProjectLeader) -
+  &lt;https://orcid.org/0000-0002-8185-1020&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  Yann Rime ('yann.rime@vogelwarte.ch') (Researcher, Contributor) -
+  &lt;https://orcid.org/0009-0005-7264-6753&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• embargo: 1970-01-01</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• licenses:</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  Creative Commons Attribution 4.0 (CC-BY-4.0) -
+  &lt;https://creativecommons.org/licenses/by/4.0/&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• created: 2025-12-11 07:59:11</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• bibliographicCitation: "Nussbaumer R, Rime Y (2025). \"Migration route and
+  timing of South African Woodland Kingfisher.\""</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• spatial: Polygon and c(17.375, 32.875, 32.875, 17.375, 17.375, -24.375,
+  -24.375, 12.875, 12.875, -24.375)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• temporal: "2017-01-10" to "2019-09-28"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• taxonomic: "Halcyon senegalensis"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• numberTags:</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  tags: 25</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  measurements: 5</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  light: 5</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  pressure: 5</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  activity: 5</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  temperature_external: 5</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  magnetic: 5</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  paths: 5</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  pressurepaths: 5</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── 8 resources </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• twilights (n=3,262)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• staps (n=223)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• paths (n=22,523)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• edges (n=22,018)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• pressurepaths (n=224,828)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• tags (n=25)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• observations (n=64)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• measurements (n=1,924,975)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Use `unclass()` to print the Geolocator Data Package as a list.</code></pre>
+</div>
+</div>
 <p>You can visualize the coverage of the package by ploting the Data Package. Check for the correct number of tags, as well as equipment and retrieval dates.</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pkg</span>, <span class="st">"ring"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pkg</span>, <span class="st">"ring"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="geolocator-create_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="geolocator-create_files/figure-html/15-plot-pkg-coverage-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pkg</span>, <span class="st">"coverage"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pkg</span>, <span class="st">"coverage"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="geolocator-create_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="geolocator-create_files/figure-html/15-plot-pkg-coverage-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pkg</span>, <span class="st">"map"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pkg</span>, <span class="st">"map"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="htmlwidget-59c83865259b29d17d4e" style="width:100%;height:580px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-59c83865259b29d17d4e">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,26.625,26.375,27.125,26.625,27.375,25.625,24.125,24.125,24.625,24.625,25.625,25.375,24.625,24.125,23.625,24.375,24.875,25.375,25.375,25.625,26.125,26.375,26.375,26.375,26.125,27.375,23.875,23.375,23.125,26.125,26.125,26.375,25.875,25.125,25.875,25.125,25.125,25.125,26.125,27.375,28.125,28.875,28.76857325],"lat":[-22.72463163,-20.125,-18.875,-18.125,-17.125,-17.125,-15.625,-12.375,-11.875,-11.625,-10.375,-8.875,-3.875,-2.125,-0.375,1.125,1.875,1.875,2.625,4.625,5.375,5.875,7.125,7.875,8.125,8.375,8.875,4.375,1.625,-0.625,-3.375,-4.375,-4.125,-7.625,-8.125,-8.625,-9.125,-9.875,-12.125,-13.375,-15.125,-18.125,-21.375,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#E41A1C","weight":2,"opacity":0.5,"fill":false,"fillColor":"#E41A1C","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 16LN<br>stap #1","Tag ID: 16LN<br>stap #2","Tag ID: 16LN<br>stap #3","Tag ID: 16LN<br>stap #4","Tag ID: 16LN<br>stap #5","Tag ID: 16LN<br>stap #6","Tag ID: 16LN<br>stap #7","Tag ID: 16LN<br>stap #8","Tag ID: 16LN<br>stap #9","Tag ID: 16LN<br>stap #10","Tag ID: 16LN<br>stap #11","Tag ID: 16LN<br>stap #12","Tag ID: 16LN<br>stap #13","Tag ID: 16LN<br>stap #14","Tag ID: 16LN<br>stap #15","Tag ID: 16LN<br>stap #16","Tag ID: 16LN<br>stap #17","Tag ID: 16LN<br>stap #18","Tag ID: 16LN<br>stap #19","Tag ID: 16LN<br>stap #20","Tag ID: 16LN<br>stap #21","Tag ID: 16LN<br>stap #22","Tag ID: 16LN<br>stap #23","Tag ID: 16LN<br>stap #24","Tag ID: 16LN<br>stap #25","Tag ID: 16LN<br>stap #26","Tag ID: 16LN<br>stap #27","Tag ID: 16LN<br>stap #28","Tag ID: 16LN<br>stap #29","Tag ID: 16LN<br>stap #30","Tag ID: 16LN<br>stap #31","Tag ID: 16LN<br>stap #32","Tag ID: 16LN<br>stap #33","Tag ID: 16LN<br>stap #34","Tag ID: 16LN<br>stap #35","Tag ID: 16LN<br>stap #36","Tag ID: 16LN<br>stap #37","Tag ID: 16LN<br>stap #38","Tag ID: 16LN<br>stap #39","Tag ID: 16LN<br>stap #40","Tag ID: 16LN<br>stap #41","Tag ID: 16LN<br>stap #42","Tag ID: 16LN<br>stap #43","Tag ID: 16LN<br>stap #44"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-20.125,-18.875,-18.125,-17.125,-17.125,-15.625,-12.375,-11.875,-11.625,-10.375,-8.875,-3.875,-2.125,-0.375,1.125,1.875,1.875,2.625,4.625,5.375,5.875,7.125,7.875,8.125,8.375,8.875,4.375,1.625,-0.625,-3.375,-4.375,-4.125,-7.625,-8.125,-8.625,-9.125,-9.875,-12.125,-13.375,-15.125,-18.125,-21.375,-22.72463163],[28.76857325,26.625,26.375,27.125,26.625,27.375,25.625,24.125,24.125,24.625,24.625,25.625,25.375,24.625,24.125,23.625,24.375,24.875,25.375,25.375,25.625,26.125,26.375,26.375,26.375,26.125,27.375,23.875,23.375,23.125,26.125,26.125,26.375,25.875,25.125,25.875,25.125,25.125,25.125,26.125,27.375,28.125,28.875,28.76857325],[11.07135053374517,3.666795113076461,3.10256738693349,3.957442835211622,3.735003130649571,3.967893122607635,4.019277669600067,3.823458304150088,4.165391486388277,5.341047572608344,6.384454138859396,6.828594836284029,3.85695256237773,3.960932822424447,4.796803943529695,3.900689344285079,4.962334667809835,3.943416725188273,3.796981726941118,4.807870549510269,4.036093749492295,4.114750717991913,8.703597603276531,3.034824305699424,5.331093582673601,4.049437502158778,12,3.642108911774882,3.735003130649571,3.838419498033746,3.687118452912002,3,3.889851629427228,3.875301946154145,4.812278736516986,4.09539753478832,4.68233995386746,3.967893122607635,4.012508237312036,6.072336571521524,4.722056859048129,3.886224913932221,3.711215595699928,8.641202134653941],null,null,{"interactive":true,"className":"","stroke":true,"color":"#E41A1C","weight":5,"opacity":0.5,"fill":true,"fillColor":"#E41A1C","fillOpacity":0.8},null,null,["Tag ID: 16LN<br>stap #1","Tag ID: 16LN<br>stap #2","Tag ID: 16LN<br>stap #3","Tag ID: 16LN<br>stap #4","Tag ID: 16LN<br>stap #5","Tag ID: 16LN<br>stap #6","Tag ID: 16LN<br>stap #7","Tag ID: 16LN<br>stap #8","Tag ID: 16LN<br>stap #9","Tag ID: 16LN<br>stap #10","Tag ID: 16LN<br>stap #11","Tag ID: 16LN<br>stap #12","Tag ID: 16LN<br>stap #13","Tag ID: 16LN<br>stap #14","Tag ID: 16LN<br>stap #15","Tag ID: 16LN<br>stap #16","Tag ID: 16LN<br>stap #17","Tag ID: 16LN<br>stap #18","Tag ID: 16LN<br>stap #19","Tag ID: 16LN<br>stap #20","Tag ID: 16LN<br>stap #21","Tag ID: 16LN<br>stap #22","Tag ID: 16LN<br>stap #23","Tag ID: 16LN<br>stap #24","Tag ID: 16LN<br>stap #25","Tag ID: 16LN<br>stap #26","Tag ID: 16LN<br>stap #27","Tag ID: 16LN<br>stap #28","Tag ID: 16LN<br>stap #29","Tag ID: 16LN<br>stap #30","Tag ID: 16LN<br>stap #31","Tag ID: 16LN<br>stap #32","Tag ID: 16LN<br>stap #33","Tag ID: 16LN<br>stap #34","Tag ID: 16LN<br>stap #35","Tag ID: 16LN<br>stap #36","Tag ID: 16LN<br>stap #37","Tag ID: 16LN<br>stap #38","Tag ID: 16LN<br>stap #39","Tag ID: 16LN<br>stap #40","Tag ID: 16LN<br>stap #41","Tag ID: 16LN<br>stap #42","Tag ID: 16LN<br>stap #43","Tag ID: 16LN<br>stap #44"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,26.875,26.625,27.625,27.875,28.125,28.375,27.375,27.125,26.625,26.375,26.125,26.375,26.375,26.625,26.625,26.875,25.625,26.375,26.375,25.875,25.625,26.625,27.375,28.375,27.625,27.375,24.375,25.875,28.125,29.625,29.375,26.625,26.125,27.125,27.875,27.625,27.375,26.375,25.625,24.125,24.625,24.625,24.625,24.375,24.875,24.875,25.625,26.625,26.125,28.76857325],"lat":[-22.72463163,-18.375,-17.625,-16.375,-16.125,-15.375,-14.625,-13.125,-12.625,-11.625,-10.875,-10.375,-9.625,-10.125,-10.375,-7.875,-3.875,-2.875,1.375,1.875,3.125,4.625,6.125,6.875,7.875,8.625,8.375,5.125,0.125,-3.875,-4.875,-4.625,-4.875,-5.375,-5.875,-5.875,-6.875,-8.125,-8.375,-10.125,-12.875,-14.125,-15.125,-15.625,-15.875,-16.375,-16.875,-17.625,-17.875,-21.125,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#4DAF4A","weight":2,"opacity":0.5,"fill":false,"fillColor":"#4DAF4A","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 16LO<br>stap #1","Tag ID: 16LO<br>stap #2","Tag ID: 16LO<br>stap #3","Tag ID: 16LO<br>stap #4","Tag ID: 16LO<br>stap #5","Tag ID: 16LO<br>stap #6","Tag ID: 16LO<br>stap #7","Tag ID: 16LO<br>stap #8","Tag ID: 16LO<br>stap #9","Tag ID: 16LO<br>stap #10","Tag ID: 16LO<br>stap #11","Tag ID: 16LO<br>stap #12","Tag ID: 16LO<br>stap #13","Tag ID: 16LO<br>stap #14","Tag ID: 16LO<br>stap #15","Tag ID: 16LO<br>stap #16","Tag ID: 16LO<br>stap #17","Tag ID: 16LO<br>stap #18","Tag ID: 16LO<br>stap #19","Tag ID: 16LO<br>stap #20","Tag ID: 16LO<br>stap #21","Tag ID: 16LO<br>stap #22","Tag ID: 16LO<br>stap #23","Tag ID: 16LO<br>stap #24","Tag ID: 16LO<br>stap #25","Tag ID: 16LO<br>stap #26","Tag ID: 16LO<br>stap #27","Tag ID: 16LO<br>stap #28","Tag ID: 16LO<br>stap #29","Tag ID: 16LO<br>stap #30","Tag ID: 16LO<br>stap #31","Tag ID: 16LO<br>stap #32","Tag ID: 16LO<br>stap #33","Tag ID: 16LO<br>stap #34","Tag ID: 16LO<br>stap #35","Tag ID: 16LO<br>stap #36","Tag ID: 16LO<br>stap #37","Tag ID: 16LO<br>stap #38","Tag ID: 16LO<br>stap #39","Tag ID: 16LO<br>stap #40","Tag ID: 16LO<br>stap #41","Tag ID: 16LO<br>stap #42","Tag ID: 16LO<br>stap #43","Tag ID: 16LO<br>stap #44","Tag ID: 16LO<br>stap #45","Tag ID: 16LO<br>stap #46","Tag ID: 16LO<br>stap #47","Tag ID: 16LO<br>stap #48","Tag ID: 16LO<br>stap #49","Tag ID: 16LO<br>stap #50","Tag ID: 16LO<br>stap #51"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-18.375,-17.625,-16.375,-16.125,-15.375,-14.625,-13.125,-12.625,-11.625,-10.875,-10.375,-9.625,-10.125,-10.375,-7.875,-3.875,-2.875,1.375,1.875,3.125,4.625,6.125,6.875,7.875,8.625,8.375,5.125,0.125,-3.875,-4.875,-4.625,-4.875,-5.375,-5.875,-5.875,-6.875,-8.125,-8.375,-10.125,-12.875,-14.125,-15.125,-15.625,-15.875,-16.375,-16.875,-17.625,-17.875,-21.125,-22.72463163],[28.76857325,26.875,26.625,27.625,27.875,28.125,28.375,27.375,27.125,26.625,26.375,26.125,26.375,26.375,26.625,26.625,26.875,25.625,26.375,26.375,25.875,25.625,26.625,27.375,28.375,27.625,27.375,24.375,25.875,28.125,29.625,29.375,26.625,26.125,27.125,27.875,27.625,27.375,26.375,25.625,24.125,24.625,24.625,24.625,24.375,24.875,24.875,25.625,26.625,26.125,28.76857325],[10.89338315462323,3.77565938434595,4.924967269288262,3.861298165037192,4.210360503678524,4.062911289710583,3.917493632924075,3.156811664025805,3.961251617693748,4.320397586761295,4.103395138403232,4.855197157237944,4.859635787330896,4.093356985890333,6.455243346393809,6.406927444553184,3.917493632924075,3.77565938434595,3.950408838543332,4.19454613396835,4.14953236293975,3.811174237302337,4.263139411969357,4.003997765927024,9.290782796458325,4.866273814375344,12,3.694206185893024,3.690037777034233,3.88022042384486,3.200830137529971,3.791528052986874,3.826742232844179,4.089998785973913,4.156030396152346,4.089998785973913,4.712031155739025,4.188182311692373,5.763656643807763,3.924858935676884,4.003997765927024,3,4.152784234570897,5.810631293847301,4.100055140122304,3.986306831445471,4.188182311692373,4.752402323651863,4.096709096592322,3.902674406912388,9.66610128443109],null,null,{"interactive":true,"className":"","stroke":true,"color":"#4DAF4A","weight":5,"opacity":0.5,"fill":true,"fillColor":"#4DAF4A","fillOpacity":0.8},null,null,["Tag ID: 16LO<br>stap #1","Tag ID: 16LO<br>stap #2","Tag ID: 16LO<br>stap #3","Tag ID: 16LO<br>stap #4","Tag ID: 16LO<br>stap #5","Tag ID: 16LO<br>stap #6","Tag ID: 16LO<br>stap #7","Tag ID: 16LO<br>stap #8","Tag ID: 16LO<br>stap #9","Tag ID: 16LO<br>stap #10","Tag ID: 16LO<br>stap #11","Tag ID: 16LO<br>stap #12","Tag ID: 16LO<br>stap #13","Tag ID: 16LO<br>stap #14","Tag ID: 16LO<br>stap #15","Tag ID: 16LO<br>stap #16","Tag ID: 16LO<br>stap #17","Tag ID: 16LO<br>stap #18","Tag ID: 16LO<br>stap #19","Tag ID: 16LO<br>stap #20","Tag ID: 16LO<br>stap #21","Tag ID: 16LO<br>stap #22","Tag ID: 16LO<br>stap #23","Tag ID: 16LO<br>stap #24","Tag ID: 16LO<br>stap #25","Tag ID: 16LO<br>stap #26","Tag ID: 16LO<br>stap #27","Tag ID: 16LO<br>stap #28","Tag ID: 16LO<br>stap #29","Tag ID: 16LO<br>stap #30","Tag ID: 16LO<br>stap #31","Tag ID: 16LO<br>stap #32","Tag ID: 16LO<br>stap #33","Tag ID: 16LO<br>stap #34","Tag ID: 16LO<br>stap #35","Tag ID: 16LO<br>stap #36","Tag ID: 16LO<br>stap #37","Tag ID: 16LO<br>stap #38","Tag ID: 16LO<br>stap #39","Tag ID: 16LO<br>stap #40","Tag ID: 16LO<br>stap #41","Tag ID: 16LO<br>stap #42","Tag ID: 16LO<br>stap #43","Tag ID: 16LO<br>stap #44","Tag ID: 16LO<br>stap #45","Tag ID: 16LO<br>stap #46","Tag ID: 16LO<br>stap #47","Tag ID: 16LO<br>stap #48","Tag ID: 16LO<br>stap #49","Tag ID: 16LO<br>stap #50","Tag ID: 16LO<br>stap #51"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,27.875,26.875,27.125,26.125,25.875,25.625,24.625,26.125,26.875,27.125,27.375,28.125,27.625,27.875,27.625,27.625,27.375,27.375,27.625,28.625,28.125,28.625,28.875,29.875,27.625,28.875,28.875,28.875,27.875,27.875,26.875,26.875,26.875,27.375,29.125,28.76857325],"lat":[-22.72463163,-19.125,-16.125,-14.875,-13.375,-9.875,-8.875,-2.125,2.375,4.125,4.875,5.125,5.375,5.875,5.375,6.375,6.625,6.875,7.375,7.875,8.125,8.875,8.875,4.625,0.375,-2.875,-4.625,-5.375,-5.375,-8.375,-10.375,-13.375,-14.125,-15.875,-16.375,-17.625,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#FF7F00","weight":2,"opacity":0.5,"fill":false,"fillColor":"#FF7F00","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 16LP<br>stap #1","Tag ID: 16LP<br>stap #2","Tag ID: 16LP<br>stap #3","Tag ID: 16LP<br>stap #4","Tag ID: 16LP<br>stap #5","Tag ID: 16LP<br>stap #6","Tag ID: 16LP<br>stap #7","Tag ID: 16LP<br>stap #8","Tag ID: 16LP<br>stap #9","Tag ID: 16LP<br>stap #10","Tag ID: 16LP<br>stap #11","Tag ID: 16LP<br>stap #12","Tag ID: 16LP<br>stap #13","Tag ID: 16LP<br>stap #14","Tag ID: 16LP<br>stap #15","Tag ID: 16LP<br>stap #16","Tag ID: 16LP<br>stap #17","Tag ID: 16LP<br>stap #18","Tag ID: 16LP<br>stap #19","Tag ID: 16LP<br>stap #20","Tag ID: 16LP<br>stap #21","Tag ID: 16LP<br>stap #22","Tag ID: 16LP<br>stap #23","Tag ID: 16LP<br>stap #24","Tag ID: 16LP<br>stap #25","Tag ID: 16LP<br>stap #26","Tag ID: 16LP<br>stap #27","Tag ID: 16LP<br>stap #28","Tag ID: 16LP<br>stap #29","Tag ID: 16LP<br>stap #30","Tag ID: 16LP<br>stap #31","Tag ID: 16LP<br>stap #32","Tag ID: 16LP<br>stap #33","Tag ID: 16LP<br>stap #34","Tag ID: 16LP<br>stap #35","Tag ID: 16LP<br>stap #36","Tag ID: 16LP<br>stap #37"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-19.125,-16.125,-14.875,-13.375,-9.875,-8.875,-2.125,2.375,4.125,4.875,5.125,5.375,5.875,5.375,6.375,6.625,6.875,7.375,7.875,8.125,8.875,8.875,4.625,0.375,-2.875,-4.625,-5.375,-5.375,-8.375,-10.375,-13.375,-14.125,-15.875,-16.375,-17.625,-22.72463163],[28.76857325,27.875,26.875,27.125,26.125,25.875,25.625,24.625,26.125,26.875,27.125,27.375,28.125,27.625,27.875,27.625,27.625,27.375,27.375,27.625,28.625,28.125,28.625,28.875,29.875,27.625,28.875,28.875,28.875,27.875,27.875,26.875,26.875,26.875,27.375,29.125,28.76857325],[11.27899677293034,3.777907022559593,3.817707964763053,3.957977194407688,4.033119848414101,6.164049202962797,8.226283399068468,3.704044337240636,3.829483925864687,4.911062499885847,3.018251861661237,4.148684526260251,4.846543327246556,6.223267297931051,4.022569396377506,3.06606499283,4.187815086859923,8.347866407344771,4.155263764904957,4.011958713080117,4.254371716507061,4.078158825169844,12,3.691443387440283,3.716560431516682,3.821641580996088,3.860526534330607,3,6.135981122342998,3.872035134421968,4.029609681220929,4.178109409575905,5.386889776163806,4.158544671275616,3.983363795586598,3.891059179488961,9.606689155453939],null,null,{"interactive":true,"className":"","stroke":true,"color":"#FF7F00","weight":5,"opacity":0.5,"fill":true,"fillColor":"#FF7F00","fillOpacity":0.8},null,null,["Tag ID: 16LP<br>stap #1","Tag ID: 16LP<br>stap #2","Tag ID: 16LP<br>stap #3","Tag ID: 16LP<br>stap #4","Tag ID: 16LP<br>stap #5","Tag ID: 16LP<br>stap #6","Tag ID: 16LP<br>stap #7","Tag ID: 16LP<br>stap #8","Tag ID: 16LP<br>stap #9","Tag ID: 16LP<br>stap #10","Tag ID: 16LP<br>stap #11","Tag ID: 16LP<br>stap #12","Tag ID: 16LP<br>stap #13","Tag ID: 16LP<br>stap #14","Tag ID: 16LP<br>stap #15","Tag ID: 16LP<br>stap #16","Tag ID: 16LP<br>stap #17","Tag ID: 16LP<br>stap #18","Tag ID: 16LP<br>stap #19","Tag ID: 16LP<br>stap #20","Tag ID: 16LP<br>stap #21","Tag ID: 16LP<br>stap #22","Tag ID: 16LP<br>stap #23","Tag ID: 16LP<br>stap #24","Tag ID: 16LP<br>stap #25","Tag ID: 16LP<br>stap #26","Tag ID: 16LP<br>stap #27","Tag ID: 16LP<br>stap #28","Tag ID: 16LP<br>stap #29","Tag ID: 16LP<br>stap #30","Tag ID: 16LP<br>stap #31","Tag ID: 16LP<br>stap #32","Tag ID: 16LP<br>stap #33","Tag ID: 16LP<br>stap #34","Tag ID: 16LP<br>stap #35","Tag ID: 16LP<br>stap #36","Tag ID: 16LP<br>stap #37"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,28.125,27.625,28.375,28.125,27.875,27.375,26.625,27.125,26.625,26.125,25.875,25.125,25.125,25.625,25.625,24.875,26.375,25.875,26.375,27.625,27.875,26.625,26.625,25.625,25.375,25.125,24.125,23.875,23.375,22.875,22.875,22.625,23.875,23.375,24.125,24.875,25.375,25.375,25.125,23.875,24.125,24.375,24.625,24.875,24.625,27.625,29.125,28.375,28.375,28.375,28.76857325],"lat":[-22.72463163,-21.875,-20.875,-20.125,-20.125,-20.375,-20.125,-17.125,-16.875,-16.125,-12.375,-8.125,-5.625,-4.375,-4.125,-3.625,-1.625,2.375,4.625,5.125,6.125,7.125,8.125,9.125,9.625,9.875,8.625,4.625,3.125,0.625,-0.625,-1.875,-3.625,-3.875,-5.125,-5.625,-7.125,-9.625,-9.875,-10.125,-12.875,-13.125,-13.625,-13.875,-15.375,-15.125,-18.875,-21.125,-22.625,-22.875,-22.375,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#A65628","weight":2,"opacity":0.5,"fill":false,"fillColor":"#A65628","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 20IK<br>stap #1","Tag ID: 20IK<br>stap #2","Tag ID: 20IK<br>stap #3","Tag ID: 20IK<br>stap #4","Tag ID: 20IK<br>stap #5","Tag ID: 20IK<br>stap #6","Tag ID: 20IK<br>stap #7","Tag ID: 20IK<br>stap #8","Tag ID: 20IK<br>stap #9","Tag ID: 20IK<br>stap #10","Tag ID: 20IK<br>stap #11","Tag ID: 20IK<br>stap #12","Tag ID: 20IK<br>stap #13","Tag ID: 20IK<br>stap #14","Tag ID: 20IK<br>stap #15","Tag ID: 20IK<br>stap #16","Tag ID: 20IK<br>stap #17","Tag ID: 20IK<br>stap #18","Tag ID: 20IK<br>stap #19","Tag ID: 20IK<br>stap #20","Tag ID: 20IK<br>stap #21","Tag ID: 20IK<br>stap #22","Tag ID: 20IK<br>stap #23","Tag ID: 20IK<br>stap #24","Tag ID: 20IK<br>stap #25","Tag ID: 20IK<br>stap #26","Tag ID: 20IK<br>stap #27","Tag ID: 20IK<br>stap #28","Tag ID: 20IK<br>stap #29","Tag ID: 20IK<br>stap #30","Tag ID: 20IK<br>stap #31","Tag ID: 20IK<br>stap #32","Tag ID: 20IK<br>stap #33","Tag ID: 20IK<br>stap #34","Tag ID: 20IK<br>stap #35","Tag ID: 20IK<br>stap #36","Tag ID: 20IK<br>stap #37","Tag ID: 20IK<br>stap #38","Tag ID: 20IK<br>stap #39","Tag ID: 20IK<br>stap #40","Tag ID: 20IK<br>stap #41","Tag ID: 20IK<br>stap #42","Tag ID: 20IK<br>stap #43","Tag ID: 20IK<br>stap #44","Tag ID: 20IK<br>stap #45","Tag ID: 20IK<br>stap #46","Tag ID: 20IK<br>stap #47","Tag ID: 20IK<br>stap #48","Tag ID: 20IK<br>stap #49","Tag ID: 20IK<br>stap #50","Tag ID: 20IK<br>stap #51","Tag ID: 20IK<br>stap #52"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-21.875,-20.875,-20.125,-20.125,-20.375,-20.125,-17.125,-16.875,-16.125,-12.375,-8.125,-5.625,-4.375,-4.125,-3.625,-1.625,2.375,4.625,5.125,6.125,7.125,8.125,9.125,9.625,9.875,8.625,4.625,3.125,0.625,-0.625,-1.875,-3.625,-3.875,-5.125,-5.625,-7.125,-9.625,-9.875,-10.125,-12.875,-13.125,-13.625,-13.875,-15.375,-15.125,-18.875,-21.125,-22.625,-22.875,-22.375,-22.72463163],[28.76857325,28.125,27.625,28.375,28.125,27.875,27.375,26.625,27.125,26.625,26.125,25.875,25.125,25.125,25.625,25.625,24.875,26.375,25.875,26.375,27.625,27.875,26.625,26.625,25.625,25.375,25.125,24.125,23.875,23.375,22.875,22.875,22.625,23.875,23.375,24.125,24.875,25.375,25.375,25.125,23.875,24.125,24.375,24.625,24.875,24.625,27.625,29.125,28.375,28.375,28.375,28.76857325],[11.45509227961321,4.161764341873555,4.114002817259973,4.279262749667447,4.01466265364895,5.872426253351985,4.201755168876398,4.800562148048821,4.332285697764281,8.773567108358591,3.802708469337077,3.85897805810734,5.853412561400452,4.231197684656812,5.97752156911159,3.905899073507041,5.860225346545286,3.806784276323488,4.201755168876398,4.958923978473369,4.039996040881959,8.328475903939122,8.320083264636672,4.218169231621456,4.075602295308893,12,3.847061797941675,3.798623772906359,3,3.794530148170331,3.201702038859505,3.790427556012602,4.900812339369047,4.072071978389685,4.093154744041119,4.914383649270103,5.427636586681924,4.018302756973863,4.272924900738829,4.824359578414995,5.941405221246297,5.476679700166294,5.496603638828859,5.861584934678376,4.165129720265346,4.107079213917834,3.902033576632032,3.874749372959748,3.079707032096198,5.92308246434124,4.168489062100729,7.726002735307697],null,null,{"interactive":true,"className":"","stroke":true,"color":"#A65628","weight":5,"opacity":0.5,"fill":true,"fillColor":"#A65628","fillOpacity":0.8},null,null,["Tag ID: 20IK<br>stap #1","Tag ID: 20IK<br>stap #2","Tag ID: 20IK<br>stap #3","Tag ID: 20IK<br>stap #4","Tag ID: 20IK<br>stap #5","Tag ID: 20IK<br>stap #6","Tag ID: 20IK<br>stap #7","Tag ID: 20IK<br>stap #8","Tag ID: 20IK<br>stap #9","Tag ID: 20IK<br>stap #10","Tag ID: 20IK<br>stap #11","Tag ID: 20IK<br>stap #12","Tag ID: 20IK<br>stap #13","Tag ID: 20IK<br>stap #14","Tag ID: 20IK<br>stap #15","Tag ID: 20IK<br>stap #16","Tag ID: 20IK<br>stap #17","Tag ID: 20IK<br>stap #18","Tag ID: 20IK<br>stap #19","Tag ID: 20IK<br>stap #20","Tag ID: 20IK<br>stap #21","Tag ID: 20IK<br>stap #22","Tag ID: 20IK<br>stap #23","Tag ID: 20IK<br>stap #24","Tag ID: 20IK<br>stap #25","Tag ID: 20IK<br>stap #26","Tag ID: 20IK<br>stap #27","Tag ID: 20IK<br>stap #28","Tag ID: 20IK<br>stap #29","Tag ID: 20IK<br>stap #30","Tag ID: 20IK<br>stap #31","Tag ID: 20IK<br>stap #32","Tag ID: 20IK<br>stap #33","Tag ID: 20IK<br>stap #34","Tag ID: 20IK<br>stap #35","Tag ID: 20IK<br>stap #36","Tag ID: 20IK<br>stap #37","Tag ID: 20IK<br>stap #38","Tag ID: 20IK<br>stap #39","Tag ID: 20IK<br>stap #40","Tag ID: 20IK<br>stap #41","Tag ID: 20IK<br>stap #42","Tag ID: 20IK<br>stap #43","Tag ID: 20IK<br>stap #44","Tag ID: 20IK<br>stap #45","Tag ID: 20IK<br>stap #46","Tag ID: 20IK<br>stap #47","Tag ID: 20IK<br>stap #48","Tag ID: 20IK<br>stap #49","Tag ID: 20IK<br>stap #50","Tag ID: 20IK<br>stap #51","Tag ID: 20IK<br>stap #52"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,26.875,25.875,26.875,27.125,26.875,26.625,26.375,26.125,26.375,26.375,26.125,26.125,26.125,25.125,24.875,24.875,24.625,23.125,23.625,23.625,23.875,23.125,23.125,24.125,24.125,23.875,24.875,25.125,25.375,25.875,26.125,27.125,27.375,27.625,27.875,28.125,28.625,28.625],"lat":[-22.72463163,-17.875,-15.625,-14.625,-14.375,-14.125,-12.125,-11.125,-9.875,-9.375,-8.625,-7.375,-7.125,-6.875,-6.125,-5.875,-5.125,-4.625,0.875,1.625,2.375,3.125,3.875,4.875,5.125,5.625,5.875,7.875,8.625,9.125,9.125,9.375,9.375,9.625,9.875,10.125,10.625,10.875,10.875]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#999999","weight":2,"opacity":0.5,"fill":false,"fillColor":"#999999","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 22NO<br>stap #1","Tag ID: 22NO<br>stap #2","Tag ID: 22NO<br>stap #3","Tag ID: 22NO<br>stap #4","Tag ID: 22NO<br>stap #5","Tag ID: 22NO<br>stap #6","Tag ID: 22NO<br>stap #7","Tag ID: 22NO<br>stap #8","Tag ID: 22NO<br>stap #9","Tag ID: 22NO<br>stap #10","Tag ID: 22NO<br>stap #11","Tag ID: 22NO<br>stap #12","Tag ID: 22NO<br>stap #13","Tag ID: 22NO<br>stap #14","Tag ID: 22NO<br>stap #15","Tag ID: 22NO<br>stap #16","Tag ID: 22NO<br>stap #17","Tag ID: 22NO<br>stap #18","Tag ID: 22NO<br>stap #19","Tag ID: 22NO<br>stap #20","Tag ID: 22NO<br>stap #21","Tag ID: 22NO<br>stap #22","Tag ID: 22NO<br>stap #23","Tag ID: 22NO<br>stap #24","Tag ID: 22NO<br>stap #25","Tag ID: 22NO<br>stap #26","Tag ID: 22NO<br>stap #27","Tag ID: 22NO<br>stap #28","Tag ID: 22NO<br>stap #29","Tag ID: 22NO<br>stap #30","Tag ID: 22NO<br>stap #31","Tag ID: 22NO<br>stap #32","Tag ID: 22NO<br>stap #33","Tag ID: 22NO<br>stap #34","Tag ID: 22NO<br>stap #35","Tag ID: 22NO<br>stap #36","Tag ID: 22NO<br>stap #37","Tag ID: 22NO<br>stap #38","Tag ID: 22NO<br>stap #39"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-17.875,-15.625,-14.625,-14.375,-14.125,-12.125,-11.125,-9.875,-9.375,-8.625,-7.375,-7.125,-6.875,-6.125,-5.875,-5.125,-4.625,0.875,1.625,2.375,3.125,3.875,4.875,5.125,5.625,5.875,7.875,8.625,9.125,9.125,9.375,9.375,9.625,9.875,10.125,10.625,10.875,10.875],[28.76857325,26.875,25.875,26.875,27.125,26.875,26.625,26.375,26.125,26.375,26.375,26.125,26.125,26.125,25.125,24.875,24.875,24.625,23.125,23.625,23.625,23.875,23.125,23.125,24.125,24.125,23.875,24.875,25.125,25.375,25.875,26.125,27.125,27.375,27.625,27.875,28.125,28.625,28.625],[11.9952022419205,3.722134822895513,4.002330974918033,4.125513419266977,4.30991910576217,8.131842309027654,4.018643970430968,5.669484436114251,4.22712960726451,6.884015587353632,4.91442873124956,4.292201247080913,4.375895429637781,7.115435902422335,4.159943360226208,5.029684280999048,6.110661442636202,6.112137816462614,4.070789506012292,6.070395576338855,4.348372075401199,7.367432994294666,3.965149247511323,4.204975879732645,4.117783834728605,3.052514859768434,3.923036560497702,4.182582215468146,3,4.961304676188674,4.327486428566123,4.186331375980481,5.779833348670409,4.038855875814317,4.472704365410025,5.032173939886293,5.098285977158695,4.295756985628817,12],null,null,{"interactive":true,"className":"","stroke":true,"color":"#999999","weight":5,"opacity":0.5,"fill":true,"fillColor":"#999999","fillOpacity":0.8},null,null,["Tag ID: 22NO<br>stap #1","Tag ID: 22NO<br>stap #2","Tag ID: 22NO<br>stap #3","Tag ID: 22NO<br>stap #4","Tag ID: 22NO<br>stap #5","Tag ID: 22NO<br>stap #6","Tag ID: 22NO<br>stap #7","Tag ID: 22NO<br>stap #8","Tag ID: 22NO<br>stap #9","Tag ID: 22NO<br>stap #10","Tag ID: 22NO<br>stap #11","Tag ID: 22NO<br>stap #12","Tag ID: 22NO<br>stap #13","Tag ID: 22NO<br>stap #14","Tag ID: 22NO<br>stap #15","Tag ID: 22NO<br>stap #16","Tag ID: 22NO<br>stap #17","Tag ID: 22NO<br>stap #18","Tag ID: 22NO<br>stap #19","Tag ID: 22NO<br>stap #20","Tag ID: 22NO<br>stap #21","Tag ID: 22NO<br>stap #22","Tag ID: 22NO<br>stap #23","Tag ID: 22NO<br>stap #24","Tag ID: 22NO<br>stap #25","Tag ID: 22NO<br>stap #26","Tag ID: 22NO<br>stap #27","Tag ID: 22NO<br>stap #28","Tag ID: 22NO<br>stap #29","Tag ID: 22NO<br>stap #30","Tag ID: 22NO<br>stap #31","Tag ID: 22NO<br>stap #32","Tag ID: 22NO<br>stap #33","Tag ID: 22NO<br>stap #34","Tag ID: 22NO<br>stap #35","Tag ID: 22NO<br>stap #36","Tag ID: 22NO<br>stap #37","Tag ID: 22NO<br>stap #38","Tag ID: 22NO<br>stap #39"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLegend","args":[{"colors":["#E41A1C","#4DAF4A","#FF7F00","#A65628","#999999"],"labels":["16LN","16LO","16LP","20IK","22NO"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"Bird Trajectories","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[-22.875,10.875],"lng":[22.625,29.875]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c0fea36e80408c281374" style="width:100%;height:580px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c0fea36e80408c281374">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,26.625,26.375,27.125,26.625,27.375,25.625,24.125,24.125,24.625,24.625,25.625,25.375,24.625,24.125,23.625,24.375,24.875,25.375,25.375,25.625,26.125,26.375,26.375,26.375,26.125,27.375,23.875,23.375,23.125,26.125,26.125,26.375,25.875,25.125,25.875,25.125,25.125,25.125,26.125,27.375,28.125,28.875,28.76857325],"lat":[-22.72463163,-20.125,-18.875,-18.125,-17.125,-17.125,-15.625,-12.375,-11.875,-11.625,-10.375,-8.875,-3.875,-2.125,-0.375,1.125,1.875,1.875,2.625,4.625,5.375,5.875,7.125,7.875,8.125,8.375,8.875,4.375,1.625,-0.625,-3.375,-4.375,-4.125,-7.625,-8.125,-8.625,-9.125,-9.875,-12.125,-13.375,-15.125,-18.125,-21.375,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#E41A1C","weight":2,"opacity":0.5,"fill":false,"fillColor":"#E41A1C","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 16LN<br>stap #1","Tag ID: 16LN<br>stap #2","Tag ID: 16LN<br>stap #3","Tag ID: 16LN<br>stap #4","Tag ID: 16LN<br>stap #5","Tag ID: 16LN<br>stap #6","Tag ID: 16LN<br>stap #7","Tag ID: 16LN<br>stap #8","Tag ID: 16LN<br>stap #9","Tag ID: 16LN<br>stap #10","Tag ID: 16LN<br>stap #11","Tag ID: 16LN<br>stap #12","Tag ID: 16LN<br>stap #13","Tag ID: 16LN<br>stap #14","Tag ID: 16LN<br>stap #15","Tag ID: 16LN<br>stap #16","Tag ID: 16LN<br>stap #17","Tag ID: 16LN<br>stap #18","Tag ID: 16LN<br>stap #19","Tag ID: 16LN<br>stap #20","Tag ID: 16LN<br>stap #21","Tag ID: 16LN<br>stap #22","Tag ID: 16LN<br>stap #23","Tag ID: 16LN<br>stap #24","Tag ID: 16LN<br>stap #25","Tag ID: 16LN<br>stap #26","Tag ID: 16LN<br>stap #27","Tag ID: 16LN<br>stap #28","Tag ID: 16LN<br>stap #29","Tag ID: 16LN<br>stap #30","Tag ID: 16LN<br>stap #31","Tag ID: 16LN<br>stap #32","Tag ID: 16LN<br>stap #33","Tag ID: 16LN<br>stap #34","Tag ID: 16LN<br>stap #35","Tag ID: 16LN<br>stap #36","Tag ID: 16LN<br>stap #37","Tag ID: 16LN<br>stap #38","Tag ID: 16LN<br>stap #39","Tag ID: 16LN<br>stap #40","Tag ID: 16LN<br>stap #41","Tag ID: 16LN<br>stap #42","Tag ID: 16LN<br>stap #43","Tag ID: 16LN<br>stap #44"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-20.125,-18.875,-18.125,-17.125,-17.125,-15.625,-12.375,-11.875,-11.625,-10.375,-8.875,-3.875,-2.125,-0.375,1.125,1.875,1.875,2.625,4.625,5.375,5.875,7.125,7.875,8.125,8.375,8.875,4.375,1.625,-0.625,-3.375,-4.375,-4.125,-7.625,-8.125,-8.625,-9.125,-9.875,-12.125,-13.375,-15.125,-18.125,-21.375,-22.72463163],[28.76857325,26.625,26.375,27.125,26.625,27.375,25.625,24.125,24.125,24.625,24.625,25.625,25.375,24.625,24.125,23.625,24.375,24.875,25.375,25.375,25.625,26.125,26.375,26.375,26.375,26.125,27.375,23.875,23.375,23.125,26.125,26.125,26.375,25.875,25.125,25.875,25.125,25.125,25.125,26.125,27.375,28.125,28.875,28.76857325],[11.07135053374517,3.666795113076461,3.10256738693349,3.957442835211622,3.735003130649571,3.967893122607635,4.019277669600067,3.823458304150088,4.165391486388277,5.341047572608344,6.384454138859396,6.828594836284029,3.85695256237773,3.960932822424447,4.796803943529695,3.900689344285079,4.962334667809835,3.943416725188273,3.796981726941118,4.807870549510269,4.036093749492295,4.114750717991913,8.703597603276531,3.034824305699424,5.331093582673601,4.049437502158778,12,3.642108911774882,3.735003130649571,3.838419498033746,3.687118452912002,3,3.889851629427228,3.875301946154145,4.812278736516986,4.09539753478832,4.68233995386746,3.967893122607635,4.012508237312036,6.072336571521524,4.722056859048129,3.886224913932221,3.711215595699928,8.641202134653941],null,null,{"interactive":true,"className":"","stroke":true,"color":"#E41A1C","weight":5,"opacity":0.5,"fill":true,"fillColor":"#E41A1C","fillOpacity":0.8},null,null,["Tag ID: 16LN<br>stap #1","Tag ID: 16LN<br>stap #2","Tag ID: 16LN<br>stap #3","Tag ID: 16LN<br>stap #4","Tag ID: 16LN<br>stap #5","Tag ID: 16LN<br>stap #6","Tag ID: 16LN<br>stap #7","Tag ID: 16LN<br>stap #8","Tag ID: 16LN<br>stap #9","Tag ID: 16LN<br>stap #10","Tag ID: 16LN<br>stap #11","Tag ID: 16LN<br>stap #12","Tag ID: 16LN<br>stap #13","Tag ID: 16LN<br>stap #14","Tag ID: 16LN<br>stap #15","Tag ID: 16LN<br>stap #16","Tag ID: 16LN<br>stap #17","Tag ID: 16LN<br>stap #18","Tag ID: 16LN<br>stap #19","Tag ID: 16LN<br>stap #20","Tag ID: 16LN<br>stap #21","Tag ID: 16LN<br>stap #22","Tag ID: 16LN<br>stap #23","Tag ID: 16LN<br>stap #24","Tag ID: 16LN<br>stap #25","Tag ID: 16LN<br>stap #26","Tag ID: 16LN<br>stap #27","Tag ID: 16LN<br>stap #28","Tag ID: 16LN<br>stap #29","Tag ID: 16LN<br>stap #30","Tag ID: 16LN<br>stap #31","Tag ID: 16LN<br>stap #32","Tag ID: 16LN<br>stap #33","Tag ID: 16LN<br>stap #34","Tag ID: 16LN<br>stap #35","Tag ID: 16LN<br>stap #36","Tag ID: 16LN<br>stap #37","Tag ID: 16LN<br>stap #38","Tag ID: 16LN<br>stap #39","Tag ID: 16LN<br>stap #40","Tag ID: 16LN<br>stap #41","Tag ID: 16LN<br>stap #42","Tag ID: 16LN<br>stap #43","Tag ID: 16LN<br>stap #44"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,26.875,26.625,27.625,27.875,28.125,28.375,27.375,27.125,26.625,26.375,26.125,26.375,26.375,26.625,26.625,26.875,25.625,26.375,26.375,25.875,25.625,26.625,27.375,28.375,27.625,27.375,24.375,25.875,28.125,29.625,29.375,26.625,26.125,27.125,27.875,27.625,27.375,26.375,25.625,24.125,24.625,24.625,24.625,24.375,24.875,24.875,25.625,26.625,26.125,28.76857325],"lat":[-22.72463163,-18.375,-17.625,-16.375,-16.125,-15.375,-14.625,-13.125,-12.625,-11.625,-10.875,-10.375,-9.625,-10.125,-10.375,-7.875,-3.875,-2.875,1.375,1.875,3.125,4.625,6.125,6.875,7.875,8.625,8.375,5.125,0.125,-3.875,-4.875,-4.625,-4.875,-5.375,-5.875,-5.875,-6.875,-8.125,-8.375,-10.125,-12.875,-14.125,-15.125,-15.625,-15.875,-16.375,-16.875,-17.625,-17.875,-21.125,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#4DAF4A","weight":2,"opacity":0.5,"fill":false,"fillColor":"#4DAF4A","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 16LO<br>stap #1","Tag ID: 16LO<br>stap #2","Tag ID: 16LO<br>stap #3","Tag ID: 16LO<br>stap #4","Tag ID: 16LO<br>stap #5","Tag ID: 16LO<br>stap #6","Tag ID: 16LO<br>stap #7","Tag ID: 16LO<br>stap #8","Tag ID: 16LO<br>stap #9","Tag ID: 16LO<br>stap #10","Tag ID: 16LO<br>stap #11","Tag ID: 16LO<br>stap #12","Tag ID: 16LO<br>stap #13","Tag ID: 16LO<br>stap #14","Tag ID: 16LO<br>stap #15","Tag ID: 16LO<br>stap #16","Tag ID: 16LO<br>stap #17","Tag ID: 16LO<br>stap #18","Tag ID: 16LO<br>stap #19","Tag ID: 16LO<br>stap #20","Tag ID: 16LO<br>stap #21","Tag ID: 16LO<br>stap #22","Tag ID: 16LO<br>stap #23","Tag ID: 16LO<br>stap #24","Tag ID: 16LO<br>stap #25","Tag ID: 16LO<br>stap #26","Tag ID: 16LO<br>stap #27","Tag ID: 16LO<br>stap #28","Tag ID: 16LO<br>stap #29","Tag ID: 16LO<br>stap #30","Tag ID: 16LO<br>stap #31","Tag ID: 16LO<br>stap #32","Tag ID: 16LO<br>stap #33","Tag ID: 16LO<br>stap #34","Tag ID: 16LO<br>stap #35","Tag ID: 16LO<br>stap #36","Tag ID: 16LO<br>stap #37","Tag ID: 16LO<br>stap #38","Tag ID: 16LO<br>stap #39","Tag ID: 16LO<br>stap #40","Tag ID: 16LO<br>stap #41","Tag ID: 16LO<br>stap #42","Tag ID: 16LO<br>stap #43","Tag ID: 16LO<br>stap #44","Tag ID: 16LO<br>stap #45","Tag ID: 16LO<br>stap #46","Tag ID: 16LO<br>stap #47","Tag ID: 16LO<br>stap #48","Tag ID: 16LO<br>stap #49","Tag ID: 16LO<br>stap #50","Tag ID: 16LO<br>stap #51"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-18.375,-17.625,-16.375,-16.125,-15.375,-14.625,-13.125,-12.625,-11.625,-10.875,-10.375,-9.625,-10.125,-10.375,-7.875,-3.875,-2.875,1.375,1.875,3.125,4.625,6.125,6.875,7.875,8.625,8.375,5.125,0.125,-3.875,-4.875,-4.625,-4.875,-5.375,-5.875,-5.875,-6.875,-8.125,-8.375,-10.125,-12.875,-14.125,-15.125,-15.625,-15.875,-16.375,-16.875,-17.625,-17.875,-21.125,-22.72463163],[28.76857325,26.875,26.625,27.625,27.875,28.125,28.375,27.375,27.125,26.625,26.375,26.125,26.375,26.375,26.625,26.625,26.875,25.625,26.375,26.375,25.875,25.625,26.625,27.375,28.375,27.625,27.375,24.375,25.875,28.125,29.625,29.375,26.625,26.125,27.125,27.875,27.625,27.375,26.375,25.625,24.125,24.625,24.625,24.625,24.375,24.875,24.875,25.625,26.625,26.125,28.76857325],[10.89338315462323,3.77565938434595,4.924967269288262,3.861298165037192,4.210360503678524,4.062911289710583,3.917493632924075,3.156811664025805,3.961251617693748,4.320397586761295,4.103395138403232,4.855197157237944,4.859635787330896,4.093356985890333,6.455243346393809,6.406927444553184,3.917493632924075,3.77565938434595,3.950408838543332,4.19454613396835,4.14953236293975,3.811174237302337,4.263139411969357,4.003997765927024,9.290782796458325,4.866273814375344,12,3.694206185893024,3.690037777034233,3.88022042384486,3.200830137529971,3.791528052986874,3.826742232844179,4.089998785973913,4.156030396152346,4.089998785973913,4.712031155739025,4.188182311692373,5.763656643807763,3.924858935676884,4.003997765927024,3,4.152784234570897,5.810631293847301,4.100055140122304,3.986306831445471,4.188182311692373,4.752402323651863,4.096709096592322,3.902674406912388,9.66610128443109],null,null,{"interactive":true,"className":"","stroke":true,"color":"#4DAF4A","weight":5,"opacity":0.5,"fill":true,"fillColor":"#4DAF4A","fillOpacity":0.8},null,null,["Tag ID: 16LO<br>stap #1","Tag ID: 16LO<br>stap #2","Tag ID: 16LO<br>stap #3","Tag ID: 16LO<br>stap #4","Tag ID: 16LO<br>stap #5","Tag ID: 16LO<br>stap #6","Tag ID: 16LO<br>stap #7","Tag ID: 16LO<br>stap #8","Tag ID: 16LO<br>stap #9","Tag ID: 16LO<br>stap #10","Tag ID: 16LO<br>stap #11","Tag ID: 16LO<br>stap #12","Tag ID: 16LO<br>stap #13","Tag ID: 16LO<br>stap #14","Tag ID: 16LO<br>stap #15","Tag ID: 16LO<br>stap #16","Tag ID: 16LO<br>stap #17","Tag ID: 16LO<br>stap #18","Tag ID: 16LO<br>stap #19","Tag ID: 16LO<br>stap #20","Tag ID: 16LO<br>stap #21","Tag ID: 16LO<br>stap #22","Tag ID: 16LO<br>stap #23","Tag ID: 16LO<br>stap #24","Tag ID: 16LO<br>stap #25","Tag ID: 16LO<br>stap #26","Tag ID: 16LO<br>stap #27","Tag ID: 16LO<br>stap #28","Tag ID: 16LO<br>stap #29","Tag ID: 16LO<br>stap #30","Tag ID: 16LO<br>stap #31","Tag ID: 16LO<br>stap #32","Tag ID: 16LO<br>stap #33","Tag ID: 16LO<br>stap #34","Tag ID: 16LO<br>stap #35","Tag ID: 16LO<br>stap #36","Tag ID: 16LO<br>stap #37","Tag ID: 16LO<br>stap #38","Tag ID: 16LO<br>stap #39","Tag ID: 16LO<br>stap #40","Tag ID: 16LO<br>stap #41","Tag ID: 16LO<br>stap #42","Tag ID: 16LO<br>stap #43","Tag ID: 16LO<br>stap #44","Tag ID: 16LO<br>stap #45","Tag ID: 16LO<br>stap #46","Tag ID: 16LO<br>stap #47","Tag ID: 16LO<br>stap #48","Tag ID: 16LO<br>stap #49","Tag ID: 16LO<br>stap #50","Tag ID: 16LO<br>stap #51"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,27.875,26.875,27.125,26.125,25.875,25.625,24.625,26.125,26.875,27.125,27.375,28.125,27.625,27.875,27.625,27.625,27.375,27.375,27.625,28.625,28.125,28.625,28.875,29.875,27.625,28.875,28.875,28.875,27.875,27.875,26.875,26.875,26.875,27.375,29.125,28.76857325],"lat":[-22.72463163,-19.125,-16.125,-14.875,-13.375,-9.875,-8.875,-2.125,2.375,4.125,4.875,5.125,5.375,5.875,5.375,6.375,6.625,6.875,7.375,7.875,8.125,8.875,8.875,4.625,0.375,-2.875,-4.625,-5.375,-5.375,-8.375,-10.375,-13.375,-14.125,-15.875,-16.375,-17.625,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#FF7F00","weight":2,"opacity":0.5,"fill":false,"fillColor":"#FF7F00","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 16LP<br>stap #1","Tag ID: 16LP<br>stap #2","Tag ID: 16LP<br>stap #3","Tag ID: 16LP<br>stap #4","Tag ID: 16LP<br>stap #5","Tag ID: 16LP<br>stap #6","Tag ID: 16LP<br>stap #7","Tag ID: 16LP<br>stap #8","Tag ID: 16LP<br>stap #9","Tag ID: 16LP<br>stap #10","Tag ID: 16LP<br>stap #11","Tag ID: 16LP<br>stap #12","Tag ID: 16LP<br>stap #13","Tag ID: 16LP<br>stap #14","Tag ID: 16LP<br>stap #15","Tag ID: 16LP<br>stap #16","Tag ID: 16LP<br>stap #17","Tag ID: 16LP<br>stap #18","Tag ID: 16LP<br>stap #19","Tag ID: 16LP<br>stap #20","Tag ID: 16LP<br>stap #21","Tag ID: 16LP<br>stap #22","Tag ID: 16LP<br>stap #23","Tag ID: 16LP<br>stap #24","Tag ID: 16LP<br>stap #25","Tag ID: 16LP<br>stap #26","Tag ID: 16LP<br>stap #27","Tag ID: 16LP<br>stap #28","Tag ID: 16LP<br>stap #29","Tag ID: 16LP<br>stap #30","Tag ID: 16LP<br>stap #31","Tag ID: 16LP<br>stap #32","Tag ID: 16LP<br>stap #33","Tag ID: 16LP<br>stap #34","Tag ID: 16LP<br>stap #35","Tag ID: 16LP<br>stap #36","Tag ID: 16LP<br>stap #37"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-19.125,-16.125,-14.875,-13.375,-9.875,-8.875,-2.125,2.375,4.125,4.875,5.125,5.375,5.875,5.375,6.375,6.625,6.875,7.375,7.875,8.125,8.875,8.875,4.625,0.375,-2.875,-4.625,-5.375,-5.375,-8.375,-10.375,-13.375,-14.125,-15.875,-16.375,-17.625,-22.72463163],[28.76857325,27.875,26.875,27.125,26.125,25.875,25.625,24.625,26.125,26.875,27.125,27.375,28.125,27.625,27.875,27.625,27.625,27.375,27.375,27.625,28.625,28.125,28.625,28.875,29.875,27.625,28.875,28.875,28.875,27.875,27.875,26.875,26.875,26.875,27.375,29.125,28.76857325],[11.27899677293034,3.777907022559593,3.817707964763053,3.957977194407688,4.033119848414101,6.164049202962797,8.226283399068468,3.704044337240636,3.829483925864687,4.911062499885847,3.018251861661237,4.148684526260251,4.846543327246556,6.223267297931051,4.022569396377506,3.06606499283,4.187815086859923,8.347866407344771,4.155263764904957,4.011958713080117,4.254371716507061,4.078158825169844,12,3.691443387440283,3.716560431516682,3.821641580996088,3.860526534330607,3,6.135981122342998,3.872035134421968,4.029609681220929,4.178109409575905,5.386889776163806,4.158544671275616,3.983363795586598,3.891059179488961,9.606689155453939],null,null,{"interactive":true,"className":"","stroke":true,"color":"#FF7F00","weight":5,"opacity":0.5,"fill":true,"fillColor":"#FF7F00","fillOpacity":0.8},null,null,["Tag ID: 16LP<br>stap #1","Tag ID: 16LP<br>stap #2","Tag ID: 16LP<br>stap #3","Tag ID: 16LP<br>stap #4","Tag ID: 16LP<br>stap #5","Tag ID: 16LP<br>stap #6","Tag ID: 16LP<br>stap #7","Tag ID: 16LP<br>stap #8","Tag ID: 16LP<br>stap #9","Tag ID: 16LP<br>stap #10","Tag ID: 16LP<br>stap #11","Tag ID: 16LP<br>stap #12","Tag ID: 16LP<br>stap #13","Tag ID: 16LP<br>stap #14","Tag ID: 16LP<br>stap #15","Tag ID: 16LP<br>stap #16","Tag ID: 16LP<br>stap #17","Tag ID: 16LP<br>stap #18","Tag ID: 16LP<br>stap #19","Tag ID: 16LP<br>stap #20","Tag ID: 16LP<br>stap #21","Tag ID: 16LP<br>stap #22","Tag ID: 16LP<br>stap #23","Tag ID: 16LP<br>stap #24","Tag ID: 16LP<br>stap #25","Tag ID: 16LP<br>stap #26","Tag ID: 16LP<br>stap #27","Tag ID: 16LP<br>stap #28","Tag ID: 16LP<br>stap #29","Tag ID: 16LP<br>stap #30","Tag ID: 16LP<br>stap #31","Tag ID: 16LP<br>stap #32","Tag ID: 16LP<br>stap #33","Tag ID: 16LP<br>stap #34","Tag ID: 16LP<br>stap #35","Tag ID: 16LP<br>stap #36","Tag ID: 16LP<br>stap #37"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,28.125,27.625,28.375,28.125,27.875,27.375,26.625,27.125,26.625,26.125,25.875,25.125,25.125,25.625,25.625,24.875,26.375,25.875,26.375,27.625,27.875,26.625,26.625,25.625,25.375,25.125,24.125,23.875,23.375,22.875,22.875,22.625,23.875,23.375,24.125,24.875,25.375,25.375,25.125,23.875,24.125,24.375,24.625,24.875,24.625,27.625,29.125,28.375,28.375,28.375,28.76857325],"lat":[-22.72463163,-21.875,-20.875,-20.125,-20.125,-20.375,-20.125,-17.125,-16.875,-16.125,-12.375,-8.125,-5.625,-4.375,-4.125,-3.625,-1.625,2.375,4.625,5.125,6.125,7.125,8.125,9.125,9.625,9.875,8.625,4.625,3.125,0.625,-0.625,-1.875,-3.625,-3.875,-5.125,-5.625,-7.125,-9.625,-9.875,-10.125,-12.875,-13.125,-13.625,-13.875,-15.375,-15.125,-18.875,-21.125,-22.625,-22.875,-22.375,-22.72463163]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#A65628","weight":2,"opacity":0.5,"fill":false,"fillColor":"#A65628","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 20IK<br>stap #1","Tag ID: 20IK<br>stap #2","Tag ID: 20IK<br>stap #3","Tag ID: 20IK<br>stap #4","Tag ID: 20IK<br>stap #5","Tag ID: 20IK<br>stap #6","Tag ID: 20IK<br>stap #7","Tag ID: 20IK<br>stap #8","Tag ID: 20IK<br>stap #9","Tag ID: 20IK<br>stap #10","Tag ID: 20IK<br>stap #11","Tag ID: 20IK<br>stap #12","Tag ID: 20IK<br>stap #13","Tag ID: 20IK<br>stap #14","Tag ID: 20IK<br>stap #15","Tag ID: 20IK<br>stap #16","Tag ID: 20IK<br>stap #17","Tag ID: 20IK<br>stap #18","Tag ID: 20IK<br>stap #19","Tag ID: 20IK<br>stap #20","Tag ID: 20IK<br>stap #21","Tag ID: 20IK<br>stap #22","Tag ID: 20IK<br>stap #23","Tag ID: 20IK<br>stap #24","Tag ID: 20IK<br>stap #25","Tag ID: 20IK<br>stap #26","Tag ID: 20IK<br>stap #27","Tag ID: 20IK<br>stap #28","Tag ID: 20IK<br>stap #29","Tag ID: 20IK<br>stap #30","Tag ID: 20IK<br>stap #31","Tag ID: 20IK<br>stap #32","Tag ID: 20IK<br>stap #33","Tag ID: 20IK<br>stap #34","Tag ID: 20IK<br>stap #35","Tag ID: 20IK<br>stap #36","Tag ID: 20IK<br>stap #37","Tag ID: 20IK<br>stap #38","Tag ID: 20IK<br>stap #39","Tag ID: 20IK<br>stap #40","Tag ID: 20IK<br>stap #41","Tag ID: 20IK<br>stap #42","Tag ID: 20IK<br>stap #43","Tag ID: 20IK<br>stap #44","Tag ID: 20IK<br>stap #45","Tag ID: 20IK<br>stap #46","Tag ID: 20IK<br>stap #47","Tag ID: 20IK<br>stap #48","Tag ID: 20IK<br>stap #49","Tag ID: 20IK<br>stap #50","Tag ID: 20IK<br>stap #51","Tag ID: 20IK<br>stap #52"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-21.875,-20.875,-20.125,-20.125,-20.375,-20.125,-17.125,-16.875,-16.125,-12.375,-8.125,-5.625,-4.375,-4.125,-3.625,-1.625,2.375,4.625,5.125,6.125,7.125,8.125,9.125,9.625,9.875,8.625,4.625,3.125,0.625,-0.625,-1.875,-3.625,-3.875,-5.125,-5.625,-7.125,-9.625,-9.875,-10.125,-12.875,-13.125,-13.625,-13.875,-15.375,-15.125,-18.875,-21.125,-22.625,-22.875,-22.375,-22.72463163],[28.76857325,28.125,27.625,28.375,28.125,27.875,27.375,26.625,27.125,26.625,26.125,25.875,25.125,25.125,25.625,25.625,24.875,26.375,25.875,26.375,27.625,27.875,26.625,26.625,25.625,25.375,25.125,24.125,23.875,23.375,22.875,22.875,22.625,23.875,23.375,24.125,24.875,25.375,25.375,25.125,23.875,24.125,24.375,24.625,24.875,24.625,27.625,29.125,28.375,28.375,28.375,28.76857325],[11.45509227961321,4.161764341873555,4.114002817259973,4.279262749667447,4.01466265364895,5.872426253351985,4.201755168876398,4.800562148048821,4.332285697764281,8.773567108358591,3.802708469337077,3.85897805810734,5.853412561400452,4.231197684656812,5.97752156911159,3.905899073507041,5.860225346545286,3.806784276323488,4.201755168876398,4.958923978473369,4.039996040881959,8.328475903939122,8.320083264636672,4.218169231621456,4.075602295308893,12,3.847061797941675,3.798623772906359,3,3.794530148170331,3.201702038859505,3.790427556012602,4.900812339369047,4.072071978389685,4.093154744041119,4.914383649270103,5.427636586681924,4.018302756973863,4.272924900738829,4.824359578414995,5.941405221246297,5.476679700166294,5.496603638828859,5.861584934678376,4.165129720265346,4.107079213917834,3.902033576632032,3.874749372959748,3.079707032096198,5.92308246434124,4.168489062100729,7.726002735307697],null,null,{"interactive":true,"className":"","stroke":true,"color":"#A65628","weight":5,"opacity":0.5,"fill":true,"fillColor":"#A65628","fillOpacity":0.8},null,null,["Tag ID: 20IK<br>stap #1","Tag ID: 20IK<br>stap #2","Tag ID: 20IK<br>stap #3","Tag ID: 20IK<br>stap #4","Tag ID: 20IK<br>stap #5","Tag ID: 20IK<br>stap #6","Tag ID: 20IK<br>stap #7","Tag ID: 20IK<br>stap #8","Tag ID: 20IK<br>stap #9","Tag ID: 20IK<br>stap #10","Tag ID: 20IK<br>stap #11","Tag ID: 20IK<br>stap #12","Tag ID: 20IK<br>stap #13","Tag ID: 20IK<br>stap #14","Tag ID: 20IK<br>stap #15","Tag ID: 20IK<br>stap #16","Tag ID: 20IK<br>stap #17","Tag ID: 20IK<br>stap #18","Tag ID: 20IK<br>stap #19","Tag ID: 20IK<br>stap #20","Tag ID: 20IK<br>stap #21","Tag ID: 20IK<br>stap #22","Tag ID: 20IK<br>stap #23","Tag ID: 20IK<br>stap #24","Tag ID: 20IK<br>stap #25","Tag ID: 20IK<br>stap #26","Tag ID: 20IK<br>stap #27","Tag ID: 20IK<br>stap #28","Tag ID: 20IK<br>stap #29","Tag ID: 20IK<br>stap #30","Tag ID: 20IK<br>stap #31","Tag ID: 20IK<br>stap #32","Tag ID: 20IK<br>stap #33","Tag ID: 20IK<br>stap #34","Tag ID: 20IK<br>stap #35","Tag ID: 20IK<br>stap #36","Tag ID: 20IK<br>stap #37","Tag ID: 20IK<br>stap #38","Tag ID: 20IK<br>stap #39","Tag ID: 20IK<br>stap #40","Tag ID: 20IK<br>stap #41","Tag ID: 20IK<br>stap #42","Tag ID: 20IK<br>stap #43","Tag ID: 20IK<br>stap #44","Tag ID: 20IK<br>stap #45","Tag ID: 20IK<br>stap #46","Tag ID: 20IK<br>stap #47","Tag ID: 20IK<br>stap #48","Tag ID: 20IK<br>stap #49","Tag ID: 20IK<br>stap #50","Tag ID: 20IK<br>stap #51","Tag ID: 20IK<br>stap #52"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPolylines","args":[[[[{"lng":[28.76857325,26.875,25.875,26.875,27.125,26.875,26.625,26.375,26.125,26.375,26.375,26.125,26.125,26.125,25.125,24.875,24.875,24.625,23.125,23.625,23.625,23.875,23.125,23.125,24.125,24.125,23.875,24.875,25.125,25.375,25.875,26.125,27.125,27.375,27.625,27.875,28.125,28.625,28.625],"lat":[-22.72463163,-17.875,-15.625,-14.625,-14.375,-14.125,-12.125,-11.125,-9.875,-9.375,-8.625,-7.375,-7.125,-6.875,-6.125,-5.875,-5.125,-4.625,0.875,1.625,2.375,3.125,3.875,4.875,5.125,5.625,5.875,7.875,8.625,9.125,9.125,9.375,9.375,9.625,9.875,10.125,10.625,10.875,10.875]}]]],null,null,{"interactive":true,"className":"","stroke":true,"color":"#999999","weight":2,"opacity":0.5,"fill":false,"fillColor":"#999999","fillOpacity":0.2,"smoothFactor":1,"noClip":false},["Tag ID: 22NO<br>stap #1","Tag ID: 22NO<br>stap #2","Tag ID: 22NO<br>stap #3","Tag ID: 22NO<br>stap #4","Tag ID: 22NO<br>stap #5","Tag ID: 22NO<br>stap #6","Tag ID: 22NO<br>stap #7","Tag ID: 22NO<br>stap #8","Tag ID: 22NO<br>stap #9","Tag ID: 22NO<br>stap #10","Tag ID: 22NO<br>stap #11","Tag ID: 22NO<br>stap #12","Tag ID: 22NO<br>stap #13","Tag ID: 22NO<br>stap #14","Tag ID: 22NO<br>stap #15","Tag ID: 22NO<br>stap #16","Tag ID: 22NO<br>stap #17","Tag ID: 22NO<br>stap #18","Tag ID: 22NO<br>stap #19","Tag ID: 22NO<br>stap #20","Tag ID: 22NO<br>stap #21","Tag ID: 22NO<br>stap #22","Tag ID: 22NO<br>stap #23","Tag ID: 22NO<br>stap #24","Tag ID: 22NO<br>stap #25","Tag ID: 22NO<br>stap #26","Tag ID: 22NO<br>stap #27","Tag ID: 22NO<br>stap #28","Tag ID: 22NO<br>stap #29","Tag ID: 22NO<br>stap #30","Tag ID: 22NO<br>stap #31","Tag ID: 22NO<br>stap #32","Tag ID: 22NO<br>stap #33","Tag ID: 22NO<br>stap #34","Tag ID: 22NO<br>stap #35","Tag ID: 22NO<br>stap #36","Tag ID: 22NO<br>stap #37","Tag ID: 22NO<br>stap #38","Tag ID: 22NO<br>stap #39"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[[-22.72463163,-17.875,-15.625,-14.625,-14.375,-14.125,-12.125,-11.125,-9.875,-9.375,-8.625,-7.375,-7.125,-6.875,-6.125,-5.875,-5.125,-4.625,0.875,1.625,2.375,3.125,3.875,4.875,5.125,5.625,5.875,7.875,8.625,9.125,9.125,9.375,9.375,9.625,9.875,10.125,10.625,10.875,10.875],[28.76857325,26.875,25.875,26.875,27.125,26.875,26.625,26.375,26.125,26.375,26.375,26.125,26.125,26.125,25.125,24.875,24.875,24.625,23.125,23.625,23.625,23.875,23.125,23.125,24.125,24.125,23.875,24.875,25.125,25.375,25.875,26.125,27.125,27.375,27.625,27.875,28.125,28.625,28.625],[11.9952022419205,3.722134822895513,4.002330974918033,4.125513419266977,4.30991910576217,8.131842309027654,4.018643970430968,5.669484436114251,4.22712960726451,6.884015587353632,4.91442873124956,4.292201247080913,4.375895429637781,7.115435902422335,4.159943360226208,5.029684280999048,6.110661442636202,6.112137816462614,4.070789506012292,6.070395576338855,4.348372075401199,7.367432994294666,3.965149247511323,4.204975879732645,4.117783834728605,3.052514859768434,3.923036560497702,4.182582215468146,3,4.961304676188674,4.327486428566123,4.186331375980481,5.779833348670409,4.038855875814317,4.472704365410025,5.032173939886293,5.098285977158695,4.295756985628817,12],null,null,{"interactive":true,"className":"","stroke":true,"color":"#999999","weight":5,"opacity":0.5,"fill":true,"fillColor":"#999999","fillOpacity":0.8},null,null,["Tag ID: 22NO<br>stap #1","Tag ID: 22NO<br>stap #2","Tag ID: 22NO<br>stap #3","Tag ID: 22NO<br>stap #4","Tag ID: 22NO<br>stap #5","Tag ID: 22NO<br>stap #6","Tag ID: 22NO<br>stap #7","Tag ID: 22NO<br>stap #8","Tag ID: 22NO<br>stap #9","Tag ID: 22NO<br>stap #10","Tag ID: 22NO<br>stap #11","Tag ID: 22NO<br>stap #12","Tag ID: 22NO<br>stap #13","Tag ID: 22NO<br>stap #14","Tag ID: 22NO<br>stap #15","Tag ID: 22NO<br>stap #16","Tag ID: 22NO<br>stap #17","Tag ID: 22NO<br>stap #18","Tag ID: 22NO<br>stap #19","Tag ID: 22NO<br>stap #20","Tag ID: 22NO<br>stap #21","Tag ID: 22NO<br>stap #22","Tag ID: 22NO<br>stap #23","Tag ID: 22NO<br>stap #24","Tag ID: 22NO<br>stap #25","Tag ID: 22NO<br>stap #26","Tag ID: 22NO<br>stap #27","Tag ID: 22NO<br>stap #28","Tag ID: 22NO<br>stap #29","Tag ID: 22NO<br>stap #30","Tag ID: 22NO<br>stap #31","Tag ID: 22NO<br>stap #32","Tag ID: 22NO<br>stap #33","Tag ID: 22NO<br>stap #34","Tag ID: 22NO<br>stap #35","Tag ID: 22NO<br>stap #36","Tag ID: 22NO<br>stap #37","Tag ID: 22NO<br>stap #38","Tag ID: 22NO<br>stap #39"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLegend","args":[{"colors":["#E41A1C","#4DAF4A","#FF7F00","#A65628","#999999"],"labels":["16LN","16LO","16LP","20IK","22NO"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"Bird Trajectories","extra":null,"layerId":null,"className":"info legend","group":null}]}],"limits":{"lat":[-22.875,10.875],"lng":[22.625,29.875]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -664,13 +729,14 @@ Important
 <div class="callout-body-container callout-body">
 <p>Finally, we check that the package is compliant with GeoLocator Data Package standards.</p>
 <div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://github.com/rafnuss/geolocator/reference/validate_gldp.html">validate_gldp</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/validate_gldp.html">validate_gldp</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## ── Check GeoLocator DataPackage profile ──</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## ✔ title is valid.</span></span>
 <span><span class="co">## ✔ contributors is valid.</span></span>
 <span><span class="co">## ✔ contributors[[1]] is valid.</span></span>
+<span><span class="co">## ✔ contributors[[2]] is valid.</span></span>
 <span><span class="co">## ✔ embargo is valid.</span></span>
 <span><span class="co">## ✔ licenses is valid.</span></span>
 <span><span class="co">## ✔ licenses[[1]] is valid.</span></span>
@@ -699,14 +765,6 @@ Important
 <span><span class="co">## ✔ resources[[6]] is valid.</span></span>
 <span><span class="co">## ✔ resources[[7]] is valid.</span></span>
 <span><span class="co">## ✔ resources[[8]] is valid.</span></span>
-<span><span class="co">## ✔ keywords is valid.</span></span>
-<span><span class="co">## ✔ keywords[[1]] is valid.</span></span>
-<span><span class="co">## ✔ keywords[[2]] is valid.</span></span>
-<span><span class="co">## ✔ keywords[[3]] is valid.</span></span>
-<span><span class="co">## ✔ grants is valid.</span></span>
-<span><span class="co">## ✔ grants[[1]] is valid.</span></span>
-<span><span class="co">## ✔ relatedIdentifiers is valid.</span></span>
-<span><span class="co">## ✔ relatedIdentifiers[[1]] is valid.</span></span>
 <span><span class="co">## ✔ taxonomic is valid.</span></span>
 <span><span class="co">## ✔ taxonomic[[1]] is valid.</span></span>
 <span><span class="co">## ✔ spatial is valid.</span></span>
@@ -847,177 +905,35 @@ Important
 <span><span class="co">## </span></span>
 <span><span class="co">## ── Overall Package Validation ──</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## ✔ Package is valid.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co">## ✔ Package is valid.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>It is quite normal that you’ll first see some error here. Try to fix them and re-create the package until the package is valid. If you can’t fix them, contact me!</p>
 </div>
 </div>
-</section><section id="upload-to-zenodo" class="level2" data-number="15.5"><h2 data-number="15.5" class="anchored" data-anchor-id="upload-to-zenodo">
-<span class="header-section-number">15.5</span> Upload to Zenodo</h2>
+</section></section><section id="upload-data-to-zenodo" class="level2" data-number="15.5"><h2 data-number="15.5" class="anchored" data-anchor-id="upload-data-to-zenodo">
+<span class="header-section-number">15.5</span> Upload data to Zenodo</h2>
 <section id="option-1-manually" class="level3" data-number="15.5.1"><h3 data-number="15.5.1" class="anchored" data-anchor-id="option-1-manually">
 <span class="header-section-number">15.5.1</span> Option 1: Manually</h3>
-<p>First, create a new deposit on <a href="https://zenodo.org/uploads/new">Zenodo</a> and <a href="https://help.zenodo.org/docs/deposit/describe-records/reserve-doi/#reserve-doi">reserve the DOI</a> to be able to define the package <code>id</code>.</p>
-<div class="callout-info">
-<p>The package <code>id</code> should be the <a href="https://support.zenodo.org/help/en-gb/1-upload-deposit/97-what-is-doi-versioning">concept DOI</a>, that is, the one that doesn’t change with new versions. The DOI displayed on Zenodo is actually the DOI of the first version, but you can retrieve the concept DOI by substracting <code>1</code> to your ID number</p>
+<p>We can write the datapackage to file</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"https://doi.org/10.5281/zenodo.{ZENODO_ID - 1}"</span></span>
-<span><span class="co"># e.g. "10.5281/zenodo.14620590" for a DOI reserved as 10.5281/zenodo.14620591</span></span>
-<span></span>
-<span><span class="co"># Update the bibliographic citation with this new DOI</span></span>
-<span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/rafnuss/geolocator/reference/update_gldp.html">update_gldp_bibliographic_citation</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<p>Now, we can write the datapackage to file</p>
-<div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="st">"data/datapackage"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The content of the folder created can now be uploaded on your Zenodo deposit.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You can populate all other fields on Zenodo with the information provided in <code>datapackage.json</code>! Note that a datapackage <code>contributors</code> corresponds to <code>creators</code> on Zenodo and not the <code>contributors</code>.</p>
-</div>
-</div>
 </section><section id="option-2-programatically" class="level3" data-number="15.5.2"><h3 data-number="15.5.2" class="anchored" data-anchor-id="option-2-programatically">
 <span class="header-section-number">15.5.2</span> Option 2: Programatically</h3>
-<p>A more efficient solution is to create a deposit on Zenodo using the API. For this, you first need to <a href="https://zenodo.org/account/settings/applications/tokens/new/">create a token</a> and save it to your keyring with:</p>
+<p>Alternatively, we can also upload the data to the deposit with</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_set_with_value</a></span><span class="op">(</span><span class="st">"ZENODO_PAT"</span>, password <span class="op">=</span> <span class="st">"{your_zenodo_token}"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>This allows us to create a <code>ZenodoManager</code> object which becomes useful later.</p>
-<div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">zenodo</span> <span class="op">&lt;-</span> <span class="va"><a href="https://rdrr.io/pkg/zen4R/man/ZenodoManager.html">ZenodoManager</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>token <span class="op">=</span> <span class="fu">keyring</span><span class="fu">::</span><span class="fu"><a href="https://keyring.r-lib.org/reference/key_get.html">key_get</a></span><span class="op">(</span>service <span class="op">=</span> <span class="st">"ZENODO_PAT"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Successfully connected to Zenodo with user token</code></pre>
-</div>
-</div>
-<p>You can create a <code><a href="https://rdrr.io/pkg/zen4R/man/ZenodoRecord.html">zen4R::ZenodoRecord</a></code> object from the from <code>pkg</code>.</p>
-<div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://github.com/rafnuss/geolocator/reference/gldp_to_zenodo.html">gldp_to_zenodo</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Successfully connected to Zenodo with user token</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Successfully fetched resourcetype 'dataset'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Successfully fetched list of affiliations!</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ! Zenodo's creator can only have a single role.
-→ Only the first role will be kept</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Successfully fetched license 'cc-by-4.0'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Successfully fetched list of funders!</code></pre>
-</div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;ZenodoRecord&gt;
-....|-- created: &lt;NULL&gt;
-....|-- updated: &lt;NULL&gt;
-....|-- revision_id: &lt;NULL&gt;
-....|-- is_draft: &lt;NULL&gt;
-....|-- is_published: &lt;NULL&gt;
-....|-- status: &lt;NULL&gt;
-....|-- versions: &lt;NULL&gt;
-....|-- access: 
-........|-- record: public
-........|-- files: restricted
-........|-- embargo: 
-............|-- active: TRUE
-............|-- until: 2030-01-01
-............|-- reason: 
-....|-- files: &lt;NULL&gt;
-....|-- id: &lt;NULL&gt;
-....|-- links: &lt;NULL&gt;
-....|-- metadata: 
-........|-- resource_type: 
-............|-- id: dataset
-........|-- publisher: Zenodo
-........|-- title: Migration route and timing of South African Woodland Kingfisher
-........|-- creators: 
-........|-- rights: 
-........|-- related_identifiers: 
-........|-- subjects: 
-........|-- publication_date: 2025-09-04
-....|-- parent: &lt;NULL&gt;
-....|-- pids: &lt;NULL&gt;
-....|-- stats: &lt;NULL&gt;</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Learn more about <a href="https://github.com/eblondel/zen4R/wiki">the <code>zen4R</code> package</a>!</p>
-</div>
-</div>
-<p>You can create the deposit on the website. For this we need to reserve the DOI, but without publishing the record yet: there is no data!</p>
-<div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">depositRecord</span><span class="op">(</span><span class="va">z</span>, reserveDOI <span class="op">=</span> <span class="cn">TRUE</span>, publish <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>You can now open this record on your browser using its link: <code>z$links$self_html</code></p>
-<p>We can retrieve the concept DOI to build the pkg <code>id</code></p>
-<div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pkg</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"https://doi.org/"</span>, <span class="va">z</span><span class="op">$</span><span class="fu">getConceptDOI</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We can now upload the data to the deposit with (or do it manually from the website)</p>
-<div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/frictionless/reference/write_package.html">write_package</a></span><span class="op">(</span><span class="va">pkg</span>, directory <span class="op">=</span> <span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">f</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">$</span><span class="va">version</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">zenodo</span><span class="op">$</span><span class="fu">uploadFile</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">$</span><span class="va">version</span>, <span class="va">f</span><span class="op">)</span>, <span class="va">z</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>At this stage, the Zenodo record is still not published. This is voluntarily not done automatically so that you check the record before publishing.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A nice feature of Zenodo is that you can share the record BEFORE publication with others (e.g., co-authors) allowing them to check everything before publication.</p>
-<p>If any modification of the metadata are made on Zenodo, you overwrite <code>pkg</code>’s metadata with</p>
-<div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">z_updated</span> <span class="op">&lt;-</span> <span class="va">zenodo</span><span class="op">$</span><span class="fu">getDepositionByConceptDOI</span><span class="op">(</span><span class="va">z</span><span class="op">$</span><span class="fu">getConceptDOI</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu">zenodoRecord2gldp</span><span class="op">(</span><span class="va">z_updated</span>, <span class="va">pkg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
+</section></section><section id="publish-the-record" class="level2" data-number="15.6"><h2 data-number="15.6" class="anchored" data-anchor-id="publish-the-record">
+<span class="header-section-number">15.6</span> Publish the record</h2>
+<p>Finally, once you’re happy with everything, you can publish the record on Zenodo</p>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -1068,13 +984,14 @@ Tip
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

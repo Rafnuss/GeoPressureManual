@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-wind.html">
 <title>12&nbsp; Download wind – A User Manual for GeoPressureR</title>
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a7790033cff2d4e3bc9b324136141315.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-ef881a153540be65ad1a752274347fb5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -425,11 +426,11 @@ Tip
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"18LX"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"18LX"</span></span>
 <span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_knit.html">opts_knit</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>root.dir <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Rafnuss/GeoPressureR">GeoPressureR</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lindeloev.github.io/job/">job</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lindeloev.github.io/job/">job</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="set-copernicus-credentials" class="level2" data-number="12.1"><h2 data-number="12.1" class="anchored" data-anchor-id="set-copernicus-credentials">
 <span class="header-section-number">12.1</span> Set Copernicus credentials</h2>
@@ -451,7 +452,7 @@ Caution
 <li><p>Save the token to your local keychain with <code>ecmwfr</code> (which calls the API Token <code>key</code>):</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ecmwfr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ecmwfr/man/wf_set_key.html">wf_set_key</a></span><span class="op">(</span><span class="st">"abcd1234-foo-bar-98765431-XXXXXXXXXX"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ecmwfr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ecmwfr/man/wf_set_key.html">wf_set_key</a></span><span class="op">(</span><span class="st">"abcd1234-foo-bar-98765431-XXXXXXXXXX"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>User ecmwfr for ecmwfr service added successfully in keychain</code></pre>
 </div>
@@ -463,37 +464,37 @@ Caution
 <span class="header-section-number">12.2</span> Create tag</h2>
 <p>Make sure you have already created the label file with the “1-label.qmd” script.</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tag</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressuretemplate.html">geopressuretemplate_tag</a></span><span class="op">(</span><span class="va">id</span>, quiet <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tag</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressuretemplate.html">geopressuretemplate_tag</a></span><span class="op">(</span><span class="va">id</span>, quiet <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="download-wind-data" class="level2" data-number="12.3"><h2 data-number="12.3" class="anchored" data-anchor-id="download-wind-data">
 <span class="header-section-number">12.3</span> Download wind data</h2>
 <p>The <a href="https://lindeloev.github.io/job">job package</a> allows you to download the wind data in the background and let your R console free to use.</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://lindeloev.github.io/job/reference/job.html">job</a></span><span class="op">(</span><span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://lindeloev.github.io/job/reference/job.html">job</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/tag_download_wind.html">tag_download_wind</a></span><span class="op">(</span><span class="va">tag</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Check requests at <a href="https://cds.climate.copernicus.eu/requests" class="uri">https://cds.climate.copernicus.eu/requests</a></p>
 </section><section id="define-movement-model" class="level2" data-number="12.4"><h2 data-number="12.4" class="anchored" data-anchor-id="define-movement-model">
 <span class="header-section-number">12.4</span> Define movement model</h2>
 <div class="callout-danger">
 <p>Make sure to update the type from <code>"gs"</code> to <code>"as"</code> in <code>config.yml</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">graph_set_movement</span><span class="kw">:</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> </span><span class="st">"as"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">graph_set_movement</span><span class="kw">:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> </span><span class="st">"as"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="add-wind-data" class="level3" data-number="12.4.1"><h3 data-number="12.4.1" class="anchored" data-anchor-id="add-wind-data">
 <span class="header-section-number">12.4.1</span> Add wind data</h3>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_create.html">graph_create</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_create.html">graph_create</a></span><span class="op">(</span></span>
 <span>  <span class="va">tag</span>,</span>
 <span>  thr_likelihood <span class="op">=</span> <span class="fu">config</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/config/reference/get.html">get</a></span><span class="op">(</span><span class="st">"graph_create"</span>, <span class="va">id</span><span class="op">)</span><span class="op">$</span><span class="va">thr_likelihood</span>,</span>
 <span>  thr_gs <span class="op">=</span> <span class="fu">config</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/config/reference/get.html">get</a></span><span class="op">(</span><span class="st">"graph_create"</span>, <span class="va">id</span><span class="op">)</span><span class="op">$</span><span class="va">thr_gs</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Check data input</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Data input validated [207ms]</code></pre>
+<pre><code>✔ Data input validated [16ms]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -502,7 +503,7 @@ Caution
 <pre><code>ℹ Create nodes from likelihood maps</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Nodes created from likelihood maps: map_pressure and map_light [170ms]</code></pre>
+<pre><code>✔ Nodes created from likelihood maps: map_pressure and map_light [88ms]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -511,7 +512,7 @@ Caution
 <pre><code>ℹ Filter nodes by binary distance</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Nodes filtered by binary distance [390ms]</code></pre>
+<pre><code>✔ Nodes filtered by binary distance [319ms]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -520,25 +521,22 @@ Caution
 <pre><code>ℹ Compute the groundspeed for stationary period 0/28: 0% of transitions done</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Compute the groundspeed for stationary period 5/28: 9% of transitions done</code></pre>
+<pre><code>ℹ Compute the groundspeed for stationary period 3/28: 8% of transitions done</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Compute the groundspeed for stationary period 10/28: 37% of transitions done</code></pre>
+<pre><code>ℹ Compute the groundspeed for stationary period 9/28: 25% of transitions done</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Compute the groundspeed for stationary period 14/28: 57% of transitions done</code></pre>
+<pre><code>ℹ Compute the groundspeed for stationary period 12/28: 54% of transitions done</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Compute the groundspeed for stationary period 20/28: 63% of transitions done</code></pre>
+<pre><code>ℹ Compute the groundspeed for stationary period 19/28: 62% of transitions done</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Compute the groundspeed for stationary period 22/28: 91% of transitions done</code></pre>
+<pre><code>ℹ Compute the groundspeed for stationary period 24/28: 99% of transitions done</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>ℹ Compute the groundspeed for stationary period 28/28: 100% of transitions done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Compute the groundspeed [17.8s]</code></pre>
+<pre><code>✔ Compute the groundspeed [14.8s]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -547,7 +545,10 @@ Caution
 <pre><code>ℹ Pruning the graph: 0/54 transitions (forward and backward).</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Graph pruned [1.8s]</code></pre>
+<pre><code>ℹ Pruning the graph: 45/54 transitions (forward and backward).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Graph pruned [1.5s]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -556,18 +557,18 @@ Caution
 <pre><code>ℹ Format graph output</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Graph formatted [779ms]</code></pre>
+<pre><code>✔ Graph formatted [679ms]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_add_wind.html">graph_add_wind</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_add_wind.html">graph_add_wind</a></span><span class="op">(</span></span>
 <span>  <span class="va">graph</span>,</span>
 <span>  pressure <span class="op">=</span> <span class="va">tag</span><span class="op">$</span><span class="va">pressure</span>,</span>
 <span>  thr_as <span class="op">=</span> <span class="fu">config</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/config/reference/get.html">get</a></span><span class="op">(</span><span class="st">"graph_add_wind"</span>, <span class="va">id</span><span class="op">)</span><span class="op">$</span><span class="va">thr_as</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  1/28 ■                   …</code></pre>
 </div>
@@ -587,70 +588,2290 @@ Caution
 <pre><code>ℹ Compute wind speed for edges of stationary period:  6/28 ■■■■                …</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 17
+ℹ Date: 2017-08-31 18:00:00
+ℹ Pressure: 1010 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 510 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 17
+ℹ Date: 2017-08-31 19:00:00
+ℹ Pressure: 924 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 424 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 17
+ℹ Date: 2017-08-31 20:00:00
+ℹ Pressure: 964 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 464 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 17
+ℹ Date: 2017-08-31 21:00:00
+ℹ Pressure: 974 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 474 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 17
+ℹ Date: 2017-08-31 22:00:00
+ℹ Pressure: 984 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 484 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 17
+ℹ Date: 2017-08-31 23:00:00
+ℹ Pressure: 923 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 423 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 17
+ℹ Date: 2017-09-01 00:00:00
+ℹ Pressure: 806 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 306 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 17
+ℹ Date: 2017-09-01 01:00:00
+ℹ Pressure: 720 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 220 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 17
+ℹ Date: 2017-09-01 02:00:00
+ℹ Pressure: 660 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 160 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 17
+ℹ Date: 2017-09-01 03:00:00
+ℹ Pressure: 722 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 222 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 11 of 17
+ℹ Date: 2017-09-01 04:00:00
+ℹ Pressure: 696 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 196 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 12 of 17
+ℹ Date: 2017-09-01 05:00:00
+ℹ Pressure: 710 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 210 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 13 of 17
+ℹ Date: 2017-09-01 06:00:00
+ℹ Pressure: 582 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 82 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 14 of 17
+ℹ Date: 2017-09-01 07:00:00
+ℹ Pressure: 515 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 15 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 15 of 17
+ℹ Date: 2017-09-01 08:00:00
+ℹ Pressure: 580 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 80 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 16 of 17
+ℹ Date: 2017-09-01 09:00:00
+ℹ Pressure: 857 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 357 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 7
+ℹ Flight index: 1 of 1
+ℹ Time index: 17 of 17
+ℹ Date: 2017-09-01 10:00:00
+ℹ Pressure: 932 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 432 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  7/28 ■■■■■■              …</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 17
+ℹ Date: 2017-09-01 18:00:00
+ℹ Pressure: 924 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 324 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 17
+ℹ Date: 2017-09-01 19:00:00
+ℹ Pressure: 921 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 321 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 17
+ℹ Date: 2017-09-01 20:00:00
+ℹ Pressure: 837 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 237 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 17
+ℹ Date: 2017-09-01 21:00:00
+ℹ Pressure: 736 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 136 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 17
+ℹ Date: 2017-09-01 22:00:00
+ℹ Pressure: 636 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 36 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 17
+ℹ Date: 2017-09-01 23:00:00
+ℹ Pressure: 756 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 156 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 17
+ℹ Date: 2017-09-02 00:00:00
+ℹ Pressure: 799 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 199 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 17
+ℹ Date: 2017-09-02 01:00:00
+ℹ Pressure: 715 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 115 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 17
+ℹ Date: 2017-09-02 02:00:00
+ℹ Pressure: 764 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 164 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 17
+ℹ Date: 2017-09-02 03:00:00
+ℹ Pressure: 686 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 86 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 11 of 17
+ℹ Date: 2017-09-02 04:00:00
+ℹ Pressure: 705 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 105 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 12 of 17
+ℹ Date: 2017-09-02 05:00:00
+ℹ Pressure: 778 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 178 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 13 of 17
+ℹ Date: 2017-09-02 06:00:00
+ℹ Pressure: 792 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 192 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 14 of 17
+ℹ Date: 2017-09-02 07:00:00
+ℹ Pressure: 823 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 223 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 15 of 17
+ℹ Date: 2017-09-02 08:00:00
+ℹ Pressure: 819 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 219 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 16 of 17
+ℹ Date: 2017-09-02 09:00:00
+ℹ Pressure: 946 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 346 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 8
+ℹ Flight index: 1 of 1
+ℹ Time index: 17 of 17
+ℹ Date: 2017-09-02 10:00:00
+ℹ Pressure: 947 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 347 hPa</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  8/28 ■■■■■■■             …</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 9
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 10
+ℹ Date: 2017-09-04 20:00:00
+ℹ Pressure: 943 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 168 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 9
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 10
+ℹ Date: 2017-09-04 21:00:00
+ℹ Pressure: 865 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 90 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 9
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 10
+ℹ Date: 2017-09-04 22:00:00
+ℹ Pressure: 818 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 43 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 9
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 10
+ℹ Date: 2017-09-04 23:00:00
+ℹ Pressure: 796 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 21 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 9
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 10
+ℹ Date: 2017-09-05 00:00:00
+ℹ Pressure: 849 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 74 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 9
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 10
+ℹ Date: 2017-09-05 01:00:00
+ℹ Pressure: 783 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 8 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 9
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 10
+ℹ Date: 2017-09-05 02:00:00
+ℹ Pressure: 796 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 21 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 9
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 10
+ℹ Date: 2017-09-05 03:00:00
+ℹ Pressure: 787 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 12 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 9
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 10
+ℹ Date: 2017-09-05 04:00:00
+ℹ Pressure: 834 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 59 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 9
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 10
+ℹ Date: 2017-09-05 05:00:00
+ℹ Pressure: 977 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 202 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  9/28 ■■■■■■■■■           …</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 11
+ℹ Date: 2017-09-06 19:00:00
+ℹ Pressure: 976 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 276 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 11
+ℹ Date: 2017-09-06 20:00:00
+ℹ Pressure: 937 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 237 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 11
+ℹ Date: 2017-09-06 21:00:00
+ℹ Pressure: 882 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 182 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 11
+ℹ Date: 2017-09-06 22:00:00
+ℹ Pressure: 752 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 52 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 11
+ℹ Date: 2017-09-06 23:00:00
+ℹ Pressure: 797 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 97 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 11
+ℹ Date: 2017-09-07 00:00:00
+ℹ Pressure: 841 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 141 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 11
+ℹ Date: 2017-09-07 01:00:00
+ℹ Pressure: 801 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 101 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 11
+ℹ Date: 2017-09-07 02:00:00
+ℹ Pressure: 831 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 131 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 11
+ℹ Date: 2017-09-07 03:00:00
+ℹ Pressure: 830 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 130 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 11
+ℹ Date: 2017-09-07 04:00:00
+ℹ Pressure: 833 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 133 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 10
+ℹ Flight index: 1 of 1
+ℹ Time index: 11 of 11
+ℹ Date: 2017-09-07 05:00:00
+ℹ Pressure: 980 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 280 hPa</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  10/28 ■■■■■■■■■■■■       …</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 11
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 8
+ℹ Date: 2017-09-09 19:00:00
+ℹ Pressure: 981 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 156 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 11
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 8
+ℹ Date: 2017-09-09 20:00:00
+ℹ Pressure: 978 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 153 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 11
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 8
+ℹ Date: 2017-09-09 21:00:00
+ℹ Pressure: 865 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 40 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 11
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 8
+ℹ Date: 2017-09-09 22:00:00
+ℹ Pressure: 854 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 29 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 11
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 8
+ℹ Date: 2017-09-09 23:00:00
+ℹ Pressure: 876 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 51 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 11
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 8
+ℹ Date: 2017-09-10 00:00:00
+ℹ Pressure: 851 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 26 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 11
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 8
+ℹ Date: 2017-09-10 01:00:00
+ℹ Pressure: 966 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 141 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 11
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 8
+ℹ Date: 2017-09-10 02:00:00
+ℹ Pressure: 980 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 155 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  11/28 ■■■■■■■■■■■■■■■    …</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 12
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 10
+ℹ Date: 2017-09-10 19:00:00
+ℹ Pressure: 979 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 104 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 12
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 10
+ℹ Date: 2017-09-10 20:00:00
+ℹ Pressure: 917 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 42 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 12
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 10
+ℹ Date: 2017-09-10 21:00:00
+ℹ Pressure: 935 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 60 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 12
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 10
+ℹ Date: 2017-09-10 22:00:00
+ℹ Pressure: 963 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 88 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 12
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 10
+ℹ Date: 2017-09-10 23:00:00
+ℹ Pressure: 958 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 83 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 12
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 10
+ℹ Date: 2017-09-11 00:00:00
+ℹ Pressure: 940 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 65 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 12
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 10
+ℹ Date: 2017-09-11 01:00:00
+ℹ Pressure: 923 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 48 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 12
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 10
+ℹ Date: 2017-09-11 02:00:00
+ℹ Pressure: 886 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 11 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 12
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 10
+ℹ Date: 2017-09-11 03:00:00
+ℹ Pressure: 997 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 122 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 12
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 10
+ℹ Date: 2017-09-11 04:00:00
+ℹ Pressure: 998 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 123 hPa</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  12/28 ■■■■■■■■■■■■■■■■■  …</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 13
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 3
+ℹ Date: 2017-09-11 23:00:00
+ℹ Pressure: 997 hPa
+ℹ Highest available level: 975 hPa
+ℹ Pressure difference: 22 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 13
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 3
+ℹ Date: 2017-09-12 00:00:00
+ℹ Pressure: 988 hPa
+ℹ Highest available level: 975 hPa
+ℹ Pressure difference: 13 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 13
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 3
+ℹ Date: 2017-09-12 01:00:00
+ℹ Pressure: 997 hPa
+ℹ Highest available level: 975 hPa
+ℹ Pressure difference: 22 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  13/28 ■■■■■■■■■■■■■■■■■  …</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 14
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 10
+ℹ Date: 2017-09-15 20:00:00
+ℹ Pressure: 996 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 221 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 14
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 10
+ℹ Date: 2017-09-15 21:00:00
+ℹ Pressure: 978 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 203 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 14
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 10
+ℹ Date: 2017-09-15 22:00:00
+ℹ Pressure: 838 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 63 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 14
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 10
+ℹ Date: 2017-09-15 23:00:00
+ℹ Pressure: 817 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 42 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 14
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 10
+ℹ Date: 2017-09-16 00:00:00
+ℹ Pressure: 787 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 12 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 14
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 10
+ℹ Date: 2017-09-16 01:00:00
+ℹ Pressure: 791 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 16 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 14
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 10
+ℹ Date: 2017-09-16 02:00:00
+ℹ Pressure: 786 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 11 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 14
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 10
+ℹ Date: 2017-09-16 03:00:00
+ℹ Pressure: 816 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 41 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 14
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 10
+ℹ Date: 2017-09-16 04:00:00
+ℹ Pressure: 897 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 122 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 14
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 10
+ℹ Date: 2017-09-16 05:00:00
+ℹ Pressure: 982 hPa
+ℹ Highest available level: 775 hPa
+ℹ Pressure difference: 207 hPa</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  14/28 ■■■■■■■■■■■■■■■■■  …</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 15
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 7
+ℹ Date: 2017-09-16 20:00:00
+ℹ Pressure: 983 hPa
+ℹ Highest available level: 925 hPa
+ℹ Pressure difference: 58 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 15
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 7
+ℹ Date: 2017-09-16 21:00:00
+ℹ Pressure: 959 hPa
+ℹ Highest available level: 925 hPa
+ℹ Pressure difference: 34 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 15
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 7
+ℹ Date: 2017-09-16 22:00:00
+ℹ Pressure: 948 hPa
+ℹ Highest available level: 925 hPa
+ℹ Pressure difference: 23 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 15
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 7
+ℹ Date: 2017-09-16 23:00:00
+ℹ Pressure: 980 hPa
+ℹ Highest available level: 925 hPa
+ℹ Pressure difference: 55 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 15
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 7
+ℹ Date: 2017-09-17 00:00:00
+ℹ Pressure: 980 hPa
+ℹ Highest available level: 925 hPa
+ℹ Pressure difference: 55 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 15
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 7
+ℹ Date: 2017-09-17 01:00:00
+ℹ Pressure: 972 hPa
+ℹ Highest available level: 925 hPa
+ℹ Pressure difference: 47 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 15
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 7
+ℹ Date: 2017-09-17 02:00:00
+ℹ Pressure: 987 hPa
+ℹ Highest available level: 925 hPa
+ℹ Pressure difference: 62 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  15/28 ■■■■■■■■■■■■■■■■■■ …</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 16
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 6
+ℹ Date: 2017-09-18 19:00:00
+ℹ Pressure: 988 hPa
+ℹ Highest available level: 950 hPa
+ℹ Pressure difference: 38 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 16
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 6
+ℹ Date: 2017-09-18 20:00:00
+ℹ Pressure: 974 hPa
+ℹ Highest available level: 950 hPa
+ℹ Pressure difference: 24 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 16
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 6
+ℹ Date: 2017-09-18 21:00:00
+ℹ Pressure: 977 hPa
+ℹ Highest available level: 950 hPa
+ℹ Pressure difference: 27 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 16
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 6
+ℹ Date: 2017-09-18 22:00:00
+ℹ Pressure: 973 hPa
+ℹ Highest available level: 950 hPa
+ℹ Pressure difference: 23 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 16
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 6
+ℹ Date: 2017-09-18 23:00:00
+ℹ Pressure: 983 hPa
+ℹ Highest available level: 950 hPa
+ℹ Pressure difference: 33 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 16
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 6
+ℹ Date: 2017-09-19 00:00:00
+ℹ Pressure: 997 hPa
+ℹ Highest available level: 950 hPa
+ℹ Pressure difference: 47 hPa</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  16/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 17
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 4
+ℹ Date: 2017-09-19 23:00:00
+ℹ Pressure: 995 hPa
+ℹ Highest available level: 975 hPa
+ℹ Pressure difference: 20 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 17
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 4
+ℹ Date: 2017-09-20 00:00:00
+ℹ Pressure: 993 hPa
+ℹ Highest available level: 975 hPa
+ℹ Pressure difference: 18 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 17
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 4
+ℹ Date: 2017-09-20 01:00:00
+ℹ Pressure: 990 hPa
+ℹ Highest available level: 975 hPa
+ℹ Pressure difference: 15 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 17
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 4
+ℹ Date: 2017-09-20 02:00:00
+ℹ Pressure: 996 hPa
+ℹ Highest available level: 975 hPa
+ℹ Pressure difference: 21 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  17/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 13
+ℹ Date: 2017-12-05 18:00:00
+ℹ Pressure: 995 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 170 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 13
+ℹ Date: 2017-12-05 19:00:00
+ℹ Pressure: 982 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 157 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 13
+ℹ Date: 2017-12-05 20:00:00
+ℹ Pressure: 960 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 135 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 13
+ℹ Date: 2017-12-05 21:00:00
+ℹ Pressure: 942 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 117 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 13
+ℹ Date: 2017-12-05 22:00:00
+ℹ Pressure: 951 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 126 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 13
+ℹ Date: 2017-12-05 23:00:00
+ℹ Pressure: 906 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 81 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 13
+ℹ Date: 2017-12-06 00:00:00
+ℹ Pressure: 881 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 56 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 13
+ℹ Date: 2017-12-06 01:00:00
+ℹ Pressure: 919 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 94 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 13
+ℹ Date: 2017-12-06 02:00:00
+ℹ Pressure: 877 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 52 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 13
+ℹ Date: 2017-12-06 03:00:00
+ℹ Pressure: 836 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 11 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 11 of 13
+ℹ Date: 2017-12-06 04:00:00
+ℹ Pressure: 860 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 35 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 12 of 13
+ℹ Date: 2017-12-06 05:00:00
+ℹ Pressure: 871 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 46 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 18
+ℹ Flight index: 1 of 1
+ℹ Time index: 13 of 13
+ℹ Date: 2017-12-06 06:00:00
+ℹ Pressure: 978 hPa
+ℹ Highest available level: 825 hPa
+ℹ Pressure difference: 153 hPa</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  18/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 19
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 7
+ℹ Date: 2017-12-06 19:00:00
+ℹ Pressure: 978 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 178 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 19
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 7
+ℹ Date: 2017-12-06 20:00:00
+ℹ Pressure: 872 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 72 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 19
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 7
+ℹ Date: 2017-12-06 21:00:00
+ℹ Pressure: 937 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 137 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 19
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 7
+ℹ Date: 2017-12-06 22:00:00
+ℹ Pressure: 878 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 78 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 19
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 7
+ℹ Date: 2017-12-06 23:00:00
+ℹ Pressure: 915 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 115 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 19
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 7
+ℹ Date: 2017-12-07 00:00:00
+ℹ Pressure: 924 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 124 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 19
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 7
+ℹ Date: 2017-12-07 01:00:00
+ℹ Pressure: 985 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 185 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  19/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 20
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 7
+ℹ Date: 2018-04-10 19:00:00
+ℹ Pressure: 988 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 113 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 20
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 7
+ℹ Date: 2018-04-10 20:00:00
+ℹ Pressure: 976 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 101 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 20
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 7
+ℹ Date: 2018-04-10 21:00:00
+ℹ Pressure: 962 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 87 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 20
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 7
+ℹ Date: 2018-04-10 22:00:00
+ℹ Pressure: 926 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 51 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 20
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 7
+ℹ Date: 2018-04-10 23:00:00
+ℹ Pressure: 928 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 53 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 20
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 7
+ℹ Date: 2018-04-11 00:00:00
+ℹ Pressure: 940 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 65 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 20
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 7
+ℹ Date: 2018-04-11 01:00:00
+ℹ Pressure: 969 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 94 hPa</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  20/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 12
+ℹ Date: 2018-04-11 19:00:00
+ℹ Pressure: 965 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 165 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 12
+ℹ Date: 2018-04-11 20:00:00
+ℹ Pressure: 941 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 141 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 12
+ℹ Date: 2018-04-11 21:00:00
+ℹ Pressure: 943 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 143 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 12
+ℹ Date: 2018-04-11 22:00:00
+ℹ Pressure: 961 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 161 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 12
+ℹ Date: 2018-04-11 23:00:00
+ℹ Pressure: 955 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 155 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 12
+ℹ Date: 2018-04-12 00:00:00
+ℹ Pressure: 942 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 142 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 12
+ℹ Date: 2018-04-12 01:00:00
+ℹ Pressure: 915 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 115 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 12
+ℹ Date: 2018-04-12 02:00:00
+ℹ Pressure: 940 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 140 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 12
+ℹ Date: 2018-04-12 03:00:00
+ℹ Pressure: 933 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 133 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 12
+ℹ Date: 2018-04-12 04:00:00
+ℹ Pressure: 921 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 121 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 11 of 12
+ℹ Date: 2018-04-12 05:00:00
+ℹ Pressure: 812 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 12 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 21
+ℹ Flight index: 1 of 1
+ℹ Time index: 12 of 12
+ℹ Date: 2018-04-12 06:00:00
+ℹ Pressure: 978 hPa
+ℹ Highest available level: 800 hPa
+ℹ Pressure difference: 178 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  21/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 12
+ℹ Date: 2018-04-12 19:00:00
+ℹ Pressure: 977 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 277 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 12
+ℹ Date: 2018-04-12 20:00:00
+ℹ Pressure: 857 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 157 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 12
+ℹ Date: 2018-04-12 21:00:00
+ℹ Pressure: 723 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 23 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 12
+ℹ Date: 2018-04-12 22:00:00
+ℹ Pressure: 715 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 15 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 12
+ℹ Date: 2018-04-12 23:00:00
+ℹ Pressure: 702 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 2 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 12
+ℹ Date: 2018-04-13 00:00:00
+ℹ Pressure: 738 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 38 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 12
+ℹ Date: 2018-04-13 01:00:00
+ℹ Pressure: 833 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 133 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 12
+ℹ Date: 2018-04-13 02:00:00
+ℹ Pressure: 862 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 162 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 12
+ℹ Date: 2018-04-13 03:00:00
+ℹ Pressure: 830 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 130 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 12
+ℹ Date: 2018-04-13 04:00:00
+ℹ Pressure: 822 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 122 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 11 of 12
+ℹ Date: 2018-04-13 05:00:00
+ℹ Pressure: 816 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 116 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 22
+ℹ Flight index: 1 of 1
+ℹ Time index: 12 of 12
+ℹ Date: 2018-04-13 06:00:00
+ℹ Pressure: 985 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 285 hPa</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  22/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 12
+ℹ Date: 2018-04-13 19:00:00
+ℹ Pressure: 983 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 383 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 12
+ℹ Date: 2018-04-13 20:00:00
+ℹ Pressure: 792 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 192 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 12
+ℹ Date: 2018-04-13 21:00:00
+ℹ Pressure: 648 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 48 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 12
+ℹ Date: 2018-04-13 22:00:00
+ℹ Pressure: 666 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 66 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 12
+ℹ Date: 2018-04-13 23:00:00
+ℹ Pressure: 692 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 92 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 12
+ℹ Date: 2018-04-14 00:00:00
+ℹ Pressure: 721 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 121 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 12
+ℹ Date: 2018-04-14 01:00:00
+ℹ Pressure: 714 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 114 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 12
+ℹ Date: 2018-04-14 02:00:00
+ℹ Pressure: 708 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 108 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 12
+ℹ Date: 2018-04-14 03:00:00
+ℹ Pressure: 672 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 72 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 12
+ℹ Date: 2018-04-14 04:00:00
+ℹ Pressure: 659 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 59 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 11 of 12
+ℹ Date: 2018-04-14 05:00:00
+ℹ Pressure: 662 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 62 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 23
+ℹ Flight index: 1 of 1
+ℹ Time index: 12 of 12
+ℹ Date: 2018-04-14 06:00:00
+ℹ Pressure: 957 hPa
+ℹ Highest available level: 600 hPa
+ℹ Pressure difference: 357 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  23/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 23
+ℹ Date: 2018-04-14 18:00:00
+ℹ Pressure: 957 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 457 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 23
+ℹ Date: 2018-04-14 19:00:00
+ℹ Pressure: 834 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 334 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 23
+ℹ Date: 2018-04-14 20:00:00
+ℹ Pressure: 757 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 257 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 23
+ℹ Date: 2018-04-14 21:00:00
+ℹ Pressure: 731 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 231 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 23
+ℹ Date: 2018-04-14 22:00:00
+ℹ Pressure: 743 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 243 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 23
+ℹ Date: 2018-04-14 23:00:00
+ℹ Pressure: 749 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 249 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 23
+ℹ Date: 2018-04-15 00:00:00
+ℹ Pressure: 697 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 197 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 23
+ℹ Date: 2018-04-15 01:00:00
+ℹ Pressure: 652 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 152 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 23
+ℹ Date: 2018-04-15 02:00:00
+ℹ Pressure: 617 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 117 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 23
+ℹ Date: 2018-04-15 03:00:00
+ℹ Pressure: 631 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 131 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 11 of 23
+ℹ Date: 2018-04-15 04:00:00
+ℹ Pressure: 601 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 101 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 12 of 23
+ℹ Date: 2018-04-15 05:00:00
+ℹ Pressure: 617 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 117 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 13 of 23
+ℹ Date: 2018-04-15 06:00:00
+ℹ Pressure: 544 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 44 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 14 of 23
+ℹ Date: 2018-04-15 07:00:00
+ℹ Pressure: 537 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 37 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 15 of 23
+ℹ Date: 2018-04-15 08:00:00
+ℹ Pressure: 525 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 25 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 16 of 23
+ℹ Date: 2018-04-15 09:00:00
+ℹ Pressure: 519 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 19 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 17 of 23
+ℹ Date: 2018-04-15 10:00:00
+ℹ Pressure: 518 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 18 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 18 of 23
+ℹ Date: 2018-04-15 11:00:00
+ℹ Pressure: 514 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 14 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 19 of 23
+ℹ Date: 2018-04-15 12:00:00
+ℹ Pressure: 539 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 39 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 20 of 23
+ℹ Date: 2018-04-15 13:00:00
+ℹ Pressure: 541 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 41 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 21 of 23
+ℹ Date: 2018-04-15 14:00:00
+ℹ Pressure: 543 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 43 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 22 of 23
+ℹ Date: 2018-04-15 15:00:00
+ℹ Pressure: 662 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 162 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 24
+ℹ Flight index: 1 of 1
+ℹ Time index: 23 of 23
+ℹ Date: 2018-04-15 16:00:00
+ℹ Pressure: 896 hPa
+ℹ Highest available level: 500 hPa
+ℹ Pressure difference: 396 hPa</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  24/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 25
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 6
+ℹ Date: 2018-04-15 18:00:00
+ℹ Pressure: 895 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 20 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 25
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 6
+ℹ Date: 2018-04-15 19:00:00
+ℹ Pressure: 923 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 48 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 25
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 6
+ℹ Date: 2018-04-15 20:00:00
+ℹ Pressure: 1002 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 127 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 25
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 6
+ℹ Date: 2018-04-15 21:00:00
+ℹ Pressure: 892 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 17 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 25
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 6
+ℹ Date: 2018-04-15 22:00:00
+ℹ Pressure: 1003 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 128 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 25
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 6
+ℹ Date: 2018-04-15 23:00:00
+ℹ Pressure: 1009 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 134 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  25/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 26
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 10
+ℹ Date: 2018-04-25 18:00:00
+ℹ Pressure: 1018 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 143 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 26
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 10
+ℹ Date: 2018-04-25 19:00:00
+ℹ Pressure: 977 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 102 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 26
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 10
+ℹ Date: 2018-04-25 20:00:00
+ℹ Pressure: 972 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 97 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 26
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 10
+ℹ Date: 2018-04-25 21:00:00
+ℹ Pressure: 924 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 49 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 26
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 10
+ℹ Date: 2018-04-25 22:00:00
+ℹ Pressure: 961 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 86 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 26
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 10
+ℹ Date: 2018-04-25 23:00:00
+ℹ Pressure: 918 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 43 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 26
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 10
+ℹ Date: 2018-04-26 00:00:00
+ℹ Pressure: 919 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 44 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 26
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 10
+ℹ Date: 2018-04-26 01:00:00
+ℹ Pressure: 877 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 2 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 26
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 10
+ℹ Date: 2018-04-26 02:00:00
+ℹ Pressure: 891 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 16 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 26
+ℹ Flight index: 1 of 1
+ℹ Time index: 10 of 10
+ℹ Date: 2018-04-26 03:00:00
+ℹ Pressure: 1009 hPa
+ℹ Highest available level: 875 hPa
+ℹ Pressure difference: 134 hPa</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  26/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 27
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 8
+ℹ Date: 2018-04-29 21:00:00
+ℹ Pressure: 1007 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 307 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 27
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 8
+ℹ Date: 2018-04-29 22:00:00
+ℹ Pressure: 854 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 154 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 27
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 8
+ℹ Date: 2018-04-29 23:00:00
+ℹ Pressure: 815 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 115 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 27
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 8
+ℹ Date: 2018-04-30 00:00:00
+ℹ Pressure: 902 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 202 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 27
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 8
+ℹ Date: 2018-04-30 01:00:00
+ℹ Pressure: 856 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 156 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 27
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 8
+ℹ Date: 2018-04-30 02:00:00
+ℹ Pressure: 720 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 20 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 27
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 8
+ℹ Date: 2018-04-30 03:00:00
+ℹ Pressure: 914 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 214 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 27
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 8
+ℹ Date: 2018-04-30 04:00:00
+ℹ Pressure: 1001 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 301 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>ℹ Compute wind speed for edges of stationary period:  27/28 ■■■■■■■■■■■■■■■■■■■…</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Compute wind speed for edges of stationary periods [31.5s]</code></pre>
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 28
+ℹ Flight index: 1 of 1
+ℹ Time index: 1 of 9
+ℹ Date: 2018-04-30 18:00:00
+ℹ Pressure: 1001 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 301 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 28
+ℹ Flight index: 1 of 1
+ℹ Time index: 2 of 9
+ℹ Date: 2018-04-30 19:00:00
+ℹ Pressure: 946 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 246 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 28
+ℹ Flight index: 1 of 1
+ℹ Time index: 3 of 9
+ℹ Date: 2018-04-30 20:00:00
+ℹ Pressure: 813 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 113 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 28
+ℹ Flight index: 1 of 1
+ℹ Time index: 4 of 9
+ℹ Date: 2018-04-30 21:00:00
+ℹ Pressure: 740 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 40 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 28
+ℹ Flight index: 1 of 1
+ℹ Time index: 5 of 9
+ℹ Date: 2018-04-30 22:00:00
+ℹ Pressure: 905 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 205 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 28
+ℹ Flight index: 1 of 1
+ℹ Time index: 6 of 9
+ℹ Date: 2018-04-30 23:00:00
+ℹ Pressure: 976 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 276 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 28
+ℹ Flight index: 1 of 1
+ℹ Time index: 7 of 9
+ℹ Date: 2018-05-01 00:00:00
+ℹ Pressure: 957 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 257 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 28
+ℹ Flight index: 1 of 1
+ℹ Time index: 8 of 9
+ℹ Date: 2018-05-01 01:00:00
+ℹ Pressure: 979 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 279 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ! Pressure is above the highest level while the highest level is not 1000hPa.
+ℹ Stationary period: 28
+ℹ Flight index: 1 of 1
+ℹ Time index: 9 of 9
+ℹ Date: 2018-05-01 02:00:00
+ℹ Pressure: 990 hPa
+ℹ Highest available level: 700 hPa
+ℹ Pressure difference: 290 hPa</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Compute wind speed for edges of stationary periods [31.2s]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -659,7 +2880,7 @@ Caution
 <pre><code>ℹ Pruning the graph: 0/54 transitions (forward and backward).</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ Graph pruned [1.2s]</code></pre>
+<pre><code>✔ Graph pruned [799ms]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
@@ -669,13 +2890,14 @@ Caution
 <span class="header-section-number">12.4.2</span> Set movement model</h3>
 <p>Check that the movement model defined in <code>config.yml</code> is adequate.</p>
 <div class="cell">
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_set_movement.html">graph_set_movement</a></span><span class="op">(</span><span class="va">graph</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb287"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/graph_set_movement.html">graph_set_movement</a></span><span class="op">(</span></span>
+<span>  <span class="va">graph</span>,</span>
 <span>  bird <span class="op">=</span> <span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/bird_create.html">bird_create</a></span><span class="op">(</span><span class="fu">config</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/config/reference/get.html">get</a></span><span class="op">(</span><span class="st">"bird_create"</span>, <span class="va">id</span><span class="op">)</span><span class="op">$</span><span class="va">scientific_name</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Check the movement model</p>
 <div class="cell">
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/plot_graph_movement.html">plot_graph_movement</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb288"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/plot_graph_movement.html">plot_graph_movement</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="geopressuretemplate-wind_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
@@ -736,13 +2958,14 @@ Caution
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

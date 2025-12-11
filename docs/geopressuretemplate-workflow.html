@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
 <title>13&nbsp; Workflow – A User Manual for GeoPressureR</title>
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a7790033cff2d4e3bc9b324136141315.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-ef881a153540be65ad1a752274347fb5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -410,7 +411,7 @@ cookieconsent.run({
 </h2>
 <p>After performing all preparation steps, you are able to run the entire workflow in a single line:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressuretemplate</span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressuretemplate</span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The <code>geopressuretemplate()</code> function calls on three child functions outlined below. <code>data/interim/{id}.Rdata</code> is created in Step 1, and then updated in steps 2 and 3 with the main variables (see below).</p>
 <p><strong>1. <code>geopressuretemplate_tag()</code></strong></p>
@@ -440,49 +441,48 @@ cookieconsent.run({
 </section><section id="configuration-the-workflow" class="level2" data-number="13.2"><h2 data-number="13.2" class="anchored" data-anchor-id="configuration-the-workflow">
 <span class="header-section-number">13.2</span> Configuration the workflow</h2>
 <p>All parameters of the workflow’s function are provided in the <a href="https://github.com/Rafnuss/GeoPressureTemplate/blob/main/config.yml"><code>config.yml</code></a> file following the structure:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tag_id</span><span class="kw">:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tag_id</span><span class="kw">:</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">function_name</span><span class="kw">:</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">argument</span><span class="kw">:</span><span class="at"> value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">argument</span><span class="kw">:</span><span class="at"> value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>On top of all GeoPressureR functions, you also need to provide general workflow parameters in <code>geopressuretemplate</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">default</span><span class="kw">:</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">default</span><span class="kw">:</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">geopressuretemplate</span><span class="kw">:</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">likelihood</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"map_pressure"</span><span class="kw">,</span><span class="at"> </span><span class="st">"map_light"</span><span class="kw">]</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">outputs</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"marginal"</span><span class="kw">,</span><span class="at"> </span><span class="st">"most_likely"</span><span class="kw">,</span><span class="at"> </span><span class="st">"simulation"</span><span class="kw">]</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">pressurepath</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"most_likely"</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">pressurepath</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"most_likely"</span><span class="kw">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>likelihood</code> define which likelihood map to compute and use in the graph model while <code>outputs</code> define which outputs to use. In <code>pressurepath</code>, you need to set which path to use. The path can also be visualised using <a href="geopressureviz.html">GeoPressureViz</a>.</p>
 <p>You can check the configuration used with:</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressuretemplate_config</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressuretemplate_config</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This is constructed by combining the default parameters used in GeoPressureR overwritten by the parameters you’ve written in <code>config.yml</code> in the config <code>default</code> and overwritten by the config <code>18LX</code>.</p>
 </section><section id="tag" class="level2" data-number="13.3"><h2 data-number="13.3" class="anchored" data-anchor-id="tag">
 <span class="header-section-number">13.3</span> Tag</h2>
 <p>The tag workflow simply consists of preparing the tag data and computing the likelihood map.</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tag</span> <span class="op">&lt;-</span> <span class="fu">geopressuretemplate_tag</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tag</span> <span class="op">&lt;-</span> <span class="fu">geopressuretemplate_tag</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>At the end of each geopressuretemplate function the interim file (e.g.&nbsp;<code>data/interim/18LX.Rdata</code>) is create or updated. Next geopressuretemplate functions will re-use this file to load variables.</p>
 </section><section id="graph" class="level2" data-number="13.4"><h2 data-number="13.4" class="anchored" data-anchor-id="graph">
 <span class="header-section-number">13.4</span> Graph</h2>
 <p>The graph workflow uses the <code>tag</code> computed before to create the graph and produce the outputs according to what you defined in <code>geopressuretemplate</code> in <code>config.yml</code></p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu">geopressuretemplate_graph</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu">geopressuretemplate_graph</span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Because the construction of the graph can be a bit more complicated and takes a lot of time, we’ve implemented a <code>tryCatch</code> approach which returns the <code>graph</code> in case the code fails during the processing so that you can troubleshoot the problem more easily.</p>
 </section><section id="pressurepath" class="level2" data-number="13.5"><h2 data-number="13.5" class="anchored" data-anchor-id="pressurepath">
 <span class="header-section-number">13.5</span> Pressurepath</h2>
 <div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressuretemplate_pressurepath</span><span class="op">(</span><span class="va">id</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressuretemplate_pressurepath</span><span class="op">(</span><span class="va">id</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="outputs" class="level2" data-number="13.6"><h2 data-number="13.6" class="anchored" data-anchor-id="outputs">
 <span class="header-section-number">13.6</span> Outputs</h2>
 <p>All the information needed for your analysis should now be contained in <code>./data/interim/18LX.RData</code></p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">save_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"./data/interim/{id}.RData"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">save_list</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">save_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"./data/interim/{id}.RData"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">save_list</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "tag"              "graph"            "path_most_likely" "path_simulation" 
-[5] "marginal"         "edge_simulation"  "edge_most_likely" "pressurepath"    </code></pre>
+<pre><code>[1] "tag"   "param"</code></pre>
 </div>
 </div>
 
@@ -538,13 +538,14 @@ cookieconsent.run({
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

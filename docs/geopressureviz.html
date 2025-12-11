@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
 <title>7&nbsp; GeoPressureViz – A User Manual for GeoPressureR</title>
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a7790033cff2d4e3bc9b324136141315.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-ef881a153540be65ad1a752274347fb5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -398,7 +399,7 @@ cookieconsent.run({
 
 
 </header><div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Rafnuss/GeoPressureR">GeoPressureR</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Rafnuss/GeoPressureR">GeoPressureR</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>GeoPressureR includes the <a href="https://shiny.rstudio.com/" target="_blank">shiny app</a> <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that <strong>this is a visualization tool only</strong> and as such, it cannot be used to make changes to your data. It offers a useful tool to label your tag and provides a convenient platform to discuss the overall trajectory with collaborators.</p>
 <p><a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" width="100%"></a><em>Screenshot of the</em> <a href="https://rafnuss.shinyapps.io/GeoPressureViz/" target="_blank">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler (18LX), based on (1) the pressure and light match (map colorscale and timeseries) and (2) potential flight distances from the previous and next stationary periods (circles).</p>
@@ -425,17 +426,17 @@ cookieconsent.run({
 <span class="header-section-number">7.2</span> Run GeoPressureViz</h2>
 <p>The visualization can be started with your track using <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz()</a></code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">include</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"./data/interim/18LX.RData"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">include</span></span>
+<span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/load_interim.html">load_interim</a></span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span></span>
 <span>  tag <span class="op">=</span> <span class="va">tag</span>, <span class="co"># required</span></span>
 <span>  path <span class="op">=</span> <span class="va">pressurepath</span>, <span class="co"># optional</span></span>
 <span>  marginal <span class="op">=</span> <span class="va">marginal</span>, <span class="co"># optional</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>If your data is stored in <code>./data/interim/18LX.RData</code>, you can use directly</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note that the path of the shiny app can be retrieved from the global environment using <code>geopressure_path</code>.</p>
 
@@ -491,13 +492,14 @@ cookieconsent.run({
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

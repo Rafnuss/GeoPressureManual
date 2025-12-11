@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Raphaël &amp; Améline Nussbaumer">
 <meta name="description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
@@ -89,14 +89,15 @@ div.csl-indent {
 <link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a7790033cff2d4e3bc9b324136141315.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-ef881a153540be65ad1a752274347fb5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -483,7 +484,13 @@ cookieconsent.run({
 <li>
 <a href="https://raphaelnussbaumer.com/GeoLocatoR/">GeoLocatoR</a> is an R package designed to handle GeoLocator Data Packages.</li>
 <li>
+<a href="https://raphaelnussbaumer.com/GeoLocatorExplorer/">GeoLocatorExplorer</a> is a web app to explore geolocator data packages.</li>
+<li>
 <a href="https://chatgpt.com/g/g-6888c9afb4348191b6134fcfc19232d8-geopressuregpt">GeoPressureGPT</a> is a ChatGPT plugin that allows you to ask any questions in the chat interface.</li>
+<li>
+<a href="https://raphaelnussbaumer.com/GeoMag/">GeoMag</a> is an R package extending GeoPressureR using 3 axis magnetic data to improve geolocation.</li>
+<li>
+<a href="https://raphaelnussbaumer.com/GeoLightViz/">GeoLightViz</a> is a shiny app to visualize geolocation using light data.</li>
 </ul></section><section id="structure-of-the-manual" class="level2"><h2 class="anchored" data-anchor-id="structure-of-the-manual">Structure of the manual</h2>
 <p>This manual includes five parts:</p>
 <ul>
@@ -502,16 +509,19 @@ cookieconsent.run({
 </section><section id="installation" class="level2"><h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <p>The best way to install the GeoPressureR package is through Github:</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html">pkg_install</a></span><span class="op">(</span><span class="st">"Rafnuss/GeoPressureR"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html">pkg_install</a></span><span class="op">(</span><span class="st">"Rafnuss/GeoPressureR"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Development version:</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html">pkg_install</a></span><span class="op">(</span><span class="st">"Rafnuss/GeoPressureR@dev"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can then load the package:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Rafnuss/GeoPressureR">GeoPressureR</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Rafnuss/GeoPressureR">GeoPressureR</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="how-to-cite" class="level2"><h2 class="anchored" data-anchor-id="how-to-cite">How to cite?</h2>
 <blockquote class="blockquote">
-<p>Nussbaumer, R., &amp; Nussbaumer, A. (2024). GeoPressureManual: User Manual for GeoPressureR. Zenodo. <a href="https://doi.org/10.5281/zenodo.10799355">10.5281/zenodo.10799355</a></p>
+<p>Nussbaumer, R., &amp; Nussbaumer, A. (2024). GeoPressureManual: User Manual for GeoPressureR. Zenodo. [https://doi.org/10.5281/zenodo.10799355]</p>
 </blockquote>
 
 
@@ -574,13 +584,14 @@ Nussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, Felix Liechti, and Daniel
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

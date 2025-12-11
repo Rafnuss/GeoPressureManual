@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.26">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
 <title>9&nbsp; Introduction – A User Manual for GeoPressureR</title>
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a7790033cff2d4e3bc9b324136141315.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-ef881a153540be65ad1a752274347fb5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -493,6 +494,11 @@ Important
 <p>Do not clone (or fork) the repository! <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template">Read more about creating repositories from a template</a>.</p>
 </div>
 </div>
+<p><strong>Option 3: using the GeoLocatoR package</strong></p>
+<p>You can create a new GeoPressureTemplate project folder from R directly, using <a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/create_gldp_geopressuretemplate.html"><code>GeoLocatoR::create_geopressuretemplate()</code></a>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#| eval: false</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rafnuss/geolocator">GeoLocatoR</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/create_geopressuretemplate.html">create_geopressuretemplate</a></span><span class="op">(</span><span class="st">"location/to/your/project/folder/my_tracking_study_name"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section><section id="make-yourself-at-home" class="level3" data-number="9.2.2"><h3 data-number="9.2.2" class="anchored" data-anchor-id="make-yourself-at-home">
 <span class="header-section-number">9.2.2</span> 🏠 Make yourself at home</h3>
 <ol type="1">
@@ -502,7 +508,7 @@ Important
 <li>Replace the content of <code>data/</code> with your tag data.</li>
 <li>Install the dependencies needed with</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install.html">install</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install.html">install</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="6" type="1">
 <li>Optionally, modify the <code>LICENCES</code> file (see the <a href="https://r-pkgs.org/description.html">R package book</a> for details).</li>
 </ol></section></section><section id="how-to-master-config.yml" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="how-to-master-config.yml">
@@ -521,18 +527,18 @@ Note
 <p>An important benefit of <code>config</code> is its ability to manage hierarchical configurations: you can organize settings into different groups and override them as needed. This is particularly useful in our context, where we can configure parameters for all tags and/or specific tags.</p>
 </div>
 </div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">default</span><span class="kw">:</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tag_create</span><span class="kw">:</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">extent</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">-16</span><span class="kw">,</span><span class="at"> </span><span class="dv">23</span><span class="kw">,</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span><span class="at"> </span><span class="dv">50</span><span class="kw">]</span><span class="co"> # [W, E, S, N]</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">scale</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">18LX</span><span class="kw">:</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tag_set_map</span><span class="kw">:</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">scale</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">config</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/config/reference/get.html">get</a></span><span class="op">(</span><span class="st">"tag_create"</span>, <span class="st">"18LX"</span><span class="op">)</span><span class="op">$</span><span class="va">extent</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">default</span><span class="kw">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tag_create</span><span class="kw">:</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">extent</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="dv">-16</span><span class="kw">,</span><span class="at"> </span><span class="dv">23</span><span class="kw">,</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span><span class="at"> </span><span class="dv">50</span><span class="kw">]</span><span class="co"> # [W, E, S, N]</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">scale</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">18LX</span><span class="kw">:</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tag_set_map</span><span class="kw">:</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">scale</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">config</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/config/reference/get.html">get</a></span><span class="op">(</span><span class="st">"tag_create"</span>, <span class="st">"18LX"</span><span class="op">)</span><span class="op">$</span><span class="va">extent</span></span>
 <span><span class="co"># [-16, 23, 0, 50] # Returns the default value if not set in 18LX</span></span>
 <span><span class="fu">config</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/config/reference/get.html">get</a></span><span class="op">(</span><span class="st">"tag_set_map"</span>, <span class="st">"18LX"</span><span class="op">)</span><span class="op">$</span><span class="va">scale</span></span>
-<span><span class="co"># 5 # Return the value in 18LX if presents in both</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co"># 5 # Return the value in 18LX if presents in both</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section><section id="analyse-the-data" class="level2" data-number="9.4"><h2 data-number="9.4" class="anchored" data-anchor-id="analyse-the-data">
 <span class="header-section-number">9.4</span> 📈 Analyse the data</h2>
 <p>Now that you’re set up, it’s time to get serious 😬.</p>
@@ -595,7 +601,7 @@ Caution
 </div>
 <p>The <code>geopressuretemplate()</code> function allows you to run the entire GeoPressureR workflow with a single function. By using this workflow, you make sure that your work is reproducible.</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressuretemplate</span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">geopressuretemplate</span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This creates <code>data/interim/18LX.RData</code> with all the trajectory outputs. You’ll learn more in the <a href="./geopressuretemplate-workflow.html">Workflow chapter</a>. In GeoPressureTemplate, this is performed in the file <code>analysis/4-geopressuretemplate.R</code>.</p>
 </section><section id="step-3-your-own-analysis" class="level3" data-number="9.4.3"><h3 data-number="9.4.3" class="anchored" data-anchor-id="step-3-your-own-analysis">
@@ -670,13 +676,14 @@ Caution
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
