@@ -52,3 +52,5 @@ data/processed/18LX/*
 data/processed/CB619/*
 
 /.quarto/
+
+**/*.quarto_ipynb
