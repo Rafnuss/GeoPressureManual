@@ -1,6 +1,6 @@
 # Export and Visual
 
-```{r B-setup}
+```{r visuals-setup}
 #| message: false
 #| include: false
 library(GeoPressureR)
@@ -8,8 +8,8 @@ library(GeoPressureR)
 
 In this chapter, we will see how to create additional figures with external package.
 
-```{r}
-load("./data/interim/18LX.Rdata")
+```{r visuals-load-interim}
+load_interim("18LX")
 ```
 
 ## Export to open format
@@ -22,7 +22,7 @@ For all data.frame formats (e.g., `stap`, `pressurepath`, `path_most_likely` etc
 
 We can add additional information on stationary periods such as altitude or duration:
 
-```{r}
+```{r visuals-export-stap}
 #| warning: false
 # Compute summary stats of altitude, grouped by stap_id
 stap <- merge(
@@ -60,7 +60,7 @@ Note that the most likely path contains all the information from `stap` and coul
 
 Similarly, flights can also be exported:
 
-```{r}
+```{r visuals-export-flight}
 #| warning: false
 pp_f <- pressurepath[pressurepath$stap_id != round(pressurepath$stap_id), ]
 pp_f$stap_s <- floor(pp_f$stap_id)
@@ -93,7 +93,7 @@ write.csv(
 
 GeoPressureR `maps` can be exported in a `.geotiff` file using `terra::writeRaster` after you convert them to a `terra::rast` using `rast.map()`.
 
-```{r}
+```{r visuals-export-maps}
 #| warning: false
 terra::writeRaster(
   rast.map(tag$map_pressure),
@@ -119,7 +119,7 @@ terra::writeRaster(
 
 During the entire workflow, `tag$param` and `graph$param` record all the essential parameters used to create the likelihood map and the graph. It is therefore interesting to export this structure for reproducibility.
 
-```{r}
+```{r visuals-export-params}
 write(
   jsonlite::toJSON(graph$param, auto_unbox = TRUE, pretty = TRUE, force = TRUE),
   file = glue::glue("./data/processed/{tag$param$id}/param.json")
@@ -134,7 +134,7 @@ Let's try to create some beautiful visual trajectories using <a href="https://mo
 
 Because the path encodes the position during the entire stationary period, we need to produce a data.frame with the position at the start and end of each stationary period. We can do this with the following function:
 
-```{r} 
+```{r visuals-movevis-prepare} 
 #| eval: false
 library(moveVis)
 path_most_likely$duration <- stap2duration(path_most_likely)
@@ -171,14 +171,14 @@ frames <- frames_spatial(
 
 It is worth checking what a frame looks like before generating the entire gif (which takes around 10 min to compute), using:
 
-```{r} 
+```{r visuals-movevis-frame-preview} 
 #| eval: false
 plot(frames[[100]])
 ```
 
 If you're satisfied, then go for it!
 
-```{r} 
+```{r visuals-movevis-animate} 
 #| eval: false
 animate_frames(
   frames,
@@ -197,14 +197,14 @@ And here is the map! Check out <a href="https://movevis.org/index.html#examples"
 
 Enter your google map API (see documentation of `?register_google()`)
 
-```{r} 
+```{r visuals-ggmap-setup} 
 #| eval: false
 library(ggmap)
 library(cowplot)
 register_google("googlemap_key")
 ```
 
-```{r} 
+```{r visuals-ggmap-get-map} 
 #| eval: false
 istap_winter <- which(stap2duration(tag$stap) > 50)[2]
 
@@ -222,7 +222,7 @@ p0 <- get_googlemap(
   theme_map()
 ```
 
-```{r}
+```{r visuals-ggmap-contours}
 #| eval: false
 #| warning: false
 
@@ -253,7 +253,7 @@ p <- p0 +
   )
 ```
 
-```{r} 
+```{r visuals-ggmap-inset} 
 #| eval: false
 plot_inset <- ggplot() +
   borders("world", colour = "gray90", fill = "gray50", linewidth = 0.1) +
@@ -284,7 +284,7 @@ pf <- ggdraw() +
   draw_plot(plot_inset, x = .15, y = .06, width = 0.35, height = 0.35)
 ```
 
-```{r} 
+```{r visuals-ggmap-save} 
 #| eval: false
 ggsave(plot = pf, "assets/wintering_location.png")
 ```

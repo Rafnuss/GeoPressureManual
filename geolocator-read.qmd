@@ -1,6 +1,6 @@
 # Read and use
 
-```{r setup}
+```{r 16-setup}
 #| message: false
 library(frictionless)
 library(GeoLocatoR)
@@ -14,7 +14,7 @@ library(leaflet)
 A cool feature of Zenodo is that you can load the data directly without 
 downloading the files! 
 
-```{r}
+```{r 16-read-gldp-zenodo}
 pkg <- read_gldp("https://zenodo.org/records/14641765/files/datapackage.json")
 ```
 
@@ -23,7 +23,7 @@ pkg <- read_gldp("https://zenodo.org/records/14641765/files/datapackage.json")
 If this data package has not yet been analysed with GeoPressureR, you can create a [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) folder from 
 the data package using the following code. Note that this code will open a new RStudio session. 
 
-```{r}
+```{r 16-create-template-from-pkg}
 project_dir <- create_geopressuretemplate(path = tempfile(), pkg = pkg)
 ```               
 
@@ -37,7 +37,7 @@ You're now ready to [analyse your data according to the GeoPressureTemplate inst
 
 If the datapackage you want to use has already been analysed, you can retrieve all the resources of the datapackage:
 
-```{r}
+```{r 16-preview-edges}
 # For instance, display the edges
 edges(pkg) %>%
   head() %>%
@@ -46,7 +46,7 @@ edges(pkg) %>%
 
 Here is an example showing all the tracks
 
-```{r}
+```{r 16-plot-bird-tracks}
 #| code-fold: true
 bird_data <- paths(pkg) %>%
   filter(type == "most_likely")
@@ -93,4 +93,3 @@ leaflet_map <- leaflet_map %>%
 # Display the map
 leaflet_map
 ```
-

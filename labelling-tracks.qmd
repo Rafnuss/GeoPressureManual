@@ -1,6 +1,6 @@
 # Labelling tracks {#sec-labelling-tracks}
 
-```{r 23-setup}
+```{r 08-setup}
 #| message: false
 library(GeoPressureR)
 ```
@@ -39,7 +39,7 @@ In the absence of acceleration data, both labels are applied to the pressure tim
 
 Let's see an example using acceleration data with 18LX.
 
-```{r}
+```{r 08-tag-create-example}
 tag <- tag_create(
   "18LX",
   crop_start = "2017-06-20",
@@ -50,7 +50,7 @@ tag <- tag_create(
 
 **Acceleration data can be used to initialize the `flight` label automatically**. `tag_label_auto()` first classifies low and high activity using a <a href="https://en.wikipedia.org/wiki/K-means_clustering" target="_blank">k-means clustering</a>, and then identifies and labels long periods of high activity (e.g., lasting more than 30 minutes) as flights. A post-processing reclassify short high-activities based on the proximity of other flights to improve the classification of low-activity period happening during a migration flight (e.g. gliding phase).
 
-```{r}
+```{r 08-tag-label-auto-acc}
 tag <- tag_label_auto(tag, min_duration = 30)
 plot(tag, type = "acceleration")
 ```
@@ -61,7 +61,7 @@ More classification methods are described in the <a href="https://kiranlda.githu
 
 The general process to perform the labelling is as follows:
 
-```{r} 
+```{r 08-labelling-process-pseudo-code} 
 #| eval: false
 # 1. Create the csv label file `./data/tag-label/18LX.csv` (only once)
 tag_label_write(tag)
@@ -135,13 +135,13 @@ Use the checks outlined below to evaluate and improve the quality of your labell
 
 The first test consists in checking the duration of flights and stationary periods. This is systematically checked when computing stationary periods and a message will give you feedback on where to find potential errors:
 
-```{r}
+```{r 08-check1-label-v1}
 tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v1.csv")
 ```
 
 Here, I used the label produced by `tag_label_auto()` without making any edits on TRAINSET. In such cases, the most common error is that a flight is cut because the bird was inactive during a few data-points. You can correct this by cleaning up flights on TRAINSET.
 
-```{r}
+```{r 08-check1-label-v2}
 tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v2.csv")
 ```
 
@@ -149,8 +149,8 @@ tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v2.csv")
 
 Here we visually inspect that the pressure timeseries of each stationary period (1) is correctly grouped and (2) does not include pressure outliers (e.g., altitudinal movements). It is worth zooming in and panning on each individual stationary period to manually inspect the timeseries.
 
-```{r}
-plot(tag, type = "pressure", quiet = TRUE)
+```{r 08-check2-pressure}
+plot(tag, type = "pressure")
 ```
 
 ::: callout-warning
@@ -169,7 +169,7 @@ At this stage, the label file is good enough to start estimating the position of
 
 Before this, we need to compute the likelihood maps. It's generally better to start from scratch to be sure everything is working fine:
 
-```{r 23-full-workflow}
+```{r 08-full-workflow}
 #| eval: false
 tag <- tag_create(
   "18LX",
@@ -192,7 +192,7 @@ tag <- geopressure_map(tag, quiet = TRUE)
 ```
 
 
-```{r} 
+```{r 08-geopressureviz-check} 
 #| eval: false
 geopressureviz(
   tag,
@@ -242,9 +242,9 @@ A final check should be performed on the pressurepath computed from your most li
 
 We want to look at the histogram of the pressure error between geolocator and ERA5 timeseries for each stapelev.
 
-```{r}
+```{r 08-pressurepath-check}
 #| warning: false
-load("./data/interim/18LX.Rdata")
+load_interim("18LX")
 plot_pressurepath(pressurepath, type = "hist", plot_plotly = FALSE)
 ```
 

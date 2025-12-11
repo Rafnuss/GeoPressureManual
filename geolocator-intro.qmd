@@ -64,7 +64,7 @@ Once you've published your data package, make sure to [submit it to the communit
 
 You can install GeoLocatoR from GitHub:
 
-```{r}
+```{r 14-install-geolocator}
 #| eval: false
 # install.packages("pak")
 pak::pkg_install("Rafnuss/GeoLocatoR")

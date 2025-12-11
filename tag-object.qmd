@@ -4,7 +4,7 @@ In this basic tutorial, we go through the main steps of GeoPressureR using only 
 
 ![<small>Swainson's Warbler. 16 May 2022. Edisto Nature Trail, South Carolina, US. <a href="https://macaulaylibrary.org/asset/450511161" target="_blank">ML 450511161</a></small>](assets/450511651.png){width="100%" alt="Photo of a Swainson's Warbler, a small brownish songbird, perched on a branch"}
 
-```{r setup}
+```{r 01-setup}
 #| message: false
 library(GeoPressureR)
 ```
@@ -27,7 +27,7 @@ tag <- tag_create(id = "CB619")
 
 You can use the generic `print()` and `plot()` function to visualize the tag data.
 
-```{r}
+```{r 01-plot-tag-pressure}
 #| warning: false
 plot(tag, type = "pressure")
 ```
@@ -53,7 +53,7 @@ As labelling relies on functions and tools presented later in the tutorial, we r
 
 Use `tag_label_write()` to initiate the label (i.e., empty label) and create the label file to `./data/tag-label/CB619.csv`.
 
-```{r}
+```{r 01-tag-label-write}
 tag_label_write(tag)
 ```
 
@@ -67,7 +67,7 @@ Open <https://trainset.raphaelnussbaumer.com/> and click on "Upload Tag Label" t
 
 Read the exported file with `tag_label_read()` to update `tag$pressure` (and, when relevant, `tag$acceleration`), with a new `label` column.
 
-```{r}
+```{r 01-tag-label-read}
 tag <- tag_label_read(tag)
 knitr::kable(head(tag$pressure))
 ```
@@ -76,16 +76,16 @@ knitr::kable(head(tag$pressure))
 
 `tag_label_stap()` then creates the stationary periods based on these labels:
 
-```{r}
+```{r 01-tag-label-stap}
 tag <- tag_label_stap(tag, quiet = TRUE)
 knitr::kable(head(tag$stap))
 ```
 
 Plotting the pressure timeseries of tag provides additional information:
 
-```{r}
+```{r 01-plot-tag-pressure-labelled}
 #| warning: false
-plot(tag, type = "pressure", quiet = TRUE)
+plot(tag, type = "pressure")
 ```
 
 ::: callout-note

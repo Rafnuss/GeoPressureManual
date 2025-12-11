@@ -155,7 +155,7 @@ The core benefit of using GeoPressureTemplate is coming now! You can finally gai
 
 The `geopressuretemplate()` function allows you to run the entire GeoPressureR workflow with a single function. By using this workflow, you make sure that your work is reproducible.
 
-```{r}
+```{r 09-workflow-run}
 #| eval: false
 geopressuretemplate("18LX")
 ```

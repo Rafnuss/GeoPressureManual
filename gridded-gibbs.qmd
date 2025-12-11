@@ -38,13 +38,13 @@ The gibbs samples presents several advantages compare to traditional MH. First, 
 
 We already pre-processed the light and pressure data in the chapter [Static map](light-map.html)
 
-```{r}
+```{r gibbs-load-static-prob}
 load("./data/3_static/18LX_static_prob.Rdata")
 ```
 
 We first normalize the static probability (light and pressure combined) to ensure that the sum of all probabilities on the map is 1.
 
-```{r}
+```{r gibbs-normalize-static-prob}
 static_prob_n <- lapply(static_prob, function(x) {
   probt <- raster::as.matrix(x)
   probt[is.na(probt)] <- 0
@@ -54,7 +54,7 @@ static_prob_n <- lapply(static_prob, function(x) {
 
 Instead of considering all grid cells of the map, we pre-select only the grid cells of each stationary period which are possible according to the static probability. 'Possible' is here defined by all grid cells whose cumulative sum of probability is 99%.
 
-```{r}
+```{r gibbs-select-high-prob-cells}
 thr_prob_percentile <- .99
 nds_id <- lapply(static_prob_n, function(probi) {
   # First, compute the threshold of prob corresponding to percentile
@@ -73,7 +73,7 @@ nds_id <- lapply(static_prob_n, function(probi) {
 
 In the movement model, we define the function to convert a groundspeed [km/h] to a probability value. We here use a standard gamma distribution. Note that in the graph approach, we use wind speed so that the movement model is defined on the **air**speed.
 
-```{r}
+```{r gibbs-movement-model-pdf}
 mvt_pdf <- function(x) {
   dgamma(x, shape = 7, scale = 7)
 }
@@ -81,7 +81,7 @@ mvt_pdf <- function(x) {
 
 We pre-compute the position of the center of all grid cells.
 
-```{r}
+```{r gibbs-compute-grid-centers}
 lat <- seq(
   raster::ymax(static_prob[[1]]),
   raster::ymin(static_prob[[1]]),
@@ -100,7 +100,7 @@ latlon <- expand.grid(lat = lat, lon = lon)
 
 Extract the flight duration from the metadata of the `static_prob` raster data.
 
-```{r}
+```{r gibbs-compute-flight-duration}
 flight_duration <- unlist(lapply(static_prob, function(x) {
   mtf <- metadata(x)
   as.numeric(sum(difftime(mtf$flight$end, mtf$flight$start, units = "hours")))
@@ -109,7 +109,7 @@ flight_duration <- unlist(lapply(static_prob, function(x) {
 
 Create a function which compute the distance from a point `pt` to all other location of the grid `id` and return the probability that the bird flew these distances at a particular stationary period `i_s`.
 
-```{r}
+```{r gibbs-movement-probability-function}
 prob_mvt <- function(pt, i_s, id) {
   gs <- geosphere::distGeo(latlon[pt, ], latlon[id, ]) /
     1000 /
@@ -124,7 +124,7 @@ As any Metropolis-hasting, we need to provide an initial path to the sampler.
 
 Before that, let's set a few constants
 
-```{r}
+```{r gibbs-init-constants}
 nj <- 100 # number of iteration/samples
 nsta <- length(static_prob) # number of stationary period
 nll <- dim(static_prob[[1]])[1:2] # number of grid cell
@@ -132,21 +132,21 @@ nll <- dim(static_prob[[1]])[1:2] # number of grid cell
 
 Initialize the first path with the most likely position of each stationary period. Yet the position is unlikely to be reliable for short stationary periods. To fix this, we linearly interpolate the position of short stationary periods. We first identify and remove the position of short stationary periods (1 day).
 
-```{r}
+```{r gibbs-init-path}
 path <- matrix(ncol = nsta, nrow = nj)
 path[1, ] <- geopressure_map2path(static_prob, interp = 1, format = "ind")$ind
 ```
 
 Then, we set the position of the first and last stationary period (equipment and retrieval) for all simulated path.
 
-```{r}
+```{r gibbs-fix-endpoints}
 path[, 1] <- which(as.matrix(static_prob[[1]]) == 1)
 path[, nsta] <- which(as.matrix(static_prob[[nsta]]) == 1)
 ```
 
 Visualize the initial path
 
-```{r, asis = TRUE}
+```{r gibbs-plot-initial-path, asis = TRUE}
 path_ll <- arrayInd(path[1, ], nll)
 leaflet(width = "100%") |>
   addProviderTiles(providers$Stamen.TerrainBackground) |>
@@ -169,7 +169,7 @@ leaflet(width = "100%") |>
 
 We can set/get the stationary period to simulate
 
-```{r}
+```{r gibbs-select-sim-stationary-periods}
 ss <- which(is.na(path[2, ]))
 ```
 
@@ -177,7 +177,7 @@ ss <- which(is.na(path[2, ]))
 
 Now that all the preparations are done, we can perform the simulation by simply iterating through `nj`
 
-```{r}
+```{r gibbs-run-sampler}
 for (j in seq(from = 2, to = nj)) {
   # Looping through the stationay period to simulate
   for (i_s in ss) {
@@ -201,7 +201,7 @@ for (j in seq(from = 2, to = nj)) {
 
 Illustration of the simulation with 10 paths
 
-```{r}
+```{r gibbs-plot-simulated-paths}
 m <- leaflet(width = "100%") |>
   leaflet(width = "100%") |>
   addProviderTiles(providers$Stamen.TerrainBackground) |>
@@ -229,7 +229,7 @@ m
 
 Compare the simulated position of each stationary period with the corresponding static probability.
 
-```{r}
+```{r gibbs-plot-static-vs-paths}
 #| warning: false
 li_s <- list()
 l <- leaflet(width = "100%") |>

@@ -1,6 +1,6 @@
 # Pressurepath
 
-```{r 21-setup}
+```{r 06-setup}
 #| message: false
 library(GeoPressureR)
 library(ggplot2)
@@ -11,8 +11,8 @@ In this chapter, we will see what a `pressurepath` object is and how to use it t
 
 Let's load the `tag` from the Great Reed Warbler (18LX) created in the [advanced tutorial](light-map.html).
 
-```{r}
-load("./data/interim/18LX.Rdata")
+```{r 06-load-interim}
+load_interim("18LX")
 ```
 
 ## Timeseries at a single position
@@ -23,7 +23,7 @@ Before creating a full `pressurepath`, we start with the basic building block of
 
 Let's start by retrieving the pressure at the known site of equipment, querying the same date as the first stationary period.
 
-```{r geopressure-timeseries}
+```{r 06-geopressure-timeseries}
 #| cache: true
 ts <- geopressure_timeseries(
   lat = tag$stap$known_lat[1],
@@ -36,7 +36,7 @@ ts <- geopressure_timeseries(
 
 We can compare the retrieved ERA5 pressure to the pressure measured on the Great Reed Warbler:
 
-```{r}
+```{r 06-pressure-timeseries-compare}
 #| cache: FALSE
 p <- ggplot() +
   geom_line(data = ts, aes(x = date, y = surface_pressure, colour = "ERA5")) +
@@ -66,7 +66,7 @@ You can think of a pressurepath as the timeseries of pressure that a tag would r
 The `pressurepath` data.frame returned also contains the original pressure `pressure_tag` which can [be very helpful for labelling](labelling-tracks.html) and the altitude of the bird corrected for the natural variation of pressure.
 :::
 
-```{r pressurepath-create}
+```{r 06-pressurepath-create}
 #| cache: true
 pressurepath <- pressurepath_create(
   tag,
@@ -77,7 +77,7 @@ pressurepath <- pressurepath_create(
 
 Note that if a position on the path is over water, it is automatically moved to the closest point onshore as we use ERA5 Land.
 
-```{r}
+```{r 06-pressurepath-plot}
 plot_pressurepath(pressurepath)
 ```
 
@@ -85,7 +85,7 @@ plot_pressurepath(pressurepath)
 
 The main benefit of creating pressurepath is the ability to retrieve ERA5 variables along the trajectory of the bird. One of them is altitude which can be directly plotted with
 
-```{r}
+```{r 06-altitude-plot}
 plot_pressurepath(pressurepath, type = "altitude")
 ```
 
@@ -100,7 +100,7 @@ where $L_b$ is the standard temperature lapse rate, $R$ is the universal gas con
 
 It is typical to assume a standard atmosphere with fixed $T_0=15°C$, $P_0=1013.25 hPa$ and $z_0=0 m$,
 
-```{r}
+```{r 06-altitude-uncorrected}
 Lb <- -0.0065
 R <- 8.31432
 g0 <- 9.80665
@@ -120,7 +120,7 @@ See more information on the [GeoPressureAPI documentation](https://raphaelnussba
 
 We can compare these two altitudes for the first stationary period,
 
-```{r}
+```{r 06-altitude-compare}
 #| echo: false
 p <- ggplot(pressurepath[pressurepath$stap_id == 1, ]) +
   geom_line(aes(
@@ -151,7 +151,7 @@ The uncorrected altitude estimate incorrectly produces a 200m amplitude error in
 
 In order to estimate the flight altitude above ground level, we need to retrieve the ground level elevation along the path. This can be done with `path2elevation()`.
 
-```{r}
+```{r 06-elevation-from-path}
 elevation <- path2elevation(
   path_most_likely,
   scale = tag$param$tag_set_map$scale,
@@ -162,7 +162,7 @@ elevation <- path2elevation(
 
 Note that because of the imprecision of the position, particularly during flight, it's important to analyse with caution the relationship between flight altitude and ground elevation. `path2elevation()` aggregates the elevation across a larger area defined by `scale` and returns different `percentile` values.
 
-```{r}
+```{r 06-elevation-vs-flight-plot}
 #| echo: false
 #| warning: false
 # Compute distance along the path for pressurepath (to be able to plot it with elevation)
@@ -226,7 +226,7 @@ plotly::layout(plotly::ggplotly(p), legend = list(orientation = "h"))
 `pressurepath_create()` can also be used to retrieve other ERA5 variables along a path, such as temperature, cloud cover, and precipitation. This retrieves data from both [ERA5-single-levels](https://doi.org/10.24381/cds.adbb2d47) and [ERA5-LAND](https://doi.org/10.24381/cds.e2161bac) datasets. Use `GeoPressureR:::pressurepath_variable` to list all the variables available. In addition, `pressurepath_create()` also computes the local sunrise and sunset time along the path using `path2twilight()`.  
 
 
-```{r pressurepath-advence}
+```{r 06-pressurepath-advanced-create}
 #| cache: true
 pressurepath_2_to_5 <- pressurepath_create(
   tag,
@@ -247,7 +247,7 @@ pressurepath_2_to_5 <- pressurepath_create(
 )
 ```
 
-```{r}
+```{r 06-temperature-vs-daynight}
 pressurepath_2_to_5 %>%
   mutate(day = date > sunrise & date < sunset) %>%
   ggplot(aes(x = date, y = temperature_2m, colour = day)) +
@@ -256,7 +256,7 @@ pressurepath_2_to_5 %>%
 
 ## Save
 
-```{r 21-save}
+```{r 06-save-interim}
 #| warning: false
 save(
   tag,

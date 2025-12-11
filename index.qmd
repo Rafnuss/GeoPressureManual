@@ -39,7 +39,10 @@ The GeoPressure suite includes several tools:
 - GeoPressureViz is a [shiny app](https://shiny.posit.co/) included in GeoPressureR to visualize the trajectory of your bird. See the [GeoPressureViz](geopressureviz.html) chapter for an introduction and [the demo for 18LX](https://rafnuss.shinyapps.io/GeoPressureViz/).
 - [GeoLocator Data Package (DP)](https://github.com/rafnuss/geolocator-dp) is a data exchange format for geolocator data.
 - [GeoLocatoR](https://raphaelnussbaumer.com/GeoLocatoR/) is an R package designed to handle GeoLocator Data Packages.
+- [GeoLocatorExplorer](https://raphaelnussbaumer.com/GeoLocatorExplorer/) is a web app to explore geolocator data packages.
 - [GeoPressureGPT](https://chatgpt.com/g/g-6888c9afb4348191b6134fcfc19232d8-geopressuregpt) is a ChatGPT plugin that allows you to ask any questions in the chat interface.
+- [GeoMag](https://raphaelnussbaumer.com/GeoMag/) is an R package extending GeoPressureR using 3 axis magnetic data to improve geolocation.
+- [GeoLightViz](https://raphaelnussbaumer.com/GeoLightViz/) is a shiny app to visualize geolocation using light data.
 
 ## Structure of the manual
 
@@ -58,15 +61,18 @@ Feel free to read through the manual, or to [fork the repository](https://github
 
 The best way to install the GeoPressureR package is through Github:
 
-```{r} 
+```{r intro-install-geopressurer} 
 #| eval: false
 # install.packages("pak")
 pak::pkg_install("Rafnuss/GeoPressureR")
+
+# Development version:
+pak::pkg_install("Rafnuss/GeoPressureR@dev")
 ```
 
 We can then load the package:
 
-```{r setup}
+```{r intro-setup}
 #| message: false
 library(GeoPressureR)
 ```
@@ -74,4 +80,4 @@ library(GeoPressureR)
 
 ## How to cite?
 
-> Nussbaumer, R., & Nussbaumer, A. (2024). GeoPressureManual: User Manual for GeoPressureR. Zenodo. [10.5281/zenodo.10799355](https://doi.org/10.5281/zenodo.10799355)
+> Nussbaumer, R., & Nussbaumer, A. (2024). GeoPressureManual: User Manual for GeoPressureR. Zenodo. [https://doi.org/10.5281/zenodo.10799355]

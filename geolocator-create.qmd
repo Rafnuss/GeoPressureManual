@@ -14,8 +14,7 @@ To be able to follow this guide, you need to have a GeoPressureTemplate project 
 If you've not yet performed the GeoPressureR analysis, it is still possible to create a geolocator data package with only the core ressources. 
 :::
 
-
-```{r setup}
+```{r 15-setup}
 #| message: false
 library(frictionless)
 library(GeoLocatoR)
@@ -23,13 +22,32 @@ library(tidyverse)
 library(zen4R)
 ```
 
+::: callout-important
+
+The easiest way to create a Zendo record and ensure that the data is correctly sync is using the Zenodo API and the [`Zen4R`](https://github.com/eblondel/zen4R/wiki) package.
+
+For this, you first need to [create a token](https://zenodo.org/account/settings/applications/tokens/new/) and save it to your keyring with:
+
+```{r 15-set-zenodo-token}
+#| eval: false
+keyring::key_set_with_value("ZENODO_PAT", password = "{your_zenodo_token}")
+```
+
+This allows us to create a `ZenodoManager` object which becomes useful later.
+
+```{r 15-init-zenodo-manager}
+zenodo <- ZenodoManager$new(token = keyring::key_get(service = "ZENODO_PAT"))
+```
+
+:::
+
 ## Setup of the example
 
 For this example, we won't be using the Swainson's Warbler nor Great Reed Warbler as we want a full project with multiple tags. Instead, we download [the GeoPressureTemplate of the Woodland Kingfisher geolocator project](https://github.com/Rafnuss/WoodlandKingfisher). Our goal will essentially be to reproduce the [associated GeoLocator Data Package uploaded on Zenodo already](https://zenodo.org/records/13829929).
 
 We can download this GeoPressureTemplate from Github in a temporary folder using the following code:
 
-```{r}
+```{r 15-download-geopressuretemplate-example}
 #| code-fold: true
 #| message: false
 repo <- "Rafnuss/WoodlandKingfisher"
@@ -50,118 +68,91 @@ unzip(temp_zip, exdir = temp_dir)
 directory <- file.path(temp_dir, list.files(temp_dir))
 ```
 
-
 ## Initiate datapackage with metadata
 
-We can generate a GeoLocator Data Package `pkg` from a GeoPressureTemplate folder with `create_gldp_geopressuretemplate()`. This function will read the `DESCRIPTION` file and create a frictionless package with the metadata. At this stage, no data is included in the package.
+### Initiate datapackage using the DESCRIPTION file
 
-```{r}
+We can generate a GeoLocator Data Package `pkg` from an existing GeoPressureTemplate folder with `create_gldp_geopressuretemplate()`. This function will read the `DESCRIPTION` file and create a frictionless package with the metadata you've already entered.
+
+```{r 15-create-gldp-from-template}
 pkg <- create_gldp_geopressuretemplate(directory = directory)
 ```
 
-::: callout-info
+### Create record on Zenodo
 
-Read the [datapackage specification](https://raphaelnussbaumer.com/GeoLocator-DP/datapackage/) to learn about all recommended metadata that can be added. 
+The easiest way to update the metadata is to create an empty Zenodo record and fill in all metadata directly on Zenodo. This way, you can benefit from the Zenodo interface to enter all metadata and share it with co-authors for review before creating the package. 
 
-Generally, the information (title, description, license, etc...) between the code (DESCRIPTION file) would be different than the one for the datapackage published. Make sure to update these information accordingly!
+```{r 15-create-zenodo-record}
+#| eval: false
+z <- zenodo$depositRecord(
+  gldp_to_zenodo(pkg),
+  reserveDOI = TRUE,
+  publish = FALSE
+)
+browseURL(z$links$self_html)
+```
+
+### Update metadata on Zenodo
+
+Login to Zenodo and fill in all metadata you want to add to your GeoLocator Data Package. Read the [datapackage specification](https://raphaelnussbaumer.com/GeoLocator-DP/datapackage/) to learn about all recommended metadata that can be added
+
+::: callout-note
+Note that a datapackage `contributors` corresponds to `creators` on Zenodo and not the `contributors`.
 :::
 
-```{r}
-# title
-# pkg$title <- "GeoLocator Data Package: {Species} in {country}"
 
-# Contributors/creators:
-# Default is to take the GeoPressureTemplate authors, but it is common that
-# additional co-authors should be added for the datapackage
-pkg$contributors <- list(
-  # required
-  list(
-    title = "Raphaël Nussbaumer",
-    roles = c("ContactPerson", "DataCurator", "ProjectLeader"),
-    email = "raphael.nussbaumer@vogelwarte.ch",
-    path = "https://orcid.org/0000-0002-8185-1020",
-    organization = "Swiss Ornithological Institute"
-  )
-)
+::: callout-tip
+To be able to save the draft of your record, you'll need to upload some file, even a dummy text file will do. You can always delete it later and upload with the correct ones.
 
-# There are no embargo by default (1970-01-01)
-pkg$embargo <- "2030-01-01"
+Sharing the draft with co-authors is a great way to ensure that all metadata are correct before publication.
+:::
 
-# Licences
-# Code licenses are often not the same as data licences.
-pkg$licenses = list(list(
-  name = "CC-BY-4.0",
-  title = "Creative Commons Attribution 4.0",
-  path = "https://creativecommons.org/licenses/by/4.0/"
-))
+### Create datapackage from Zenodo record
+
+Once you're happy with the metadata entered on Zenodo, you create a new GeoLocator Data Package from the Zenodo record. For this, you need to retrieve the [concept DOI](https://support.zenodo.org/help/en-gb/1-upload-deposit/97-what-is-doi-versioning) of your Zenodo record. The concept DOI is the one that doesn't change with new versions. The DOI displayed on Zenodo is actually the DOI of the first version, but you can retrieve the concept DOI by substracting `1` to your ID number.
+
+```{r 15-get-zenodo-concept-record}
+#| eval: false
+z <- zenodo$getDepositionByConceptDOI("10.5281/zenodo.{ZENODO_ID - 1}")
+pkg <- zenodo_to_gldp(z)
 ```
 
-In addition, here are some more optional metadata:
 
-```{r}
-# Review the description, often, you want to be more descriptive here.
-# pkg$description
+## Add the data
 
-# Add keywords
-pkg$keywords <- c(
-  "Woodland Kingfisher",
-  "intra-african",
-  "multi-sensor geolocator"
-)
+Now that we have the metadata set up, we can add the data to the package. `add_gldp_geopressuretemplate()` is a key function that read the geopressuretemplate data available and automatically add the most up-to-date available data to the datapackage.
 
-# Funding sources
-pkg$grants <- c("Swiss Ornithological Intitute")
-
-# Related Identifiers
-# e.g. papers, project pages, derived datasets, etc.
-pkg$relatedIdentifiers <- list(
-  list(
-    relationType = "IsPartOf",
-    relatedIdentifier = "10.5281/zenodo.11207081",
-    relatedIdentifierType = "DOI"
-  )
-)
-```
-
-You can display all these information at any point with
-
-```{r}
-#| collapse: true
-print(pkg)
-```
-
-## Add the geopressuretemplate data
-
-`add_gldp_geopressuretemplate()` is a key function that read the geopressuretemplate data available and automatically add the most up-to-date available data to the datapackage.
-
-```{r}
+```{r 15-add-data-from-geopressuretemplate}
 pkg <- add_gldp_geopressuretemplate(pkg, directory = directory)
 ```
 
+## Data to include
+
+By default, `add_gldp_geopressuretemplate()` adds first the tag data from the `data/interim` Rdata file. For all tag_id that don't have a interim file, it read the data directly from the `data/raw-data` folder, using `config.yml` information. Using the `from` argument, you can specify to only read from one of these two locations. It's possible to exclude specific tag_id by adding a `_` to the interim file name or raw-data folder (e.g., `_TAG1234.RData` or `_TAG1234/`). 
+
+### `tags` and `observations` resources
 
 If `tags.csv` and `observations.csv` are not available (i.e., not stored in the `data/` folder of your project), `tags` and `observations` resources would have been generated by `add_gldp_geopressuretemplate()` based on the available information. You certainly need to edit them manually, adding some key missing information (e.g. `ring_number`).
 
-```{r}
+```{r 15-export-tags-observations}
 #| eval: false
 write.csv(tags(pkg), file = "data/tags.csv", row.names = FALSE)
 write.csv(observations(pkg), file = "data/observations.csv", row.names = FALSE)
 ```
 
+### Inspect the created package
 
-```{r}
-#| collapse: true
+Before uploading the data, you should also inspect the created package to ensure that everything is correct.
+
+Check the summary of the package, in particular the number of tags in each resources.
+
+```{r 15-inspect-pkg-summary}
 print(pkg)
 ```
 
-::: callout-tip
-You can now see a lot of new metadata (e.g., number of tags, coverages) as well as the resources (table)! 
-:::
-
-## Check the validity of the data package
-
 You can visualize the coverage of the package by ploting the Data Package. Check for the correct number of tags, as well as equipment and retrieval dates.
 
-```{r}
+```{r 15-plot-pkg-coverage}
 plot(pkg, "ring")
 plot(pkg, "coverage")
 plot(pkg, "map")
@@ -171,7 +162,7 @@ plot(pkg, "map")
 
 Finally, we check that the package is compliant with GeoLocator Data Package standards.
 
-```{r}
+```{r 15-validate-gldp}
 #| collapse: true
 validate_gldp(pkg)
 ```
@@ -181,84 +172,26 @@ It is quite normal that you'll first see some error here. Try to fix them and re
 :::
 
 
-## Upload to Zenodo
+## Upload data to Zenodo
+
 
 ### Option 1: Manually
 
-First, create a new deposit on [Zenodo](https://zenodo.org/uploads/new) and [reserve the DOI](https://help.zenodo.org/docs/deposit/describe-records/reserve-doi/#reserve-doi) to be able to define the package `id`.
+We can write the datapackage to file
 
-::: callout-info
-The package `id` should be the [concept DOI](https://support.zenodo.org/help/en-gb/1-upload-deposit/97-what-is-doi-versioning), that is, the one that doesn't change with new versions. The DOI displayed on Zenodo is actually the DOI of the first version, but you can retrieve the concept DOI by substracting `1` to your ID number
-
-```{r}
+```{r 15-write-package-basic}
 #| eval: false
-pkg$id <- "https://doi.org/10.5281/zenodo.{ZENODO_ID - 1}"
-# e.g. "10.5281/zenodo.14620590" for a DOI reserved as 10.5281/zenodo.14620591
-
-# Update the bibliographic citation with this new DOI
-pkg <- update_gldp_bibliographic_citation(pkg)
-``
-`
-:::
-
-Now, we can write the datapackage to file
-
-```{r}
-#| eval: false
-write_package(pkg, directory = "data/datapackage")
+write_package(pkg)
 ```
 
 The content of the folder created can now be uploaded on your Zenodo deposit.
 
-::: callout-tip
-You can populate all other fields on Zenodo with the information provided in `datapackage.json`! Note that a datapackage `contributors` corresponds to `creators` on Zenodo and not the `contributors`.
-:::
 
 ### Option 2: Programatically
 
-A more efficient solution is to create a deposit on Zenodo using the API. For this, you first need to [create a token](https://zenodo.org/account/settings/applications/tokens/new/) and save it to your keyring with:
+Alternatively, we can also upload the data to the deposit with
 
-```{r}
-#| eval: false
-keyring::key_set_with_value("ZENODO_PAT", password = "{your_zenodo_token}")
-```
-
-This allows us to create a `ZenodoManager` object which becomes useful later.
-
-```{r}
-zenodo <- ZenodoManager$new(token = keyring::key_get(service = "ZENODO_PAT"))
-```
-
-You can create a `zen4R::ZenodoRecord` object from the from `pkg`.
-
-```{r}
-z <- gldp_to_zenodo(pkg)
-print(z)
-```
-
-::: callout-tip
-Learn more about [the `zen4R` package](https://github.com/eblondel/zen4R/wiki)!
-:::
-
-You can create the deposit on the website. For this we need to reserve the DOI, but without publishing the record yet: there is no data!
-
-```{r}
-#| eval: false
-z <- zenodo$depositRecord(z, reserveDOI = TRUE, publish = FALSE)
-```
-
-You can now open this record on your browser using its link: `z$links$self_html`
-
-We can retrieve the concept DOI to build the pkg `id`
-
-```{r}
-#| eval: false
-pkg$id <- paste0("https://doi.org/", z$getConceptDOI())
-```
-
-We can now upload the data to the deposit with (or do it manually from the website)
-
-```{r}
+```{r 15-write-package-and-upload}
 #| eval: false
 write_package(pkg, directory = pkg$version)
 for (f in list.files(pkg$version)) {
@@ -266,19 +199,7 @@ for (f in list.files(pkg$version)) {
 }
 ```
 
-::: callout-warning
-At this stage, the Zenodo record is still not published. This is voluntarily not done automatically so that you check the record before publishing.
-:::
 
-::: callout-tip
-A nice feature of Zenodo is that you can share the record BEFORE publication with others (e.g., co-authors) allowing them to check everything before publication.
+## Publish the record
 
-If any modification of the metadata are made on Zenodo, you overwrite `pkg`'s metadata with
-
-```{r}
-#| eval: false
-z_updated <- zenodo$getDepositionByConceptDOI(z$getConceptDOI())
-pkg <- zenodoRecord2gldp(z_updated, pkg)
-`
-``
-:::
+Finally, once you're happy with everything, you can publish the record on Zenodo

@@ -92,7 +92,7 @@ We then define the movement model by setting a parametric function converting gr
 
 In this basic tutorial, we use the gamma distribution to model the probability of groundspeed.
 
-```{r}
+```{r 03-graph-set-movement}
 graph <- graph_set_movement(
   graph,
   method = "gamma",
@@ -106,7 +106,7 @@ Because birds may fly back and forth over small distances, we give all groundspe
 
 We can visualize the parametric function created with `plot_graph_movement()`
 
-```{r}
+```{r 03-graph-movement-plot}
 plot_graph_movement(graph)
 ```
 
@@ -118,13 +118,13 @@ With the graph built, we can now generate the three main products of GeoPressure
 
 The graph can directly and efficiently compute the most likely path, that is, the set of positions at each stationary period which maximizes the joint probability of the trajectory. It finds the optimal compromise between the most likely position according to the pressure (and light) likelihood map and the realistic flight distance defined by the movement model.
 
-```{r 03-graph-most-likely}
+```{r 03-path-most-likely-create}
 path_most_likely <- graph_most_likely(graph, quiet = TRUE)
 ```
 
 In GeoPressureR, a `path` is a standard data.frame created and used [in several other functions](https://raphaelnussbaumer.com/GeoPressureR/reference/index.html#path).
 
-```{r}
+```{r 03-path-most-likely-summary}
 knitr::kable(head(path_most_likely, 3))
 plot_path(path_most_likely)
 ```
@@ -133,13 +133,13 @@ plot_path(path_most_likely)
 
 Estimating the uncertainty of the bird's position for each stationary period is generally the most sought-after output of tracking studies. While the pressure likelihood map provides some information for each stationary period, we can now produce the probability map of positions accounting for all observations and transitions. In the HMM, these maps correspond to the marginal distribution of a Markov process.
 
-```{r 03-graph-marginal}
+```{r 03-map-marginal-create}
 marginal <- graph_marginal(graph, quiet = TRUE)
 ```
 
 You can visualize the marginal map along with the most likely path:
 
-```{r}
+```{r 03-map-marginal-plot}
 plot(marginal, path = path_most_likely)
 ```
 
@@ -149,7 +149,7 @@ When you want to perform a post-hoc computation on the trajectory (e.g., mean fl
 
 Note that we are using the forward filtering backward sampling algorithm, allowing to sample trajectories independently and without error.
 
-```{r 03-graph-simulation}
+```{r 03-path-simulation-create}
 path_simulation <- graph_simulation(
   graph,
   nj = 10, # Number of simulation
@@ -157,7 +157,7 @@ path_simulation <- graph_simulation(
 )
 ```
 
-```{r}
+```{r 03-path-simulation-plot}
 plot_path(path_simulation, plot_leaflet = FALSE)
 ```
 
@@ -167,7 +167,7 @@ You might want to save some of the key objects such as `tag` or `marginal` in an
 
 Note that `graph` can be quite large if the number of stationary periods and grid resolution is high.
 
-```{r 03-save}
+```{r 03-save-interim}
 #| warning: false
 save(
   tag,

@@ -5,7 +5,7 @@ aliases:
 
 # Probability aggregation
 
-```{r C-setup}
+```{r B-setup}
 #| message: false
 #| include: false
 library(GeoPressureR)
@@ -35,7 +35,7 @@ This way of building the error term has some important consequences. A timeserie
 
 Let's load the data and filter
 
-```{r}
+```{r B-load-interim}
 load("./data/interim/CB619.RData")
 ```
 
@@ -43,7 +43,7 @@ We are using [the GeoPressure API](https://raphaelnussbaumer.com/GeoPressureServ
 
 The MSE shows where the match of pressure is the best, excluding open water (ERA5-LAND does not support water). `tag$stap` also contains a column `nb_sample` which indicates the number of datapoints used to compute the MSE $n$. This value can only be up to the value `max_sample`.
 
-```{r}
+```{r B-plot-mse}
 plot(tag, type = "map_pressure_mse")
 knitr::kable(head(tag$stap))
 ```
@@ -56,7 +56,7 @@ The figure below shows the error distribution at the known location of equipment
 
 ![Histogram of the error term](assets/Appendix_F_4.png){width="100%"} They all look close enough to a Gaussian distribution. In the case of the Great Reed Warbler, the standard deviation is around 0.5.
 
-```{r}
+```{r B-set-sd}
 sd <- 0.5
 ```
 
@@ -70,7 +70,7 @@ We can re-write this equation as a function of the MSE $$ f_{ind}(\boldsymbol{\v
 
 Using this equation, we can compute the probability for each stationary periods. This function corresponds the one used in `geopressure_map_likelihood()` using the following parameters
 
-```{r}
+```{r B-likelihood-w-1}
 tag_tmp <- geopressure_map_likelihood(
   tag,
   sd = sd,
@@ -122,7 +122,7 @@ An interesting case is if $w=1/n$, so that $\sum_t w_t=1$. This would simplify t
 
 We can try this and see the influence on the probability map.
 
-```{r}
+```{r B-likelihood-w-1-over-n}
 tag_tmp <- geopressure_map_likelihood(
   tag,
   sd = sd,
@@ -143,7 +143,7 @@ $$F(\boldsymbol{\varepsilon}) \propto \left({\frac {1}{2\pi \sigma ^{2}}}\right)
 
 This scheme was designed to minimize the strength of $1/n$
 
-```{r}
+```{r B-likelihood-w-logn-over-n}
 tag_tmp <- geopressure_map_likelihood(
   tag,
   sd = sd,

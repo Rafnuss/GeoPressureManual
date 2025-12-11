@@ -1,6 +1,6 @@
 # Workflow
 
-```{r setup}
+```{r 13-setup}
 #| message: false
 #| include: false
 id <- "18LX"
@@ -15,7 +15,7 @@ The GeoPressureR workflow follows a series of functions taking as input the raw 
 
 After performing all preparation steps, you are able to run the entire workflow in a single line:
 
-```{r}
+```{r 13-workflow-run}
 #| eval: false
 geopressuretemplate("18LX")
 ```
@@ -68,7 +68,7 @@ default:
 
 You can check the configuration used with:
 
-```{r}
+```{r 13-config-check}
 #| eval: false
 geopressuretemplate_config(id)
 ```
@@ -79,7 +79,7 @@ This is constructed by combining the default parameters used in GeoPressureR ove
 
 The tag workflow simply consists of preparing the tag data and computing the likelihood map.
 
-```{r}
+```{r 13-tag-workflow}
 #| eval: false
 #| cache: true
 tag <- geopressuretemplate_tag(id)
@@ -91,7 +91,7 @@ At the end of each geopressuretemplate function the interim file (e.g. `data/int
 
 The graph workflow uses the `tag` computed before to create the graph and produce the outputs according to what you defined in `geopressuretemplate` in `config.yml`
 
-```{r}
+```{r 13-graph-workflow}
 #| eval: false
 #| cache: true
 graph <- geopressuretemplate_graph(id)
@@ -101,7 +101,7 @@ Because the construction of the graph can be a bit more complicated and takes a 
 
 ## Pressurepath
 
-```{r, eval = FALSE}
+```{r 13-pressurepath-workflow, eval = FALSE}
 #| cache: true
 geopressuretemplate_pressurepath(id, quiet = FALSE)
 ```
@@ -111,7 +111,7 @@ geopressuretemplate_pressurepath(id, quiet = FALSE)
 
 All the information needed for your analysis should now be contained in `./data/interim/18LX.RData`
 
-```{r}
+```{r 13-load-interim}
 save_list <- load(glue::glue("./data/interim/{id}.RData"))
 print(save_list)
 ```

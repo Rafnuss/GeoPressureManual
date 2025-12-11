@@ -21,7 +21,7 @@ See `map_create()` for technical characteristics of a GeoPressureR `map`.
 
 The first step is to define the characteristics of the `map`, by setting the following parameter to the `tag` object.
 
-```{r 02-setmap}
+```{r 02-map-pressure-set-params}
 tag <- tag_set_map(
   tag,
   extent = c(-100, -68, 0, 40), # coordinates of the map to request (W, E, S, N)
@@ -58,7 +58,7 @@ The function `geopressure_map()` conveniently performs all the necessary steps, 
 
 ### Compute mismatch maps
 
-```{r 02-geopressure_map_mismatch}
+```{r 02-map-pressure-mismatch-create}
 #| cache: true
 tag <- geopressure_map_mismatch(
   tag,
@@ -90,13 +90,13 @@ This function returns the `tag` with two maps:
 - `tag$map_pressure_mask` $\textbf{z}_{thr}$ is a GeoPressureR `map` of the proportion of data-points in the pressure timeseries which correspond to an altitude that falls between the min and max altitude of each grid cell (accounting for the `margin` parameter). 
 - `tag$map_pressure_mse` $\textbf{MSE}$ is a GeoPressureR `map` of the normalised mean square error between the tag pressure timeseries and ERA5 map. The mean error is removed because we assume no specific altitude of the tag, thus allowing an altitudinal shift of the pressure timeseries. For computational efficiency, $\textbf{MSE}$ is only computed on the pixels for which $\textbf{z}_{thr}>thr_{mask}$.
 
-```{r}
+```{r 02-map-pressure-mismatch-plot}
 plot(tag, type = "map_pressure_mse")
 ```
 
 This is an alternative and identical way to plot a `map` from a `tag`.
 
-```{r}
+```{r 02-map-pressure-mask-plot}
 #| warning: false
 plot(tag$map_pressure_mask)
 ```
@@ -107,7 +107,7 @@ We combine and convert these two maps into a single likelihood map using $$f \pr
 
 Because the auto-correlation of the timeseries is not accounted for in this equation, we use a log-linear pooling weight $w(n)=\log(n)/n$, where $n$ is the number of data-points in the time series. See [Probability aggregation](probability-aggregation.html#gaussian-likelihood-function) for more information on this.
 
-```{r}
+```{r 02-map-pressure-likelihood-create}
 tag <- geopressure_map_likelihood(
   tag,
   sd = 0.5,
@@ -125,7 +125,7 @@ This value should ideally be calibrated, but it is usually safe to start with a 
 
 The resulting pressure likelihood map can be visualized with:
 
-```{r}
+```{r 02-map-pressure-plot}
 #| warning: false
 plot(tag$map_pressure)
 ```

@@ -1,6 +1,6 @@
 # GeoPressureViz
 
-```{r 22-setup}
+```{r 07-setup}
 #| message: false
 library(GeoPressureR)
 ```
@@ -39,10 +39,10 @@ GeoPressureR includes the <a href="https://shiny.rstudio.com/" target="_blank">s
 
 The visualization can be started with your track using `geopressureviz()`.
 
-```{r}
+```{r 07-geopressureviz-run-from-objects}
 #| eval: false
 include
-load("./data/interim/18LX.RData")
+load_interim("18LX")
 geopressureviz(
   tag = tag, # required
   path = pressurepath, # optional
@@ -52,7 +52,7 @@ geopressureviz(
 
 If your data is stored in `./data/interim/18LX.RData`, you can use directly
 
-```{r}
+```{r 07-geopressureviz-run-from-id}
 #| eval: false
 geopressureviz("18LX")
 ```
