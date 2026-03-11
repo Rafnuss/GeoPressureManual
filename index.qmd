@@ -15,6 +15,16 @@ For a quick overview of the method, here is a 10 min presentation:
 
 {{< video https://www.youtube.com/embed/U7jAK9nZNQU >}}
 
+## Prerequisites
+
+GeoPressureR is an R package, and this manual assumes basic knowledge of R.
+
+- We recommend installing the latest version of R; GeoPressureR requires at least R `4.1.0`.
+- GeoPressureR works on macOS, Windows, and Linux.
+- We recommend using [Positron](https://positron.posit.co/download.html) or [RStudio Desktop](https://posit.co/download/rstudio-desktop/) as your editor/IDE.
+- An internet connection is required to download ERA5 pressure data during the modelling workflow.
+- For trajectory modelling, a computer with 8-16 GB RAM is highly recommended. It can also run on 4 GB RAM, but computations will usually be slower and may require reducing model size.
+
 ## Data requirements
 
 The only strict requirement is that your geolocator provides a continuous timeseries of pressure (\<1hr resolution). Beyond this, here are a few things that can help:

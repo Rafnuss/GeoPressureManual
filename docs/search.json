@@ -1070,5 +1070,15 @@
       "Appendices",
       "<span class='chapter-number'>B</span>  <span class='chapter-title'>Probability aggregation</span>"
     ]
+  },
+  {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "A User Manual for GeoPressureR",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nGeoPressureR is an R package, and this manual assumes basic knowledge of R.\n\nWe recommend installing the latest version of R; GeoPressureR requires at least R 4.1.0.\nGeoPressureR works on macOS, Windows, and Linux.\nWe recommend using Positron or RStudio Desktop as your editor/IDE.\nAn internet connection is required to download ERA5 pressure data during the modelling workflow.\nFor trajectory modelling, a computer with 8-16 GB RAM is highly recommended. It can also run on 4 GB RAM, but computations will usually be slower and may require reducing model size.",
+    "crumbs": [
+      "Introduction"
+    ]
   }
 ]

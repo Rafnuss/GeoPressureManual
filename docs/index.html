@@ -399,7 +399,8 @@ cookieconsent.run({
 <li>
 <a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-<li><a href="#data-requirements" id="toc-data-requirements" class="nav-link" data-scroll-target="#data-requirements">Data requirements</a></li>
+<li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#data-requirements" id="toc-data-requirements" class="nav-link" data-scroll-target="#data-requirements">Data requirements</a></li>
   <li><a href="#the-geopressure-suite" id="toc-the-geopressure-suite" class="nav-link" data-scroll-target="#the-geopressure-suite">The GeoPressure suite</a></li>
   <li><a href="#structure-of-the-manual" id="toc-structure-of-the-manual" class="nav-link" data-scroll-target="#structure-of-the-manual">Structure of the manual</a></li>
   <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
@@ -457,7 +458,15 @@ cookieconsent.run({
 </ul>
 <p>For a quick overview of the method, here is a 10 min presentation:</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/U7jAK9nZNQU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<section id="data-requirements" class="level2"><h2 class="anchored" data-anchor-id="data-requirements">Data requirements</h2>
+<section id="prerequisites" class="level2"><h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<p>GeoPressureR is an R package, and this manual assumes basic knowledge of R.</p>
+<ul>
+<li>We recommend installing the latest version of R; GeoPressureR requires at least R <code>4.1.0</code>.</li>
+<li>GeoPressureR works on macOS, Windows, and Linux.</li>
+<li>We recommend using <a href="https://positron.posit.co/download.html">Positron</a> or <a href="https://posit.co/download/rstudio-desktop/">RStudio Desktop</a> as your editor/IDE.</li>
+<li>An internet connection is required to download ERA5 pressure data during the modelling workflow.</li>
+<li>For trajectory modelling, a computer with 8-16 GB RAM is highly recommended. It can also run on 4 GB RAM, but computations will usually be slower and may require reducing model size.</li>
+</ul></section><section id="data-requirements" class="level2"><h2 class="anchored" data-anchor-id="data-requirements">Data requirements</h2>
 <p>The only strict requirement is that your geolocator provides a continuous timeseries of pressure (&lt;1hr resolution). Beyond this, here are a few things that can help:</p>
 <ul>
 <li>GeoPressureR works best for species with a clear separation between stationary and migratory periods, as opposed to birds moving continuously over time and/or gradually over large distances (10-50km) or altitude (&gt;10m). As such, aerial feeders such as swifts or bee-eaters or mountainous species do not lend themselves well to this method.</li>
