@@ -11,7 +11,7 @@ To be able to follow this guide, you need to have a GeoPressureTemplate project 
 ::: 
 
 ::: callout-info
-If you've not yet performed the GeoPressureR analysis, it is still possible to create a geolocator data package with only the core ressources. 
+If you've not yet performed the GeoPressureR analysis, it is still possible to create a geolocator data package with only the core resources. 
 :::
 
 ```{r 15-setup}
@@ -24,7 +24,7 @@ library(zen4R)
 
 ::: callout-important
 
-The easiest way to create a Zendo record and ensure that the data is correctly sync is using the Zenodo API and the [`Zen4R`](https://github.com/eblondel/zen4R/wiki) package.
+The easiest way to create a Zenodo record and ensure that the data is correctly sync is using the Zenodo API and the [`Zen4R`](https://github.com/eblondel/zen4R/wiki) package.
 
 For this, you first need to [create a token](https://zenodo.org/account/settings/applications/tokens/new/) and save it to your keyring with:
 
@@ -174,32 +174,15 @@ It is quite normal that you'll first see some error here. Try to fix them and re
 
 ## Upload data to Zenodo
 
-
-### Option 1: Manually
-
 We can write the datapackage to file
 
 ```{r 15-write-package-basic}
 #| eval: false
-write_package(pkg)
+frictionless::write_package(pkg, "data/datapackage")
 ```
 
-The content of the folder created can now be uploaded on your Zenodo deposit.
-
-
-### Option 2: Programatically
-
-Alternatively, we can also upload the data to the deposit with
-
-```{r 15-write-package-and-upload}
-#| eval: false
-write_package(pkg, directory = pkg$version)
-for (f in list.files(pkg$version)) {
-  zenodo$uploadFile(file.path(pkg$version, f), z)
-}
-```
-
+The content of the folder created should now be uploaded on your Zenodo record with a drag and drop.
 
 ## Publish the record
 
-Finally, once you're happy with everything, you can publish the record on Zenodo
+Finally, once you're happy with everything, you can publish the record on Zenodo!

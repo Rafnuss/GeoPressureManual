@@ -3,8 +3,7 @@
 ```{r 02-setup}
 #| message: false
 library(GeoPressureR)
-tag <- tag_create(id = "CB619") |>
-  tag_label()
+tag <- tag_create(id = "CB619") |> tag_label()
 ```
 
 This second chapter of the basic tutorial covers the main steps to determine the position of a bird from pressure data. This code is a direct implementation of the method introduced in @Nussbaumer2023a

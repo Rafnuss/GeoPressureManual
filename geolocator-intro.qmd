@@ -35,7 +35,7 @@ The GeoPressureR extensions consist of optional trajectory data generated throug
 - [`pressurepaths.csv`](https://raphaelnussbaumer.com/GeoLocator-DP/geopressurer/pressurepaths): Table of the pressurepaths
 
 ::: callout-note
-The GeoPressureR Resources is optional, and even if you have not (yet!) analysed your data, it's worth publishing the data (maybe with an embargo?). The data package can always be updated once the analysis is done.
+The GeoPressureR Resources are optional, and even if you have not (yet!) analysed your data, it's worth publishing the data (maybe with an embargo?). The data package can always be updated once the analysis is done.
 :::
 
 ## Examples
@@ -48,7 +48,7 @@ The [GeoLocator Data Package Zenodo Community](https://zenodo.org/communities/ge
 
 Once you've published your data package, make sure to [submit it to the community](https://help.zenodo.org/docs/share/submit-to-community/).
 
-![GeoLocatorExplorer is a user friendly interface to all the available datapackage of geolocator](assets/geolocatorexplorer.png){width="100%" alt="screenshot of geolocatorexplorer"}
+![<small>GeoLocatorExplorer interface to browse published geolocator data packages.</small>](assets/geolocatorexplorer.png){width="100%" alt="Screenshot of GeoLocatorExplorer showing searchable geolocator data packages"}
 
 
 ## GeoLocatoR 

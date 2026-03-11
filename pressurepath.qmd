@@ -37,7 +37,7 @@ ts <- geopressure_timeseries(
 We can compare the retrieved ERA5 pressure to the pressure measured on the Great Reed Warbler:
 
 ```{r 06-pressure-timeseries-compare}
-#| cache: FALSE
+#| cache: false
 p <- ggplot() +
   geom_line(data = ts, aes(x = date, y = surface_pressure, colour = "ERA5")) +
   geom_line(

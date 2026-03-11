@@ -5,7 +5,8 @@
 library(GeoPressureR)
 ```
 
-In this last chapter, we tackle the challenge of labelling your tag!
+In this final chapter, you will finally learn how to label your tag. Labelling is a relatively long **iterative process**: you repeatedly refine the label csv file in the `trainset` Shiny app until all validity checks pass. You can expect to spend between 1 minutes to 60 minutes per track, depending on the species' complexity, and likely more for the first track you label. The more you label, the faster it will get! 
+
 
 ::: callout-important
 This chapter assumes that you are familiar with the overall process of GeoPressureR presented in the [Basic tutorial](tag-object.html), as well as the concept of [PressurePath](pressurepath.html) and the use of [GeoPressureViz](geopressureviz.html).
@@ -25,7 +26,7 @@ The procedure involves labelling each datapoint (1) with the `flight` label when
 
 Each species' migration behaviour is so specific that **manual editing remains the fastest option**. Indeed, small changes in pressure and activity can correspond to either local movement or slow migration. Expertise on your bird's expected migration style will be essential to correctly label your tracks. As you label, you will learn how the bird is moving (e.g. long continuous high altitude flights, short flights over multiple days, alternation between short migration flights and stopovers, etc.). Manual editing also gives a sense of the uncertainty of your labelling, which is useful to interpret your results.
 
-## With or without acceleration data
+## With or without acceleration data?
 
 Acceleration data can significantly improve our understanding of bird activity and movement. It's often very helpful for the labeling flights, and even essential for some specie. For instance, acceleration data is the only way to idenfy low-altitude migration flight. In addition, acceleration is typically recorded at a higher temporal resolution (5min), which can refine flight duration and thus the movement model when building the trajectory.
 
@@ -37,167 +38,88 @@ When acceleration data is available, use the `flight` label on the acceleration 
 In the absence of acceleration data, both labels are applied to the pressure timeseries.
 :::
 
-Let's see an example using acceleration data with 18LX.
-
-```{r 08-tag-create-example}
-tag <- tag_create(
-  "18LX",
-  crop_start = "2017-06-20",
-  crop_end = "2018-05-02",
-  quiet = TRUE
-)
-```
-
-**Acceleration data can be used to initialize the `flight` label automatically**. `tag_label_auto()` first classifies low and high activity using a <a href="https://en.wikipedia.org/wiki/K-means_clustering" target="_blank">k-means clustering</a>, and then identifies and labels long periods of high activity (e.g., lasting more than 30 minutes) as flights. A post-processing reclassify short high-activities based on the proximity of other flights to improve the classification of low-activity period happening during a migration flight (e.g. gliding phase).
-
-```{r 08-tag-label-auto-acc}
-tag <- tag_label_auto(tag, min_duration = 30)
-plot(tag, type = "acceleration")
-```
-
-More classification methods are described in the <a href="https://kiranlda.github.io/PAMLrManual/index.html" target="_blank">PALMr manual</a>.
-
-## The process
-
-The general process to perform the labelling is as follows:
-
-```{r 08-labelling-process-pseudo-code} 
-#| eval: false
-# 1. Create the csv label file `./data/tag-label/18LX.csv` (only once)
-tag_label_write(tag)
-
-# 2. Edit csv file on TRAINSET
-# *on TRAINSET*
-
-# 3. Export csv file `./data/tag-label/18LX-labeled.csv`
-# *on TRAINSET*
-
-# 4a. Read exported label file
-tag <- tag_label_read(tag)
-
-# 4b. Compute stationary period data.frame tag$stap
-tag <- tag_label_stap(tag)
-
-# Steps 4a and 4b are typically performed simultaneously with
-tag <- tag_label(tag)
-```
-
-In practice, labelling of your tags will then be a long **iterative process** where you check the validity of the labels and subsequently refine them by modifying the csv file `./data/tag-label/18LX-labeled.csv` on TRAINSET.
-
-You can expect to spend 1 minutes to 60 minutes per track, depending on the species' complexity, and likely more for the first track you label. The more you label, the faster it will get! 
-
+Acceleration data can be used to initialize the `flight` label automatically. This step is done automatically when no label exist when starting `trainset()` but you can also refine the paramater manually using `tag_label_auto()`. 
 
 ## Introduction to TRAINSET
 
-TRAINSET is a web-based graphical tool for labelling timeseries.
+Start labeling using the `trainset()` function:
 
-::: callout-note
-## New TRAINSET
+```{r 08-labelling-process-pseudo-code} 
+#| eval: false
+trainset("data/tag-label/18LX-label.csv")
 
-We customized the <a href="https://trainset.geocene.com/" target="_blank">original TRAINSET app</a> for a smoother experience in labelling tags and twilight data: <a href="https://trainset.raphaelnussbaumer.com/" target="_blank">https://trainset.raphaelnussbaumer.com/</a>
+# or using a tag obeject
+trainset(tag)
+```
 
-Please use this new version and report issues or bugs on the <a href="https://github.com/Rafnuss/trainset" target="_blank">Github repository</a>.
-:::
 
-Start by uploading your .csv file (e.g., `data/tag-label/18LX.csv`) using the "Upload Tag Label" button.
-
-![\*Example of a labeled file on TRAINSET. First, the pressure timeseries is separated into stationary periods by "flight" label (red). When the bird is changing altitude or flying for short periods, the pressure datapoint are labeled as "discard" (gray)](assets/labelling-tracks-0.png){width="100%" alt="TRAINSET interface showing labeled pressure timeseries with red flight periods and gray discard periods"}
+![<small>Example of a labelled file in TRAINSET. Pressure is split into stationary periods with `flight` (red), and outliers are marked `discard` (gray).</small>](assets/labelling-tracks-01.png){width="100%" alt="TRAINSET interface showing labelled pressure timeseries with red flight periods and gray discard periods"}
 
 **A few tips:**
 
-- **Keyboard shortcuts** can considerably speed up navigation (zoom in/out, move left/right) and labelling (add/remove a label), e.g. using SHIFT.
-- Because of the large number of datapoints, **keep a narrow temporal window** to avoid your browser from becoming slow or unresponsive.
-- Change the `Active Series` and `Reference Series` depending on what you are labelling but **use both timeseries at the same time** to help you determine what the bird might be doing.
-- **Adapt the y-axis range** to each stationary period to see the small (but essential) pressure variations which are not visible in the full view.
+- **Keyboard shortcuts** can considerably speed up navigation. Click the info button for more information.
+- Use the information from **both timeseries** (pressure and acceleration) at the same time to help you determine what the bird might be doing.
+- **Adapt the y-axis range** to see the small (but essential) pressure variations which are not visible in the full view.
+
+
+::: callout-note
+## Why TRAINSET?
+
+<a href="https://trainset.raphaelnussbaumer.com/" target="_blank">TRAINSET</a> was the original web platform used for labelling. It was built as a customization of the <a href="https://trainset.geocene.com/" target="_blank">Geocene TRAINSET app</a>, a web-based tool for time-series annotation.
+
+The legacy website is still online, but it is now deprecated. We recommend using the `trainset()` Shiny app integrated in `GeoPressureR` (from v3.5.0), which is better maintained and fits the GeoPressure workflow more directly.
+:::
+
 
 ## Elevation period
 
 It is common for birds to change elevation level within the same stationary period (e.g., roost vs feeding site or altitudinal movements for mountainous species). Such movements can result in drastic variations in pressure, which interfere with the ERA5 matching exercise.
 
-To circumvent this issue while preserving as much data as possible in the match, you can label pressure data with different **elevation levels** by using `elev_x` in TRAINSET. To do so, click on the + sign in the bottom right to create a new elevation level (e.g., `elev_1`). Assign the new label to all pressure datapoints belonging to the same elevation period. 
+To circumvent this issue while preserving as much data as possible in the match, you can label pressure data with different **elevation levels** by using `elev_x` in TRAINSET. To do so, click on the + sign in the label selector to create a new elevation level (e.g., `elev_1`). Assign the new label to all pressure datapoints belonging to the same elevation period. 
 
 - **Note 1:** Conseptually, you can think of unlabelled datapoints (i.e., black dots) as `elev_0`.
-
 - **Note 2:** The elevation levels do not have to be continuous: it's even better if the same elevation period comes back several times during the same stationary period. For instance, you can have unlabelled datapoints for the feeding site every day and labelled datapoints at the roosting location of every night as `elev_1`.
 - **Note 3:** You can restart the count of `elev_x` for each new stationary period (e.g., the datapoints from stap 1 labelled as `elev_1` are not connected to the datapoints from stap 2 also labelled as `elev_1`).
 - **Note 4:** In general, short elev level (< 12-24h) might be better left out (i.e, discard) to reduce computational/memory cost, especially, if you have long eleve level on the same stap. But see note 5.
 - **Note 5:** It's ideal to have the highest and lowest elevation included as they can bring tromendous constrains on the elevation mask of the likelihood map. 
 
-![*Example of elevation periods label. "elev_x" label allows you to identify periods when the bird changes altitude for a considerable amount of time within the same stationary period . Note that you can re-use the same elev label for two distinct stationary periods without implying the same elevation.*](assets/labelling-tracks-1.png){width="100%" alt="TRAINSET interface showing elevation period labeling with elev_x markers for altitude changes within stationary periods"}
+![<small>Example of elevation-period labelling with `elev_x`, used when the bird changes altitude within the same stationary period.</small>](assets/labelling-tracks-02.png){width="100%" alt="TRAINSET interface showing elevation-period labelling with elev_x markers within stationary periods"}
 
-## Labelling checks
+## Trainset checks
 
-Use the checks outlined below to evaluate and improve the quality of your labelling.
+Use the `Check` button in TRAINSET as a quick quality-control panel. The modal highlights three common issues:
 
-### Initial checks
+1.  **Short stationary periods**: often a sign of fragmented or misplaced flight labels.
+2.  **Short flights**: often accidental flight labels or noisy transitions.
+3.  **Large hourly pressure jumps**: often outliers, label mistakes, or artefacts inside a stationary block.
 
-**Check 1: Duration of stationary periods and flights**
+Each section has its own threshold in the header. You can change thresholds live to be more strict or permissive.
 
-The first test consists in checking the duration of flights and stationary periods. This is systematically checked when computing stationary periods and a message will give you feedback on where to find potential errors:
-
-```{r 08-check1-label-v1}
-tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v1.csv")
-```
-
-Here, I used the label produced by `tag_label_auto()` without making any edits on TRAINSET. In such cases, the most common error is that a flight is cut because the bird was inactive during a few data-points. You can correct this by cleaning up flights on TRAINSET.
-
-```{r 08-check1-label-v2}
-tag <- tag_label(tag, "./data/tag-label/18LX-labeled-v2.csv")
-```
-
-**Check 2: Pressure timeseries**
-
-Here we visually inspect that the pressure timeseries of each stationary period (1) is correctly grouped and (2) does not include pressure outliers (e.g., altitudinal movements). It is worth zooming in and panning on each individual stationary period to manually inspect the timeseries.
-
-```{r 08-check2-pressure}
-plot(tag, type = "pressure")
-```
+Use the `Go` button on each warning row to jump directly to the relevant period/time window, inspect, relabel, and re-check.
 
 ::: callout-warning
-## How short can a stationary period be?
+## How strict should thresholds be?
 
-It is acceptable to have a few stationary periods/flights shorter than the warning threshold of checks 1 and 2. Feel free to overwrite the default warning (e.g., `warning_flight_duration`).
+There is no universal threshold that fits all tags and species. Warnings are prompts for manual review, not automatic errors.
 
-However, having too many stationary periods leads to slow code as the number of likelihood maps and, more importantly, the size of the graph becomes excessively large. This is where the parameter `include_min_duration` from `tag_set_map()` is particularly useful: it allows you to ignore the short stationary periods and merge flights.
-
-Note that while the MSE mismatch is usually not useful for stationary periods shorter than a few hours, a single high or low pressure datapoint can indicate a high or low altitude location which is not common on the map!
+A few short stationary periods or flights can be acceptable, but too many often indicate over-fragmentation and can slow down downstream workflows.
 :::
 
-### GeoPressureViz check
+![<small>Example the trainset checks helping to review potential labeling issues.</small>](assets/labelling-tracks-03.png){width="100%" alt="TRAINSET interface showing elevation-period labelling with elev_x markers within stationary periods"}
 
-At this stage, the label file is good enough to start estimating the position of the bird. This will be super helpful to then compare the pressure measurements to the ERA5 pressure and refine the labelling. To help in this process, we'll be using [GeoPressureViz](geopressureviz.html).
+## GeoPressureViz check
+
+At this stage, the label file should be good enough to start estimating the position of the bird. This will be super helpful to then compare the pressure measurements to the ERA5 pressure and refine the labelling. To help in this process, we'll be using [GeoPressureViz](geopressureviz.html).
 
 Before this, we need to compute the likelihood maps. It's generally better to start from scratch to be sure everything is working fine:
 
 ```{r 08-full-workflow}
 #| eval: false
-tag <- tag_create(
-  "18LX",
-  crop_start = "2017-06-20",
-  crop_end = "2018-05-02",
-  quiet = TRUE
-) |>
-  tag_label("./data/tag-label/18LX-labeled-v3.csv", quiet = TRUE) |>
-  tag_set_map(
-    extent = c(-16, 23, 0, 50),
-    scale = 1, # Use a coarse scale at first 1° is usually enough
-    known = data.frame(
-      stap_id = 1,
-      known_lat = 48.9,
-      known_lon = 17.05
-    )
-  )
+# Use the geopressuretemplate to run a full clean tag
+geopressuretemplate_tag("18LX")
 
-tag <- geopressure_map(tag, quiet = TRUE)
-```
-
-
-```{r 08-geopressureviz-check} 
-#| eval: false
-geopressureviz(
-  tag,
-  path = tag2path(tag, interp = 1) # interpolate stap shorter than 1 day to have a smoother trajectory
-)
+# Open geopressureviz directly with the interim
+geopressureviz("18LX")
 ```
 
 In GeoPressureViz, your main task is to draw a coherent trajectory with the following steps:
@@ -236,7 +158,7 @@ The main advantages of using [GeoPressureViz](geopressureviz.html) are:
 - Filter out short stationary periods to see if they are coherent, before refining the trajectory by adding the shorter ones
 
 
-### Pressurepath check
+## Pressurepath check
 
 A final check should be performed on the pressurepath computed from your most likely trajectory.
 

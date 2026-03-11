@@ -62,15 +62,12 @@ Because we have already label the stationary period before, the plot indicates w
 
 ## Manual labelling of twilight
 
-Twilight outliers should be discarded from the analysis using Trainset <https://trainset.raphaelnussbaumer.com/>.
+Twilight outliers should be discarded from the analysis using the GeoLightViz shiny app included in GeoPressureR. See the [GeoLightViz chapter](geolightviz.html) for a full overview of all controls and workflows.
 
-Use `twilight_label_write()` to generate the twilight label `csv` file.
-
-```{r 04-twilight-label-write}
-twilight_label_write(tag)
+```{r 04-twilight-label-viz}
+#| eval: false
+geolightviz(tag)
 ```
-
-Click on "Upload Twilight Label" to customize the interface for twilight labelling. Similar to tag labelling, simply label the twilights to be ignored with the `"discard"` label.
 
 ::: callout-note
 ## How to pick out outliers?
@@ -84,7 +81,7 @@ Note that modifying the label of twilight to a different stationary period has n
 **Avoid Over-edit the calibration period.** The variability of twilight is important to build a calibration which adequately captures the range of uncertainty of a twilight. As it is easier to pick out outliers during long stationary periods (calibration period) than during shorter ones, there is a risk of having more variability during short stationary periods and thus biases in the estimated position.
 :::
 
-When you have finished labelling, export the file in the same folder keeping `-labeled` in the name (automatically added by Trainset).
+When you have finished labelling, read and check the twilight annotation.
 
 ```{r 04-twilight-label-read}
 tag <- twilight_label_read(tag)
@@ -93,44 +90,85 @@ plot(tag, type = "twilight")
 
 ## Compute likelihood map
 
-The computation of the light likelihood map for each stationary period is performed with `geolight_map()` and follows these three steps:
+The light likelihood map is now built in three explicit steps:
 
-1.  Perform a calibration of the zenith angle (i.e., the angle of the sun at sunrise and sunset) with a kernel density (see `stats::kernel()`). This requires knowing the position of the bird for a least one stationary period. This position should be specified with the `known` data.frame in `tag_set_map()`.
-2.  Compute a likelihood map for each twilight. This step consists of computing, for each pixel of the map, the zenith angle and the corresponding probability using the calibrated kernel distribution.
-3.  Aggregate all likelihood maps of the same stationary period into a single map using a log-linear pooling. See [probability aggregation](probability-aggregation.html#probability-aggregation-1) for more information on log-linear pooling.
+1.  Calibrate twilight error in zenith angle with `geolight_map_calibrate()`.
+2.  Compute one likelihood map per twilight with `geolight_map_likelihood()`.
+3.  Aggregate twilight maps by stationary period with `geolight_map_aggregate()`.
 
-```{r 04-map-light-create}
-tag <- geolight_map(
+```{r 04-map-light-calibrate}
+tag <- geolight_map_calibrate(
   tag,
   twl_calib_adjust = 1.4,
-  twl_llp = function(n) log(n) / n,
+  fitted_location_duration = Inf,
   quiet = TRUE
 )
 ```
 
-The `twl_calib_adjust` parameter adjusts the smoothness of the fit (see `stats::density()`). Because the zenith angle error model is fitted with data only at the calibration site, and we are using it for all locations of the bird's journey, it is safer to assume a broader/smoother distribution (`twl_calib_adjust > 1`).
+Set `fitted_location_duration` to a finite value (e.g. `5`) if you want GeoPressureR to estimate a calibration location from long stationary period(s) instead of relying only on known coordinates.
 
-It is recommended to always check the calibration fit `tag$param$twl_calib` with
+The `twl_calib_adjust` parameter controls the smoothness of the calibration density (`stats::density()`). Since calibration is estimated from calibration site(s) and then applied across the full trajectory, it is generally safer to use a slightly broader fit (`twl_calib_adjust > 1`).
+
+::: callout-note
+## About `fitted_location_duration`
+
+`fitted_location_duration` defines the minimum stationary-period duration (in days) eligible for automatic calibration-location fitting.
+
+- `Inf` (default): no automatic fitting, calibration uses only known location(s) from `tag_set_map(known = ...)`.
+- Finite value (e.g. `5`): GeoPressureR searches for stationary period(s) at least that long, fits location(s) from twilight, and uses them as calibration locations.
+
+Use this when no reliable known calibration site is available, or to complement sparse known locations.
+:::
+
+You should always check calibration before computing the map:
 
 ```{r 04-twilight-calibration-plot}
-barW <- median(diff(tag$param$geolight_map$twl_calib$x)) / 2
-plot(tag$param$geolight_map$twl_calib, xlim = c(85, 100))
-rect(
-  xleft = tag$param$geolight_map$twl_calib$x - barW,
-  ybottom = 0,
-  xright = tag$param$geolight_map$twl_calib$x + barW,
-  ytop = tag$param$geolight_map$twl_calib$y,
-  col = gray(0.5)
-)
-lines(tag$param$geolight_map$twl_calib, col = "red")
+plot_twl_calib(tag)
 ```
 
-Finally, we can visualize the probability map for each stationary period:
+You can also compare the calibration against a provisional path:
+
+```{r 04-twilight-calibration-plot-path}
+plot_twl_calib(tag, path = tag2path(tag, interp = 2))
+```
+
+This diagnostic shows, for each stationary period, the distribution of observed twilight zenith angles along the provisional path, overlaid with the calibrated distribution. Stationary periods highlighted as out-of-range suggest potential issues with twilight labels, calibration settings, or the provisional path itself. Use this plot iteratively to refine labels and calibration before final trajectory modelling.
+
+We can now compute a likelihood map for each individual twilight event. These per-twilight maps are stored in `tag$map_light_twl` and are the raw inputs for the stationary-period aggregation step.
+
+With `compute_known = FALSE`, twilight maps are not computed for stationary periods with known coordinates (they are handled later as fixed known locations).
+
+```{r 04-map-light-likelihood}
+tag <- geolight_map_likelihood(
+  tag,
+  compute_known = FALSE,
+  quiet = TRUE
+)
+```
+
+Next, we aggregate twilight maps within each stationary period using log-linear pooling (`twl_llp`).
+
+The function `\(n) log(n) / n` down-weights each twilight contribution as the number of twilights (`n`) increases, which helps limit overconfidence when twilight errors are temporally correlated.
+
+The output of this step is `tag$map_light`, which is the map used in the rest of the trajectory workflow.
+
+```{r 04-map-light-aggregate}
+tag <- geolight_map_aggregate(
+  tag,
+  twl_llp = \(n) log(n) / n,
+  compute_known = FALSE,
+  quiet = TRUE
+)
+```
+
+Finally, we can visualize the aggregated probability map for each stationary period:
 
 ```{r 04-map-light-plot}
 #| warning: false
 plot(tag, type = "map_light")
 ```
+
+`geolight_map()` is a shortcut that runs these three steps in sequence.
 
 ::: {.callout-warning style="margin-top: 20px;"}
 ## Light map vs pressure map?

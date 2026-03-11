@@ -24,7 +24,7 @@ The only strict requirement is that your geolocator provides a continuous timese
 - Light data can accelerate building the trajectory model by allowing to quickly narrow down possible locations during short stationary periods. Generally, for species with few long stopover, light data brings limited benefit, but it can be quite helpful for species with multiple short stopovers, and particularly if migrating on a east/west trajectory.
 - Knowing the equipment and retrieval sites can also be helpful, but it also works well without it.
 
-GeoPressureR can currently read Swiss Ornithological Institute (SOI) files (`*.pressure`, `*.lux`, `*.acceleration`), Migrate Technology files (`*.deg` and `*.lux`) and Lund CAnMove (`*.xlsx`).
+GeoPressureR can currently read Swiss Ornithological Institute (SOI) files (`*.pressure`, `*.glf`, `*.acceleration`), Migrate Technology files (`*.deg` and `*.lux`) and Lund CAnMove (`*.xlsx`).
 
 Feel free to [contact me](mailto:rafnuss@gmail.com) to discuss your data and study species.
 
@@ -35,14 +35,15 @@ The GeoPressure suite includes several tools:
 - [GeoPressureR](https://github.com/Rafnuss/GeoPressureR) is the main R package with functions to run the analysis.
 - [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual/) is the official user guide developed to help you learn to use GeoPressureR.
 - [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate) is a [template Github repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) to help kickstart your project.
-- [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is the JSON API used by GeoPressureR under the hood to query the ERA5 reanalysis data with Google Earth Engine.
-- GeoPressureViz is a [shiny app](https://shiny.posit.co/) included in GeoPressureR to visualize the trajectory of your bird. See the [GeoPressureViz](geopressureviz.html) chapter for an introduction and [the demo for 18LX](https://rafnuss.shinyapps.io/GeoPressureViz/).
+- [GeoPressureViz](geopressureviz.html) is a shiny app included in GeoPressureR to visualize the trajectory of your bird.
+- [GeoLightViz](geolightviz.html) is another shiny app included in GeoPressureR for labelling twilight data and tuning calibration settings.
+- Trainset is yet another shiny app dedicated for the labeling of pressure and acceleration data.
 - [GeoLocator Data Package (DP)](https://github.com/rafnuss/geolocator-dp) is a data exchange format for geolocator data.
 - [GeoLocatoR](https://raphaelnussbaumer.com/GeoLocatoR/) is an R package designed to handle GeoLocator Data Packages.
 - [GeoLocatorExplorer](https://raphaelnussbaumer.com/GeoLocatorExplorer/) is a web app to explore geolocator data packages.
 - [GeoPressureGPT](https://chatgpt.com/g/g-6888c9afb4348191b6134fcfc19232d8-geopressuregpt) is a ChatGPT plugin that allows you to ask any questions in the chat interface.
 - [GeoMag](https://raphaelnussbaumer.com/GeoMag/) is an R package extending GeoPressureR using 3 axis magnetic data to improve geolocation.
-- [GeoLightViz](https://raphaelnussbaumer.com/GeoLightViz/) is a shiny app to visualize geolocation using light data.
+- [GeoPressureAPI](https://github.com/Rafnuss/GeoPressureAPI) is the JSON API used by GeoPressureR under the hood to query the ERA5 reanalysis data with Google Earth Engine.
 
 ## Structure of the manual
 

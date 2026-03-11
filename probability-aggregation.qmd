@@ -36,7 +36,7 @@ This way of building the error term has some important consequences. A timeserie
 Let's load the data and filter
 
 ```{r B-load-interim}
-load("./data/interim/CB619.RData")
+load_interim("CB619")
 ```
 
 We are using [the GeoPressure API](https://raphaelnussbaumer.com/GeoPressureServer/#description) with the `geopressure_map_mismatch()` function to measure the mismatch of the pressure time series. Because the API can realistically return only a single map per stationary period, it aggregates the error time series with the Mean Squared Error (MSE), $$\mathit{MSE} = \frac{1}{n}\sum_{t=1}^{n} \varepsilon[t]^2.$$

@@ -49,19 +49,18 @@ Correctly labelling the track requires time and effort, but is key to accurately
 As labelling relies on functions and tools presented later in the tutorial, we recommend first following the basic and advanced tutorials. After that, we strongly advise that you **read attentively the recommendations for this step provided in [Labelling tracks](labelling-tracks.html)**.
 :::
 
-### Initialize and create the label .csv file
+### Label manually with the Trainset shiny app
 
-Use `tag_label_write()` to initiate the label (i.e., empty label) and create the label file to `./data/tag-label/CB619.csv`.
+Open the shiny app with the function `trainset()`, this will open your browser where you can label the acceleration and pressure timeseries.
 
-```{r 01-tag-label-write}
-tag_label_write(tag)
+```{r 01-tag-label-trainset}
+#| eval: false
+trainset(tag)
 ```
 
-### Label manually on Trainset
+Instructions on how to label the file can be found in the dedicated chapter [Labelling tracks](labelling-tracks.html). Once you have finished, click on "save" which will create the label as `csv` file in the folder `/data/tag-label/CB619-labeled.csv`.
 
-Open <https://trainset.raphaelnussbaumer.com/> and click on "Upload Tag Label" to load your .csv file. Instructions on how to label the file can be found in the dedicated chapter [Labelling tracks](labelling-tracks.html). Once you have finished, export the new `csv` file in the same folder `/data/tag-label/CB619-labeled.csv` (TRAINSET will automatically add `-labeled` in the name).
-
-![*Print screen of the manual labelling of tag data in* <a href="https://trainset.raphaelnussbaumer.com/">TRAINSET</a>. See [Labelling tracks](labelling-tracks.html) for more information.](assets/labelling-tracks-0.png){width="100%" alt="Screenshot of TRAINSET interface showing manual labelling of geolocator tag data with activity and pressure plots"}
+![<small>TRAINSET interface for manual tag labelling. See [Labelling tracks](labelling-tracks.html) for details.</small>](assets/labelling-tracks-0.png){width="100%" alt="Screenshot of TRAINSET showing manual geolocator tag labelling with activity and pressure plots"}
 
 ### Read labelled file
 
@@ -98,4 +97,4 @@ The pre-processing aligns the raw timeseries data to the weather reanalysis pres
 The black dots show the discarded pressure points (i.e., outliers), corresponding to bird vertical movement rather than natural variation of pressure.
 :::
 
-The function `tag_label()` is a wrapper for `tag_label_write()`, `tag_label_read()` and `tag_label_stap()`, allowing you to process the label file (i.e., `CB619-labeled.csv`) in a single line.
+The function `tag_label()` is a wrapper for `tag_label_write()`, `tag_label_read()` and `tag_label_stap()`, allowing you to process the label file in a single line.

@@ -1,10 +1,13 @@
 # Trajectory
+```{r 03-setup-library}
+#| code-fold: true
+library(GeoPressureR)
+```
 
 ```{r 03-setup}
 #| message: false
 #| code-fold: true
-library(GeoPressureR)
-
+#| cache: true
 tag <- tag_create(id = "CB619") |>
   tag_label() |>
   tag_set_map(
@@ -165,13 +168,11 @@ plot_path(path_simulation, plot_leaflet = FALSE)
 
 You might want to save some of the key objects such as `tag` or `marginal` in an `R` format. Following the default structure described in [GeoPressureTemplate](https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder), you should save them in the `./data/interim` folder.
 
-Note that `graph` can be quite large if the number of stationary periods and grid resolution is high.
-
 ```{r 03-save-interim}
 #| warning: false
 save(
   tag,
-  graph, # format(object.size(graph), units = "MB")
+  # graph, # format(object.size(graph), units = "MB")
   path_most_likely,
   path_simulation,
   marginal,
@@ -179,4 +180,14 @@ save(
 )
 ```
 
-When saving `tag` and `graph`, you also archive the functions parameters used, which can be retrieved with `tag$param` and `graph$param`.
+Note that you can retriev all the functions parameters used with `tag$param` and/or `graph$param`.
+
+::: callout-warning
+## Workflow note
+
+This manual `save()` step is only used here to learn the pipeline one step at a time.
+
+For real analyses, especially when processing multiple tags, the recommended approach is to create the interim files with `geopressuretemplate()`.
+
+This workflow is described in detail in [GeoPressureTemplate workflow](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html).
+:::

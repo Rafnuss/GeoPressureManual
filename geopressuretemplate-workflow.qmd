@@ -101,8 +101,8 @@ Because the construction of the graph can be a bit more complicated and takes a 
 
 ## Pressurepath
 
-```{r 13-pressurepath-workflow, eval = FALSE}
-#| cache: true
+```{r 13-pressurepath-workflow}
+#| cache: false
 geopressuretemplate_pressurepath(id, quiet = FALSE)
 ```
 
