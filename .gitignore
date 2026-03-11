@@ -55,3 +55,4 @@ data/processed/CB619/*
 /.quarto/
 
 **/*.quarto_ipynb
+data/tag-label/18LX-labeled-backup.csv
