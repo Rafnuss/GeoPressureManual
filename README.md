@@ -8,13 +8,13 @@
 
 The [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual/) is a great place to start learning about how to use [`GeoPressureR`](https://raphaelnussbaumer.com/GeoPressureR/), the R package which helps researchers construct the trajectory of a bird equipped with an atmospheric pressure sensor.
 
-Using the examples of a Swainson's Warbler and a Great Reed Warbler, this user guide takes you through each step of the analysis in detail.
+Using the examples of a Swainson's Warbler and a Great Reed Warbler, this user guide will take you through each step of the analysis in detail.
 
 <div align="center">
 <a href="https://raphaelnussbaumer.com/GeoPressureManual"><img src="https://img.shields.io/badge/📖%20open%20the%20manual%20📖-37a779?style=for-the-badge&amp;color=%238D5903" style="height:40px;"/></a>
 </div>
 
-## Table of content
+## Table of contents
 
 - [Introduction](https://raphaelnussbaumer.com/GeoPressureManual/index.html)
 - Basic tutorial
@@ -27,12 +27,12 @@ Using the examples of a Swainson's Warbler and a Great Reed Warbler, this user g
 - Labelling tools
   - [6 Pressurepath](https://raphaelnussbaumer.com/GeoPressureManual/pressurepath.html)
   - [7 GeoPressureViz](https://raphaelnussbaumer.com/GeoPressureManual/geopressureviz.html)
-  - [8 Labelling tracks](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html)
+  - [8 GeoLightViz](https://raphaelnussbaumer.com/GeoPressureManual/geolightviz.html)
+  - [9 Labelling tracks](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html)
 - GeoPressureTemplate
-  - [9 Introduction](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-intro.html)
-  - [10 Tag label](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-label.html)
-  - [11 Twilight label](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-twilight.html)
-  - [12 Download wind](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-wind.html)
+  - [10 Introduction](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-intro.html)
+  - [11 Tag label](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-label.html)
+  - [12 Twilight label](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-twilight.html)
   - [13 Workflow](https://raphaelnussbaumer.com/GeoPressureManual/geopressuretemplate-workflow.html)
 - GeoLocator DP
   - [14 Introduction](https://raphaelnussbaumer.com/GeoPressureManual/geolocator-intro.html)
@@ -41,6 +41,26 @@ Using the examples of a Swainson's Warbler and a Great Reed Warbler, this user g
 - Appendix
   - [A Resources](https://raphaelnussbaumer.com/GeoPressureManual/resources.html)
   - [B Probability aggregation](https://raphaelnussbaumer.com/GeoPressureManual/probability-aggregation.html)
+- [Build the book](#build-the-book)
+- [Start your own study](#start-your-own-study)
+- [How to cite?](#how-to-cite)
+- [Contributing to GeoPressureManual](#contributing-to-geopressuremanual)
+
+## Build the book
+
+This project uses Quarto. From the project root, render the book with:
+
+```r
+quarto::quarto_render()
+```
+
+Or from a terminal:
+
+```sh
+quarto render
+```
+
+The rendered site is written to `docs/` (see `_quarto.yml`).
 
 ## Start your own study
 
@@ -52,25 +72,4 @@ Once you are familiar with the overall workflow of geolocation by pressure and a
 
 ## Contributing to GeoPressureManual
 
-Thanks for your interest! Here's a concise guide to help you contribute effectively.
-
-### 1. **Setup**
-
-- **Fork** the repository to your GitHub.
-- **Clone** your fork.
-- Create a **branch** for your edits.
-
-### 2. **Content Edits**
-
-- Follow [bookdown syntax](https://bookdown.org/yihui/bookdown/).
-- Keep style and structure consistent (use [`styler`](https://styler.r-lib.org/)).
-
-### 3. **Local Testing**
-
-- Build with `bookdown::render_book()` to catch issues.
-
-### 4. **Submit Changes**
-
-- **Commit** with a clear message.
-- **Push** to your fork.
-- Open a **Pull Request (PR)**. Describe your changes.
+This manual is mostly maintained by the authors. If you spot an issue, please open an [issue](https://github.com/Rafnuss/GeoPressureManual/issues) or submit a small PR.
