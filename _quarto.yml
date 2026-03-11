@@ -51,6 +51,7 @@ book:
       chapters:
         - pressurepath.qmd
         - geopressureviz.qmd
+        - geolightviz.qmd
         - labelling-tracks.qmd
 
     - part: "GeoPressureTemplate"
@@ -58,7 +59,6 @@ book:
         - geopressuretemplate-intro.qmd
         - geopressuretemplate-label.qmd
         - geopressuretemplate-twilight.qmd
-        - geopressuretemplate-wind.qmd
         - geopressuretemplate-workflow.qmd
 
     - part: "GeoLocator DP"
