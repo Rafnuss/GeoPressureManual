@@ -62,7 +62,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./labelling-tracks.html" rel="next">
+<link href="./geolightviz.html" rel="next">
 <link href="./pressurepath.html" rel="prev">
 <link href=".//assets/favicon.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/cookie-consent/cookie-consent.js"></script>
@@ -127,15 +127,15 @@ cookieconsent.run({
 </script>
 <meta property="og:title" content="7&nbsp; GeoPressureViz – A User Manual for GeoPressureR">
 <meta property="og:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
-<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/geopressureviz-demo.png">
+<meta property="og:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
 <meta property="og:site_name" content="A User Manual for GeoPressureR">
-<meta property="og:image:height" content="818">
-<meta property="og:image:width" content="1000">
+<meta property="og:image:height" content="3875">
+<meta property="og:image:width" content="2953">
 <meta name="twitter:title" content="7&nbsp; GeoPressureViz – A User Manual for GeoPressureR">
 <meta name="twitter:description" content="Learn how to use GeoPressureR with a Swainson’s Warbler and a Great Reed Warbler.">
-<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/geopressureviz-demo.png">
-<meta name="twitter:image-height" content="818">
-<meta name="twitter:image-width" content="1000">
+<meta name="twitter:image" content="https://raphaelnussbaumer.com/GeoPressureManual/assets/cover.png">
+<meta name="twitter:image-height" content="3875">
+<meta name="twitter:image-width" content="2953">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-sidebar floating quarto-light">
@@ -163,13 +163,13 @@ cookieconsent.run({
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
 <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=%7Curl%7C">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=%7Curl%7C">
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
               <i class="bi bi-facebook pe-1"></i>
             Facebook
             </a>
@@ -267,8 +267,14 @@ cookieconsent.run({
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./geolightviz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">GeoLightViz</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./labelling-tracks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Labelling tracks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Labelling tracks</span></span></a>
   </div>
 </li>
       </ul>
@@ -285,25 +291,19 @@ cookieconsent.run({
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./geopressuretemplate-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./geopressuretemplate-label.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Tag label</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Tag label</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./geopressuretemplate-twilight.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Twilight label</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./geopressuretemplate-wind.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Download wind</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Twilight label</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -376,8 +376,8 @@ cookieconsent.run({
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#navigate-geopressureviz" id="toc-navigate-geopressureviz" class="nav-link active" data-scroll-target="#navigate-geopressureviz"><span class="header-section-number">7.1</span> Navigate GeoPressureViz</a></li>
-  <li><a href="#run-geopressureviz" id="toc-run-geopressureviz" class="nav-link" data-scroll-target="#run-geopressureviz"><span class="header-section-number">7.2</span> Run GeoPressureViz</a></li>
+<li><a href="#run-geopressureviz" id="toc-run-geopressureviz" class="nav-link active" data-scroll-target="#run-geopressureviz"><span class="header-section-number">7.1</span> Run GeoPressureViz</a></li>
+  <li><a href="#navigate-geopressureviz" id="toc-navigate-geopressureviz" class="nav-link" data-scroll-target="#navigate-geopressureviz"><span class="header-section-number">7.2</span> Navigate GeoPressureViz</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/Rafnuss/GeoPressureManual/issues" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/"><i class="bi bi-link-45deg"></i>GeoPressureR reference</a></li><li><a href="https://raphaelnussbaumer.com/GeoLocatoR/reference/"><i class="bi bi-link-45deg"></i>GeoLocatoR reference</a></li><li><a href="https://github.com/Rafnuss/GeoPressureTemplate"><i class="bi bi-link-45deg"></i>GeoPressureTemplate</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -401,12 +401,20 @@ cookieconsent.run({
 </header><div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Rafnuss/GeoPressureR">GeoPressureR</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>GeoPressureR includes the <a href="https://shiny.rstudio.com/" target="_blank">shiny app</a> <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that <strong>this is a visualization tool only</strong> and as such, it cannot be used to make changes to your data. It offers a useful tool to label your tag and provides a convenient platform to discuss the overall trajectory with collaborators.</p>
-<p><a href="https://rafnuss.shinyapps.io/GeoPressureViz/"><img src="assets/geopressureviz-demo.png" width="100%"></a><em>Screenshot of the</em> <a href="https://rafnuss.shinyapps.io/GeoPressureViz/" target="_blank">GeoPressureViz demo</a> showing the estimated position at one stationary period of the Great Reed Warbler (18LX), based on (1) the pressure and light match (map colorscale and timeseries) and (2) potential flight distances from the previous and next stationary periods (circles).</p>
-<section id="navigate-geopressureviz" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="navigate-geopressureviz">
-<span class="header-section-number">7.1</span> Navigate GeoPressureViz</h2>
+<p>GeoPressureR includes the <a href="https://shiny.rstudio.com/" target="_blank">shiny app</a> <code>GeoPressureViz</code> which helps you visualize the overall trajectory of the bird as well as each step-by-step move. Note that <strong>this is a visualization tool only</strong> and as such, it cannot be used to make changes to your data.</p>
+<p>It is an essential tool to label your tag and provides a convenient platform to discuss the overall trajectory with collaborators.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/x1WDPIiFB5g" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="run-geopressureviz" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="run-geopressureviz">
+<span class="header-section-number">7.1</span> Run GeoPressureViz</h2>
+<p>Start the shiny app with</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span><span class="va">tag</span><span class="op">)</span></span>
+<span><span class="co"># or if interim file is present</span></span>
+<span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section><section id="navigate-geopressureviz" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="navigate-geopressureviz">
+<span class="header-section-number">7.2</span> Navigate GeoPressureViz</h2>
 <ol type="1">
-<li><p>Open <a href="https://rafnuss.shinyapps.io/GeoPressureViz/" target="_blank">the demo for 18LX</a></p></li>
 <li>
 <p>The app has three panels:</p>
 <ol type="1">
@@ -422,22 +430,7 @@ cookieconsent.run({
 <li><p>Depending on which maps are available, you can choose to display the probability map of pressure <code>tag$map_pressure</code>, light <code>tag$map_light</code>, their product, or the marginal.</p></li>
 <li><p>Because some locations of the most likely path can be completely off, it might be helpful to temporarily change their location to check the coherence of distance with the next/previous stationary period. Click on “Start Editing” to do so. Every time you click on the map, it updates the position. Once you’re happy with the position, you can click on the button again to disable the editing mode.</p></li>
 <li><p>Finally, you can also check the pressure timeseries with the new positions using the button “Query pressure”. This runs <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressure_timeseries.html">geopressure_timeseries()</a></code> in the background, so it is slow (especially for long stationary periods).</p></li>
-</ol></section><section id="run-geopressureviz" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="run-geopressureviz">
-<span class="header-section-number">7.2</span> Run GeoPressureViz</h2>
-<p>The visualization can be started with your track using <code><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz()</a></code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">include</span></span>
-<span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/load_interim.html">load_interim</a></span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span></span>
-<span>  tag <span class="op">=</span> <span class="va">tag</span>, <span class="co"># required</span></span>
-<span>  path <span class="op">=</span> <span class="va">pressurepath</span>, <span class="co"># optional</span></span>
-<span>  marginal <span class="op">=</span> <span class="va">marginal</span>, <span class="co"># optional</span></span>
-<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>If your data is stored in <code>./data/interim/18LX.RData</code>, you can use directly</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz.html">geopressureviz</a></span><span class="op">(</span><span class="st">"18LX"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+</ol>
 <p>Note that the path of the shiny app can be retrieved from the global environment using <code>geopressure_path</code>.</p>
 
 
@@ -846,8 +839,8 @@ cookieconsent.run({
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./labelling-tracks.html" class="pagination-link" aria-label="Labelling tracks">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Labelling tracks</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./geolightviz.html" class="pagination-link" aria-label="GeoLightViz">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">GeoLightViz</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
