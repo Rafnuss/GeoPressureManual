@@ -10,6 +10,16 @@
     ]
   },
   {
+    "objectID": "index.html#prerequisites",
+    "href": "index.html#prerequisites",
+    "title": "A User Manual for GeoPressureR",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nGeoPressureR is an R package, and this manual assumes basic knowledge of R.\n\nWe recommend installing the latest version of R; GeoPressureR requires at least R 4.1.0.\nGeoPressureR works on macOS, Windows, and Linux.\nWe recommend using Positron or RStudio Desktop as your editor/IDE.\nAn internet connection is required to download ERA5 pressure data during the modelling workflow.\nFor trajectory modelling, a computer with 8-16 GB RAM is highly recommended. It can also run on 4 GB RAM, but computations will usually be slower and may require reducing model size.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
     "objectID": "index.html#data-requirements",
     "href": "index.html#data-requirements",
     "title": "A User Manual for GeoPressureR",
@@ -185,7 +195,7 @@
     "href": "trajectory.html#save",
     "title": "\n3  Trajectory\n",
     "section": "\n3.5 Save",
-    "text": "3.5 Save\nYou might want to save some of the key objects such as tag or marginal in an R format. Following the default structure described in GeoPressureTemplate, you should save them in the ./data/interim folder.\n\nsave(\n  tag,\n  # graph, # format(object.size(graph), units = \"MB\")\n  path_most_likely,\n  path_simulation,\n  marginal,\n  file = \"./data/interim/CB619.RData\"\n)\n\nNote that you can retriev all the functions parameters used with tag$param and/or graph$param.\n\n\n\n\n\n\nWarningWorkflow note\n\n\n\nThis manual save() step is only used here to learn the pipeline one step at a time.\nFor real analyses, especially when processing multiple tags, the recommended approach is to create the interim files with geopressuretemplate().\nThis workflow is described in detail in GeoPressureTemplate workflow.\n\n\n\n\n\n\nNussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, Felix Liechti, and Daniel Sheldon. 2023. “Reconstructing Bird Trajectories from Pressure and Wind Data Using a Highly Optimized Hidden Markov Model.” Methods in Ecology and Evolution 14 (4): 1118–29. https://doi.org/10.1111/2041-210X.14082.\n\n\nPatterson, Toby A., Len Thomas, Chris Wilcox, Otso Ovaskainen, and Jason Matthiopoulos. 2008. “State-Space Models of Individual Animal Movement.” Trends in Ecology and Evolution 23 (2): 87–94. https://doi.org/10.1016/j.tree.2007.10.009.",
+    "text": "3.5 Save\nYou might want to save some of the key objects such as tag or marginal in an R format. Following the default structure described in GeoPressureTemplate, you should save them in the ./data/interim folder.\n\nparam &lt;- graph$param\nsave(\n  param,\n  tag,\n  # graph, # format(object.size(graph), units = \"MB\")\n  path_most_likely,\n  path_simulation,\n  marginal,\n  file = \"./data/interim/CB619.RData\"\n)\n\nNote that you can retriev all the functions parameters used with tag$param and/or graph$param.\n\n\n\n\n\n\nWarningWorkflow note\n\n\n\nThis manual save() step is only used here to learn the pipeline one step at a time.\nFor real analyses, especially when processing multiple tags, the recommended approach is to create the interim files with geopressuretemplate().\nThis workflow is described in detail in GeoPressureTemplate workflow.\n\n\n\n\n\n\nNussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, Felix Liechti, and Daniel Sheldon. 2023. “Reconstructing Bird Trajectories from Pressure and Wind Data Using a Highly Optimized Hidden Markov Model.” Methods in Ecology and Evolution 14 (4): 1118–29. https://doi.org/10.1111/2041-210X.14082.\n\n\nPatterson, Toby A., Len Thomas, Chris Wilcox, Otso Ovaskainen, and Jason Matthiopoulos. 2008. “State-Space Models of Individual Animal Movement.” Trends in Ecology and Evolution 23 (2): 87–94. https://doi.org/10.1016/j.tree.2007.10.009.",
     "crumbs": [
       "Basic tutorial",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Trajectory</span>"
@@ -317,7 +327,7 @@
     "href": "trajectory-with-wind.html#save",
     "title": "\n5  Trajectory with wind\n",
     "section": "\n5.6 Save",
-    "text": "5.6 Save\ngraph can become extremely big for such models and it might not be recommended to save it. Check its size with format(object.size(graph), units = \"MB\").\n\nsave(\n  tag,\n  graph,\n  path_most_likely,\n  path_simulation,\n  marginal,\n  edge_simulation,\n  edge_most_likely,\n  file = \"./data/interim/18LX.RData\"\n)\n\n\n\n\n\n\n\nWarningWorkflow note\n\n\n\nThis manual save() step is only used here to learn the pipeline one step at a time.\nFor real analyses, especially when processing multiple tags, the recommended approach is to create the interim files with geopressuretemplate().\nThis workflow is described in detail in GeoPressureTemplate workflow.\n\n\n\n\n\n\nCopernicus Climate Change Service. 2018. “ERA5 Hourly Data on Pressure Levels from 1940 to Present.” Copernicus Climate Change Service (C3S) Climate Data Store (CDS). https://doi.org/10.24381/CDS.BD0915C6.\n\n\nNussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, Felix Liechti, and Daniel Sheldon. 2023. “Reconstructing Bird Trajectories from Pressure and Wind Data Using a Highly Optimized Hidden Markov Model.” Methods in Ecology and Evolution 14 (4): 1118–29. https://doi.org/10.1111/2041-210X.14082.\n\n\nTobias, Joseph A., Catherine Sheard, Alex L. Pigot, Adam J. M. Devenish, Jingyi Yang, Ferran Sayol, Montague H. C. Neate-Clegg, et al. 2022. “AVONET: Morphological, Ecological and Geographical Data for All Birds.” Edited by Tim Coulson. Ecology Letters 25 (3): 581–97. https://doi.org/10.1111/ele.13898.",
+    "text": "5.6 Save\ngraph can become extremely big for such models and it might not be recommended to save it. Check its size with format(object.size(graph), units = \"MB\").\n\nparam &lt;- graph$param\nsave(\n  param,\n  tag,\n  graph,\n  path_most_likely,\n  path_simulation,\n  marginal,\n  edge_simulation,\n  edge_most_likely,\n  file = \"./data/interim/18LX.RData\"\n)\n\n\n\n\n\n\n\nWarningWorkflow note\n\n\n\nThis manual save() step is only used here to learn the pipeline one step at a time.\nFor real analyses, especially when processing multiple tags, the recommended approach is to create the interim files with geopressuretemplate().\nThis workflow is described in detail in GeoPressureTemplate workflow.\n\n\n\n\n\n\nCopernicus Climate Change Service. 2018. “ERA5 Hourly Data on Pressure Levels from 1940 to Present.” Copernicus Climate Change Service (C3S) Climate Data Store (CDS). https://doi.org/10.24381/CDS.BD0915C6.\n\n\nNussbaumer, Raphaël, Mathieu Gravey, Martins Briedis, Felix Liechti, and Daniel Sheldon. 2023. “Reconstructing Bird Trajectories from Pressure and Wind Data Using a Highly Optimized Hidden Markov Model.” Methods in Ecology and Evolution 14 (4): 1118–29. https://doi.org/10.1111/2041-210X.14082.\n\n\nTobias, Joseph A., Catherine Sheard, Alex L. Pigot, Adam J. M. Devenish, Jingyi Yang, Ferran Sayol, Montague H. C. Neate-Clegg, et al. 2022. “AVONET: Morphological, Ecological and Geographical Data for All Birds.” Edited by Tim Coulson. Ecology Letters 25 (3): 581–97. https://doi.org/10.1111/ele.13898.",
     "crumbs": [
       "Advanced tutorial",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Trajectory with wind</span>"
@@ -394,7 +404,7 @@
     "href": "pressurepath.html#save",
     "title": "\n6  Pressurepath\n",
     "section": "\n6.6 Save",
-    "text": "6.6 Save\n\nsave(\n  tag,\n  graph,\n  path_most_likely,\n  path_simulation,\n  marginal,\n  edge_simulation,\n  edge_most_likely,\n  pressurepath,\n  file = \"./data/interim/18LX.RData\"\n)",
+    "text": "6.6 Save\n\nparam &lt;- graph$param\nsave(\n  param,\n  tag,\n  graph,\n  path_most_likely,\n  path_simulation,\n  marginal,\n  edge_simulation,\n  edge_most_likely,\n  pressurepath,\n  file = \"./data/interim/18LX.RData\"\n)",
     "crumbs": [
       "Labelling tools",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Pressurepath</span>"
@@ -746,7 +756,7 @@
     "href": "geopressuretemplate-twilight.html#compute-likelihood-map",
     "title": "\n12  Twilight label\n",
     "section": "\n12.4 Compute likelihood map",
-    "text": "12.4 Compute likelihood map\n\ntag &lt;- geolight_map(\n  tag,\n  twl_calib_adjust = config::get(\"geolight_map\", id)$twl_calib_adjust,\n  twl_llp = config::get(\"geolight_map\", id)$twl_llp,\n  fitted_location_duration = config::get(\n    \"geolight_map\",\n    id\n  )$fitted_location_duration\n)\n\nℹ Calibrate zenith angle\n\n\n✔ Calibrate zenith angle [23ms]\n\n\n\n\n\nℹ Compute twilight likelihood maps\n\n\n✔ Compute twilight likelihood maps [5.5s]\n\n\n\n\n\nℹ Aggregate twilight likelihood maps per stationary periods\n\n\n✔ Aggregate twilight likelihood maps per stationary periods [6ms]\n\n\n\n\n\ntwl_calib_adjust, fitted_location_duration and twl_llp can generally be left to default, but can be modified in config.yml if needed.",
+    "text": "12.4 Compute likelihood map\n\ntag &lt;- geolight_map(\n  tag,\n  twl_calib_adjust = config::get(\"geolight_map\", id)$twl_calib_adjust,\n  twl_llp = config::get(\"geolight_map\", id)$twl_llp,\n  fitted_location_duration = config::get(\n    \"geolight_map\",\n    id\n  )$fitted_location_duration\n)\n\nℹ Calibrate zenith angle\n\n\n✔ Calibrate zenith angle [20ms]\n\n\n\n\n\nℹ Compute twilight likelihood maps\n\n\n✔ Compute twilight likelihood maps [4.1s]\n\n\n\n\n\nℹ Aggregate twilight likelihood maps per stationary periods\n\n\n✔ Aggregate twilight likelihood maps per stationary periods [5ms]\n\n\n\n\n\ntwl_calib_adjust, fitted_location_duration and twl_llp can generally be left to default, but can be modified in config.yml if needed.",
     "crumbs": [
       "GeoPressureTemplate",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Twilight label</span>"
@@ -823,7 +833,7 @@
     "href": "geopressuretemplate-workflow.html#pressurepath",
     "title": "\n13  Workflow\n",
     "section": "\n13.5 Pressurepath",
-    "text": "13.5 Pressurepath\n\ngeopressuretemplate_pressurepath(id, quiet = FALSE)\n\n\n\n\n── Compute pressurepath 18LX ──\n\n\n\n\n\nℹ Prepare pressure\n\n\n✔ Prepare pressure [23ms]\n\n\n\n\n\nℹ Generate request on &lt;glp.mgravey.com/GeoPressure/v2/pressurePath&gt; and downloa…\n\n\n✔ Generate request on &lt;glp.mgravey.com/GeoPressure/v2/pressurePath&gt; and downloa…\n\n\n\n\n\nℹ Post-process pressurepath\n\n\n✔ Post-process pressurepath [2.2s]",
+    "text": "13.5 Pressurepath\n\ngeopressuretemplate_pressurepath(id, quiet = TRUE)",
     "crumbs": [
       "GeoPressureTemplate",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Workflow</span>"
@@ -834,153 +844,175 @@
     "href": "geopressuretemplate-workflow.html#outputs",
     "title": "\n13  Workflow\n",
     "section": "\n13.6 Outputs",
-    "text": "13.6 Outputs\nAll the information needed for your analysis should now be contained in ./data/interim/18LX.RData\n\nsave_list &lt;- load(glue::glue(\"./data/interim/{id}.RData\"))\nprint(save_list)\n\n[1] \"tag\"                      \"graph\"                   \n[3] \"path_most_likely\"         \"path_simulation\"         \n[5] \"marginal\"                 \"edge_simulation\"         \n[7] \"edge_most_likely\"         \"pressurepath\"            \n[9] \"pressurepath_most_likely\"",
+    "text": "13.6 Outputs\nAll the information needed for the rest of your analysis should now be contained in ./data/interim/18LX.RData\n\nsave_list &lt;- load_interim(id)\nprint(save_list)\n\n[1] \"param\"            \"tag\"              \"graph\"            \"path_most_likely\"\n[5] \"path_simulation\"  \"marginal\"         \"edge_simulation\"  \"edge_most_likely\"\n[9] \"pressurepath\"",
     "crumbs": [
       "GeoPressureTemplate",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>Workflow</span>"
     ]
   },
   {
-    "objectID": "geolocator-intro.html",
-    "href": "geolocator-intro.html",
-    "title": "\n14  Introduction\n",
-    "section": "",
-    "text": "14.1 Structure\nGeoLocator Data Package (GeoLocator DP) is a data exchange format for geolocator data, following the Data Package standards for structuring data. Read more about GeoLocator DP.\nA geolocator data package consists of three sets of data: (1) project metadata, (2) core resources containing the main data and (3) optional trajectory data generated with the GeoPressure suite.",
-    "crumbs": [
-      "GeoLocator DP",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Introduction</span>"
-    ]
-  },
-  {
-    "objectID": "geolocator-intro.html#structure",
-    "href": "geolocator-intro.html#structure",
-    "title": "\n14  Introduction\n",
-    "section": "",
-    "text": "14.1.1 Metadata\n\n\ndatapackage.json: List of project metadata such as package title, licences, contributors etc. as well as a list of the data resources that make up the package.\n\n14.1.2 Core Resources\nThe core GeoLocator DP resources contain all the raw geolocator data. These resources can be generated without any analysis of the geolocator data.\n\n\ntags.csv: Table of devices used in the study. We assume that a tag is only used once on a single animal.\n\n\nmeasurements.csv: Table with the raw measurements of all sensors (e.g., light, pressure, …) for all tags.\n\n\nobservations.csv: Table with the field observations associated with tags such as equipment, retrieval, or others events.\n\n14.1.3 GeoPressureR Resources\nThe GeoPressureR extensions consist of optional trajectory data generated through the GeoPressureR workflow analysis.\n\n\nstaps.csv: Table of the stationary periods of all tags.\n\npaths.csv: Table of the trajectory of all tags, typically most likely path or simulation paths.\n\nedges.csv: Table containing the flight information of the edges associated with the paths.\n\ntwilights.csv: Table of the twilights estimated from light data for all tags.\n\npressurepaths.csv: Table of the pressurepaths\n\n\n\n\n\n\n\nNote\n\n\n\nThe GeoPressureR Resources are optional, and even if you have not (yet!) analysed your data, it’s worth publishing the data (maybe with an embargo?). The data package can always be updated once the analysis is done.",
-    "crumbs": [
-      "GeoLocator DP",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Introduction</span>"
-    ]
-  },
-  {
-    "objectID": "geolocator-intro.html#examples",
-    "href": "geolocator-intro.html#examples",
-    "title": "\n14  Introduction\n",
-    "section": "\n14.2 Examples",
-    "text": "14.2 Examples\nThe GeoLocator Data Package Zenodo Community is the best place to see all GeoLocator Data Packages.\n \nOnce you’ve published your data package, make sure to submit it to the community.\n\n\nGeoLocatorExplorer interface to browse published geolocator data packages.",
-    "crumbs": [
-      "GeoLocator DP",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Introduction</span>"
-    ]
-  },
-  {
-    "objectID": "geolocator-intro.html#geolocator",
-    "href": "geolocator-intro.html#geolocator",
-    "title": "\n14  Introduction\n",
-    "section": "\n14.3 GeoLocatoR",
-    "text": "14.3 GeoLocatoR\n\nGeoLocatoR is a R package designed to help you create and work with the GeoLocator Data Package.\nMain Features:\n\nCreate a Geolocator Data Package: Easily create a geolocator datapackage object, add resources (data), and write the data package to your preferred directory. Or, read an existing data package from a directory or from Zenodo.\nWorks with GeoPressureTemplate: GeoLocatoR is perfectly tailored to work with GeoPressureTemplate. Use this dynamic duo to streamline your analysis, maintain a standardized project structure, and keep your geolocator data in perfect formation.\nBuilt on frictionless: This package is built on top of the frictionless R package, adhering to the Frictionless Data standards for open data.\n\nYou can install GeoLocatoR from GitHub:\n\n# install.packages(\"pak\")\npak::pkg_install(\"Rafnuss/GeoLocatoR\")",
-    "crumbs": [
-      "GeoLocator DP",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Introduction</span>"
-    ]
-  },
-  {
     "objectID": "geolocator-create.html",
     "href": "geolocator-create.html",
-    "title": "\n15  Create\n",
+    "title": "\n14  Create\n",
     "section": "",
-    "text": "15.1 Setup of the example\nIn this guide, we explore how to generate a GeoLocator Data Package from a GeoPressureTemplate folder where you’ve already performed the analysis of the tracks following the GeoPressureTemplate workflow.\nFor this example, we won’t be using the Swainson’s Warbler nor Great Reed Warbler as we want a full project with multiple tags. Instead, we download the GeoPressureTemplate of the Woodland Kingfisher geolocator project. Our goal will essentially be to reproduce the associated GeoLocator Data Package uploaded on Zenodo already.\nWe can download this GeoPressureTemplate from Github in a temporary folder using the following code:\nCoderepo &lt;- \"Rafnuss/WoodlandKingfisher\"\n\n# Create temporary file for the ZIP\ntemp_zip &lt;- tempfile(fileext = \".zip\")\n\n# Download the ZIP file and unzip the repository\ndownload.file(\n  glue::glue(\"https://github.com/{repo}/archive/refs/heads/main.zip\"),\n  temp_zip,\n  mode = \"wb\"\n)\ntemp_dir &lt;- tempfile()\nunzip(temp_zip, exdir = temp_dir)\n\n# return the extraction directory\ndirectory &lt;- file.path(temp_dir, list.files(temp_dir))",
+    "text": "14.1 Install GeoLocatoR\nThis tutorial explains how to create a GeoLocator Data Package (GeoLocator DP) from a GeoPressureTemplate project, upload it to Zenodo, and validate the draft before publication.\nWe use the GeoLocatoR package to create and validate the data package.\n# install.packages(\"pak\")\npak::pkg_install(\"Rafnuss/GeoLocatoR\")\ndevtools::load_all(\"~/Documents/GitHub/GeoLocatoR/\")\n# library(GeoLocatoR)",
     "crumbs": [
       "GeoLocator DP",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Create</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Create</span>"
     ]
   },
   {
-    "objectID": "geolocator-create.html#initiate-datapackage-with-metadata",
-    "href": "geolocator-create.html#initiate-datapackage-with-metadata",
-    "title": "\n15  Create\n",
-    "section": "\n15.2 Initiate datapackage with metadata",
-    "text": "15.2 Initiate datapackage with metadata\n\n15.2.1 Initiate datapackage using the DESCRIPTION file\nWe can generate a GeoLocator Data Package pkg from an existing GeoPressureTemplate folder with create_gldp_geopressuretemplate(). This function will read the DESCRIPTION file and create a frictionless package with the metadata you’ve already entered.\n\npkg &lt;- create_gldp_geopressuretemplate(directory = directory)\n\n\n15.2.2 Create record on Zenodo\nThe easiest way to update the metadata is to create an empty Zenodo record and fill in all metadata directly on Zenodo. This way, you can benefit from the Zenodo interface to enter all metadata and share it with co-authors for review before creating the package.\n\nz &lt;- zenodo$depositRecord(\n  gldp_to_zenodo(pkg),\n  reserveDOI = TRUE,\n  publish = FALSE\n)\nbrowseURL(z$links$self_html)\n\n\n15.2.3 Update metadata on Zenodo\nLogin to Zenodo and fill in all metadata you want to add to your GeoLocator Data Package. Read the datapackage specification to learn about all recommended metadata that can be added\n\n\n\n\n\n\nNote\n\n\n\nNote that a datapackage contributors corresponds to creators on Zenodo and not the contributors.\n\n\n\n\n\n\n\n\nTip\n\n\n\nTo be able to save the draft of your record, you’ll need to upload some file, even a dummy text file will do. You can always delete it later and upload with the correct ones.\nSharing the draft with co-authors is a great way to ensure that all metadata are correct before publication.\n\n\n\n15.2.4 Create datapackage from Zenodo record\nOnce you’re happy with the metadata entered on Zenodo, you create a new GeoLocator Data Package from the Zenodo record. For this, you need to retrieve the concept DOI of your Zenodo record. The concept DOI is the one that doesn’t change with new versions. The DOI displayed on Zenodo is actually the DOI of the first version, but you can retrieve the concept DOI by substracting 1 to your ID number.\n\nz &lt;- zenodo$getDepositionByConceptDOI(\"10.5281/zenodo.{ZENODO_ID - 1}\")\npkg &lt;- zenodo_to_gldp(z)",
+    "objectID": "geolocator-create.html#step-1.-create-the-package-from-geopressuretemplate",
+    "href": "geolocator-create.html#step-1.-create-the-package-from-geopressuretemplate",
+    "title": "\n14  Create\n",
+    "section": "\n14.2 Step 1. Create the package from GeoPressureTemplate",
+    "text": "14.2 Step 1. Create the package from GeoPressureTemplate\nRead your project and build a geolocator-dp object.\n\npkg &lt;- read_geopressuretemplate()\n\nBy default, read_geopressuretemplate() reads data/interim/*.RData first and falls back to raw data for tags without interim files.\n\nUse from to force a specific source (\"interim\" or \"raw\").\nPrefix a file/folder with _ to exclude a tag temporarily.\n\nInspect the package summary:\n\nprint(pkg)\n## \n## ── A GeoLocator Data Package `pkg` (v1.0) ──────────────────────────────────────\n## \n## ── Metadata\n## Note: All green texts are fields of `pkg` which can be accessed with `pkg$field`).\n## ✔ access: Open access\n## ! community: no Geolocator DP community\n## • temporal: \"2017-06-20\" to \"2022-06-11\"\n## • taxonomic: \"Acrocephalus arundinaceus\" and \"Limnothlypis swainsonii\"\n## • numberTags: tags: 2, measurements: 2, light: 1, pressure: 2, activity: 1,\n##   temperature_external: 1, paths: 2\n## \n## ── Resources: (7 resources)\n## • `tags()` (n=2)\n## • `observations()` (n=4)\n## • `measurements()` (n=228,953)\n## • `staps()` (n=38)\n## • `twilights()` (n=632)\n## • `paths()` (n=418)\n## • `edges()` (n=308)",
     "crumbs": [
       "GeoLocator DP",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Create</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Create</span>"
     ]
   },
   {
-    "objectID": "geolocator-create.html#add-the-data",
-    "href": "geolocator-create.html#add-the-data",
-    "title": "\n15  Create\n",
-    "section": "\n15.3 Add the data",
-    "text": "15.3 Add the data\nNow that we have the metadata set up, we can add the data to the package. add_gldp_geopressuretemplate() is a key function that read the geopressuretemplate data available and automatically add the most up-to-date available data to the datapackage.\n\npkg &lt;- add_gldp_geopressuretemplate(pkg, directory = directory)\n\n✔ Reading tags from '/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T//Rtmp2wPZnX/fileed8d56fb1e53/WoodlandKingfisher-main/data/tags.csv'.\n\n\n✔ Reading observations from '/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T//Rtmp2wPZnX/fileed8d56fb1e53/WoodlandKingfisher-main/data/observations.csv'.",
+    "objectID": "geolocator-create.html#step-2.-complete-tags-and-observations",
+    "href": "geolocator-create.html#step-2.-complete-tags-and-observations",
+    "title": "\n14  Create\n",
+    "section": "\n14.3 Step 2. Complete tags and observations\n",
+    "text": "14.3 Step 2. Complete tags and observations\n\nAt this point, tags and observations will certaintly still be missing key metadata (for example ringing information).\nThe easiest way to fix this is to export the tables, edit them manually and then save them back.\n\nwrite.csv(tags(pkg), file = \"data/tags.csv\", row.names = FALSE)\nwrite.csv(observations(pkg), file = \"data/observations.csv\", row.names = FALSE)\n\nRebuild and validate after editing:\n\npkg &lt;- read_geopressuretemplate()\n## ✔ Reading tags from './data/tags.csv'.\n## ✔ Reading observations from './data/observations.csv'.\nvalidate_gldp(pkg)\n## \n## ── Check Profile\n## \n## ── Check Resources tags\n## ✔ Table tags is consistent with the schema.\n## \n## ── Check Resources observations\n## ✔ Table observations is consistent with the schema.\n## \n## ── Check Resources measurements\n## ✔ Table measurements is consistent with the schema.\n## \n## ── Check Resources staps\n## ✔ Table staps is consistent with the schema.\n## \n## ── Check Resources twilights\n## ✔ Table twilights is consistent with the schema.\n## \n## ── Check Resources paths\n## ✔ Table paths is consistent with the schema.\n## \n## ── Check Resources edges\n## ✔ Table edges is consistent with the schema.\n## \n## ── Check Coherence\n## ✔ Coherence checks passed.\n## \n## ── Check Metadata\n## ! pkg$title is missing or empty.\n## ! Missing role in pkg$contributors.\n## ! Expected pkg$record_type to be \"dataset\"; got NA.\n## ! No relatedIdentifiers present. Add any resources related to the data (e.g. papers, project pages, derived datasets, etc.).\n## ! Missing selected community &lt;https://zenodo.org/communities/geolocator-dp/&gt;.\n## ! Missing or invalid pkg$codeRepository; expected a GitHub repository URL.\n## \n## ── Final: ──────────────────────────────────────────────────────────────────────\n## ✔ Package validation succeeded.",
     "crumbs": [
       "GeoLocator DP",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Create</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Create</span>"
     ]
   },
   {
-    "objectID": "geolocator-create.html#data-to-include",
-    "href": "geolocator-create.html#data-to-include",
-    "title": "\n15  Create\n",
-    "section": "\n15.4 Data to include",
-    "text": "15.4 Data to include\nBy default, add_gldp_geopressuretemplate() adds first the tag data from the data/interim Rdata file. For all tag_id that don’t have a interim file, it read the data directly from the data/raw-data folder, using config.yml information. Using the from argument, you can specify to only read from one of these two locations. It’s possible to exclude specific tag_id by adding a _ to the interim file name or raw-data folder (e.g., _TAG1234.RData or _TAG1234/).\n\n15.4.1 tags and observations resources\nIf tags.csv and observations.csv are not available (i.e., not stored in the data/ folder of your project), tags and observations resources would have been generated by add_gldp_geopressuretemplate() based on the available information. You certainly need to edit them manually, adding some key missing information (e.g. ring_number).\n\nwrite.csv(tags(pkg), file = \"data/tags.csv\", row.names = FALSE)\nwrite.csv(observations(pkg), file = \"data/observations.csv\", row.names = FALSE)\n\n\n15.4.2 Inspect the created package\nBefore uploading the data, you should also inspect the created package to ensure that everything is correct.\nCheck the summary of the package, in particular the number of tags in each resources.\n\nprint(pkg)\n\n\n\n\n── A GeoLocator Data Package (v0.5) \n\n\n• title: \"Migration route and timing of South African Woodland Kingfisher\"\n\n\n• contributors:\n\n\n  Raphaël Nussbaumer ('rafnuss@gmail.com') (Researcher, ProjectLeader) -\n  &lt;https://orcid.org/0000-0002-8185-1020&gt;\n\n\n  Yann Rime ('yann.rime@vogelwarte.ch') (Researcher, Contributor) -\n  &lt;https://orcid.org/0009-0005-7264-6753&gt;\n\n\n• embargo: 1970-01-01\n\n\n• licenses:\n\n\n  Creative Commons Attribution 4.0 (CC-BY-4.0) -\n  &lt;https://creativecommons.org/licenses/by/4.0/&gt;\n\n\n• created: 2026-03-11 16:24:57\n\n\n• bibliographicCitation: \"Nussbaumer R, Rime Y (2026). \\\"Migration route and\n  timing of South African Woodland Kingfisher.\\\"\"\n\n\n• spatial: Polygon and c(17.375, 32.875, 32.875, 17.375, 17.375, -24.375,\n  -24.375, 12.875, 12.875, -24.375)\n\n\n• temporal: \"2017-01-10\" to \"2019-09-28\"\n\n\n• taxonomic: \"Halcyon senegalensis\"\n\n\n• numberTags:\n\n\n  tags: 25\n\n\n  measurements: 5\n\n\n  light: 5\n\n\n  pressure: 5\n\n\n  activity: 5\n\n\n  temperature_external: 5\n\n\n  magnetic: 5\n\n\n  paths: 5\n\n\n  pressurepaths: 5\n\n\n\n\n\n── 8 resources \n\n\n• twilights (n=3,262)\n\n\n• staps (n=223)\n\n\n• paths (n=22,523)\n\n\n• edges (n=22,018)\n\n\n• pressurepaths (n=224,828)\n\n\n• tags (n=25)\n\n\n• observations (n=64)\n\n\n• measurements (n=1,924,975)\n\n\nUse `unclass()` to print the Geolocator Data Package as a list.\n\n\nYou can visualize the coverage of the package by ploting the Data Package. Check for the correct number of tags, as well as equipment and retrieval dates.\n\nplot(pkg, \"ring\")\n\n\n\n\n\n\nplot(pkg, \"coverage\")\n\n\n\n\n\n\nplot(pkg, \"map\")\n\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\n\nFinally, we check that the package is compliant with GeoLocator Data Package standards.\n\nvalidate_gldp(pkg)\n## \n## ── Check GeoLocator DataPackage profile ──\n## \n## ✔ title is valid.\n## ✔ contributors is valid.\n## ✔ contributors[[1]] is valid.\n## ✔ contributors[[1]]$title is valid.\n## ✔ contributors[[1]]$givenName is valid.\n## ✔ contributors[[1]]$familyName is valid.\n## ✔ contributors[[1]]$roles is valid.\n## ✔ contributors[[1]]$roles[[1]] is valid.\n## ✔ contributors[[1]]$roles[[2]] is valid.\n## ✔ contributors[[1]]$email is valid.\n## ✔ contributors[[1]]$path is valid.\n## ✔ contributors[[2]] is valid.\n## ✔ contributors[[2]]$title is valid.\n## ✔ contributors[[2]]$givenName is valid.\n## ✔ contributors[[2]]$familyName is valid.\n## ✔ contributors[[2]]$roles is valid.\n## ✔ contributors[[2]]$roles[[1]] is valid.\n## ✔ contributors[[2]]$roles[[2]] is valid.\n## ✔ contributors[[2]]$email is valid.\n## ✔ contributors[[2]]$path is valid.\n## ✔ embargo is valid.\n## ✔ licenses is valid.\n## ✔ licenses[[1]] is valid.\n## ✔ licenses[[1]]$name is valid.\n## ✔ licenses[[1]]$title is valid.\n## ✔ licenses[[1]]$path is valid.\n## ✔ created is valid.\n## ✔ numberTags is valid.\n## ✔ numberTags$tags is valid.\n## ✔ numberTags$measurements is valid.\n## ✔ numberTags$light is valid.\n## ✔ numberTags$pressure is valid.\n## ✔ numberTags$activity is valid.\n## ✔ numberTags$temperature_external is valid.\n## ✔ numberTags$temperature_internal is valid.\n## ✔ numberTags$magnetic is valid.\n## ✔ numberTags$wet_count is valid.\n## ✔ numberTags$conductivity is valid.\n## ✔ numberTags$paths is valid.\n## ✔ numberTags$pressurepaths is valid.\n## ✔ bibliographicCitation is valid.\n## ✔ $schema is valid.\n## ✔ taxonomic is valid.\n## ✔ taxonomic[[1]] is valid.\n## ✔ spatial is valid.\n## ! spatial cannot be validated (external schema).\n## ✔ temporal is valid.\n## ✔ temporal$start is valid.\n## ✔ temporal$end is valid.\n## ✔ Package is consistent with the profile.\n## \n## ── Check GeoLocator DataPackage id ──\n## \n## ✖ Package id is missing.\n## \n## ── Check GeoLocator DataPackage Resources\n## \n## ── Check GeoLocator DataPackage Resources twilights ──\n## \n## ✔ twilights$tag_id is valid.\n## ✔ twilights$twilight is valid.\n## ✔ twilights$rise is valid.\n## ✔ twilights$label is valid.\n## ✔ Table twilights is consistent with the schema.\n## \n## ── Check GeoLocator DataPackage Resources staps ──\n## \n## ✔ staps$tag_id is valid.\n## ✔ staps$stap_id is valid.\n## ✔ staps$start is valid.\n## ✔ staps$end is valid.\n## ✔ staps$known_lat is valid.\n## ✔ staps$known_lon is valid.\n## ✔ staps$include is valid.\n## ✔ Table staps is consistent with the schema.\n## \n## ── Check GeoLocator DataPackage Resources paths ──\n## \n## ✔ paths$tag_id is valid.\n## ✔ paths$type is valid.\n## ✔ paths$stap_id is valid.\n## ✔ paths$lat is valid.\n## ✔ paths$lon is valid.\n## ✔ paths$ind is valid.\n## ✔ paths$j is valid.\n## ✔ paths$interp is valid.\n## ✔ paths$known is valid.\n## ✔ Table paths is consistent with the schema.\n## \n## ── Check GeoLocator DataPackage Resources edges ──\n## \n## ✔ edges$tag_id is valid.\n## ✔ edges$type is valid.\n## ✔ edges$stap_s is valid.\n## ✔ edges$stap_t is valid.\n## ✔ edges$lat_s is valid.\n## ✔ edges$lon_s is valid.\n## ✔ edges$lat_t is valid.\n## ✔ edges$lon_t is valid.\n## ✔ edges$s is valid.\n## ✔ edges$t is valid.\n## ✔ edges$j is valid.\n## ✔ edges$start is valid.\n## ✔ edges$end is valid.\n## ✔ edges$n is valid.\n## ✔ edges$distance is valid.\n## ✔ edges$bearing is valid.\n## ✔ edges$gs_u is valid.\n## ✔ edges$gs_v is valid.\n## ✔ edges$ws_u is valid.\n## ✔ edges$ws_v is valid.\n## ✔ Table edges is consistent with the schema.\n## \n## ── Check GeoLocator DataPackage Resources pressurepaths ──\n## \n## ✔ pressurepaths$tag_id is valid.\n## ✔ pressurepaths$datetime is valid.\n## ✔ pressurepaths$stap_id is valid.\n## ✔ pressurepaths$type is valid.\n## ✔ pressurepaths$lat is valid.\n## ✔ pressurepaths$lon is valid.\n## ✔ pressurepaths$ind is valid.\n## ✔ pressurepaths$j is valid.\n## ✔ pressurepaths$pressure_tag is valid.\n## ✔ pressurepaths$label is valid.\n## ✔ pressurepaths$altitude is valid.\n## ✔ pressurepaths$surface_pressure is valid.\n## ✔ pressurepaths$surface_pressure_norm is valid.\n## ✔ pressurepaths$sunset is valid.\n## ✔ pressurepaths$sunrise is valid.\n## ✔ Table pressurepaths is consistent with the schema.\n## \n## ── Check GeoLocator DataPackage Resources tags ──\n## \n## ✔ tags$tag_id is valid.\n## ✔ tags$datapackage_id is valid.\n## ✔ tags$ring_number is valid.\n## ✔ tags$scientific_name is valid.\n## ✔ tags$manufacturer is valid.\n## ✔ tags$model is valid.\n## ✔ tags$firmware is valid.\n## ✔ tags$weight is valid.\n## ✔ tags$attachment_type is valid.\n## ✔ tags$readout_method is valid.\n## ✔ tags$tag_comments is valid.\n## ✔ Table tags is consistent with the schema.\n## \n## ── Check GeoLocator DataPackage Resources observations ──\n## \n## ✔ observations$ring_number is valid.\n## ✔ observations$tag_id is valid.\n## ✔ observations$observation_type is valid.\n## ✔ observations$datetime is valid.\n## ✔ observations$latitude is valid.\n## ✔ observations$longitude is valid.\n## ✔ observations$location_name is valid.\n## ✔ observations$device_status is valid.\n## ✔ observations$observer is valid.\n## ✔ observations$catching_method is valid.\n## ✔ observations$age_class is valid.\n## ✔ observations$sex is valid.\n## ✔ observations$condition is valid.\n## ✔ observations$mass is valid.\n## ✔ observations$wing_length is valid.\n## ✔ observations$additional_metric is valid.\n## ✔ observations$observation_comments is valid.\n## ✔ Table observations is consistent with the schema.\n## \n## ── Check GeoLocator DataPackage Resources measurements ──\n## \n## ✔ measurements$tag_id is valid.\n## ✔ measurements$sensor is valid.\n## ✔ measurements$datetime is valid.\n## ✔ measurements$value is valid.\n## ✔ measurements$label is valid.\n## ✔ Table measurements is consistent with the schema.\n## ✔ Package's resources are valid.\n## \n## ── Check GeoLocator DataPackage Coherence ──\n## \n## ✔ Package is internally coherent.\n## \n## ── Check Observations Coherence ──\n## \n## ✔ observations table is coherent.\n## \n## ── Overall Package Validation ──\n## \n## ✖ Package validation failed.\n\nIt is quite normal that you’ll first see some error here. Try to fix them and re-create the package until the package is valid. If you can’t fix them, contact me!",
+    "objectID": "geolocator-create.html#step-3.-run-visual-checks",
+    "href": "geolocator-create.html#step-3.-run-visual-checks",
+    "title": "\n14  Create\n",
+    "section": "\n14.4 Step 3. Run visual checks",
+    "text": "14.4 Step 3. Run visual checks\nIn this final stage, we check the coverage, tag count, and deployment/retrieval consistency to avoid outliers or missing information. To do so, plot each variable and check that (1) all the ring numbers are present, (2) all measurements are correct and no information is missing and (3) trajectories are correct.\n\nplot(pkg, \"ring\")\n\n\n\n\n\n\nplot(pkg, \"coverage\")\n\nWarning: Removed 1 row containing missing values or values outside the scale range\n(`geom_tile()`).\n\n\n\n\n\n\n\nplot(pkg, \"map\")",
     "crumbs": [
       "GeoLocator DP",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Create</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Create</span>"
     ]
   },
   {
-    "objectID": "geolocator-create.html#upload-data-to-zenodo",
-    "href": "geolocator-create.html#upload-data-to-zenodo",
-    "title": "\n15  Create\n",
-    "section": "\n15.5 Upload data to Zenodo",
-    "text": "15.5 Upload data to Zenodo\nWe can write the datapackage to file\n\nfrictionless::write_package(pkg, \"data/datapackage\")\n\nThe content of the folder created should now be uploaded on your Zenodo record with a drag and drop.",
+    "objectID": "geolocator-create.html#step-4.-write-the-package-files",
+    "href": "geolocator-create.html#step-4.-write-the-package-files",
+    "title": "\n14  Create\n",
+    "section": "\n14.5 Step 4. Write the package files",
+    "text": "14.5 Step 4. Write the package files\nNow that we have checked the data, we can export pkg into the csv file that will be uploaded on Zenodo.\n\nwrite_gldp(pkg, \"data/datapackage\")",
     "crumbs": [
       "GeoLocator DP",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Create</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Create</span>"
     ]
   },
   {
-    "objectID": "geolocator-create.html#publish-the-record",
-    "href": "geolocator-create.html#publish-the-record",
-    "title": "\n15  Create\n",
-    "section": "\n15.6 Publish the record",
-    "text": "15.6 Publish the record\nFinally, once you’re happy with everything, you can publish the record on Zenodo!",
+    "objectID": "geolocator-create.html#step-5.-create-the-zenodo-draft-record",
+    "href": "geolocator-create.html#step-5.-create-the-zenodo-draft-record",
+    "title": "\n14  Create\n",
+    "section": "\n14.6 Step 5. Create the Zenodo draft record",
+    "text": "14.6 Step 5. Create the Zenodo draft record\nCreate a new draft on Zenodo, complete all metadata fields, BUT, do not submit it just yet.\n\n\n\n\n\n\nWarningMandatory checklist\n\n\n\nComplete all items below. If one or more are missing, the record may be returned for revision and not accepted in the community.\n\nSelect the community: GeoLocator Data Package\nUpload all files\nReserve a DOI\nSet resource type to Dataset\nAdd a title starting with “GeoLocator Data Package:”\nAdd all data package authors (with roles when possible)\nAdd a basic description\nAdd funding and related resources\nAdd the GitHub link of the GeoPressureTemplate used\nAdd any additional metadata you want to include\n\nReview the GeoLocator DP curation policy before submission.",
     "crumbs": [
       "GeoLocator DP",
-      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Create</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Create</span>"
+    ]
+  },
+  {
+    "objectID": "geolocator-create.html#step-6.-validate-the-zenodo-draft",
+    "href": "geolocator-create.html#step-6.-validate-the-zenodo-draft",
+    "title": "\n14  Create\n",
+    "section": "\n14.7 Step 6. Validate the Zenodo draft",
+    "text": "14.7 Step 6. Validate the Zenodo draft\nBefore submitting, read the draft back and validate exactly what Zenodo contains.\n\nReading a draft requires a Zenodo API token. Create one at Zenodo token settings and save it in your keyring:\n\nkeyring::key_set_with_value(\"ZENODO_TOKEN\", password = \"{your_zenodo_token}\")\n\n\n\npkg &lt;- read_zenodo(\n  \"10.5072/zenodo.472302\",\n  draft = TRUE, # Draft record\n  sandbox = TRUE # Remove if using production Zenodo\n)\n## ℹ Retrieve Zenodo record 472302\n## ✔ Retrieve Zenodo record 472302 [292ms]\n## \n## ℹ Download files from Zenodo\n## ✔ Download files from Zenodo [1.3s]\n## \n## ℹ Read and upgrade GeoLocator-DP\n## ✔ Read and upgrade GeoLocator-DP [310ms]\n## \n## ℹ Add metadata\n## ✔ Add metadata [102ms]\n## \n\n\n\n\n\n\n\nImportant\n\n\n\nRun the official validation check on the draft package:\n\nvalidate_gldp(pkg)\n## \n## ── Check Profile\n## \n## ── Check Resources tags\n## ✔ Table tags is consistent with the schema.\n## \n## ── Check Resources observations\n## ✔ Table observations is consistent with the schema.\n## \n## ── Check Resources measurements\n## ✔ Table measurements is consistent with the schema.\n## \n## ── Check Resources staps\n## ✔ Table staps is consistent with the schema.\n## \n## ── Check Resources twilights\n## ✔ Table twilights is consistent with the schema.\n## \n## ── Check Resources paths\n## ✔ Table paths is consistent with the schema.\n## \n## ── Check Resources edges\n## ✔ Table edges is consistent with the schema.\n## \n## ── Check Coherence\n## ✔ Coherence checks passed.\n## \n## ── Check Metadata\n## ✔ Metadata recommendations passed.\n## \n## ── Final: ──────────────────────────────────────────────────────────────────────\n## ✔ Package validation succeeded.\n\nIf validation reports errors, fix the metadata/files and run the check again until valid.",
+    "crumbs": [
+      "GeoLocator DP",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Create</span>"
+    ]
+  },
+  {
+    "objectID": "geolocator-create.html#step-7.-submit",
+    "href": "geolocator-create.html#step-7.-submit",
+    "title": "\n14  Create\n",
+    "section": "\n14.8 Step 7. Submit",
+    "text": "14.8 Step 7. Submit\nOnce all checks are valid and metadata are complete, submit the Zenodo record! 🎉 A curator will review the data and get back to you if any revision is required.",
+    "crumbs": [
+      "GeoLocator DP",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Create</span>"
     ]
   },
   {
     "objectID": "geolocator-read.html",
     "href": "geolocator-read.html",
-    "title": "\n16  Read and use\n",
+    "title": "\n15  Read and use\n",
     "section": "",
-    "text": "16.1 Read Geolocator Data Package\nA cool feature of Zenodo is that you can load the data directly without downloading the files!\npkg &lt;- read_gldp(\"https://zenodo.org/records/14641765/files/datapackage.json\")",
+    "text": "15.1 Discover datasets with GeoLocatorExplorer\nThis tutorial shows how to discover, load, combine, and analyze published GeoLocator Data Packages.\nUse the interactive GeoLocatorExplorer to find datasets you’re interested in.",
     "crumbs": [
       "GeoLocator DP",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Read and use</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Read and use</span>"
     ]
   },
   {
-    "objectID": "geolocator-read.html#analyse-data-with-geopressuretemplate",
-    "href": "geolocator-read.html#analyse-data-with-geopressuretemplate",
-    "title": "\n16  Read and use\n",
-    "section": "\n16.2 Analyse data with GeoPressureTemplate",
-    "text": "16.2 Analyse data with GeoPressureTemplate\nIf this data package has not yet been analysed with GeoPressureR, you can create a GeoPressureTemplate folder from the data package using the following code. Note that this code will open a new RStudio session.\n\nproject_dir &lt;- create_geopressuretemplate(path = tempfile(), pkg = pkg)\n\n✔ Cloning repo from &lt;https://github.com/Rafnuss/GeoPressureTemplate/&gt; into\n  '/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T//Rtmp0euvSm/fileee2c6faed395'.\n\n\n✔ Setting active project to\n  \"/private/var/folders/cm/dh8lmmxn3b5bcb2_gbz16ycm0000gn/T/Rtmp0euvSm/fileee2c6faed395\".\n\n\n✔ Adding \"CC BY 4.0\" to 'License'.\n\n\n✔ Writing 'LICENSE.md'.\n\n\n⠙ 1/5 ETA: 21s |   \n\n\n⠹ 2/5 ETA: 13s |   \n\n\n⠸ 3/5 ETA:  8s |   \n\n\n⠼ 4/5 ETA:  4s |   \n\n\n\n\n\n\n\n\nNote\n\n\n\nAt this stage, you’ll need to go through all the steps to make yourself at home.\nYou’re now ready to analyse your data according to the GeoPressureTemplate instructions!",
+    "objectID": "geolocator-read.html#discover-datasets-with-geolocatorexplorer",
+    "href": "geolocator-read.html#discover-datasets-with-geolocatorexplorer",
+    "title": "\n15  Read and use\n",
+    "section": "",
+    "text": "GeoLocatorExplorer interface to browse published geolocator data packages.",
     "crumbs": [
       "GeoLocator DP",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Read and use</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Read and use</span>"
     ]
   },
   {
-    "objectID": "geolocator-read.html#use-analysed-data",
-    "href": "geolocator-read.html#use-analysed-data",
-    "title": "\n16  Read and use\n",
-    "section": "\n16.3 Use analysed data",
-    "text": "16.3 Use analysed data\nIf the datapackage you want to use has already been analysed, you can retrieve all the resources of the datapackage:\n\n# For instance, display the edges\nedges(pkg) %&gt;%\n  head() %&gt;%\n  knitr::kable(digits = 1)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntag_id\nstap_s\nstap_t\nlat_s\nlon_s\nlat_t\nlon_t\ns\nt\nj\nstart\nend\nn\ndistance\nbearing\ngs_u\ngs_v\nws_u\nws_v\n\n\n\n16LN\n1\n2\n-22.7\n28.8\n-20.1\n26.6\n8503\n21109\n1\n2017-04-04 19:42:30\n2017-04-05 03:52:30\n1\n363.6\n-38.1\n-26.9\n31.4\n-28.0\n-3.5\n\n\n16LN\n2\n3\n-20.1\n26.6\n-18.9\n26.4\n21109\n34936\n1\n2017-04-05 17:37:30\n2017-04-05 21:12:30\n1\n140.8\n-10.8\n-6.0\n31.7\n-13.8\n-1.0\n\n\n16LN\n3\n4\n-18.9\n26.4\n-18.1\n27.1\n34936\n49373\n1\n2017-04-06 01:02:30\n2017-04-06 03:42:30\n1\n114.7\n43.8\n23.0\n24.0\n-2.3\n-0.1\n\n\n16LN\n4\n5\n-18.1\n27.1\n-17.1\n26.6\n49373\n63049\n1\n2017-04-06 23:52:30\n2017-04-07 03:07:30\n1\n122.7\n-25.7\n-12.9\n26.9\n-16.9\n-9.8\n\n\n16LN\n5\n6\n-17.1\n26.6\n-17.1\n27.4\n63049\n77489\n1\n2017-04-07 18:17:30\n2017-04-07 21:12:30\n1\n79.8\n90.1\n18.2\n0.0\n-9.5\n-3.5\n\n\n16LN\n6\n7\n-17.1\n27.4\n-15.6\n25.6\n77489\n90403\n1\n2017-04-08 17:37:30\n2017-04-08 22:17:30\n1\n250.0\n-48.6\n-36.0\n31.7\n-23.2\n3.4\n\n\n\n\n\nHere is an example showing all the tracks\n\nCodebird_data &lt;- paths(pkg) %&gt;%\n  filter(type == \"most_likely\")\n\n# Generate a color palette for unique tag IDs\ntag_ids &lt;- unique(bird_data$tag_id)\ncolor_palette &lt;- colorFactor(palette = \"Set1\", domain = tag_ids)\n\nleaflet_map &lt;- leaflet(height = 600) %&gt;% addTiles()\n\n# Add polylines and markers for each tag_id\nfor (tag in tag_ids) {\n  bird_subset &lt;- bird_data %&gt;% filter(tag_id == tag)\n  leaflet_map &lt;- leaflet_map %&gt;%\n    addPolylines(\n      lng = ~lon,\n      lat = ~lat,\n      data = bird_subset,\n      color = color_palette(tag),\n      weight = 2,\n      popup = ~ paste0(\"Tag ID: \", tag_id, \"&lt;br&gt;Step: \", stap_id)\n    ) %&gt;%\n    addCircleMarkers(\n      lng = ~lon,\n      lat = ~lat,\n      data = bird_subset,\n      color = color_palette(tag),\n      radius = 4,\n      fillOpacity = 0.8,\n      popup = ~ paste0(\"Tag ID: \", tag_id, \"&lt;br&gt;Step: \", stap_id)\n    )\n}\n\n# Add a legend\nleaflet_map &lt;- leaflet_map %&gt;%\n  addLegend(\n    position = \"topright\",\n    pal = color_palette,\n    values = tag_ids,\n    title = \"Bird Trajectories\",\n    opacity = 1\n  )\n\n# Display the map\nleaflet_map",
+    "objectID": "geolocator-read.html#read-one-geolocator-data-package",
+    "href": "geolocator-read.html#read-one-geolocator-data-package",
+    "title": "\n15  Read and use\n",
+    "section": "\n15.2 Read one GeoLocator Data Package",
+    "text": "15.2 Read one GeoLocator Data Package\nRecords can be loaded using the Zenodo record id, DOI, DOI URL, or Zenodo record URL. This will automatically download the data, upgrade if necessary and load the data in your R console.\n\npkg &lt;- read_zenodo(\"https://zenodo.org/records/13829929\")\n## ℹ Retrieve Zenodo record 13829929\n## ✔ Retrieve Zenodo record 13829929 [545ms]\n## \n## ℹ Download files from Zenodo\n## ✔ Download files from Zenodo [1.4s]\n## \n## ℹ Read and upgrade GeoLocator-DP\n## ✔ Upgrading GeoLocator-DP from \"v0.2\" to \"v1.0\".\n## ℹ Read and upgrade GeoLocator-DP\n✔ Read and upgrade GeoLocator-DP [3.3s]\n## \n## ℹ Add metadata\n## ✔ Add metadata [524ms]\n\nprint(pkg)\n## \n## ── A GeoLocator Data Package `pkg` (v1.0) ──────────────────────────────────────\n## \n## ── Metadata\n## Note: All green texts are fields of `pkg` which can be accessed with `pkg$field`).\n## • title: \"GeoLocator Data Package: South African Woodland Kingfisher\"\n## • doi: &lt;https://doi.org/10.5281/zenodo.15259676&gt;\n## • contributors:\n##   Raphaël Nussbaumer (contactperson) - &lt;https://orcid.org/0000-0002-8185-1020&gt;\n##   Yann Rime (researcher) - &lt;https://orcid.org/0009-0005-7264-6753&gt;\n##   Samuel Temidayo Osinubi (datacollector) -\n##   &lt;https://orcid.org/0000-0002-5143-6985&gt;\n## ✔ access: Open access\n## • licenses: Creative Commons Attribution 4.0 International (cc-by-4.0) - {.url\n##   https://creativecommons.org/licenses/by/4.0/legalcode}\n## • description: \"This repository contains the raw data and the trajectory\n##   information generated with the GeoPressureR workflow, following the\n##   GeoLocator Data Package standard. The more complete code used to generate\n##   this datapackage can be found on the Github Reposit...\"\n## • version: \"v1.2.1\"\n## ✔ community: Geolocator DP community\n## • relatedIdentifiers:\n##   issupplementto &lt;https://doi.org/10.1098/rspb.2024.2633&gt;\n##   isdocumentedby &lt;https://github.com/Rafnuss/WoodlandKingfisher&gt;\n## • keywords: \"Woodland Kingfisher\", \"multi-sensor geolocator\", \"intra-african\n##   migration\", \"bird\", and \"migration\"\n## • created: 2025-04-22 06:44:20.918179\n## • bibliographicCitation: \"Nussbaumer R, Rime Y, Osinubi S (2025). \\\"GeoLocator\n##   Data Package: South African Woodland Kingfisher.\\\"\n##   doi:10.5281/zenodo.13829929 &lt;https://doi.org/10.5281/zenodo.13829929&gt;,\n##   &lt;https://zenodo.org/records/15259676&gt;.\"\n## • temporal: \"2017-01-10\" to \"2019-09-28\"\n## • taxonomic: \"Halcyon senegalensis\"\n## • numberTags: tags: 25, measurements: 5, light: 5, pressure: 5, activity: 5,\n##   temperature_external: 5, magnetic: 5, paths: 5, pressurepaths: 5\n## \n## ── Resources: (8 resources)  \n## • `tags()` (n=25)\n## • `observations()` (n=64)\n## • `measurements()` (n=1,924,975)\n## • `staps()` (n=223)\n## • `twilights()` (n=3,262)\n## • `paths()` (n=22,523)\n## • `edges()` (n=22,018)\n## • `pressurepaths()` (n=224,828)\n\nplot(pkg, \"map\")\n\n\n\n\n\nA GeoLocator DP object gives direct access to tabular resources through accessor functions: tags(), observations(), measurements(), staps(), paths(), edges(), twilights(), and pressurepaths().\nFor instance, the following code computes the uncertainty in total distance flown for each bird (expressed as a percentage across simulations):\n\ndist_sim &lt;- edges(pkg) |&gt;\n  filter(type == \"simulation\") |&gt;\n  group_by(tag_id, j) |&gt;\n  summarise(total_distance = sum(distance), .groups = \"drop\")\n\ndist_sim |&gt;\n  group_by(tag_id) |&gt;\n  summarise(\n    uncertainty_pct = 100 * sd(total_distance) / mean(total_distance),\n    .groups = \"drop\"\n  ) |&gt;\n  rename(`Distance uncertainty (%)` = uncertainty_pct) |&gt;\n  knitr::kable(digits = 1)\n\n\n\ntag_id\nDistance uncertainty (%)\n\n\n\n16LN\n4.0\n\n\n16LO\n4.6\n\n\n16LP\n4.7\n\n\n20IK\n3.7\n\n\n22NO\n5.1",
     "crumbs": [
       "GeoLocator DP",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Read and use</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Read and use</span>"
+    ]
+  },
+  {
+    "objectID": "geolocator-read.html#merge-multiple-packages",
+    "href": "geolocator-read.html#merge-multiple-packages",
+    "title": "\n15  Read and use\n",
+    "section": "\n15.3 Merge multiple packages",
+    "text": "15.3 Merge multiple packages\nYou can combine two geolocator-dp objects with merge_gldp(). To make it easier, we can use purrr to read and combine a list of zenodo record_id into a single geolocator-dp object:\n\npkgs &lt;- c(\"16730669\", \"17084708\", \"18311204\", \"13829929\", \"16804931\") |&gt;\n  purrr::map(read_zenodo) |&gt;\n  purrr::reduce(merge_gldp)\n\n\n\n\n\n\n\nImportant\n\n\n\nmerge_gldp() returns a valid geolocator-dp, but it should be interpreted as a compiled object built from multiple source packages.\n\nTabular resources are merged by row.\nPackage-level metadata is merged with dedicated rules: some fields are combined (e.g., contributors), recomputed (e.g., taxonomic), while other are dropped (e.g., id).\n\ntags() becomes the key provenance table: each tag has a datapackage_id that identifies its source datapackage.\nA new table pkgs$datapackages is introduced and stores one row per source datapackage with compact provenance metadata and summary counts.",
+    "crumbs": [
+      "GeoLocator DP",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Read and use</span>"
+    ]
+  },
+  {
+    "objectID": "geolocator-read.html#showcase-analysis-migration-performance-and-wind-support",
+    "href": "geolocator-read.html#showcase-analysis-migration-performance-and-wind-support",
+    "title": "\n15  Read and use\n",
+    "section": "\n15.4 Showcase analysis: migration performance and wind support",
+    "text": "15.4 Showcase analysis: migration performance and wind support\nThis first example is a compact demonstration of table manipulation from a single resource (edges()), including data extract, filtering and mutation while asking a basic ecological question: “Are flights longer when wind support is better?”\n\nCodeedge_metrics &lt;- edges(pkgs) %&gt;%\n  filter(type == \"most_likely\") %&gt;%\n  left_join(tags(pkgs), by = \"tag_id\") %&gt;%\n  mutate(\n    facet_label = paste0(\n      str_replace_all(scientific_name, \"\\\\b(\\\\w{1,3})\\\\w*\", \"\\\\1\"),\n      \" (\",\n      tag_id,\n      \")\"\n    ),\n    duration_h = stap2duration(.),\n    groundspeed = sqrt(gs_u^2 + gs_v^2),\n    windspeed = sqrt(ws_u^2 + ws_v^2),\n    wind_support = (gs_u * ws_u + gs_v * ws_v) / pmax(windspeed, 1e-6)\n  ) %&gt;%\n  filter(!is.na(wind_support))\n\nedge_metrics %&gt;%\n  ggplot(\n    aes(\n      x = distance,\n      y = groundspeed,\n      color = wind_support,\n      size = duration_h\n    )\n  ) +\n  geom_point(alpha = 0.72) +\n  geom_smooth(\n    aes(x = distance, y = groundspeed),\n    method = \"lm\",\n    se = FALSE,\n    color = \"#111827\",\n    linewidth = 0.55,\n    inherit.aes = FALSE\n  ) +\n  facet_wrap(~facet_label, ncol = 8) +\n  scale_color_gradient2(\n    low = \"#2563eb\",\n    mid = \"#e2e8f0\",\n    high = \"#dc2626\",\n    midpoint = 0,\n    name = \"Wind support\\n(m/s)\"\n  ) +\n  scale_size(range = c(1.2, 4.8), name = \"Duration (h)\") +\n  labs(\n    title = \"Migration legs: distance, speed, and wind support\",\n    subtitle = \"Flights tend to be longer and faster under stronger tailwind support\",\n    x = \"Leg distance (km)\",\n    y = \"Groundspeed (m/s)\"\n  ) +\n  theme_geolocator_modern(base_size = 11) +\n  theme(\n    panel.spacing = grid::unit(0.55, \"lines\"),\n    strip.text = element_text(size = 9),\n    legend.position = \"right\"\n  )\n\n`geom_smooth()` using formula = 'y ~ x'\n\n\n\n\n\n\n\n\nAcross individuals, warmer colors (positive wind support) concentrate on larger/faster legs, showing that birds generally fly longer when wind support is better.",
+    "crumbs": [
+      "GeoLocator DP",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Read and use</span>"
+    ]
+  },
+  {
+    "objectID": "geolocator-read.html#showcase-analysis-latitude-seasonality-from-staps",
+    "href": "geolocator-read.html#showcase-analysis-latitude-seasonality-from-staps",
+    "title": "\n15  Read and use\n",
+    "section": "\n15.5 Showcase analysis: latitude seasonality from staps",
+    "text": "15.5 Showcase analysis: latitude seasonality from staps\nThis second example demonstrates combining multiple resources with joins and filtering with the question of synchroneity of migration timing across different flyways crossing path in Southern Africa (&lt; -4°).\n\nCodesouth_tag_ids &lt;- paths(pkgs) %&gt;%\n  filter(type == \"most_likely\", !is.na(lat)) %&gt;%\n  group_by(tag_id) %&gt;%\n  summarize(min_lat = min(lat, na.rm = TRUE), .groups = \"drop\") %&gt;%\n  filter(min_lat &lt;= -4) %&gt;%\n  pull(tag_id)\n\ndaily_latitude &lt;- paths(pkgs) %&gt;%\n  filter(type == \"most_likely\", tag_id %in% south_tag_ids) %&gt;%\n  select(tag_id, stap_id, lat) %&gt;%\n  inner_join(\n    staps(pkgs) %&gt;% select(tag_id, stap_id, start, end),\n    by = c(\"tag_id\", \"stap_id\")\n  ) %&gt;%\n  inner_join(\n    tags(pkgs) %&gt;% select(tag_id, scientific_name),\n    by = \"tag_id\"\n  ) %&gt;%\n  mutate(\n    scientific_name = coalesce(scientific_name, \"Unknown species\"),\n    start_day = as.Date(start, tz = \"UTC\"),\n    end_day = as.Date(end - lubridate::seconds(1), tz = \"UTC\"),\n    end_day = if_else(end_day &lt; start_day, start_day, end_day)\n  ) %&gt;%\n  mutate(date = purrr::map2(start_day, end_day, ~ seq(.x, .y, by = \"day\"))) %&gt;%\n  tidyr::unnest(date) %&gt;%\n  arrange(tag_id, date, stap_id) %&gt;%\n  distinct(tag_id, date, .keep_all = TRUE) %&gt;%\n  group_by(tag_id) %&gt;%\n  mutate(\n    doy_norm = yday(date),\n    new_segment = row_number() == 1L |\n      doy_norm &lt; lag(doy_norm, default = first(doy_norm)),\n    segment_id = cumsum(new_segment)\n  ) %&gt;%\n  ungroup()\n\nspecies_levels &lt;- daily_latitude %&gt;%\n  distinct(scientific_name) %&gt;%\n  arrange(scientific_name) %&gt;%\n  pull(scientific_name)\n\nspecies_palette &lt;- setNames(\n  grDevices::hcl.colors(length(species_levels), palette = \"Dark 3\"),\n  species_levels\n)\n\ndaily_latitude %&gt;%\n  ggplot(\n    aes(\n      x = doy_norm,\n      y = lat,\n      color = scientific_name,\n      group = interaction(tag_id, segment_id, drop = TRUE)\n    )\n  ) +\n  geom_hline(\n    yintercept = 0,\n    color = \"#94a3b8\",\n    linewidth = 0.4,\n    linetype = \"dashed\"\n  ) +\n  geom_line(alpha = 0.62, linewidth = 0.9, lineend = \"round\") +\n  scale_color_manual(values = species_palette) +\n  scale_x_continuous(\n    limits = c(1, 366),\n    breaks = c(1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335),\n    labels = month.abb,\n    expand = expansion(mult = c(0.01, 0.01))\n  ) +\n  labs(\n    title = \"Latitude by normalized day of year\",\n    subtitle = \"Most-likely paths reaching south of -4 degrees latitude; expanded to one position per day from staps\",\n    x = \"Normalized day of year\",\n    y = \"Latitude (degrees)\",\n    color = \"Scientific name\"\n  ) +\n  guides(\n    color = guide_legend(\n      nrow = 2,\n      byrow = TRUE,\n      override.aes = list(alpha = 1, linewidth = 2)\n    )\n  ) +\n  theme_geolocator_modern(base_size = 12) +\n  theme(\n    legend.position = \"bottom\",\n    legend.title.position = \"top\",\n    legend.box = \"horizontal\"\n  )\n\n\n\n\n\n\n\nThis seasonal plot highlights strong synchronicity in migration timing across distinct African flyways, and reveals two autumn migration windows that can extend into early January.",
+    "crumbs": [
+      "GeoLocator DP",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Read and use</span>"
+    ]
+  },
+  {
+    "objectID": "geolocator-read.html#reuse-in-geopressuretemplate",
+    "href": "geolocator-read.html#reuse-in-geopressuretemplate",
+    "title": "\n15  Read and use\n",
+    "section": "\n15.6 Reuse in GeoPressureTemplate",
+    "text": "15.6 Reuse in GeoPressureTemplate\nIf a package has not yet been analysed with GeoPressureR, you can bootstrap a GeoPressureTemplate project from it.\n\ncreate_geopressuretemplate(path = \"~/Documents/woodlandkingfisher\", pkg = pkg)",
+    "crumbs": [
+      "GeoLocator DP",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Read and use</span>"
     ]
   },
   {
@@ -1069,16 +1101,6 @@
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>B</span>  <span class='chapter-title'>Probability aggregation</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#prerequisites",
-    "href": "index.html#prerequisites",
-    "title": "A User Manual for GeoPressureR",
-    "section": "Prerequisites",
-    "text": "Prerequisites\nGeoPressureR is an R package, and this manual assumes basic knowledge of R.\n\nWe recommend installing the latest version of R; GeoPressureR requires at least R 4.1.0.\nGeoPressureR works on macOS, Windows, and Linux.\nWe recommend using Positron or RStudio Desktop as your editor/IDE.\nAn internet connection is required to download ERA5 pressure data during the modelling workflow.\nFor trajectory modelling, a computer with 8-16 GB RAM is highly recommended. It can also run on 4 GB RAM, but computations will usually be slower and may require reducing model size.",
-    "crumbs": [
-      "Introduction"
     ]
   }
 ]

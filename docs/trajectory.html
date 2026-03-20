@@ -373,20 +373,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./geolocator-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./geolocator-create.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Create</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Create</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./geolocator-read.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Read and use</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Read and use</span></span></a>
   </div>
 </li>
       </ul>
@@ -685,7 +679,9 @@ Note
 <span class="header-section-number">3.5</span> Save</h2>
 <p>You might want to save some of the key objects such as <code>tag</code> or <code>marginal</code> in an <code>R</code> format. Following the default structure described in <a href="https://github.com/Rafnuss/GeoPressureTemplate#project-structure-file_folder">GeoPressureTemplate</a>, you should save them in the <code>./data/interim</code> folder.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">param</span> <span class="op">&lt;-</span> <span class="va">graph</span><span class="op">$</span><span class="va">param</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span></span>
+<span>  <span class="va">param</span>,</span>
 <span>  <span class="va">tag</span>,</span>
 <span>  <span class="co"># graph, # format(object.size(graph), units = "MB")</span></span>
 <span>  <span class="va">path_most_likely</span>,</span>

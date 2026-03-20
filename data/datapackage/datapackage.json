@@ -1,0 +1,923 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Rafnuss/GeoLocator-DP/v1.0/geolocator-dp-profile.json",
+  "resources": [
+    {
+      "name": "twilights",
+      "path": "twilights.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "name": "twilights",
+        "title": "Twilights",
+        "description": "Table containing twilight data inferred from light data for all tags. Twilight data is typically computed with [`GeoPressureR::twilight_create()`](https://raphaelnussbaumer.com/GeoPressureR/reference/twilight_create.html).",
+        "$schema": "https://datapackage.org/profiles/2.0/tableschema.json",
+        "fields": [
+          {
+            "name": "tag_id",
+            "description": "Unique identifier of the tag. Foreign key to [`tags.tag_id`](/GeoLocator-DP/core/tags#tag_id).",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "example": "18LX"
+          },
+          {
+            "name": "twilight",
+            "description": "Date and time of the twilight event. Formatted as an ISO 8601 string with timezone designator `YYYY-MM-DDThh:mm:ssZ`.",
+            "type": "datetime",
+            "constraints": {
+              "required": true
+            },
+            "example": "2020-04-01T22:00:00Z",
+            "skos:closeMatch": "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000200"
+          },
+          {
+            "name": "rise",
+            "description": "Boolean value to indicate if the twilight is a sunrise (true) or sunset (false).",
+            "type": "boolean",
+            "constraints": {
+              "required": true
+            },
+            "example": "true"
+          },
+          {
+            "name": "label",
+            "description": "Labeling of twilight data according to the [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual/light-map.html#manual-labelling-of-twilight). The value `discard` indicates that the twilight should not be used for geopositioning. Any other value can be used without affecting the workflow; setting it to `stap_id` typically helps visualize which twilights belong to the same stationary period in the training set.",
+            "type": "string",
+            "constraints": {
+              "required": false
+            },
+            "example": "discard"
+          }
+        ],
+        "missingValues": ["", "NA"],
+        "foreignKeys": [
+          {
+            "fields": "tag_id",
+            "reference": {
+              "resource": "tags",
+              "fields": "tag_id"
+            }
+          }
+        ],
+        "fieldsMatch": "superset"
+      }
+    },
+    {
+      "name": "staps",
+      "path": "staps.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "name": "staps",
+        "title": "Stationary periods",
+        "description": "A stationary period (`stap`) is [a key concept in the GeoPressureR workflow](https://raphaelnussbaumer.com/GeoPressureManual/tag-object#label-tag-into-stationary-periods) that discretizes a bird trajectory in time and space. During a single `stap`, the bird is assumed to remain at the same location (+/- tens of kilometers). [`flight`](https://raphaelnussbaumer.com/GeoPressureR/reference/stap2flight) is the converse of `stap`, with `flight.start` corresponding to a `stap.end`, and vice versa.\n\n{:.alert .alert-info}\n`stap_id` is indexed within each `tag_id` (it is not globally unique), so the table key is the composite pair (`tag_id`, `stap_id`). `staps` are typically estimated by [`GeoPressureR::tag_label_stap()`](https://raphaelnussbaumer.com/GeoPressureR/reference/tag_label_stap) based on the `'flight'` labels assigned to pressure or acceleration measurements ([`measurements.label`](/GeoLocator-DP/core/measurements#label)). See the [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks) for more details.",
+        "$schema": "https://datapackage.org/profiles/2.0/tableschema.json",
+        "fields": [
+          {
+            "name": "tag_id",
+            "description": "Unique identifier of the tag. Foreign key to [`tags.tag_id`](/GeoLocator-DP/core/tags#tag_id).",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "example": "18LX"
+          },
+          {
+            "name": "stap_id",
+            "description": "Identifier of the stationary period for a given `tag_id`.",
+            "type": "number",
+            "constraints": {
+              "required": true,
+              "minimum": 1
+            },
+            "example": "3"
+          },
+          {
+            "name": "start",
+            "description": "Date and time of the start of the stationary period. Formatted as an ISO 8601 string with timezone designator `YYYY-MM-DDThh:mm:ssZ`.",
+            "type": "datetime",
+            "constraints": {
+              "required": true
+            },
+            "example": "2020-04-01T05:50:00Z",
+            "skos:closeMatch": "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000200"
+          },
+          {
+            "name": "end",
+            "description": "Date and time of the end of the stationary period. Formatted as an ISO 8601 string with timezone designator `YYYY-MM-DDThh:mm:ssZ`.",
+            "type": "datetime",
+            "constraints": {
+              "required": true
+            },
+            "example": "2020-04-02T21:18:00Z",
+            "skos:closeMatch": "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000200"
+          },
+          {
+            "name": "known_lat",
+            "description": "Latitude of the known stationary period. This value is typically assigned by [`GeoPressureR::tag_set_map()`](https://raphaelnussbaumer.com/GeoPressureR/reference/tag_set_map).",
+            "type": "number",
+            "constraints": {
+              "required": false,
+              "minimum": -90,
+              "maximum": 90
+            },
+            "example": "52.70442",
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/decimalLatitude"
+          },
+          {
+            "name": "known_lon",
+            "description": "Longitude of the known stationary period. This value is typically assigned by [`GeoPressureR::tag_set_map()`](https://raphaelnussbaumer.com/GeoPressureR/reference/tag_set_map).",
+            "type": "number",
+            "constraints": {
+              "required": false,
+              "minimum": -180,
+              "maximum": 180
+            },
+            "example": "23.84995",
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/decimalLongitude"
+          }
+        ],
+        "missingValues": ["", "NA"],
+        "foreignKeys": [
+          {
+            "fields": "tag_id",
+            "reference": {
+              "resource": "tags",
+              "fields": "tag_id"
+            }
+          }
+        ],
+        "primaryKey": ["tag_id", "stap_id"],
+        "fieldsMatch": "superset"
+      }
+    },
+    {
+      "name": "paths",
+      "path": "paths.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "name": "paths",
+        "title": "Paths",
+        "description": "A GeoPressureR `path` contains positions along a bird trajectory.\n\n{:.alert .alert-info}\nIn GeoPressureR, there are 4 path types: `tag`, `most_likely`, `simulation`, and `geopressureviz`. See [`paths.type`](#type) for more details.\n\n`path` should always be used in combination with [`staps`](/GeoLocator-DP/geopressurer/staps), joined by the composite key (`tag_id`, `stap_id`).",
+        "$schema": "https://datapackage.org/profiles/2.0/tableschema.json",
+        "fields": [
+          {
+            "name": "tag_id",
+            "description": "Unique identifier of the tag. Foreign key to [`tags.tag_id`](/GeoLocator-DP/core/tags#tag_id).",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "example": "18LX"
+          },
+          {
+            "name": "type",
+            "description": "One of:\n - `tag`: Created with [`tag2path()`](https://raphaelnussbaumer.com/GeoPressureR/reference/tag2path) from a likelihood map.\n - `most_likely`: Created with [`graph_most_likely()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_most_likely.html).\n - `simulation`: Created by [`graph_simulation()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_simulation).\n - `geopressureviz`: Created by [`geopressureviz()`](https://raphaelnussbaumer.com/GeoPressureR/reference/geopressureviz).",
+            "type": "string",
+            "constraints": {
+              "required": true,
+              "enum": ["tag", "most_likely", "simulation", "geopressureviz"]
+            },
+            "example": "most_likely"
+          },
+          {
+            "name": "stap_id",
+            "description": "Identifier of the stationary period. Together with [`tag_id`](#tag_id), this forms a foreign key to [`staps`](/GeoLocator-DP/geopressurer/staps) (`tag_id`, `stap_id`).",
+            "type": "number",
+            "constraints": {
+              "required": true
+            },
+            "example": "3"
+          },
+          {
+            "name": "lat",
+            "description": "Latitude of the stationary period.",
+            "type": "number",
+            "constraints": {
+              "required": false,
+              "minimum": -90,
+              "maximum": 90
+            },
+            "example": "52.70442",
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/decimalLatitude"
+          },
+          {
+            "name": "lon",
+            "description": "Longitude of the stationary period.",
+            "type": "number",
+            "constraints": {
+              "required": false,
+              "minimum": -180,
+              "maximum": 180
+            },
+            "example": "23.84995",
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/decimalLongitude"
+          },
+          {
+            "name": "j",
+            "description": "Unique identifier for each trajectory. Only useful for `paths.type='simulation'`. Integer from `1` to `nj` as defined in [`GeoPressureR::graph_simulation()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_simulation).",
+            "type": "integer",
+            "constraints": {
+              "required": false,
+              "minimum": 1
+            },
+            "example": "1"
+          }
+        ],
+        "missingValues": ["", "NA"],
+        "foreignKeys": [
+          {
+            "fields": "tag_id",
+            "reference": {
+              "resource": "tags",
+              "fields": "tag_id"
+            }
+          },
+          {
+            "fields": ["tag_id", "stap_id"],
+            "reference": {
+              "resource": "staps",
+              "fields": ["tag_id", "stap_id"]
+            }
+          }
+        ],
+        "fieldsMatch": "superset"
+      }
+    },
+    {
+      "name": "edges",
+      "path": "edges.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "name": "edges",
+        "title": "Edges",
+        "description": "In GeoPressureR, `edges` (graph edges; see more information on the movement model in the [GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual/trajectory.html)) are used to extract flight information from GeoPressureR [`paths`](/GeoLocator-DP/geopressurer/paths) using `path2edge()`.",
+        "$schema": "https://datapackage.org/profiles/2.0/tableschema.json",
+        "fields": [
+          {
+            "name": "tag_id",
+            "description": "Unique identifier of the tag. Foreign key to [`tags.tag_id`](/GeoLocator-DP/core/tags#tag_id).",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "example": "18LX"
+          },
+          {
+            "name": "type",
+            "description": "Same as [`paths.type`](/GeoLocator-DP/geopressurer/paths#type). One of: `tag`, `most_likely`, `simulation` or `geopressureviz`.",
+            "type": "string",
+            "constraints": {
+              "required": true,
+              "enum": ["tag", "most_likely", "simulation", "geopressureviz"]
+            },
+            "example": "tag"
+          },
+          {
+            "name": "stap_s",
+            "description": "Identifier of the SOURCE stationary period. Together with [`tag_id`](#tag_id), this forms a foreign key to [`staps`](/GeoLocator-DP/geopressurer/staps) (`tag_id`, `stap_id`).",
+            "type": "number",
+            "constraints": {
+              "required": true
+            },
+            "example": "3"
+          },
+          {
+            "name": "stap_t",
+            "description": "Identifier of the TARGET stationary period. Generally `stap_s+1`, except if `include=FALSE` for intermediate `stap_id` values. Together with [`tag_id`](#tag_id), this forms a foreign key to [`staps`](/GeoLocator-DP/geopressurer/staps) (`tag_id`, `stap_id`).",
+            "type": "number",
+            "constraints": {
+              "required": true
+            },
+            "example": "4"
+          },
+          {
+            "name": "lat_s",
+            "description": "Latitude of the source stationary period.",
+            "type": "number",
+            "constraints": {
+              "required": true,
+              "minimum": -90,
+              "maximum": 90
+            },
+            "example": "52.70442",
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/decimalLatitude"
+          },
+          {
+            "name": "lon_s",
+            "description": "Longitude of the source stationary period.",
+            "type": "number",
+            "constraints": {
+              "required": true,
+              "minimum": -180,
+              "maximum": 180
+            },
+            "example": "23.84995",
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/decimalLongitude"
+          },
+          {
+            "name": "lat_t",
+            "description": "Latitude of the target stationary period.",
+            "type": "number",
+            "constraints": {
+              "required": true,
+              "minimum": -90,
+              "maximum": 90
+            },
+            "example": "52.70442",
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/decimalLatitude"
+          },
+          {
+            "name": "lon_t",
+            "description": "Longitude of the target stationary period.",
+            "type": "number",
+            "constraints": {
+              "required": true,
+              "minimum": -180,
+              "maximum": 180
+            },
+            "example": "23.84995",
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/decimalLongitude"
+          },
+          {
+            "name": "j",
+            "description": "Same as [`paths.j`](/GeoLocator-DP/geopressurer/paths#j). Unique identifier for each trajectory. Only useful for `edges.type='simulation'`. Integer from `1` to `nj` as defined in [`GeoPressureR::graph_simulation()`](https://raphaelnussbaumer.com/GeoPressureR/reference/graph_simulation).",
+            "type": "integer",
+            "constraints": {
+              "required": false,
+              "minimum": 1
+            },
+            "example": "1"
+          },
+          {
+            "name": "start",
+            "description": "Date and time of the start of the flight. Formatted as an ISO 8601 string with timezone designator `YYYY-MM-DDThh:mm:ssZ`.",
+            "type": "datetime",
+            "constraints": {
+              "required": true
+            },
+            "example": "2020-04-01T05:50:00Z",
+            "skos:closeMatch": "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000200"
+          },
+          {
+            "name": "end",
+            "description": "Date and time of the end of the flight. Formatted as an ISO 8601 string with timezone designator `YYYY-MM-DDThh:mm:ssZ`.",
+            "type": "datetime",
+            "constraints": {
+              "required": true
+            },
+            "example": "2020-04-02T21:18:00Z",
+            "skos:closeMatch": "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000200"
+          },
+          {
+            "name": "n",
+            "description": "Flight number.",
+            "type": "integer",
+            "constraints": {
+              "required": false,
+              "minimum": 1
+            },
+            "example": "1"
+          },
+          {
+            "name": "distance",
+            "description": "Distance of the flight in km.",
+            "type": "number",
+            "constraints": {
+              "required": false,
+              "minimum": 0
+            },
+            "unit": "km",
+            "example": "235"
+          },
+          {
+            "name": "bearing",
+            "description": "Direction of the flight in degrees. 0 indicates north and values increase clockwise. In general, this should be 0°-360°, but -180° to 180° is also allowed.",
+            "type": "number",
+            "constraints": {
+              "required": false,
+              "minimum": -180,
+              "maximum": 360
+            },
+            "unit": "degree",
+            "example": "30"
+          },
+          {
+            "name": "gs_u",
+            "description": "The average groundspeed of the entire flight along the longitudinal axis (east-west direction), measured in kilometers per hour (km/h).",
+            "type": "number",
+            "constraints": {
+              "required": false
+            },
+            "unit": "km/h",
+            "example": "35.5"
+          },
+          {
+            "name": "gs_v",
+            "description": "The average groundspeed of the entire flight along the latitudinal axis (north-south direction), measured in kilometers per hour (km/h).",
+            "type": "number",
+            "constraints": {
+              "required": false
+            },
+            "unit": "km/h",
+            "example": "45.1"
+          },
+          {
+            "name": "ws_u",
+            "description": "The average windspeed of the entire flight along the longitudinal axis (east-west direction), measured in kilometers per hour (km/h).",
+            "type": "number",
+            "constraints": {
+              "required": false
+            },
+            "unit": "km/h",
+            "example": "15.1"
+          },
+          {
+            "name": "ws_v",
+            "description": "The average windspeed of the entire flight along the latitudinal axis (north-south direction), measured in kilometers per hour (km/h).",
+            "type": "number",
+            "constraints": {
+              "required": false
+            },
+            "unit": "km/h",
+            "example": "5.5"
+          }
+        ],
+        "missingValues": ["", "NA"],
+        "foreignKeys": [
+          {
+            "fields": "tag_id",
+            "reference": {
+              "resource": "tags",
+              "fields": "tag_id"
+            }
+          },
+          {
+            "fields": ["tag_id", "stap_s"],
+            "reference": {
+              "resource": "staps",
+              "fields": ["tag_id", "stap_id"]
+            }
+          },
+          {
+            "fields": ["tag_id", "stap_t"],
+            "reference": {
+              "resource": "staps",
+              "fields": ["tag_id", "stap_id"]
+            }
+          }
+        ],
+        "fieldsMatch": "superset"
+      }
+    },
+    {
+      "name": "tags",
+      "path": "tags.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "name": "tags",
+        "title": "Tags",
+        "description": "`tags.csv` is a [tabular data](https://datapackage.org/standard/glossary/#tabular-data) resource from a GeoLocator Data Package. Each tag listed in this table is assumed to have been deployed only once on a single bird. This table contains information about the device, the deployment, and the equipped bird. Data collected on the bird that may change over time (e.g., `age_class`) should be provided in the [`observations`](/GeoLocator-DP/core/observations) table.\n\nAdditional data can be provided by following the [Movebank tag attribute dictionary](https://www.movebank.org/cms/movebank-content/movebank-attribute-dictionary#tag_attributes) and [Movebank deployment attribute dictionary](https://www.movebank.org/cms/movebank-content/movebank-attribute-dictionary#deployment_attributes).\n\n **Example:** [`tags.csv`](https://github.com/Rafnuss/GeoLocator-DP/blob/main/example/tags.csv)",
+        "$schema": "https://datapackage.org/profiles/2.0/tableschema.json",
+        "fields": [
+          {
+            "name": "tag_id",
+            "description": "Unique identifier of the tag.",
+            "type": "string",
+            "constraints": {
+              "required": true,
+              "unique": true
+            },
+            "skos:exactMatch": "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000181/",
+            "example": "18LX"
+          },
+          {
+            "name": "datapackage_id",
+            "description": "Optional identifier of the data package for this tag, typically corresponding to the `datapackage.id`. This field is mostly used when [merging multiple data packages](https://raphaelnussbaumer.com/GeoLocatoR/reference/merge_gldp.html).",
+            "type": "string",
+            "constraints": {
+              "required": false
+            },
+            "example": "https://doi.org/10.5281/zenodo.11207081"
+          },
+          {
+            "name": "ring_number",
+            "description": "Ring number associated with the tagged bird. This value is not unique at table level because the same bird can receive multiple tag deployments (`tag_id`).",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "skos:exactMatch": "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000022",
+            "example": "F58445"
+          },
+          {
+            "name": "scientific_name",
+            "description": "Scientific name of the tagged species.",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "skos:exactMatch": ["https://vocab.nerc.ac.uk/collection/MVB/current/MVB000024", "http://rs.tdwg.org/dwc/terms/scientificName"],
+            "example": "Tachymarptis melba"
+          },
+          {
+            "name": "manufacturer",
+            "description": "The company or person that produced the tag. When appropriate, please use the terms `'Swiss Ornithological Institute'`, `'Migrate Technology Limited'`, or `'Lund University'`.",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "skos:exactMatch": "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000183",
+            "example": "Swiss Ornithological Institute"
+          },
+          {
+            "name": "model",
+            "description": "Model/design/version of the tag. Any device specification that can identify it.",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "skos:exactMatch": "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000185",
+            "example": "GDL2.3"
+          },
+          {
+            "name": "firmware",
+            "description": "The tag firmware and version used during the deployment.",
+            "type": "string",
+            "constraints": {
+              "required": false
+            },
+            "skos:exactMatch": "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000380",
+            "example": "v1.0"
+          },
+          {
+            "name": "weight",
+            "description": "Weight of the device with harness. Expressed in grams.",
+            "type": "number",
+            "constraints": {
+              "required": false,
+              "minimum": 0
+            },
+            "unit": "grams",
+            "skos:exactMatch": "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000409/",
+            "example": "1.32"
+          },
+          {
+            "name": "attachment_type",
+            "description": "The way a tag is attached to an animal. Use values from the [Movebank `attachment type` concept](https://vocab.nerc.ac.uk/collection/MVB/current/MVB000052) if possible. Assumed to be `harness` if not provided. You can also provide the material used.",
+            "type": "string",
+            "constraints": {
+              "required": false
+            },
+            "example": "leg-loop-harness",
+            "skos:exactMatch": "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000052"
+          },
+          {
+            "name": "readout_method",
+            "type": "string",
+            "description": "The way the data are received from the tag. Use values from the [Movebank `tag readout method` concept](https://vocab.nerc.ac.uk/collection/MVB/current/MVB000188/) if possible. Assumed to be `tag-retrieval` if not provided.",
+            "constraints": {
+              "required": false
+            },
+            "skos:relatedMatch": "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000188",
+            "example": "tag-retrieval"
+          },
+          {
+            "name": "tag_comments",
+            "description": "Comments or notes about the tag, deployment, or animal. Use this field to provide additional information that does not fit in other fields, such as data-quality issues, deployment/retrieval details, or analysis notes (e.g., labeling effort, quality checks, or issues encountered).",
+            "type": "string",
+            "constraints": {
+              "required": false
+            },
+            "skos:narrowMatch": ["https://vocab.nerc.ac.uk/collection/MVB/current/MVB000179", "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000012", "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000082"],
+            "example": ""
+          }
+        ],
+        "missingValues": ["", "NA"],
+        "primaryKey": "tag_id",
+        "fieldsMatch": "superset"
+      }
+    },
+    {
+      "name": "observations",
+      "path": "observations.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "name": "observations",
+        "title": "observations",
+        "description": "`observations.csv` is a [tabular data](https://datapackage.org/standard/glossary/#tabular-data) resource from a GeoLocator Data Package containing relevant [events](http://rs.tdwg.org/dwc/terms/Event) (datetime and location) that typically happen in the field and provide important information for analysis. These observations should include at least equipment and, when appropriate, retrieval events, as well as ringing controls or direct sightings.\n\n{:.alert .alert-info}\nYou can think of `observations` as your log entries in your ringing book.\n\nAn observation is described at minimum by `datetime`, location (`latitude` and `longitude`), `ring_number`, and `observation_type` (e.g., equipment, retrieval, or capture). In addition, `sex` and `age_class` are required (use `U` for unknown `sex` and `0` for unknown `age_class`).\n\nAlso include ringing events for any control group (i.e., birds ringed but not equipped with a tag).\n\n **Example:** [`observations.csv`](https://github.com/Rafnuss/GeoLocator-DP/blob/main/example/observations.csv)",
+        "$schema": "https://datapackage.org/profiles/2.0/tableschema.json",
+        "fields": [
+          {
+            "name": "ring_number",
+            "description": "Ring number associated with the observed bird. This is the bird-level identifier used to connect observations over time. It is not a strict foreign key because the same `ring_number` can appear in multiple `tags` rows (e.g., multiple deployments on the same bird).",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "skos:exactMatch": "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000022",
+            "example": "F58445"
+          },
+          {
+            "name": "tag_id",
+            "description": "Unique identifier of the tag. `tag_id` is NOT required in this table so that you can enter any relevant ringed species (e.g., control group). Foreign key to [`tags.tag_id`](/GeoLocator-DP/core/tags#tag_id). When provided, it should refer to a deployment associated with the same bird (`ring_number`).",
+            "type": "string",
+            "constraints": {
+              "required": false
+            },
+            "example": "18LX"
+          },
+          {
+            "name": "observation_type",
+            "description": "Type of observation.\n - `equipment`: Attachment of the tag to the bird. If you equip a new tag at the same time as retrieving an old one from the same bird, create two dedicated rows in the dataset: one for retrieval and one for equipment.\n - `retrieval`: Retrieval of the data, generally through recapture and tag removal, but it can also happen through remote download readout methods (see [`tags.readout_method`](/GeoLocator-DP/core/tags#readout_method)).\n - `capture`: General case of capturing a bird while neither deploying nor retrieving a tag. This option covers (1) recapturing a bird without a device (choose `missing` in `device_status`), (2) a capture before `equipment` or after `retrieval`, and (3) captures of individuals from the control group. Recapture/retrap are not hard-coded in the dataset, but inferred from consecutive captures of the same `ring_number`.\n - `sighting`: Known presence of the bird on a date and location outside ringing (e.g., direct field observation with a color ring).\n - `other`: Any other observation type. Avoid using this; if used, always provide [`observation_comments`](/GeoLocator-DP/core/observations#observation_comments).",
+            "type": "string",
+            "constraints": {
+              "required": true,
+              "enum": ["equipment", "retrieval", "capture", "sighting", "other"]
+            },
+            "example": "equipment"
+          },
+          {
+            "name": "datetime",
+            "description": "Date and optionally time of the observation. Accepts any valid [ISO 8601](https://wikipedia.org/wiki/ISO_8601) date or datetime string, including date-only (`YYYY-MM-DD`), full datetime in local time (`YYYY-MM-DDThh:mm`), in UTC (`YYYY-MM-DDThh:mmZ`), or in any specific timezone (`YYYY-MM-DDThh:mm+hh:mm`).",
+            "skos:broadMatch": "http://rs.tdwg.org/dwc/terms/eventDate",
+            "type": "datetime",
+            "constraints": {
+              "required": true
+            },
+            "example": "2020-03-01T22:00:00Z",
+            "skos:closeMatch": " http://vocab.nerc.ac.uk/collection/MVB/current/MVB000352"
+          },
+          {
+            "name": "latitude",
+            "description": "Latitude of the observation location in decimal degrees, using the WGS84 datum.",
+            "skos:closeMatch": ["http://vocab.nerc.ac.uk/collection/MVB/current/MVB000074", "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000078"],
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/decimalLatitude",
+            "type": "number",
+            "constraints": {
+              "required": true,
+              "minimum": -90,
+              "maximum": 90
+            },
+            "example": "52.70442"
+          },
+          {
+            "name": "longitude",
+            "description": "Longitude of the observation location in decimal degrees, using the WGS84 datum.",
+            "skos:closeMatch": ["http://vocab.nerc.ac.uk/collection/MVB/current/MVB000075", "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000079"],
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/decimalLongitude",
+            "type": "number",
+            "constraints": {
+              "required": true,
+              "minimum": -180,
+              "maximum": 180
+            },
+            "example": "23.84995"
+          },
+          {
+            "name": "location_name",
+            "description": "Given name of the observation location. It might be helpful to keep a human-readable name of the location to differentiate the location of different observations more easily.",
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/locality",
+            "type": "string",
+            "constraints": {
+              "required": false
+            },
+            "example": "Mwamba center--Nest box #2"
+          },
+          {
+            "name": "device_status",
+            "description": "Status of the tag itself (not the data inside the tag):\n - `present`: Tag on the bird.\n - `none`: No tag on the bird and this is expected (e.g., pre-equipment, post-removal, or control group). Only for `observation_type='capture'`.\n - `missing`: Tag lost by the bird. Only for `observation_type='capture'`. If a new tag is deployed on a bird that lost its previous tag, create two rows: one `capture`-`missing` and one `equipment`-`present`.\n - `unknown`: Only for `observation_type='sighting'`.\n\nCan only be `present` for `observation_type` `equipment` or `retrieval`.",
+            "type": "string",
+            "skos:relatedMatch": "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000084",
+            "constraints": {
+              "required": false,
+              "enum": ["present", "none", "missing", "unknown"]
+            },
+            "example": "present"
+          },
+          {
+            "name": "observer",
+            "description": "The name of the individual or group who made the observation.",
+            "type": "string",
+            "constraints": {
+              "required": false
+            },
+            "skos:exactMatch": ["https://vocab.nerc.ac.uk/collection/MVB/current/MVB000372/", "http://rs.tdwg.org/dwc/terms/recordedBy"],
+            "example": "Yann Rime"
+          },
+          {
+            "name": "catching_method",
+            "description": "Catching method according to [EURING Exchange Code](https://euring.org/files/documents/E2020ExchangeCodeV201.pdf#page=12). Generally, one of:\n - `M`: *m*ist-net\n - `N`: on *n*est\n - `Z`: unknown",
+            "type": "string",
+            "constraints": {
+              "required": false,
+              "enum": ["-", "A", "B", "C", "D", "F", "G", "H", "L", "M", "N", "O", "P", "R", "S", "T", "U", "V", "W", "Z"]
+            },
+            "skos:relatedMatch": "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000397",
+            "example": "M"
+          },
+          {
+            "name": "age_class",
+            "description": "Life stage of the bird according to the age class in [EURING Exchange Code](https://euring.org/files/documents/E2020ExchangeCodeV201.pdf#page=14). \n- `0`: Unknown\n- `1`: Pullus\n- `2`: Full-grown\n- `3`: 1yr\n- `4`: >1yr\n- `5`: 2yr\n- `6`: >2yr\n- ...",
+            "type": "string",
+            "constraints": {
+              "required": true,
+              "enum": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H"]
+            },
+            "skos:closeMatch": ["http://rs.tdwg.org/dwc/terms/lifeStage", "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000018"],
+            "example": "1"
+          },
+          {
+            "name": "sex",
+            "description": "Sex of the bird according to [EURING Exchange Code](https://euring.org/files/documents/E2020ExchangeCodeV201.pdf#page=13) as male `M`, female `F` or unknown `U`.",
+            "skos:closeMatch": ["http://rs.tdwg.org/dwc/terms/sex", "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000023"],
+            "type": "string",
+            "constraints": {
+              "required": true,
+              "enum": ["U", "M", "F"]
+            },
+            "example": "female"
+          },
+          {
+            "name": "condition",
+            "description": "Condition of the bird following a simplified version of the [EURING Exchange Code](https://euring.org/files/documents/E2020ExchangeCodeV201.pdf#page=23). Assumed to be `alive` if not provided.",
+            "type": "string",
+            "constraints": {
+              "required": false,
+              "enum": ["alive", "unhealthy", "dead", "unknown"]
+            },
+            "example": "alive",
+            "skos:closeMatch": "http://rs.tdwg.org/dwc/terms/vitality"
+          },
+          {
+            "name": "mass",
+            "description": "Mass of the tagged bird. See [EURING Exchange Code](https://euring.org/files/documents/E2020ExchangeCodeV201.pdf#page=27). Expressed in grams.",
+            "type": "number",
+            "constraints": {
+              "required": false,
+              "minimum": 0
+            },
+            "unit": "grams",
+            "skos:exactMatch": "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000019",
+            "example": "23.3"
+          },
+          {
+            "name": "wing_length",
+            "description": "Maximum chord measurement. See [EURING Exchange Code](https://euring.org/files/documents/E2020ExchangeCodeV201.pdf#page=26). Expressed in millimeters.",
+            "type": "number",
+            "constraints": {
+              "required": false,
+              "minimum": 0
+            },
+            "unit": "mm",
+            "example": "15.4"
+          },
+          {
+            "name": "additional_metric",
+            "description": "A list of additional measurements, facts, characteristics, or assertions about the record. Recommended best practice is to use a key:value encoding schema for a data interchange format such as JSON.",
+            "type": "string",
+            "constraints": {
+              "required": false
+            },
+            "skos:exactMatch": "http://rs.tdwg.org/dwc/terms/dynamicProperties",
+            "skos:narrowMatch": ["http://vocab.nerc.ac.uk/collection/MVB/current/MVB000356", "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000354"],
+            "example": "{'RP3':32, 'fat':2, 'tarsusLengthInMeters':0.014, 'weightInGrams':120}"
+          },
+          {
+            "name": "observation_comments",
+            "description": "Comments or notes about the observation.",
+            "skos:broadMatch": ["http://vocab.nerc.ac.uk/collection/MVB/current/MVB000396", "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000077", "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000082", "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000083"],
+            "type": "string",
+            "constraints": {
+              "required": false
+            },
+            "example": ""
+          }
+        ],
+        "missingValues": ["", "NA"],
+        "foreignKeys": [
+          {
+            "fields": "tag_id",
+            "reference": {
+              "resource": "tags",
+              "fields": "tag_id"
+            }
+          }
+        ],
+        "fieldsMatch": "superset"
+      }
+    },
+    {
+      "name": "measurements",
+      "path": "measurements.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": {
+        "name": "measurements",
+        "title": "Measurements",
+        "description": "`measurements.csv` is a [tabular data](https://datapackage.org/standard/glossary/#tabular-data) resource from a GeoLocator Data Package containing raw data from sensors on all tags.\n\n{:.alert .alert-warning}\nNote that data from all sensors and all tags are contained in a single table!",
+        "$schema": "https://datapackage.org/profiles/2.0/tableschema.json",
+        "fields": [
+          {
+            "name": "tag_id",
+            "description": "Unique identifier of the tag. Foreign key to [`tags.tag_id`](/GeoLocator-DP/core/tags#tag_id).",
+            "type": "string",
+            "constraints": {
+              "required": true
+            },
+            "example": "18LX"
+          },
+          {
+            "name": "sensor",
+            "description": "Sensor type.\n - `light`: Light-level values measured by a solar geolocator. Range and units may vary by provider and tag settings. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000139/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000139/<\/a><\/span>\n - `pressure`: Atmospheric pressure in hPa (or mbar). <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000055/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000055/<\/a><\/span>\n - `activity`: Measure of movement performed by the bird, computed from acceleration sensors. Range and computation method may vary by tag provider, model, settings, and placement on the animal. In general, higher values indicate more activity. Typically computed as the cumulative sum of the absolute difference of acceleration along the z-axis. See [doi:10.1186/s40462-018-0137-1](https://doi.org/10.1186/s40462-018-0137-1) (SOI), [doi:10.1111/jav.01068](https://doi.org/10.1111/jav.01068) (Lund), and the [migratetech report](https://www.migratetech.co.uk/IntigeoSummary.pdf) for more details. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000114/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000114/<\/a><\/span>\n - `mean_acceleration_z`: Mean acceleration along the z-axis, computed from acceleration sensors. Mainly used by SOI devices. This metric is sometimes used as a proxy for pitch and was named `pitch` in GeoLocator DP versions earlier than v1.0.\n - `temperature_external`: Temperature measured by the tag sensor pointing outward from the animal (air temperature). This typically corresponds to the main external temperature sensor. Units: degrees Celsius. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000104/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000104/<\/a><\/span>\n - `temperature_internal`: Temperature measured by the tag sensor located between the tag and the animal (body temperature). Units: degrees Celsius. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000256/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000256/<\/a><\/span>\n - `acceleration_x`: Raw acceleration values provided by the tag for the X axis. Units: m/s^2. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000006/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000006/<\/a><\/span>\n - `acceleration_y`: Raw acceleration values provided by the tag for the Y axis. Units: m/s^2. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000007/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000007/<\/a><\/span>\n - `acceleration_z`: Raw acceleration values provided by the tag for the Z axis. Units: m/s^2. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000008/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000008/<\/a><\/span>\n - `magnetic_x`: Magnetic field strength measured by the magnetometer for the X axis. Units: microtesla. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000258/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000258/<\/a><\/span>\n - `magnetic_y`: Magnetic field strength measured by the magnetometer for the Y axis. Units: microtesla. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000259/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000259/<\/a><\/span>\n - `magnetic_z`: Magnetic field strength measured by the magnetometer for the Z axis. Units: microtesla. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000260/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000260/<\/a><\/span>\n - `wet_count`: Wet count during a measurement interval from the wet-dry sensor. Units are usually device-specific. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000213/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000213/<\/a><\/span>\n - `conductivity`: Conductivity measured by the wet-dry sensor. Unit varies by model. <br/><span class='small text-muted'>Same as <a href='https://vocab.nerc.ac.uk/collection/MVB/current/MVB000071/'>https://vocab.nerc.ac.uk/collection/MVB/current/MVB000071/<\/a><\/span>",
+            "type": "string",
+            "constraints": {
+              "required": true,
+              "enum": ["light", "pressure", "activity", "mean_acceleration_z", "temperature_internal", "temperature_external", "acceleration_x", "acceleration_y", "acceleration_z", "magnetic_x", "magnetic_y", "magnetic_z", "wet_count", "conductivity"]
+            },
+            "skos:relatedMatch": "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000170/",
+            "example": "pressure"
+          },
+          {
+            "name": "datetime",
+            "description": "Date and time of the measurement. Accepts any valid [ISO 8601](https://wikipedia.org/wiki/ISO_8601) datetime string, including datetime in local time (`YYYY-MM-DDThh:mm`), in UTC (`YYYY-MM-DDThh:mmZ`) or any specific timezone (`YYYY-MM-DDThh:mm+hh:mm`).",
+            "type": "datetime",
+            "constraints": {
+              "required": true
+            },
+            "example": "2020-04-01T22:00:00Z",
+            "skos:closeMatch": "http://vocab.nerc.ac.uk/collection/MVB/current/MVB000200"
+          },
+          {
+            "name": "value",
+            "description": "Value of the measurement taken by the sensor.",
+            "type": "number",
+            "constraints": {
+              "required": true
+            },
+            "example": "12.3"
+          },
+          {
+            "name": "label",
+            "description": "Labeling of pressure and acceleration data according to the [labeling chapter of the GeoPressureManual](https://raphaelnussbaumer.com/GeoPressureManual/labelling-tracks.html).",
+            "type": "string",
+            "constraints": {
+              "required": false,
+              "pattern": "^(flight|discard|elev_\\d+|)$"
+            },
+            "example": "elev_23",
+            "skos:relatedMatch": ["https://vocab.nerc.ac.uk/collection/MVB/current/MVB000156", "https://vocab.nerc.ac.uk/collection/MVB/current/MVB000157"]
+          }
+        ],
+        "missingValues": ["", "NA"],
+        "foreignKeys": [
+          {
+            "fields": "tag_id",
+            "reference": {
+              "resource": "tags",
+              "fields": "tag_id"
+            }
+          }
+        ],
+        "fieldsMatch": "superset"
+      }
+    }
+  ],
+  "taxonomic": ["Acrocephalus arundinaceus", "Limnothlypis swainsonii"],
+  "numberTags": {
+    "tags": 2,
+    "measurements": 2,
+    "light": 1,
+    "pressure": 2,
+    "activity": 1,
+    "temperature_external": 1,
+    "temperature_internal": 0,
+    "magnetic": 0,
+    "wet_count": 0,
+    "conductivity": 0,
+    "paths": 2
+  },
+  "temporal": {
+    "start": "2017-06-20",
+    "end": "2022-06-11"
+  }
+}

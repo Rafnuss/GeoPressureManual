@@ -1,0 +1,5 @@
+ring_number,tag_id,observation_type,datetime,latitude,longitude,location_name,device_status,observer,catching_method,age_class,sex,condition,mass,wing_length,additional_metric,observation_comments
+ZA45656,18LX,equipment,2017-06-19T00:00:00Z,48.8974322,17.0603564,Mutenice,present,Petr Prochazka,M,4,F,alive,32.25,95,,
+ZA45656,18LX,retrieval,2018-05-02T00:00:00Z,48.8974322,17.0603564,Mutenice,present,Petr Prochazka,M,4,F,alive,32.25,98,,
+289048506,CB619,equipment,2021-06-16T06:18:00Z,37.288408,-82.305667,Breaks Interstate Park,present,Ashley Peele,M,2,M,alive,18.1,72,,
+289048506,CB619,retrieval,2022-06-10T08:00:00Z,37.288408,-82.305667,Breaks Interstate Park,present,Hannah Wait,M,2,M,alive,15.4,70,,

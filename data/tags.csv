@@ -1,0 +1,3 @@
+tag_id,ring_number,scientific_name,manufacturer,model,firmware,weight,attachment_type,readout_method,tag_comments
+18LX,ZA45656,Acrocephalus arundinaceus,Swiss Ornithological Institute,GDL3pam-v2.3,FW_GDL3pam_V2.3.1,1.47,leg harness|material:cord|attachment:tubes,tag-retrieval,
+CB619,289048506,Limnothlypis swainsonii,Migrate Technology Limited,BARP50Z11-7,,0.58,leg-loop-harness,tag-retrieval,
