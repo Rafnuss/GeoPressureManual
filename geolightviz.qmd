@@ -1,6 +1,6 @@
 # GeoLightViz
 
-```{r 08-setup}
+```{r 08-geolightviz-setup}
 #| message: false
 library(GeoPressureR)
 ```

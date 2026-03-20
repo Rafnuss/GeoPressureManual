@@ -63,7 +63,7 @@ GeoPressureTemplate/
 
 Alternatively, create your project folder with [`GeoLocatoR::create_geopressuretemplate()`](https://raphaelnussbaumer.com/GeoLocatoR/reference/create_geopressuretemplate.html).
 
-```{r}
+```{r 09-create-geopressuretemplate}
 #| eval: false
 library(GeoLocatoR)
 create_geopressuretemplate(

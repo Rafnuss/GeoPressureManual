@@ -15,7 +15,7 @@ It is an essential tool to label your tag and provides a convenient platform to 
 
 Start the shiny app with
 
-```{r}
+```{r 07-geopressureviz-run}
 #| eval: false
 geopressureviz(tag)
 # or if interim file is present

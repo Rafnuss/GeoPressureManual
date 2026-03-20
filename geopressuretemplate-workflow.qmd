@@ -81,7 +81,6 @@ The tag workflow simply consists of preparing the tag data and computing the lik
 
 ```{r 13-tag-workflow}
 #| eval: false
-#| cache: true
 tag <- geopressuretemplate_tag(id)
 ```
 
@@ -93,7 +92,6 @@ The graph workflow uses the `tag` computed before to create the graph and produc
 
 ```{r 13-graph-workflow}
 #| eval: false
-#| cache: true
 graph <- geopressuretemplate_graph(id)
 ```
 
@@ -102,16 +100,16 @@ Because the construction of the graph can be a bit more complicated and takes a 
 ## Pressurepath
 
 ```{r 13-pressurepath-workflow}
-#| cache: false
-geopressuretemplate_pressurepath(id, quiet = FALSE)
+#| eval: false
+geopressuretemplate_pressurepath(id)
 ```
 
 
 ## Outputs
 
-All the information needed for your analysis should now be contained in `./data/interim/18LX.RData`
+All the information needed for the rest of your analysis should now be contained in `./data/interim/18LX.RData`
 
 ```{r 13-load-interim}
-save_list <- load(glue::glue("./data/interim/{id}.RData"))
+save_list <- load_interim(id)
 print(save_list)
 ```

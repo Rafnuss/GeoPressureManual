@@ -170,7 +170,9 @@ You might want to save some of the key objects such as `tag` or `marginal` in an
 
 ```{r 03-save-interim}
 #| warning: false
+param <- graph$param
 save(
+  param,
   tag,
   # graph, # format(object.size(graph), units = "MB")
   path_most_likely,

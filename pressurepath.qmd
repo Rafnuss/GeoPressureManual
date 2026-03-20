@@ -258,7 +258,9 @@ pressurepath_2_to_5 %>%
 
 ```{r 06-save-interim}
 #| warning: false
+param <- graph$param
 save(
+  param,
   tag,
   graph,
   path_most_likely,
