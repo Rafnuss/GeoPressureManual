@@ -1,138 +1,60 @@
+---
+aliases:
+  - geolocator-intro.html
+---
+
 # Create
 
-In this guide, we explore how to generate a GeoLocator Data Package from a GeoPressureTemplate folder where you've already performed the analysis of the tracks following the [GeoPressureTemplate workflow](geopressuretemplate-workflow.html).
+This tutorial explains how to create a GeoLocator Data Package (GeoLocator DP) from a GeoPressureTemplate project, upload it to Zenodo, and validate the draft before publication.
 
-::: callout-important
-To be able to follow this guide, you need to have a GeoPressureTemplate project containing:
-
-- An up-to-date `DESCRIPTION` file, including `version`, `contributors`, `licences` as described in [the R packages book](https://r-pkgs.org/description.html). 
-- One interim `.RData` file per tag, with all outputs you would like to publish, generated with the [Geopressuretemplate workflow](geopressuretemplate-workflow.html).
-- The `tag.csv` and `observations.csv` files in the `data/` folder.
-::: 
-
-::: callout-info
-If you've not yet performed the GeoPressureR analysis, it is still possible to create a geolocator data package with only the core resources. 
+::: callout-note
+For an introduction to this format, visit the [GeoLocator DP website](https://raphaelnussbaumer.com/GeoLocator-DP/).
 :::
+
+
+## Install GeoLocatoR
+<a href="https://github.com/rafnuss/geolocator"><img src="https://raphaelnussbaumer.com/GeoLocatoR/logo.png" align="right" height="139" alt="GeoLocatoR website" style="padding-left:5px;" /></a>
+
+We use the [GeoLocatoR](https://raphaelnussbaumer.com/GeoLocatoR) package to create and validate the data package.
+
+```{r 15-install-geolocator}
+#| eval: false
+# install.packages("pak")
+pak::pkg_install("Rafnuss/GeoLocatoR")
+```
 
 ```{r 15-setup}
 #| message: false
-library(frictionless)
-library(GeoLocatoR)
-library(tidyverse)
-library(zen4R)
+devtools::load_all("~/Documents/GitHub/GeoLocatoR/")
+# library(GeoLocatoR)
 ```
 
-::: callout-important
+## Step 1. Create the package from GeoPressureTemplate
 
-The easiest way to create a Zenodo record and ensure that the data is correctly sync is using the Zenodo API and the [`Zen4R`](https://github.com/eblondel/zen4R/wiki) package.
+Read your project and build a geolocator-dp object.
 
-For this, you first need to [create a token](https://zenodo.org/account/settings/applications/tokens/new/) and save it to your keyring with:
-
-```{r 15-set-zenodo-token}
-#| eval: false
-keyring::key_set_with_value("ZENODO_PAT", password = "{your_zenodo_token}")
-```
-
-This allows us to create a `ZenodoManager` object which becomes useful later.
-
-```{r 15-init-zenodo-manager}
-zenodo <- ZenodoManager$new(token = keyring::key_get(service = "ZENODO_PAT"))
-```
-
-:::
-
-## Setup of the example
-
-For this example, we won't be using the Swainson's Warbler nor Great Reed Warbler as we want a full project with multiple tags. Instead, we download [the GeoPressureTemplate of the Woodland Kingfisher geolocator project](https://github.com/Rafnuss/WoodlandKingfisher). Our goal will essentially be to reproduce the [associated GeoLocator Data Package uploaded on Zenodo already](https://zenodo.org/records/13829929).
-
-We can download this GeoPressureTemplate from Github in a temporary folder using the following code:
-
-```{r 15-download-geopressuretemplate-example}
-#| code-fold: true
+```{r 15-read-geopressuretemplate}
 #| message: false
-repo <- "Rafnuss/WoodlandKingfisher"
-
-# Create temporary file for the ZIP
-temp_zip <- tempfile(fileext = ".zip")
-
-# Download the ZIP file and unzip the repository
-download.file(
-  glue::glue("https://github.com/{repo}/archive/refs/heads/main.zip"),
-  temp_zip,
-  mode = "wb"
-)
-temp_dir <- tempfile()
-unzip(temp_zip, exdir = temp_dir)
-
-# return the extraction directory
-directory <- file.path(temp_dir, list.files(temp_dir))
+pkg <- read_geopressuretemplate()
 ```
 
-## Initiate datapackage with metadata
+By default, `read_geopressuretemplate()` reads `data/interim/*.RData` first and falls back to raw data for tags without interim files.
 
-### Initiate datapackage using the DESCRIPTION file
+- Use `from` to force a specific source (`"interim"` or `"raw"`).
+- Prefix a file/folder with `_` to exclude a tag temporarily.
 
-We can generate a GeoLocator Data Package `pkg` from an existing GeoPressureTemplate folder with `create_gldp_geopressuretemplate()`. This function will read the `DESCRIPTION` file and create a frictionless package with the metadata you've already entered.
+Inspect the package summary:
 
-```{r 15-create-gldp-from-template}
-pkg <- create_gldp_geopressuretemplate(directory = directory)
+```{r 15-inspect-pkg-summary}
+#| collapse: true
+print(pkg)
 ```
 
-### Create record on Zenodo
+## Step 2. Complete `tags` and `observations`
 
-The easiest way to update the metadata is to create an empty Zenodo record and fill in all metadata directly on Zenodo. This way, you can benefit from the Zenodo interface to enter all metadata and share it with co-authors for review before creating the package. 
+At this point, `tags` and `observations` will certaintly still be missing key metadata (for example ringing information).
 
-```{r 15-create-zenodo-record}
-#| eval: false
-z <- zenodo$depositRecord(
-  gldp_to_zenodo(pkg),
-  reserveDOI = TRUE,
-  publish = FALSE
-)
-browseURL(z$links$self_html)
-```
-
-### Update metadata on Zenodo
-
-Login to Zenodo and fill in all metadata you want to add to your GeoLocator Data Package. Read the [datapackage specification](https://raphaelnussbaumer.com/GeoLocator-DP/datapackage/) to learn about all recommended metadata that can be added
-
-::: callout-note
-Note that a datapackage `contributors` corresponds to `creators` on Zenodo and not the `contributors`.
-:::
-
-
-::: callout-tip
-To be able to save the draft of your record, you'll need to upload some file, even a dummy text file will do. You can always delete it later and upload with the correct ones.
-
-Sharing the draft with co-authors is a great way to ensure that all metadata are correct before publication.
-:::
-
-### Create datapackage from Zenodo record
-
-Once you're happy with the metadata entered on Zenodo, you create a new GeoLocator Data Package from the Zenodo record. For this, you need to retrieve the [concept DOI](https://support.zenodo.org/help/en-gb/1-upload-deposit/97-what-is-doi-versioning) of your Zenodo record. The concept DOI is the one that doesn't change with new versions. The DOI displayed on Zenodo is actually the DOI of the first version, but you can retrieve the concept DOI by substracting `1` to your ID number.
-
-```{r 15-get-zenodo-concept-record}
-#| eval: false
-z <- zenodo$getDepositionByConceptDOI("10.5281/zenodo.{ZENODO_ID - 1}")
-pkg <- zenodo_to_gldp(z)
-```
-
-
-## Add the data
-
-Now that we have the metadata set up, we can add the data to the package. `add_gldp_geopressuretemplate()` is a key function that read the geopressuretemplate data available and automatically add the most up-to-date available data to the datapackage.
-
-```{r 15-add-data-from-geopressuretemplate}
-pkg <- add_gldp_geopressuretemplate(pkg, directory = directory)
-```
-
-## Data to include
-
-By default, `add_gldp_geopressuretemplate()` adds first the tag data from the `data/interim` Rdata file. For all tag_id that don't have a interim file, it read the data directly from the `data/raw-data` folder, using `config.yml` information. Using the `from` argument, you can specify to only read from one of these two locations. It's possible to exclude specific tag_id by adding a `_` to the interim file name or raw-data folder (e.g., `_TAG1234.RData` or `_TAG1234/`). 
-
-### `tags` and `observations` resources
-
-If `tags.csv` and `observations.csv` are not available (i.e., not stored in the `data/` folder of your project), `tags` and `observations` resources would have been generated by `add_gldp_geopressuretemplate()` based on the available information. You certainly need to edit them manually, adding some key missing information (e.g. `ring_number`).
+The easiest way to fix this is to export the tables, edit them manually and then save them back.
 
 ```{r 15-export-tags-observations}
 #| eval: false
@@ -140,49 +62,93 @@ write.csv(tags(pkg), file = "data/tags.csv", row.names = FALSE)
 write.csv(observations(pkg), file = "data/observations.csv", row.names = FALSE)
 ```
 
-### Inspect the created package
+Rebuild and validate after editing:
 
-Before uploading the data, you should also inspect the created package to ensure that everything is correct.
-
-Check the summary of the package, in particular the number of tags in each resources.
-
-```{r 15-inspect-pkg-summary}
-print(pkg)
+```{r 15-validate-gldp-local}
+#| collapse: true
+pkg <- read_geopressuretemplate()
+validate_gldp(pkg)
 ```
 
-You can visualize the coverage of the package by ploting the Data Package. Check for the correct number of tags, as well as equipment and retrieval dates.
+## Step 3. Run visual checks
+
+In this final stage, we check the coverage, tag count, and deployment/retrieval consistency to avoid outliers or missing information. To do so, plot each variable and check that (1) all the ring numbers are present, (2) all measurements are correct and no information is missing and (3) trajectories are correct.
 
 ```{r 15-plot-pkg-coverage}
+#| message: false
 plot(pkg, "ring")
 plot(pkg, "coverage")
 plot(pkg, "map")
 ```
 
-::: callout-important
+## Step 4. Write the package files
 
-Finally, we check that the package is compliant with GeoLocator Data Package standards.
+Now that we have checked the data, we can export `pkg` into the `csv` file that will be uploaded on Zenodo. 
 
-```{r 15-validate-gldp}
-#| collapse: true
-validate_gldp(pkg)
+```{r 15-write-gldp}
+#| eval: false
+write_gldp(pkg, "data/datapackage")
 ```
 
-It is quite normal that you'll first see some error here. Try to fix them and re-create the package until the package is valid. If you can't fix them, contact me!
+## Step 5. Create the Zenodo draft record
+
+[Create a new draft on Zenodo](https://zenodo.org/uploads/new), complete all metadata fields, BUT, do not submit it just yet.
+
+::: callout-warning
+## Mandatory checklist
+
+Complete **all** items below. If one or more are missing, the record may be returned for revision and not accepted in the community.
+
+- [ ] Select the community: GeoLocator Data Package
+- [ ] Upload all files
+- [ ] Reserve a DOI
+- [ ] Set resource type to Dataset
+- [ ] Add a title starting with "GeoLocator Data Package:"
+- [ ] Add all data package authors (with roles when possible)
+- [ ] Add a basic description
+- [ ] Add funding and related resources
+- [ ] Add the GitHub link of the GeoPressureTemplate used
+- [ ] Add any additional metadata you want to include
+
+Review the [GeoLocator DP curation policy](https://raphaelnussbaumer.com/GeoLocator-DP/curation) before submission.
 
 :::
 
 
-## Upload data to Zenodo
+## Step 6. Validate the Zenodo draft
 
-We can write the datapackage to file
+Before submitting, read the draft back and validate exactly what Zenodo contains.
 
-```{r 15-write-package-basic}
+::: callout-info
+Reading a draft requires a Zenodo API token. Create one at [Zenodo token settings](https://zenodo.org/account/settings/applications/tokens/new/) and save it in your keyring:
+
+```{r 15-set-zenodo-token}
 #| eval: false
-frictionless::write_package(pkg, "data/datapackage")
+keyring::key_set_with_value("ZENODO_TOKEN", password = "{your_zenodo_token}")
+```
+:::
+
+```{r 15-read-zenodo-draft}
+#| collapse: true
+pkg <- read_zenodo(
+  "10.5072/zenodo.472302",
+  draft = TRUE, # Draft record
+  sandbox = TRUE # Remove if using production Zenodo
+)
 ```
 
-The content of the folder created should now be uploaded on your Zenodo record with a drag and drop.
+::: callout-important
+Run the official validation check on the draft package:
 
-## Publish the record
+```{r 15-validate-gldp-zenodo}
+#| collapse: true
+validate_gldp(pkg)
+```
 
-Finally, once you're happy with everything, you can publish the record on Zenodo!
+If validation reports errors, fix the metadata/files and run the check again until valid.
+:::
+
+## Step 7. Submit 
+
+Once all checks are valid and metadata are complete, submit the Zenodo record! 🎉 
+A curator will review the data and get back to you if any revision is required. 
